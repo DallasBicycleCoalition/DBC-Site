@@ -82,15 +82,12 @@ function urlFor(source: SanityImageSource) {
       <div class="image-gallery">
         {
           homePage.whatWeDo?.whatWeDoPics?.map(
-            (
-              pic: {
-                image: any;
-                altText: string | null | undefined;
-                caption: unknown;
-              },
-              index: any
-            ) => (
-              <div key={index}>
+            (pic: {
+              image: any;
+              altText: string | null | undefined;
+              caption: unknown;
+            }) => (
+              <div>
                 <img src={urlFor(pic.image)} alt={pic.altText} />
                 <p>{pic.caption}</p>
               </div>
