@@ -3,7 +3,6 @@ import { defineConfig } from "sanity";
 import { structureTool } from "sanity/structure";
 import { schemaTypes } from "./schema";
 
-// Different environments use different variables
 const projectId = "wfdg37xd";
 const dataset = "production";
 
