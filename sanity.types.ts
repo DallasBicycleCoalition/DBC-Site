@@ -173,25 +173,12 @@ export type Slug = {
   source?: string;
 };
 
-export type AllSanitySchemaTypes =
-  | SanityImagePaletteSwatch
-  | SanityImagePalette
-  | SanityImageDimensions
-  | SanityFileAsset
-  | Geopoint
-  | BlockContent
-  | Post
-  | SanityImageCrop
-  | SanityImageHotspot
-  | SanityImageAsset
-  | SanityAssetSourceData
-  | SanityImageMetadata
-  | Slug;
+export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | BlockContent | Post | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata | Slug;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./src/utils/sanity.ts
 // Variable: homePage
 // Query:     *[_type == "homepage"]{      _id,      _createdAt,      title,      "slug": slug.current,      content,      "homePageHeroImage": {        "asset": homePageHeroImage.asset->url,        "altText": homePageHeroImage.altText      },      "whoWeAre": {        "heading": whoWeAre.heading,        "photo": {          "asset": whoWeAre.photo.asset->url,          "altText": whoWeAre.photo.altText        },        "content" : whoWeAre.content      },      "whatWeDo": {        "heading": whatWeDo.heading,        "whatWeDoPics": whatWeDo.whatWeDoPics[] {          "image": image.asset->url,          "altText": altText,          "caption": caption        }      },      "bikePlan": {        "heading": bikePlan.heading,        "content": bikePlan.content      }    }[0]
 export type HomePageResult = null;
 // Variable: layout
-// Query:     *[_type == "layout"]{      _id,      _createdAt,      "logo": {        "asset": logo.asset->url,        "altText": logo.altText      },      "landingPageLink": landingPageLink    }[0]
+// Query:     *[_type == "layout"][0]{      _id,      _createdAt,      "logo": {        "asset": logo.asset->url,        "altText": logo.altText      },      "landingPageLink": landingPageLink    }
 export type LayoutResult = null;

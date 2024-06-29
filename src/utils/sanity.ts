@@ -70,7 +70,7 @@ export async function getHomePage(): Promise<HomePageResult> {
 
 export async function getLayout(): Promise<LayoutResult> {
   const layout = groq`
-    *[_type == "layout"]{
+    *[_type == "layout"][0]{
       _id,
       _createdAt,
       "logo": {
@@ -78,7 +78,7 @@ export async function getLayout(): Promise<LayoutResult> {
         "altText": logo.altText
       },
       "landingPageLink": landingPageLink
-    }[0]`;
+    }`;
 
   const results = await sanityClient.fetch(layout);
 
