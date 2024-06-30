@@ -1,10 +1,11 @@
 ---
-// Import necessary packages
+// Import necessary packages and components
 import { PortableText } from "@portabletext/react";
 import imageUrlBuilder from "@sanity/image-url";
 import type { SanityImageSource } from "@sanity/image-url/lib/types/types";
 import "../css-reset.css";
 import "../globals.css";
+import Layout from "../layouts/Layout.astro"; // Import Layout component
 import { getHomePage } from "../utils/sanity";
 
 // Fetch data on the server side
@@ -16,8 +17,8 @@ const dataset = import.meta.env.PUBLIC_SANITY_DATASET;
 
 // Set up the image URL builder
 const builder = imageUrlBuilder({
-  projectId: projectId || "default-projectId",
-  dataset: dataset || "default-dataset",
+  projectId: projectId,
+  dataset: dataset,
 });
 
 // Function to get the URL of an image
@@ -34,80 +35,72 @@ function urlFor(source: SanityImageSource) {
 }
 ---
 
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{homePage.title}</title>
-  </head>
-  <body>
-    <section class="hero">
-      <h1 class="visually-hidden">{homePage.title}</h1>
+<Layout title={homePage.title || "Default Title"}>
+  <section class="hero">
+    <h1 class="visually-hidden">{homePage.title}</h1>
+    {
+      homePage.homePageHeroImage?.asset ? (
+        <img
+          src={urlFor(homePage.homePageHeroImage.asset)}
+          alt={homePage.homePageHeroImage.altText || "Hero image"}
+        />
+      ) : (
+        <p>Hero image not available</p>
+      )
+    }
+  </section>
+
+  <section id="who-we-are">
+    <h2>Who We Are</h2>
+    <div class="two-cols">
       {
-        homePage.homePageHeroImage?.asset ? (
+        homePage.whoWeAre?.photo?.asset && (
           <img
-            src={urlFor(homePage.homePageHeroImage.asset)}
-            alt={homePage.homePageHeroImage.altText || "Hero image"}
+            src={urlFor(homePage.whoWeAre.photo.asset)}
+            alt={homePage.whoWeAre.photo.altText || "Who we are image"}
           />
-        ) : (
-          <p>Hero image not available</p>
         )
       }
-    </section>
+      {
+        homePage.whoWeAre?.content && (
+          <div class="normal-copy">
+            <PortableText value={homePage.whoWeAre.content} />
+          </div>
+        )
+      }
+    </div>
+  </section>
 
-    <section id="who-we-are">
-      <h2>Who We Are</h2>
-      <div class="two-cols">
-        {
-          homePage.whoWeAre?.photo?.asset && (
-            <img
-              src={urlFor(homePage.whoWeAre.photo.asset)}
-              alt={homePage.whoWeAre.photo.altText || "Who we are image"}
-            />
-          )
-        }
-        {
-          homePage.whoWeAre?.content && (
-            <div class="normal-copy">
-              <PortableText value={homePage.whoWeAre.content} />
+  <section id="what-we-do">
+    <h2>{homePage.whatWeDo?.heading}</h2>
+    <div class="image-gallery">
+      {
+        homePage.whatWeDo?.whatWeDoPics?.map(
+          (pic: {
+            image: any;
+            altText: string | null | undefined;
+            caption: unknown;
+          }) => (
+            <div>
+              <img src={urlFor(pic.image)} alt={pic.altText} />
+              <p>{pic.caption}</p>
             </div>
           )
-        }
-      </div>
-    </section>
+        )
+      }
+    </div>
+  </section>
 
-    <section id="what-we-do">
-      <h2>{homePage.whatWeDo?.heading}</h2>
-      <div class="image-gallery">
-        {
-          homePage.whatWeDo?.whatWeDoPics?.map(
-            (pic: {
-              image: any;
-              altText: string | null | undefined;
-              caption: unknown;
-            }) => (
-              <div>
-                <img src={urlFor(pic.image)} alt={pic.altText} />
-                <p>{pic.caption}</p>
-              </div>
-            )
-          )
-        }
-      </div>
-    </section>
-
-    <section id="bike-plan">
-      <h2>{homePage.bikePlan?.heading}</h2>
-      <div class="two-cols">
-        {
-          homePage.bikePlan?.content && (
-            <div class="normal-copy">
-              <PortableText value={homePage.bikePlan.content} />
-            </div>
-          )
-        }
-      </div>
-    </section>
-  </body>
-</html>
+  <section id="bike-plan">
+    <h2>{homePage.bikePlan?.heading}</h2>
+    <div class="two-cols">
+      {
+        homePage.bikePlan?.content && (
+          <div class="normal-copy">
+            <PortableText value={homePage.bikePlan.content} />
+          </div>
+        )
+      }
+    </div>
+  </section>
+</Layout>
