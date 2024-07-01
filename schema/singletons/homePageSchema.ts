@@ -1,6 +1,6 @@
 import { defineType } from "sanity";
 
-export const homePage = defineType({
+export const homePageSchema = defineType({
   name: "homepage",
   title: "HomePage",
   type: "document",

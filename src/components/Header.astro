@@ -1,5 +1,4 @@
 ---
-// Import needed functions and components
 import imageUrlBuilder from "@sanity/image-url";
 import type { SanityImageSource } from "@sanity/image-url/lib/types/types";
 import { getLayout } from "../utils/sanity";
@@ -13,7 +12,7 @@ const builder = imageUrlBuilder({
   dataset: dataset,
 });
 
-// Function to generate image URLs
+// Generate image URLs
 function urlFor(source: SanityImageSource) {
   return source ? builder.image(source).url() : "https://picsum.photos/500/500";
 }

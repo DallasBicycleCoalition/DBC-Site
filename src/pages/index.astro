@@ -1,5 +1,4 @@
 ---
-// Import necessary packages and components
 import { PortableText } from '@portabletext/react';
 import imageUrlBuilder from '@sanity/image-url';
 import type { SanityImageSource } from '@sanity/image-url/lib/types/types';
@@ -8,8 +7,6 @@ import { getHomePage } from '../utils/sanity';
 
 // Fetch data on the server side
 const homePage = await getHomePage();
-console.log(homePage); // Log the homePage object to debug the data
-
 const projectId = import.meta.env.PUBLIC_SANITY_PROJECT_ID;
 const dataset = import.meta.env.PUBLIC_SANITY_DATASET;
 
@@ -19,7 +16,7 @@ const builder = imageUrlBuilder({
   dataset: dataset,
 });
 
-// Function to get the URL of an image
+// Get the URL of an image
 function urlFor(source: SanityImageSource) {
   let url = '';
   if (source) {
