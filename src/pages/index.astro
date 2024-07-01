@@ -33,11 +33,11 @@ function urlFor(source: SanityImageSource) {
 }
 ---
 
-<Layout title={homePage.title || 'Default Title'}>
+<Layout title={homePage?.title || 'Default Title'}>
   <section class="hero">
-    <h1 class="visually-hidden">{homePage.title}</h1>
+    <h1 class="visually-hidden">{homePage?.title}</h1>
     {
-      homePage.homePageHeroImage?.asset && (
+      homePage?.homePageHeroImage?.asset && (
         <img
           src={urlFor(homePage.homePageHeroImage.asset)}
           alt={homePage.homePageHeroImage.altText || 'Hero image'}
@@ -50,7 +50,7 @@ function urlFor(source: SanityImageSource) {
     <h2>Who We Are</h2>
     <div class="two-cols">
       {
-        homePage.whoWeAre?.photo?.asset && (
+        homePage?.whoWeAre.photo.asset && (
           <img
             src={urlFor(homePage.whoWeAre.photo.asset)}
             alt={homePage.whoWeAre.photo.altText || 'Who we are image'}
@@ -58,7 +58,7 @@ function urlFor(source: SanityImageSource) {
         )
       }
       {
-        homePage.whoWeAre?.content && (
+        homePage?.whoWeAre.content && (
           <div class="normal-copy">
             <PortableText value={homePage.whoWeAre.content} />
           </div>
@@ -68,10 +68,10 @@ function urlFor(source: SanityImageSource) {
   </section>
 
   <section id="what-we-do">
-    <h2>{homePage.whatWeDo?.heading}</h2>
+    <h2>{homePage?.whatWeDo.heading}</h2>
     <div class="image-gallery">
       {
-        homePage.whatWeDo?.whatWeDoPics?.map(
+        homePage?.whatWeDo.whatWeDoPics?.map(
           (pic: {
             image: any;
             altText: string | null | undefined;
@@ -88,10 +88,10 @@ function urlFor(source: SanityImageSource) {
   </section>
 
   <section id="bike-plan">
-    <h2>{homePage.bikePlan?.heading}</h2>
+    <h2>{homePage?.bikePlan.heading}</h2>
     <div class="two-cols">
       {
-        homePage.bikePlan?.content && (
+        homePage?.bikePlan.content && (
           <div class="normal-copy">
             <PortableText value={homePage.bikePlan.content} />
           </div>
