@@ -10,5 +10,5 @@ export default defineConfig({
   title: "Project Name",
   projectId,
   dataset,
-  plugins: [structureTool(), visionTool()]
+  plugins: [structureTool(), visionTool()],
 });

@@ -54,10 +54,11 @@ body {
 }
 
 /* normal body copy */
-div.normal-copy {
-  display: flex;
-  flex-direction: column;
-  gap: 1em;
+div.normal-copy p:not(:first-child):not(:-moz-first-node) {
+  margin-top: 1em;
+}
+div.normal-copy p:not(:last-child):not(:-moz-last-node) {
+  margin-bottom: 1em;
 }
 /* end normal body copy */
 
@@ -68,6 +69,7 @@ body h4,
 body h5,
 body h6 {
   margin-bottom: 0.5em;
+  margin-top: 1em;
 }
 
 main section {
