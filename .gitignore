@@ -4,8 +4,8 @@ dist/
 # generated types
 .astro/
 .vercel
-schema.json
-sanity.types.ts
+schema.json*
+sanity.types.ts*
 
 # dependencies
 node_modules/
@@ -26,3 +26,6 @@ pnpm-debug.log*
 
 # Typescript
 *.tsbuildinfo
+
+# Local settings
+.vscode/

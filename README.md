@@ -14,3 +14,10 @@ Template used as reference: (https://github.com/sanity-io/sanity-template-astro-
 ## Diagram
 
 ![TechStackDiagram](https://github.com/DallasBicycleCoalition/WebsiteFrontEnd/assets/85081861/f0e3e4e8-0292-4808-b43e-124771989f63)
+
+## Development
+
+- Clone Repo
+- npm i
+- npm run typeUpdate
+- npm run dev
