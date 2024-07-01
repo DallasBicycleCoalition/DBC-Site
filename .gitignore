@@ -4,6 +4,9 @@ dist/
 # generated types
 .astro/
 .vercel
+schema.json
+sanity.types.ts
+
 # dependencies
 node_modules/
 
