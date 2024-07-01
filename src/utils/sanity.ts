@@ -6,7 +6,7 @@ import type { HomePageResult, LayoutResult } from "../../sanity.types";
 
 export async function getPosts(): Promise<Post[]> {
   return await sanityClient.fetch(
-    groq`*[_type == "post" && defined(slug.current)] | order(_createdAt desc)`
+    groq`*[_type == "post" && defined(slug.current)] | order(_createdAt desc)`,
   );
 }
 
@@ -15,7 +15,7 @@ export async function getPost(slug: string): Promise<Post> {
     groq`*[_type == "post" && slug.current == $slug][0]`,
     {
       slug,
-    }
+    },
   );
 }
 

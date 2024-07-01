@@ -1,12 +1,10 @@
 ---
 // Import necessary packages and components
-import { PortableText } from "@portabletext/react";
-import imageUrlBuilder from "@sanity/image-url";
-import type { SanityImageSource } from "@sanity/image-url/lib/types/types";
-import "../css-reset.css";
-import "../globals.css";
-import Layout from "../layouts/Layout.astro"; // Import Layout component
-import { getHomePage } from "../utils/sanity";
+import { PortableText } from '@portabletext/react';
+import imageUrlBuilder from '@sanity/image-url';
+import type { SanityImageSource } from '@sanity/image-url/lib/types/types';
+import Layout from '../layouts/Layout.astro';
+import { getHomePage } from '../utils/sanity';
 
 // Fetch data on the server side
 const homePage = await getHomePage();
@@ -23,29 +21,27 @@ const builder = imageUrlBuilder({
 
 // Function to get the URL of an image
 function urlFor(source: SanityImageSource) {
-  let url = "";
+  let url = '';
   if (source) {
     url = builder.image(source).url();
-    console.log("Image URL:", url);
+    console.log('Image URL:', url);
   } else {
-    url = "https://picsum.photos/500/500";
+    url = 'https://picsum.photos/500/500';
   }
 
   return url;
 }
 ---
 
-<Layout title={homePage.title || "Default Title"}>
+<Layout title={homePage.title || 'Default Title'}>
   <section class="hero">
     <h1 class="visually-hidden">{homePage.title}</h1>
     {
-      homePage.homePageHeroImage?.asset ? (
+      homePage.homePageHeroImage?.asset && (
         <img
           src={urlFor(homePage.homePageHeroImage.asset)}
-          alt={homePage.homePageHeroImage.altText || "Hero image"}
+          alt={homePage.homePageHeroImage.altText || 'Hero image'}
         />
-      ) : (
-        <p>Hero image not available</p>
       )
     }
   </section>
@@ -57,7 +53,7 @@ function urlFor(source: SanityImageSource) {
         homePage.whoWeAre?.photo?.asset && (
           <img
             src={urlFor(homePage.whoWeAre.photo.asset)}
-            alt={homePage.whoWeAre.photo.altText || "Who we are image"}
+            alt={homePage.whoWeAre.photo.altText || 'Who we are image'}
           />
         )
       }

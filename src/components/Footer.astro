@@ -1,21 +1,21 @@
 ---
 // Import needed functions and components
-import imageUrlBuilder from "@sanity/image-url";
-import type { SanityImageSource } from "@sanity/image-url/lib/types/types";
-import { getLayout } from "../utils/sanity";
+import imageUrlBuilder from '@sanity/image-url';
+import type { SanityImageSource } from '@sanity/image-url/lib/types/types';
+import { getLayout } from '../utils/sanity';
 
 // Setup Sanity image builder
 const projectId = import.meta.env.PUBLIC_SANITY_PROJECT_ID;
 const dataset = import.meta.env.PUBLIC_SANITY_DATASET;
 
 const builder = imageUrlBuilder({
-  projectId: projectId || "default-projectId",
-  dataset: dataset || "default-dataset",
+  projectId: projectId,
+  dataset: dataset,
 });
 
 // Function to generate image URLs
 function urlFor(source: SanityImageSource) {
-  return source ? builder.image(source).url() : "https://picsum.photos/500/500";
+  return source ? builder.image(source).url() : 'https://picsum.photos/500/500';
 }
 
 // Fetching layout data
