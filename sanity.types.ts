@@ -68,6 +68,128 @@ export type Geopoint = {
   alt?: number;
 };
 
+export type CaptionedImage = {
+  _type: "captionedImage";
+  image?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+  altText?: string;
+  caption?: string;
+};
+
+export type Homepage = {
+  _id: string;
+  _type: "homepage";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  homePageHeroImage?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    altText?: string;
+    _type: "image";
+  };
+  slug?: Slug;
+  content?: string;
+  whoWeAre?: {
+    heading?: string;
+    photo?: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      altText?: string;
+      _type: "image";
+    };
+    content?: Array<{
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }>;
+      style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+      listItem?: "bullet" | "number";
+      markDefs?: Array<{
+        href?: string;
+        _type: "link";
+        _key: string;
+      }>;
+      level?: number;
+      _type: "block";
+      _key: string;
+    }>;
+  };
+  whatWeDo?: {
+    heading?: string;
+    whatWeDoPics?: Array<{
+      _key: string;
+    } & CaptionedImage>;
+  };
+  bikePlan?: {
+    heading?: string;
+    content?: Array<{
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }>;
+      style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+      listItem?: "bullet" | "number";
+      markDefs?: Array<{
+        href?: string;
+        _type: "link";
+        _key: string;
+      }>;
+      level?: number;
+      _type: "block";
+      _key: string;
+    }>;
+  };
+};
+
+export type Layout = {
+  _id: string;
+  _type: "layout";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  logo?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    altText?: string;
+    _type: "image";
+  };
+  landingPageLink?: string;
+};
+
 export type BlockContent = Array<{
   children?: Array<{
     marks?: Array<string>;
@@ -173,60 +295,84 @@ export type Slug = {
   source?: string;
 };
 
-export type AllSanitySchemaTypes =
-  | SanityImagePaletteSwatch
-  | SanityImagePalette
-  | SanityImageDimensions
-  | SanityFileAsset
-  | Geopoint
-  | BlockContent
-  | Post
-  | SanityImageCrop
-  | SanityImageHotspot
-  | SanityImageAsset
-  | SanityAssetSourceData
-  | SanityImageMetadata
-  | Slug;
+export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | CaptionedImage | Homepage | Layout | BlockContent | Post | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata | Slug;
 export declare const internalGroqTypeReferenceTo: unique symbol;
-
+// Source: ./src/utils/sanity.ts
+// Variable: homePage
+// Query:     *[_type == "homepage"]{      _id,      _createdAt,      title,      "slug": slug.current,      content,      "homePageHeroImage": {        "asset": homePageHeroImage.asset->url,        "altText": homePageHeroImage.altText      },      "whoWeAre": {        "heading": whoWeAre.heading,        "photo": {          "asset": whoWeAre.photo.asset->url,          "altText": whoWeAre.photo.altText        },        "content" : whoWeAre.content      },      "whatWeDo": {        "heading": whatWeDo.heading,        "whatWeDoPics": whatWeDo.whatWeDoPics[] {          "image": image.asset->url,          "altText": altText,          "caption": caption        }      },      "bikePlan": {        "heading": bikePlan.heading,        "content": bikePlan.content      }    }[0]
 export type HomePageResult = {
   _id: string;
   _createdAt: string;
-  title: string;
-  slug: string;
-  content: any;
+  title: string | null;
+  slug: string | null;
+  content: string | null;
   homePageHeroImage: {
-    asset: string;
-    altText: string;
+    asset: string | null;
+    altText: string | null;
   };
   whoWeAre: {
-    heading: string;
+    heading: string | null;
     photo: {
-      asset: string;
-      altText: string;
+      asset: string | null;
+      altText: string | null;
     };
-    content: any;
+    content: Array<{
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }>;
+      style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+      listItem?: "bullet" | "number";
+      markDefs?: Array<{
+        href?: string;
+        _type: "link";
+        _key: string;
+      }>;
+      level?: number;
+      _type: "block";
+      _key: string;
+    }> | null;
   };
   whatWeDo: {
-    heading: string;
-    whatWeDoPics: {
-      image: string;
-      altText: string;
-      caption: string;
-    }[];
+    heading: string | null;
+    whatWeDoPics: Array<{
+      image: string | null;
+      altText: string | null;
+      caption: string | null;
+    }> | null;
   };
   bikePlan: {
-    heading: string;
-    content: any;
+    heading: string | null;
+    content: Array<{
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }>;
+      style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+      listItem?: "bullet" | "number";
+      markDefs?: Array<{
+        href?: string;
+        _type: "link";
+        _key: string;
+      }>;
+      level?: number;
+      _type: "block";
+      _key: string;
+    }> | null;
   };
-};
-
+} | null;
+// Variable: layout
+// Query:     *[_type == "layout"][0]{      _id,      _createdAt,      "logo": {        "asset": logo.asset->url,        "altText": logo.altText      },      "landingPageLink": landingPageLink    }
 export type LayoutResult = {
   _id: string;
   _createdAt: string;
   logo: {
-    asset: string;
-    altText: string;
+    asset: string | null;
+    altText: string | null;
   };
-  landingPageLink: string;
-};
+  landingPageLink: string | null;
+} | null;
