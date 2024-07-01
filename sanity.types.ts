@@ -68,9 +68,14 @@ export type Geopoint = {
   alt?: number;
 };
 
-export type CaptionedImage = {
-  _type: "captionedImage";
-  image?: {
+export type Layout = {
+  _id: string;
+  _type: "layout";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  logo?: {
     asset?: {
       _ref: string;
       _type: "reference";
@@ -79,10 +84,10 @@ export type CaptionedImage = {
     };
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
+    altText?: string;
     _type: "image";
   };
-  altText?: string;
-  caption?: string;
+  landingPageLink?: string;
 };
 
 export type Homepage = {
@@ -168,57 +173,15 @@ export type Homepage = {
   };
 };
 
-export type Layout = {
-  _id: string;
-  _type: "layout";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  title?: string;
-  logo?: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    altText?: string;
-    _type: "image";
-  };
-  landingPageLink?: string;
+export type Slug = {
+  _type: "slug";
+  current?: string;
+  source?: string;
 };
 
-export type BlockContent = Array<{
-  children?: Array<{
-    marks?: Array<string>;
-    text?: string;
-    _type: "span";
-    _key: string;
-  }>;
-  style?: "normal" | "h1" | "h2" | "h3" | "h4" | "blockquote";
-  listItem?: "bullet";
-  markDefs?: Array<{
-    href?: string;
-    _type: "link";
-    _key: string;
-  }>;
-  level?: number;
-  _type: "block";
-  _key: string;
-}>;
-
-export type Post = {
-  _id: string;
-  _type: "post";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  title?: string;
-  slug?: Slug;
-  excerpt?: string;
-  mainImage?: {
+export type CaptionedImage = {
+  _type: "captionedImage";
+  image?: {
     asset?: {
       _ref: string;
       _type: "reference";
@@ -229,7 +192,8 @@ export type Post = {
     crop?: SanityImageCrop;
     _type: "image";
   };
-  body?: BlockContent;
+  altText?: string;
+  caption?: string;
 };
 
 export type SanityImageCrop = {
@@ -289,13 +253,7 @@ export type SanityImageMetadata = {
   isOpaque?: boolean;
 };
 
-export type Slug = {
-  _type: "slug";
-  current?: string;
-  source?: string;
-};
-
-export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | CaptionedImage | Homepage | Layout | BlockContent | Post | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata | Slug;
+export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | Layout | Homepage | Slug | CaptionedImage | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./src/utils/sanity.ts
 // Variable: homePage
