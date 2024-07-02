@@ -1,20 +1,20 @@
 {
-  "extends": "astro/tsconfigs/strict",
   "compilerOptions": {
-    "target": "ES2022",
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "skipLibCheck": true,
-    "strict": true,
-    "importsNotUsedAsValues": "remove",
-    "forceConsistentCasingInFileNames": true,
-    "noEmit": false,
     "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "importsNotUsedAsValues": "remove",
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "lib": ["dom", "dom.iterable", "esnext"],
     "module": "esnext",
     "moduleResolution": "node",
+    "noEmit": true,
     "resolveJsonModule": true,
-    "isolatedModules": true,
-    "jsx": "preserve"
+    "skipLibCheck": true,
+    "strict": true,
+    "target": "ES2022"
   },
-  "includes": ["**/*.ts", "**/*.tsx"],
-  "exclude": ["node_modules", "dist", ".vercel"]
+  "extends": "astro/tsconfigs/strict",
+  "exclude": ["node_modules", "dist", "*.mjs", "*.cjs"],
+  "includes": ["**/*.ts", "**/*.tsx"]
 }
