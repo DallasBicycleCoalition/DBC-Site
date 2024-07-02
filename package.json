@@ -8,7 +8,7 @@
     "build": "astro check && tsc --noEmit && astro build",
     "preview": "astro preview",
     "prettify": "prettier -c --write .",
-    "typeUpdate": "npx sanity schema extract && sanity typegen generate",
+    "typegen": "npx sanity schema extract && sanity typegen generate",
     "astro": "astro"
   },
   "dependencies": {
