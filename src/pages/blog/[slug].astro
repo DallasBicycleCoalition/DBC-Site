@@ -1,0 +1,69 @@
+---
+import { PortableText } from "@portabletext/react";
+import imageUrlBuilder from "@sanity/image-url";
+import type { SanityImageSource } from "@sanity/image-url/lib/types/types";
+import type { Post } from "../../../sanity.types";
+import Layout from "../../layouts/Layout.astro";
+import { getPost, getPosts } from "../../utils/sanity";
+
+// Set up the image URL builder
+const projectId = import.meta.env.PUBLIC_SANITY_PROJECT_ID;
+const dataset = import.meta.env.PUBLIC_SANITY_DATASET;
+const builder = imageUrlBuilder({
+  projectId: projectId,
+  dataset: dataset,
+});
+
+function urlFor(source: SanityImageSource): string {
+  let url = "";
+  if (typeof source === "string") {
+    url = builder.image(source).url();
+  } else if ("asset" in source) {
+    if ("_ref" in source.asset) {
+      url = builder.image(source.asset._ref).url();
+    } else if ("url" in source.asset) {
+      url = source.asset.url;
+    }
+  } else if (
+    "image" in source &&
+    "asset" in source.image &&
+    "_ref" in source.image.asset
+  ) {
+    url = builder.image(source.image.asset._ref).url();
+  } else {
+    url = "https://picsum.photos/500/500";
+  }
+
+  console.log("Image URL:", url);
+  return url;
+}
+
+export async function getStaticPaths() {
+  const posts = await getPosts();
+
+  return posts
+    .filter(
+      (post): post is Post & { slug: { current: string } } =>
+        post.slug !== undefined
+    )
+    .map((post) => ({
+      params: { slug: post.slug.current },
+    }));
+}
+
+const { slug } = Astro.params;
+const post: Post = await getPost(slug);
+
+if (!post) {
+  throw new Error(`Post with slug '${slug}' not found`);
+}
+---
+
+<Layout title={post.title}>
+  <article>
+    <h1>{post.title}</h1>
+    <p>{new Date(post._createdAt).toLocaleDateString()}</p>
+    {post.mainImage && <img src={urlFor(post.mainImage)} alt={post.title} />}
+    {post.body && <PortableText value={post.body} />}
+  </article>
+</Layout>

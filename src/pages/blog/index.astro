@@ -1,0 +1,29 @@
+---
+import type { Post } from "../../../sanity.types";
+import Layout from "../../layouts/Layout.astro";
+import { getPosts } from "../../utils/sanity";
+
+// Fetch data on the server side
+const posts = await getPosts();
+
+function hasValidSlug(
+  post: Post
+): post is Post & { slug: { current: string } } {
+  return post.slug !== undefined && post.slug.current !== undefined;
+}
+---
+
+<Layout title={"Blog Posts"}>
+  <div>
+    {
+      posts.filter(hasValidSlug).map((post) => (
+        <div class="post">
+          <h2>
+            <a href={`/blog/${post.slug.current}`}>{post.title}</a>
+          </h2>
+          <p>{new Date(post._createdAt).toLocaleDateString()}</p>
+        </div>
+      ))
+    }
+  </div>
+</Layout>
