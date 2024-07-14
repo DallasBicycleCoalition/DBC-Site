@@ -9,6 +9,7 @@
     "preview": "astro preview",
     "prettify": "prettier -c --write .",
     "typegen": "npx sanity schema extract && sanity typegen generate",
+    "devt": "npx sanity schema extract && sanity typegen generate && astro dev",
     "astro": "astro"
   },
   "dependencies": {

@@ -107,27 +107,6 @@ export type Post = {
   } & CaptionedImage)>;
 };
 
-export type Author = {
-  _id: string;
-  _type: "author";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  name?: string;
-  bio?: string;
-  image?: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    _type: "image";
-  };
-};
-
 export type Layout = {
   _id: string;
   _type: "layout";
@@ -256,6 +235,27 @@ export type CaptionedImage = {
   caption?: string;
 };
 
+export type Author = {
+  _id: string;
+  _type: "author";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  name?: string;
+  bio?: string;
+  image?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+};
+
 export type SanityImageCrop = {
   _type: "sanity.imageCrop";
   top?: number;
@@ -313,9 +313,9 @@ export type SanityImageMetadata = {
   isOpaque?: boolean;
 };
 
-export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | Post | Author | Layout | Homepage | Slug | CaptionedImage | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata;
+export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | Post | Layout | Homepage | Slug | CaptionedImage | Author | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata;
 export declare const internalGroqTypeReferenceTo: unique symbol;
-// Source: ./src/utils/sanity.ts
+// Source: ./src/utils/groqQueries.ts
 // Variable: homePage
 // Query:     *[_type == "homepage"]{      _id,      _createdAt,      title,      "slug": slug.current,      content,      "homePageHeroImage": {        "asset": homePageHeroImage.asset->url,        "altText": homePageHeroImage.altText      },      "whoWeAre": {        "heading": whoWeAre.heading,        "photo": {          "asset": whoWeAre.photo.asset->url,          "altText": whoWeAre.photo.altText        },        "content" : whoWeAre.content      },      "whatWeDo": {        "heading": whatWeDo.heading,        "whatWeDoPics": whatWeDo.whatWeDoPics[] {          "image": image.asset->url,          "altText": altText,          "caption": caption        }      },      "bikePlan": {        "heading": bikePlan.heading,        "content": bikePlan.content      }    }[0]
 export type HomePageResult = {
