@@ -1,12 +1,9 @@
 ---
 import { PortableText } from "@portabletext/react";
-import imageUrlBuilder from "@sanity/image-url";
-import type { SanityImageSource } from "@sanity/image-url/lib/types/types";
 import Layout from "../layouts/Layout.astro";
-import { getHomePage } from "../utils/sanity";
+import { getHomePage } from "../utils/groqQueries";
 import { urlFor } from "../utils/utils";
 
-// Fetch data on the server side
 const homePage = await getHomePage();
 ---
 

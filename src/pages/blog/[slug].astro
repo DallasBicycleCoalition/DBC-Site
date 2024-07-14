@@ -2,7 +2,7 @@
 import { PortableText } from "@portabletext/react";
 import type { Post } from "../../../sanity.types";
 import Layout from "../../layouts/Layout.astro";
-import { getPost, getPosts } from "../../utils/sanity";
+import { getPost, getPosts } from "../../utils/groqQueries";
 import { urlFor } from "../../utils/utils";
 
 export async function getStaticPaths() {

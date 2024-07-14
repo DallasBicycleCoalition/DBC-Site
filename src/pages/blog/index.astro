@@ -1,9 +1,8 @@
 ---
 import type { Post } from "../../../sanity.types";
 import Layout from "../../layouts/Layout.astro";
-import { getPosts } from "../../utils/sanity";
+import { getPosts } from "../../utils/groqQueries";
 
-// Fetch data on the server side
 const posts = await getPosts();
 
 function hasValidSlug(
@@ -14,10 +13,11 @@ function hasValidSlug(
 ---
 
 <Layout title={"Blog Posts"}>
+  <h1>Blog Posts</h1>
   <div>
     {
       posts.filter(hasValidSlug).map((post) => (
-        <div class="post">
+        <div class="posts">
           <h2>
             <a href={`/blog/${post.slug.current}`}>{post.title}</a>
           </h2>

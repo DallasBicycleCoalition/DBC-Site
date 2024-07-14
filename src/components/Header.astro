@@ -1,8 +1,7 @@
 ---
-import { getLayout } from "../utils/sanity";
+import { getLayout } from "../utils/groqQueries";
 import { urlFor } from "../utils/utils";
 
-// Fetching layout data
 const data = await getLayout();
 ---
 
@@ -32,5 +31,9 @@ const data = await getLayout();
     align-items: center;
     padding: 1em;
     flex: 1;
+  }
+
+  header nav a {
+    padding: 1em;
   }
 </style>
