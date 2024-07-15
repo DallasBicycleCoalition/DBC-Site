@@ -33,7 +33,17 @@ export const postSchema = defineType({
     {
       name: "mainImage",
       title: "Main image",
-      type: "captionedImage",
+      type: "image",
+      options: {
+        hotspot: true,
+      },
+      fields: [
+        {
+          name: "altText",
+          type: "string",
+          title: "Alternative text",
+        }
+      ]
     },
     {
       name: "excerpt",

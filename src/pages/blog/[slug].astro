@@ -1,9 +1,11 @@
 ---
-import { PortableText } from "@portabletext/react";
-import type { Post } from "../../../sanity.types";
-import Layout from "../../layouts/Layout.astro";
-import { getPost, getPosts } from "../../utils/groqQueries";
-import { urlFor } from "../../utils/utils";
+import { PortableText } from '@portabletext/react';
+import type { Post } from '../../../sanity.types';
+import Layout from '../../layouts/Layout.astro';
+import { getPost, getPosts } from '../../utils/groqQueries';
+import imageUrlBuilder from '@sanity/image-url';
+import { sanityClient } from 'sanity:client';
+import type { SanityImageSource } from '@sanity/image-url/lib/types/types';
 
 export async function getStaticPaths() {
   const posts = await getPosts();
@@ -18,6 +20,11 @@ export async function getStaticPaths() {
     }));
 }
 
+const builder = imageUrlBuilder(sanityClient);
+function urlFor(source: SanityImageSource) {
+  return builder.image(source);
+}
+
 const { slug } = Astro.params;
 const post: Post = await getPost(slug);
 
@@ -27,10 +34,23 @@ if (!post) {
 ---
 
 <Layout title={post.title}>
-  <article>
+  <article class="blog-post">
     <h1>{post.title}</h1>
-    <p>{new Date(post._createdAt).toLocaleDateString()}</p>
-    {post.mainImage && <img src={urlFor(post.mainImage)} alt={post.title} />}
-    {post.body && <PortableText value={post.body} />}
+    <p class="post-date-author">
+      {new Date(post._createdAt).toLocaleDateString()}
+    </p>
+    {
+      post.mainImage && (
+        <img
+          src={urlFor(post.mainImage).width(800).url()}
+          alt={post.mainImage.altText}
+          class="main-post-image"
+          loading="lazy"
+        />
+      )
+    }
+    <div class="normal-copy">
+      {post.body && <PortableText value={post.body} />}
+    </div>
   </article>
 </Layout>

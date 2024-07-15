@@ -1,20 +1,20 @@
 ---
-import { PortableText } from "@portabletext/react";
-import Layout from "../layouts/Layout.astro";
-import { getHomePage } from "../utils/groqQueries";
-import { urlFor } from "../utils/utils";
+import { PortableText } from '@portabletext/react';
+import Layout from '../layouts/Layout.astro';
+import { getHomePage } from '../utils/groqQueries';
+import { urlFor } from '../utils/utils';
 
 const homePage = await getHomePage();
 ---
 
-<Layout title={homePage?.title || "Default Title"}>
+<Layout title={homePage?.title || 'Default Title'}>
   <section class="hero">
     <h1 class="visually-hidden">{homePage?.title}</h1>
     {
       homePage?.homePageHeroImage?.asset && (
         <img
-          src={urlFor(homePage.homePageHeroImage.asset)}
-          alt={homePage.homePageHeroImage.altText || "Hero image"}
+          src={urlFor(homePage.homePageHeroImage.asset).url()}
+          alt={homePage.homePageHeroImage.altText || 'Hero image'}
         />
       )
     }
@@ -26,8 +26,8 @@ const homePage = await getHomePage();
       {
         homePage?.whoWeAre.photo.asset && (
           <img
-            src={urlFor(homePage.whoWeAre.photo.asset)}
-            alt={homePage.whoWeAre.photo.altText || "Who we are image"}
+            src={urlFor(homePage.whoWeAre.photo.asset).url()}
+            alt={homePage.whoWeAre.photo.altText || 'Who we are image'}
           />
         )
       }
@@ -52,7 +52,7 @@ const homePage = await getHomePage();
             caption: unknown;
           }) => (
             <div>
-              <img src={urlFor(pic.image)} alt={pic.altText} />
+              <img src={urlFor(pic.image).url()} alt={pic.altText} />
               <p>{pic.caption}</p>
             </div>
           )

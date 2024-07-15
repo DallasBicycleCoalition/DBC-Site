@@ -83,7 +83,18 @@ export type Post = {
     [internalGroqTypeReferenceTo]?: "author";
   };
   publishedAt?: string;
-  mainImage?: CaptionedImage;
+  mainImage?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    altText?: string;
+    _type: "image";
+  };
   excerpt?: string;
   body?: Array<{
     children?: Array<{

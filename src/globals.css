@@ -30,8 +30,8 @@ dd {
 }
 
 /* Remove list styles on ul, ol elements with a list role, which suggests default styling will be removed */
-ul[role="list"],
-ol[role="list"] {
+ul[role='list'],
+ol[role='list'] {
   list-style: none;
 }
 
@@ -197,4 +197,35 @@ main section {
 /* Specific element styling */
 #bike-plan {
   text-align: center;
+}
+
+.main-post-image {
+  margin-bottom: 1em;
+  margin-top: 1em;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  max-height: 100%;
+  max-height: 400px;
+  object-fit: cover;
+}
+
+.blog-post {
+  max-width: 50rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+h1 {
+  font-size: 3rem;
+  font-weight: 100;
+  font-style: normal;
+}
+
+.blog-post h1 {
+  margin-bottom: 0;
+}
+
+.post-date-author {
+  font-style: italic;
 }

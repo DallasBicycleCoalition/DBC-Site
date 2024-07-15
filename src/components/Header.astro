@@ -1,15 +1,18 @@
 ---
-import { getLayout } from "../utils/groqQueries";
-import { urlFor } from "../utils/utils";
+import { getLayout } from '../utils/groqQueries';
+import { urlFor } from '../utils/utils';
 
 const data = await getLayout();
 ---
 
 <header>
-  <a href={data?.landingPageLink || "/"}>
+  <a href={data?.landingPageLink || '/'}>
     {
       data?.logo && data.logo.asset && (
-        <img src={urlFor(data.logo.asset)} alt={data.logo.altText || "Logo"} />
+        <img
+          src={urlFor(data.logo.asset).url()}
+          alt={data.logo.altText || 'Logo'}
+        />
       )
     }
   </a>
