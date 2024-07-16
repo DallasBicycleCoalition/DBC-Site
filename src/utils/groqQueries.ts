@@ -1,20 +1,30 @@
 import groq from "groq";
 import { sanityClient } from "sanity:client";
-import type { HomePageResult, LayoutResult, Post } from "../../sanity.types";
+import type {
+  HomePageResult,
+  LayoutResult,
+  Post,
+  PostsResult,
+} from "../../sanity.types";
 
 export async function getPosts(): Promise<Post[]> {
   return await sanityClient.fetch(
-    groq`*[_type == "post" && defined(slug.current)] | order(_createdAt desc)`,
+    groq`*[_type == "post" && defined(slug.current)] | order(_createdAt desc)`
   );
 }
 
-export async function getPost(slug: string): Promise<Post> {
-  return await sanityClient.fetch(
-    groq`*[_type == "post" && slug.current == $slug][0]`,
-    {
-      slug,
-    },
-  );
+export async function getPost(slug: string): Promise<PostsResult> {
+  const query = groq`
+      *[_type == "post" && slug.current == $slug][0]{
+        ...,
+        author->{
+          name
+        }
+      }`;
+
+  const results = await sanityClient.fetch(query, { slug });
+
+  return results;
 }
 
 export async function getHomePage(): Promise<HomePageResult> {
