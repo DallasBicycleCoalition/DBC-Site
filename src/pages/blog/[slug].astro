@@ -35,10 +35,10 @@ if (!post) {
       }
     </p>
     {
-      post.mainImage && (
+      post.mainImage && post.mainImage.asset && (
         <img
           src={urlFor(post.mainImage).width(800).url()}
-          alt={post.mainImage.altText}
+          alt={post.mainImage.altText || "Image"}
           class="main-post-image"
           loading="lazy"
         />
