@@ -42,8 +42,8 @@ export const postSchema = defineType({
           name: "altText",
           type: "string",
           title: "Alternative text",
-        }
-      ]
+        },
+      ],
     },
     {
       name: "excerpt",
