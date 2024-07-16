@@ -1,14 +1,14 @@
 ---
-import type { Post } from "../../../sanity.types";
+import type { Post, PostsResult } from "../../../sanity.types";
 import Layout from "../../layouts/Layout.astro";
 import { getPosts } from "../../utils/groqQueries";
 
 const posts = await getPosts();
 
 function hasValidSlug(
-  post: Post
-): post is Post & { slug: { current: string } } {
-  return post.slug !== undefined && post.slug.current !== undefined;
+  post: PostsResult
+): post is PostsResult & { slug: { current: string } } {
+  return post?.slug !== undefined && post?.slug.current !== undefined;
 }
 ---
 
@@ -19,7 +19,7 @@ function hasValidSlug(
       posts.filter(hasValidSlug).map((post) => (
         <div class="posts">
           <h2>
-            <a href={`/blog/${post.slug.current}`}>{post.title}</a>
+            <a href={`/blog/${post?.slug?.current}`}>{post?.title}</a>
           </h2>
           <p>{new Date(post._createdAt).toLocaleDateString()}</p>
         </div>

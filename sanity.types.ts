@@ -328,7 +328,7 @@ export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./src/utils/groqQueries.ts
 // Variable: posts
-// Query:     *[_type == "post" && slug.current == $slug][0]{      ...,      author->{        name      }    }
+// Query:       *[_type == "post" && slug.current == $slug][0]{        ...,        author->{          name        }      }
 export type PostsResult = {
   _id: string;
   _type: "post";

@@ -3,18 +3,17 @@ import { sanityClient } from "sanity:client";
 import type {
   HomePageResult,
   LayoutResult,
-  Post,
   PostsResult,
 } from "../../sanity.types";
 
-export async function getPosts(): Promise<Post[]> {
+export async function getPosts(): Promise<PostsResult[]> {
   return await sanityClient.fetch(
-    groq`*[_type == "post" && defined(slug.current)] | order(_createdAt desc)`
+    groq`*[_type == "post" && defined(slug.current)] | order(_createdAt desc)`,
   );
 }
 
 export async function getPost(slug: string): Promise<PostsResult> {
-  const query = groq`
+  const posts = groq`
       *[_type == "post" && slug.current == $slug][0]{
         ...,
         author->{
@@ -22,7 +21,7 @@ export async function getPost(slug: string): Promise<PostsResult> {
         }
       }`;
 
-  const results = await sanityClient.fetch(query, { slug });
+  const results = await sanityClient.fetch(posts, { slug });
 
   return results;
 }

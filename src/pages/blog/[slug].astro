@@ -1,28 +1,21 @@
 ---
 import { PortableText } from "@portabletext/react";
-import imageUrlBuilder from "@sanity/image-url";
-import type { SanityImageSource } from "@sanity/image-url/lib/types/types";
-import { sanityClient } from "sanity:client";
-import type { Post, PostsResult } from "../../../sanity.types";
+import type { PostsResult } from "../../../sanity.types";
 import Layout from "../../layouts/Layout.astro";
 import { getPost, getPosts } from "../../utils/groqQueries";
+import { urlFor } from "../../utils/utils";
 
 export async function getStaticPaths() {
   const posts = await getPosts();
 
   return posts
     .filter(
-      (post): post is Post & { slug: { current: string } } =>
-        post.slug !== undefined
+      (post): post is PostsResult & { slug: { current: string } } =>
+        post?.slug !== undefined
     )
     .map((post) => ({
       params: { slug: post.slug.current },
     }));
-}
-
-const builder = imageUrlBuilder(sanityClient);
-function urlFor(source: SanityImageSource) {
-  return builder.image(source);
 }
 
 const { slug } = Astro.params;
