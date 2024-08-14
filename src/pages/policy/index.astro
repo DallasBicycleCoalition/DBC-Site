@@ -1,18 +1,9 @@
 ---
+import { PortableText } from "@portabletext/react";
 import Layout from "../../layouts/Layout.astro";
 import { getPolicyPage } from "../../utils/groqQueries";
 
 const policyPage = await getPolicyPage();
-
-function renderBlockContent(blocks: any[]) {
-  return (
-    blocks
-      ?.map((block: { children: any[] }) =>
-        block.children.map((child: { text: any }) => child.text).join("")
-      )
-      .join(" ") || ""
-  );
-}
 ---
 
 <Layout title={"Policy Table"}>
@@ -39,11 +30,21 @@ function renderBlockContent(blocks: any[]) {
               showSupport: any;
             }) => (
               <tr>
-                <td>{renderBlockContent(row.bill)}</td>
-                <td>{renderBlockContent(row.summary)}</td>
-                <td>{renderBlockContent(row.info)}</td>
-                <td>{renderBlockContent(row.position)}</td>
-                <td>{renderBlockContent(row.showSupport)}</td>
+                <td>
+                  <PortableText value={row.bill} />
+                </td>
+                <td>
+                  <PortableText value={row.summary} />
+                </td>
+                <td>
+                  <PortableText value={row.info} />
+                </td>
+                <td>
+                  <PortableText value={row.position} />
+                </td>
+                <td>
+                  <PortableText value={row.showSupport} />
+                </td>
               </tr>
             )
           )
