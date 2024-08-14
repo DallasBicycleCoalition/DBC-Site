@@ -229,3 +229,44 @@ h1 {
 .post-date-author {
   font-style: italic;
 }
+
+/* Center the Layout */
+.policy-table-container {
+  max-width: 1200px; /* Adjust the maximum width as needed */
+  margin: 0 auto; /* Center the container */
+  padding: 2em; /* Add padding for spacing */
+}
+
+/* Style the table */
+.policy-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 2em 0; /* Add space above and below the table */
+}
+
+/* Table header styling */
+.policy-table thead th {
+  padding: 1em; /* Add padding to the table headers */
+  text-align: left; /* Align header text to the left */
+  background-color: #f5f5f5; /* Light background color for the header */
+  border-bottom: 2px solid #ddd; /* Add a bottom border to the header */
+}
+
+/* Table row and cell styling */
+.policy-table tbody tr {
+  border-bottom: 1px solid #ddd; /* Add a bottom border to rows */
+}
+
+.policy-table tbody td {
+  padding: 1em; /* Increase padding between columns */
+}
+
+/* Increase row spacing */
+.policy-table tbody tr:not(:last-child) {
+  margin-bottom: 0.5em; /* Add margin between rows */
+}
+
+/* Style for alternating row colors (optional) */
+.policy-table tbody tr:nth-child(odd) {
+  background-color: #f9f9f9; /* Light background color for odd rows */
+}

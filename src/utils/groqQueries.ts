@@ -3,12 +3,13 @@ import { sanityClient } from "sanity:client";
 import type {
   HomePageResult,
   LayoutResult,
+  PolicyPageResult,
   PostsResult,
 } from "../../sanity.types";
 
 export async function getPosts(): Promise<PostsResult[]> {
   return await sanityClient.fetch(
-    groq`*[_type == "post" && defined(slug.current)] | order(_createdAt desc)`,
+    groq`*[_type == "post" && defined(slug.current)] | order(_createdAt desc)`
   );
 }
 
@@ -64,6 +65,26 @@ export async function getHomePage(): Promise<HomePageResult> {
 
   return results;
 }
+
+export async function getPolicyPage(): Promise<PolicyPageResult> {
+  const policyPage = groq`
+    *[_type == "policyPage"]{
+      _id,
+      _createdAt,
+      "policyRows": policyRows[] {
+        "bill": bill,
+        "summary": summary,
+        "info": info,
+        "position": position,
+        "showSupport": showSupport
+      }
+    }[0]`;
+
+  const results = await sanityClient.fetch(policyPage);
+
+  return results;
+}
+
 
 export async function getLayout(): Promise<LayoutResult> {
   const layout = groq`

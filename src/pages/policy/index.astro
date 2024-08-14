@@ -1,0 +1,54 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { getPolicyPage } from "../../utils/groqQueries";
+
+const policyPage = await getPolicyPage();
+
+function renderBlockContent(blocks: any[]) {
+  return (
+    blocks
+      ?.map((block: { children: any[] }) =>
+        block.children.map((child: { text: any }) => child.text).join("")
+      )
+      .join(" ") || ""
+  );
+}
+---
+
+<Layout title={"Policy Table"}>
+  <div class="policy-table-container">
+    <h1>Policy Table</h1>
+    <table class="policy-table">
+      <thead>
+        <tr>
+          <th>Bill</th>
+          <th>Summary</th>
+          <th>Info</th>
+          <th>Position</th>
+          <th>Show Support</th>
+        </tr>
+      </thead>
+      <tbody>
+        {
+          policyPage?.policyRows?.map(
+            (row: {
+              bill: any;
+              summary: any;
+              info: any;
+              position: any;
+              showSupport: any;
+            }) => (
+              <tr>
+                <td>{renderBlockContent(row.bill)}</td>
+                <td>{renderBlockContent(row.summary)}</td>
+                <td>{renderBlockContent(row.info)}</td>
+                <td>{renderBlockContent(row.position)}</td>
+                <td>{renderBlockContent(row.showSupport)}</td>
+              </tr>
+            )
+          )
+        }
+      </tbody>
+    </table>
+  </div>
+</Layout>
