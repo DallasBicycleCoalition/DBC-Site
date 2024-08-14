@@ -1635,6 +1635,13 @@
           "type": "string"
         }
       },
+      "name": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
       "policyRows": {
         "type": "objectAttribute",
         "value": {

@@ -218,6 +218,7 @@ export type PolicyPage = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
+  name?: string;
   policyRows?: Array<{
     _key: string;
   } & PolicyTableRow>;
