@@ -7,11 +7,26 @@
   box-sizing: border-box;
 }
 
+/* Ensure html and body take full height */
+html,
+body {
+  display: flex;
+  flex-direction: column;
+}
+
 /* Prevent font size inflation */
 html {
   -moz-text-size-adjust: none;
   -webkit-text-size-adjust: none;
   text-size-adjust: none;
+}
+
+/* Set core body defaults */
+body {
+  min-height: 100vh;
+  line-height: 1.5;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1.1em;
 }
 
 /* Remove default margin in favour of better control in authored CSS */
@@ -27,20 +42,14 @@ dl,
 dd {
   margin-block-end: 0;
   margin-block-start: 0;
+  margin-left: 0;
+  margin-right: 0;
 }
 
 /* Remove list styles on ul, ol elements with a list role, which suggests default styling will be removed */
 ul[role="list"],
 ol[role="list"] {
   list-style: none;
-}
-
-/* Set core body defaults */
-body {
-  min-height: 100vh;
-  line-height: 1.5;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 1.1em;
 }
 
 /* Set shorter line heights on headings and interactive elements */
@@ -98,6 +107,78 @@ textarea:not([rows]) {
 
 /* end reset */
 
+/* Main content area should expand to fill available space */
+main {
+  flex: 1;
+}
+
+/* Page container width adjustments */
+main,
+header {
+  margin: 0 10vw;
+}
+
+header {
+  display: flex;
+}
+
+header img {
+  padding-top: 2em;
+  padding-bottom: 2em;
+}
+
+header nav {
+  display: flex;
+  align-content: center;
+  justify-content: right;
+  align-items: center;
+  padding: 1em;
+  flex: 1;
+}
+
+header nav a {
+  padding: 1em;
+}
+
+#menuToggle {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 1000;
+}
+
+footer {
+  display: flex;
+  padding: 3em 10vw;
+  margin-top: 2em;
+  background-color: #dedede;
+}
+
+footer p {
+  margin: 0;
+  font-size: 0.9em;
+  color: #555;
+}
+
+footer a {
+  color: #007acc;
+  text-decoration: none;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
+
+div.normal-copy p:not(:first-child):not(:-moz-first-node) {
+  margin-top: 1em;
+}
+
+div.normal-copy p:not(:last-child):not(:-moz-last-node) {
+  margin-bottom: 1em;
+}
+
 .visually-hidden {
   border: 0;
   clip: rect(0 0 0 0);
@@ -124,34 +205,6 @@ textarea:not([rows]) {
 .two-cols img {
   height: 100%;
   width: 100%;
-}
-
-/* Page container width adjustments */
-main,
-header,
-footer {
-  margin: 0 10vw;
-}
-
-header img {
-  padding-top: 2em;
-  padding-bottom: 2em;
-}
-
-@media (max-width: 500px) {
-  main,
-  header,
-  footer {
-    margin: 0 1em;
-  }
-}
-
-div.normal-copy p:not(:first-child):not(:-moz-first-node) {
-  margin-top: 1em;
-}
-
-div.normal-copy p:not(:last-child):not(:-moz-last-node) {
-  margin-bottom: 1em;
 }
 
 main section {
@@ -185,13 +238,6 @@ main section {
 .image-gallery p {
   width: 90%;
   text-align: center;
-}
-
-@media (max-width: 900px) {
-  .image-gallery {
-    flex-direction: column;
-    align-items: center;
-  }
 }
 
 /* Specific element styling */
@@ -271,4 +317,44 @@ h1 {
 /* Style for alternating row colors (optional) */
 .policy-table tbody tr:nth-child(odd) {
   background-color: #f9f9f9; /* Light background color for odd rows */
+}
+
+@media (max-width: 900px) {
+  .image-gallery {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+@media (max-width: 750px) {
+  #menuToggle {
+    display: block;
+  }
+
+  #navMenu {
+    display: none;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: white;
+    justify-content: center;
+    gap: 40px;
+    z-index: 999;
+  }
+
+  #navMenu.active {
+    display: flex;
+  }
+}
+
+@media (max-width: 500px) {
+  main {
+    margin: 0 1em;
+  }
+  header {
+    margin: 0em;
+  }
 }
