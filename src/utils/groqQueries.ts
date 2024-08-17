@@ -74,6 +74,11 @@ export async function getPolicyPage(): Promise<PolicyPageResult> {
     *[_type == "policyPage"]{
       _id,
       _createdAt,
+      title,
+      "introBlock": {
+        "heading": introBlock.heading,
+        "content": introBlock.content
+      },
       "policyRows": policyRows[] {
         "bill": bill,
         "summary": summary,

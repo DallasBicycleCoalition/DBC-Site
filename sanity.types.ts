@@ -218,7 +218,28 @@ export type PolicyPage = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  name?: string;
+  title?: string;
+  introBlock?: {
+    heading?: string;
+    content?: Array<{
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }>;
+      style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+      listItem?: "bullet" | "number";
+      markDefs?: Array<{
+        href?: string;
+        _type: "link";
+        _key: string;
+      }>;
+      level?: number;
+      _type: "block";
+      _key: string;
+    }>;
+  };
   policyRows?: Array<{
     _key: string;
   } & PolicyTableRow>;
@@ -549,10 +570,32 @@ export type HomePageResult = {
   };
 } | null;
 // Variable: policyPage
-// Query:     *[_type == "policyPage"]{      _id,      _createdAt,      "policyRows": policyRows[] {        "bill": bill,        "summary": summary,        "info": info,        "position": position,        "showSupport": showSupport      }    }[0]
+// Query:     *[_type == "policyPage"]{      _id,      _createdAt,      title,      "introBlock": {        "heading": introBlock.heading,        "content": introBlock.content      },      "policyRows": policyRows[] {        "bill": bill,        "summary": summary,        "info": info,        "position": position,        "showSupport": showSupport      }    }[0]
 export type PolicyPageResult = {
   _id: string;
   _createdAt: string;
+  title: string | null;
+  introBlock: {
+    heading: string | null;
+    content: Array<{
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }>;
+      style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+      listItem?: "bullet" | "number";
+      markDefs?: Array<{
+        href?: string;
+        _type: "link";
+        _key: string;
+      }>;
+      level?: number;
+      _type: "block";
+      _key: string;
+    }> | null;
+  };
   policyRows: Array<{
     bill: Array<{
       children?: Array<{

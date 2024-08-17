@@ -6,9 +6,20 @@ import { getPolicyPage } from "../../utils/groqQueries";
 const policyPage = await getPolicyPage();
 ---
 
-<Layout title={"Policy Table"}>
-  <div class="policy-table-container">
-    <h1>Policy Table</h1>
+<Layout title={policyPage?.title || "Policy Page"}>
+  <section class="policy-page-intro">
+    <h1>{policyPage?.title}</h1>
+    <h2>{policyPage?.introBlock.heading}</h2>
+    {
+      policyPage?.introBlock.content && (
+        <div>
+          <PortableText value={policyPage?.introBlock.content} />
+        </div>
+      )
+    }
+  </section>
+
+  <section class="policy-table-section">
     <table class="policy-table">
       <thead>
         <tr>
@@ -30,19 +41,19 @@ const policyPage = await getPolicyPage();
               showSupport: any;
             }) => (
               <tr>
-                <td>
+                <td data-label="Bill">
                   <PortableText value={row.bill} />
                 </td>
-                <td>
+                <td data-label="Summary">
                   <PortableText value={row.summary} />
                 </td>
-                <td>
+                <td data-label="Info">
                   <PortableText value={row.info} />
                 </td>
-                <td>
+                <td data-label="Position">
                   <PortableText value={row.position} />
                 </td>
-                <td>
+                <td data-label="Show Support">
                   <PortableText value={row.showSupport} />
                 </td>
               </tr>
@@ -51,5 +62,5 @@ const policyPage = await getPolicyPage();
         }
       </tbody>
     </table>
-  </div>
+  </section>
 </Layout>
