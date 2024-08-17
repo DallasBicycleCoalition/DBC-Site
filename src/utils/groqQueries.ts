@@ -9,10 +9,10 @@ import type {
 
 export async function getPosts(
   start: number = 0,
-  limit: number = 10
+  limit: number = 10,
 ): Promise<PostsResult[]> {
   return await sanityClient.fetch(
-    groq`*[_type == "post" && defined(slug.current)] | order(_createdAt desc) [${start}...${start + limit}]`
+    groq`*[_type == "post" && defined(slug.current)] | order(_createdAt desc) [${start}...${start + limit}]`,
   );
 }
 

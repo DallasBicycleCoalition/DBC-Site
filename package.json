@@ -7,7 +7,7 @@
     "start": "astro dev",
     "build": "astro check && tsc --noEmit && astro build",
     "preview": "astro preview",
-    "prettify": "prettier -c --write .",
+    "prettify": "prettier -c --write . --ignore-path .prettierignore",
     "typegen": "npx sanity schema extract && sanity typegen generate",
     "devt": "npx sanity schema extract && sanity typegen generate && astro dev",
     "astro": "astro"
