@@ -7,9 +7,12 @@ import type {
   PostsResult,
 } from "../../sanity.types";
 
-export async function getPosts(): Promise<PostsResult[]> {
+export async function getPosts(
+  start: number = 0,
+  limit: number = 10
+): Promise<PostsResult[]> {
   return await sanityClient.fetch(
-    groq`*[_type == "post" && defined(slug.current)] | order(_createdAt desc)`
+    groq`*[_type == "post" && defined(slug.current)] | order(_createdAt desc) [${start}...${start + limit}]`
   );
 }
 
@@ -84,7 +87,6 @@ export async function getPolicyPage(): Promise<PolicyPageResult> {
 
   return results;
 }
-
 
 export async function getLayout(): Promise<LayoutResult> {
   const layout = groq`

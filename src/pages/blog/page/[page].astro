@@ -1,0 +1,63 @@
+---
+import type { PostsResult } from "../../../../sanity.types";
+import Layout from "../../../layouts/Layout.astro";
+import { getPosts } from "../../../utils/groqQueries";
+
+const limit = 10;
+
+// Generate paths for pagination
+export async function getStaticPaths() {
+  const limit = 10;
+  const totalPosts = await getPosts(0, Number.MAX_SAFE_INTEGER);
+  const totalPages = Math.ceil(totalPosts.length / limit);
+
+  const paths = Array.from({ length: totalPages }, (_, i) => ({
+    params: { page: (i + 1).toString() },
+  }));
+
+  return paths;
+}
+
+// Get the current page from params
+const { page } = Astro.params;
+const currentPage = Number(page) || 1;
+
+const start = (currentPage - 1) * limit;
+
+// Fetch posts for the current page
+const posts = await getPosts(start, limit);
+
+// Utility to check if a post has a valid slug
+function hasValidSlug(
+  post: PostsResult
+): post is PostsResult & { slug: { current: string } } {
+  return post?.slug !== undefined && post?.slug.current !== undefined;
+}
+
+// Check if there's a next page
+const hasNextPage = posts.length === limit;
+---
+
+<Layout title={"Blog Posts"}>
+  <h1>Blog Posts</h1>
+  <div>
+    {
+      posts.filter(hasValidSlug).map((post) => (
+        <div class="posts">
+          <h2>
+            <a href={`/blog/post/${post?.slug?.current}`}>{post?.title}</a>
+          </h2>
+          <p>{new Date(post._createdAt).toLocaleDateString()}</p>
+        </div>
+      ))
+    }
+  </div>
+  <div class="pagination">
+    {
+      currentPage > 1 && (
+        <a href={`/blog/page/${currentPage - 1}`}>&laquo; Previous</a>
+      )
+    }
+    {hasNextPage && <a href={`/blog/page/${currentPage + 1}`}>Next &raquo;</a>}
+  </div>
+</Layout>
