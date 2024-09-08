@@ -8,12 +8,16 @@ console.log("Calendar ID:", import.meta.env.CALENDAR_ID);
 console.log("Google API Key:", import.meta.env.GOOGLE_CALENDAR_API_KEY);
 
 const googleCalendarUrl = `https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events?key=${apiKey}`;
+console.log(googleCalendarUrl)
 
 let events = [];
 
 try {
   const response = await fetch(googleCalendarUrl);
+  console.log(response)
+
   const data = await response.json();
+  console.log(data)
 
   if (data.items) {
     events = data.items; // Directly pass the entire events array
