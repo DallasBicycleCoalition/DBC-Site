@@ -68,6 +68,36 @@ export type Geopoint = {
   alt?: number;
 };
 
+export type WeekWithoutDriving = {
+  _id: string;
+  _type: "weekWithoutDriving";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  introBlock?: {
+    heading?: string;
+    content?: Array<{
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }>;
+      style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+      listItem?: "bullet" | "number";
+      markDefs?: Array<{
+        href?: string;
+        _type: "link";
+        _key: string;
+      }>;
+      level?: number;
+      _type: "block";
+      _key: string;
+    }>;
+  };
+};
+
 export type Post = {
   _id: string;
   _type: "post";
@@ -113,9 +143,9 @@ export type Post = {
     level?: number;
     _type: "block";
     _key: string;
-  } | ({
+  } | {
     _key: string;
-  } & CaptionedImage)>;
+  } & CaptionedImage>;
 };
 
 export type PolicyTableRow = {
@@ -451,11 +481,11 @@ export type SanityImageMetadata = {
   isOpaque?: boolean;
 };
 
-export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | Post | PolicyTableRow | PolicyPage | Layout | Homepage | Slug | CaptionedImage | Author | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata;
+export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | WeekWithoutDriving | Post | PolicyTableRow | PolicyPage | Layout | Homepage | Slug | CaptionedImage | Author | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./src/utils/groqQueries.ts
 // Variable: posts
-// Query:       *[_type == "post" && slug.current == $slug][0]{        ...,        author->{          name        }      }
+// Query: *[_type == "post" && slug.current == $slug][0]{        ...,        author->{          name        }      }
 export type PostsResult = {
   _id: string;
   _type: "post";
@@ -481,9 +511,9 @@ export type PostsResult = {
     _type: "image";
   };
   excerpt?: string;
-  body?: Array<({
+  body?: Array<{
     _key: string;
-  } & CaptionedImage) | {
+  } & CaptionedImage | {
     children?: Array<{
       marks?: Array<string>;
       text?: string;
@@ -503,7 +533,7 @@ export type PostsResult = {
   }>;
 } | null;
 // Variable: homePage
-// Query:     *[_type == "homepage"]{      _id,      _createdAt,      title,      "slug": slug.current,      content,      "homePageHeroImage": {        "asset": homePageHeroImage.asset->url,        "altText": homePageHeroImage.altText      },      "whoWeAre": {        "heading": whoWeAre.heading,        "photo": {          "asset": whoWeAre.photo.asset->url,          "altText": whoWeAre.photo.altText        },        "content" : whoWeAre.content      },      "whatWeDo": {        "heading": whatWeDo.heading,        "whatWeDoPics": whatWeDo.whatWeDoPics[] {          "image": image.asset->url,          "altText": altText,          "caption": caption        }      },      "bikePlan": {        "heading": bikePlan.heading,        "content": bikePlan.content      }    }[0]
+// Query: *[_type == "homepage"]{      _id,      _createdAt,      title,      "slug": slug.current,      content,      "homePageHeroImage": {        "asset": homePageHeroImage.asset->url,        "altText": homePageHeroImage.altText      },      "whoWeAre": {        "heading": whoWeAre.heading,        "photo": {          "asset": whoWeAre.photo.asset->url,          "altText": whoWeAre.photo.altText        },        "content" : whoWeAre.content      },      "whatWeDo": {        "heading": whatWeDo.heading,        "whatWeDoPics": whatWeDo.whatWeDoPics[] {          "image": image.asset->url,          "altText": altText,          "caption": caption        }      },      "bikePlan": {        "heading": bikePlan.heading,        "content": bikePlan.content      }    }[0]
 export type HomePageResult = {
   _id: string;
   _createdAt: string;
@@ -570,7 +600,7 @@ export type HomePageResult = {
   };
 } | null;
 // Variable: policyPage
-// Query:     *[_type == "policyPage"]{      _id,      _createdAt,      title,      "introBlock": {        "heading": introBlock.heading,        "content": introBlock.content      },      "policyRows": policyRows[] {        "bill": bill,        "summary": summary,        "info": info,        "position": position,        "showSupport": showSupport      }    }[0]
+// Query: *[_type == "policyPage"]{      _id,      _createdAt,      title,      "introBlock": {        "heading": introBlock.heading,        "content": introBlock.content      },      "policyRows": policyRows[] {        "bill": bill,        "summary": summary,        "info": info,        "position": position,        "showSupport": showSupport      }    }[0]
 export type PolicyPageResult = {
   _id: string;
   _createdAt: string;
@@ -690,7 +720,7 @@ export type PolicyPageResult = {
   }> | null;
 } | null;
 // Variable: layout
-// Query:     *[_type == "layout"][0]{      _id,      _createdAt,      "logo": {        "asset": logo.asset->url,        "altText": logo.altText      },      "landingPageLink": landingPageLink    }
+// Query: *[_type == "layout"][0]{      _id,      _createdAt,      "logo": {        "asset": logo.asset->url,        "altText": logo.altText      },      "landingPageLink": landingPageLink    }
 export type LayoutResult = {
   _id: string;
   _createdAt: string;
@@ -700,3 +730,43 @@ export type LayoutResult = {
   };
   landingPageLink: string | null;
 } | null;
+// Variable: weekWithoutDrivingPage
+// Query: *[_type == "weekWithoutDriving"]{      _id,      _createdAt,      title,      "introBlock": {        "heading": introBlock.heading,        "content": introBlock.content      }    }[0]
+export type WeekWithoutDrivingPageResult = {
+  _id: string;
+  _createdAt: string;
+  title: string | null;
+  introBlock: {
+    heading: string | null;
+    content: Array<{
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }>;
+      style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+      listItem?: "bullet" | "number";
+      markDefs?: Array<{
+        href?: string;
+        _type: "link";
+        _key: string;
+      }>;
+      level?: number;
+      _type: "block";
+      _key: string;
+    }> | null;
+  };
+} | null;
+
+// Query TypeMap
+import "@sanity/client";
+declare module "@sanity/client" {
+  interface SanityQueries {
+    "\n      *[_type == \"post\" && slug.current == $slug][0]{\n        ...,\n        author->{\n          name\n        }\n      }": PostsResult;
+    "\n    *[_type == \"homepage\"]{\n      _id,\n      _createdAt,\n      title,\n      \"slug\": slug.current,\n      content,\n      \"homePageHeroImage\": {\n        \"asset\": homePageHeroImage.asset->url,\n        \"altText\": homePageHeroImage.altText\n      },\n      \"whoWeAre\": {\n        \"heading\": whoWeAre.heading,\n        \"photo\": {\n          \"asset\": whoWeAre.photo.asset->url,\n          \"altText\": whoWeAre.photo.altText\n        },\n        \"content\" : whoWeAre.content\n      },\n      \"whatWeDo\": {\n        \"heading\": whatWeDo.heading,\n        \"whatWeDoPics\": whatWeDo.whatWeDoPics[] {\n          \"image\": image.asset->url,\n          \"altText\": altText,\n          \"caption\": caption\n        }\n      },\n      \"bikePlan\": {\n        \"heading\": bikePlan.heading,\n        \"content\": bikePlan.content\n      }\n    }[0]": HomePageResult;
+    "\n    *[_type == \"policyPage\"]{\n      _id,\n      _createdAt,\n      title,\n      \"introBlock\": {\n        \"heading\": introBlock.heading,\n        \"content\": introBlock.content\n      },\n      \"policyRows\": policyRows[] {\n        \"bill\": bill,\n        \"summary\": summary,\n        \"info\": info,\n        \"position\": position,\n        \"showSupport\": showSupport\n      }\n    }[0]": PolicyPageResult;
+    "\n    *[_type == \"layout\"][0]{\n      _id,\n      _createdAt,\n      \"logo\": {\n        \"asset\": logo.asset->url,\n        \"altText\": logo.altText\n      },\n      \"landingPageLink\": landingPageLink\n    }": LayoutResult;
+    "\n    *[_type == \"weekWithoutDriving\"]{\n      _id,\n      _createdAt,\n      title,\n      \"introBlock\": {\n        \"heading\": introBlock.heading,\n        \"content\": introBlock.content\n      }\n    }[0]": WeekWithoutDrivingPageResult;
+  }
+}

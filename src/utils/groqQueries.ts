@@ -5,6 +5,7 @@ import type {
   LayoutResult,
   PolicyPageResult,
   PostsResult,
+  WeekWithoutDrivingPageResult,
 } from "../../sanity.types";
 
 export async function getPosts(
@@ -109,3 +110,21 @@ export async function getLayout(): Promise<LayoutResult> {
 
   return results;
 }
+
+export async function getWeekWithoutDrivingPage(): Promise<WeekWithoutDrivingPageResult> {
+  const weekWithoutDrivingPage = groq`
+    *[_type == "weekWithoutDriving"]{
+      _id,
+      _createdAt,
+      title,
+      "introBlock": {
+        "heading": introBlock.heading,
+        "content": introBlock.content
+      }
+    }[0]`;
+
+  const results = await sanityClient.fetch(weekWithoutDrivingPage);
+
+  return results;
+}
+
