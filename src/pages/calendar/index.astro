@@ -14,17 +14,7 @@ try {
   const data = await response.json();
 
   if (data.items) {
-    events = data.items.map(
-      (event: {
-        summary: any;
-        start: { dateTime: any; date: any };
-        end: { dateTime: any; date: any };
-      }) => ({
-        title: event.summary || "No Title",
-        start: event.start.dateTime || event.start.date || "Unknown Start Date",
-        end: event.end.dateTime || event.end.date || "Unknown End Date",
-      })
-    );
+    events = data.items; // Directly pass the entire events array
   } else {
     console.error("No events found");
   }
