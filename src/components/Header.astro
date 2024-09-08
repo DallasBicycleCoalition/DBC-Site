@@ -25,6 +25,7 @@ const data = await getLayout();
 
 <script is:inline type="module">
   function toggleMenu(menuToggle, navMenu) {
+    console.log("Toggling menu");
     navMenu.classList.toggle("active");
     menuToggle.classList.toggle("active");
     menuToggle.innerHTML = navMenu.classList.contains("active")
@@ -33,6 +34,7 @@ const data = await getLayout();
   }
 
   function init() {
+    console.log("Initializing navigation menu");
     const menuToggle = document.getElementById("menuToggle");
     const navMenu = document.getElementById("navMenu");
 
@@ -40,10 +42,10 @@ const data = await getLayout();
       const handleClick = () => toggleMenu(menuToggle, navMenu);
       menuToggle.addEventListener("click", handleClick);
 
-      // Clean up event listeners before page swap
       document.addEventListener(
         "astro:before-swap",
-        () => {
+        (event) => {
+          console.log("Before page swap: Cleaning up event listeners", event);
           menuToggle.removeEventListener("click", handleClick);
         },
         { once: true }
@@ -57,5 +59,8 @@ const data = await getLayout();
   init();
 
   // Re-initialize after swapping pages
-  document.addEventListener("astro:after-swap", init);
+  document.addEventListener("astro:after-swap", (event) => {
+    console.log("After page swap: Reinitializing navigation", event);
+    init();
+  });
 </script>

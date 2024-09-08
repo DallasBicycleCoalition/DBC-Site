@@ -11,15 +11,18 @@ declare global {
 }
 
 export function initCalendar(events: any) {
+  console.log("Initializing calendar with events:", events);
+
   const calendarEl = document.getElementById("calendar");
   const errorMessageEl = document.getElementById("error-message");
 
   if (calendarEl && errorMessageEl) {
-    const transformedEvents = events.map((event: any) => {
-      // Define if the event is all-day
-      const isAllDay = !event.start.dateTime;
+    console.log("Calendar element found, proceeding to initialize");
 
-      // Convert start and end dateTimes to Date objects
+    const transformedEvents = events.map((event: any) => {
+      console.log("Processing event:", event);
+
+      const isAllDay = !event.start.dateTime;
       let eventStart = new Date(event.start.dateTime || event.start.date);
       let eventEnd = event.end
         ? new Date(event.end.dateTime || event.end.date)
@@ -30,6 +33,8 @@ export function initCalendar(events: any) {
         description: event.description,
         location: event.location,
         allDay: isAllDay,
+        start: eventStart,
+        end: eventEnd
       };
 
       if (event.recurrence && event.recurrence.length > 0) {
@@ -64,29 +69,28 @@ export function initCalendar(events: any) {
       },
       events: transformedEvents,
       eventClick: function (info) {
-        // Get the modal elements
+        console.log("Event clicked:", info.event);
+
         const modal = document.getElementById("event-modal");
         const titleEl = document.getElementById("event-title");
         const descriptionEl = document.getElementById("event-description");
         const closeModalButton = document.getElementById("close-modal");
 
-        // Set the content of the modal
         if (modal && titleEl && descriptionEl && closeModalButton) {
           titleEl.textContent = info.event.title;
           descriptionEl.textContent =
             info.event.extendedProps.description || "No description available.";
 
-          // Display the modal
           modal.style.display = "block";
 
-          // Add event listener to close the modal
           closeModalButton.addEventListener("click", () => {
-            modal.style.display = "none"; // Hide the modal when the button is clicked
+            modal.style.display = "none";
           });
         }
       },
     });
 
+    console.log("Rendering the calendar");
     calendar.render();
   } else {
     console.error("Calendar or error message element not found");
@@ -97,34 +101,37 @@ export function initCalendar(events: any) {
   }
 }
 
-// Ensure the DOM is loaded before initializing the calendar
 document.addEventListener("DOMContentLoaded", () => {
-  const initializeCalendar = () => {
-    const calendarEl = document.getElementById("calendar");
+  console.log("DOMContentLoaded: Initializing the calendar");
+  const calendarEl = document.getElementById("calendar");
 
-    if (calendarEl) {
-      const events = window.events || [];
+  if (calendarEl) {
+    const events = window.events || [];
+    console.log("Fetched events from window:", events);
 
-      if (events.length > 0) {
-        initCalendar(events);
-      } else {
-        console.error("No events available to initialize the calendar.");
-      }
+    if (events.length > 0) {
+      initCalendar(events);
     } else {
-      console.error("Calendar element not found.");
+      console.error("No events available to initialize calendar");
     }
-  };
+  } else {
+    console.error("Calendar element not found in DOM");
+}});
 
-  // Initialize the calendar on first load
-  initializeCalendar();
+document.addEventListener("astro:after-swap", () => {
+  console.log("astro:after-swap: Reinitializing calendar after page swap");
+  const calendarEl = document.getElementById("calendar");
 
-  // Re-initialize the calendar after client-side navigation
-  document.addEventListener("astro:after-swap", (event) => {
-    if (window.location.pathname === "/calendar") {
-      // Add a slight delay to ensure the DOM is fully updated after the swap
-      setTimeout(() => {
-        initializeCalendar();
-      }, 100); // 100ms delay to allow the DOM to be fully ready
+  if (calendarEl) {
+    const events = window.events || [];
+    console.log("Fetched events after swap:", events);
+
+    if (events.length > 0) {
+      initCalendar(events);
+    } else {
+      console.error("No events available after page swap");
     }
-  });
+  } else {
+    console.error("Calendar element not found in DOM after swap");
+  }
 });
