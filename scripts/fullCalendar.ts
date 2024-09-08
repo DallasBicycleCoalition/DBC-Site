@@ -99,6 +99,25 @@ export function initCalendar(events: any) {
 
 // Ensure the DOM is loaded before initializing the calendar
 document.addEventListener("DOMContentLoaded", () => {
-  const events = window.events || [];
-  initCalendar(events);
+  const initializeCalendar = () => {
+    const calendarEl = document.getElementById("calendar");
+
+    if (calendarEl) {
+      const events = window.events || [];
+
+      if (events.length > 0) {
+        initCalendar(events);
+      }
+    }
+  };
+
+  // Initialize the calendar on first load
+  initializeCalendar();
+
+  // Re-initialize the calendar after client-side navigation
+  document.addEventListener("astro:after-swap", (event) => {
+    if (window.location.pathname === "/calendar") {
+      initializeCalendar();
+    }
+  });
 });
