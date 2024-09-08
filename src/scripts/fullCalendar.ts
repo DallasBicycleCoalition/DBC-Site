@@ -107,7 +107,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (events.length > 0) {
         initCalendar(events);
+      } else {
+        console.error("No events available to initialize the calendar.");
       }
+    } else {
+      console.error("Calendar element not found.");
     }
   };
 
@@ -117,7 +121,10 @@ document.addEventListener("DOMContentLoaded", () => {
   // Re-initialize the calendar after client-side navigation
   document.addEventListener("astro:after-swap", (event) => {
     if (window.location.pathname === "/calendar") {
-      initializeCalendar();
+      // Add a slight delay to ensure the DOM is fully updated after the swap
+      setTimeout(() => {
+        initializeCalendar();
+      }, 100); // 100ms delay to allow the DOM to be fully ready
     }
   });
 });
