@@ -1,70 +1,50 @@
 ---
 import Layout from "../../layouts/Layout.astro";
+
+// Fetch events from Google Calendar on the server
+const calendarId = import.meta.env.CALENDAR_ID;
+const apiKey = import.meta.env.GOOGLE_CALENDAR_API_KEY;
+
+const googleCalendarUrl = `https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events?key=${apiKey}`;
+
+let events = [];
+
+try {
+  const response = await fetch(googleCalendarUrl);
+  const data = await response.json();
+
+  if (data.items) {
+    events = data.items.map(
+      (event: {
+        summary: any;
+        start: { dateTime: any; date: any };
+        end: { dateTime: any; date: any };
+      }) => ({
+        title: event.summary || "No Title",
+        start: event.start.dateTime || event.start.date || "Unknown Start Date",
+        end: event.end.dateTime || event.end.date || "Unknown End Date",
+      })
+    );
+  } else {
+    console.error("No events found");
+  }
+} catch (error) {
+  console.error("Error fetching events:", error);
+}
 ---
 
-<Layout title={"Default Title"}>
-  <h1>Calendar</h1>
-  <h2>July</h2>
-  <h3>13th at 9:00am : Bike Lane Cleanup</h3>
-  <div class="normal-copy">
-    <p>
-      Unfortunately, the bike lanes in Dallas aren't maintained nearly as
-      frequently as they need to be. It's one of our asks for the annual budget
-      and upcoming bike plan, but in the mean time, we can do the work
-      ourselves.
-    </p>
-    <p>
-      We'll bring a few tools and trash bags, but this is a BYOB event (bring
-      your own broom). Thank you to Sam Cooper, DBC board member and
-      @white.rock.ramble founder, for leading this effort!
-    </p>
-  </div>
-  <h3>26th at 6:45pm : Bike Bus to Critical Mass</h3>
-  <div class="normal-copy">
-    <p>
-      Want to bike to Critical Mass, but don't want to go alone? Join our bike
-      bus to Critical Mass that we host each month. The bike bus encourages our
-      community to get to our destination by bike. We ride together for safety
-      and because it's fun! Choose any of the routes. Meet at the first stop or
-      any stop along the way. We'll pick you up!
-    </p>
-
-    <p>
-      Want to volunteer to lead a bike bus? <a
-        href="https://actionnetwork.org/forms/join-dallas-bicycle-coalition"
-        >Sign up to volunteer with DBC</a
-      > and someone will reach out to get you plugged in.
-    </p>
-  </div>
-  <h3>26th at 8:00pm : Critical Mass</h3>
-  <div class="normal-copy">
-    <p>
-      Critical Mass is a global movement where people ride their bike together
-      as a group to demonstrate the need to make space for bikes on the road. It
-      happens on the last Friday of the month in cities around the world. Dallas
-      Critical Mass leaves at 8pm from the Dallas Farmer's market.
-    </p>
-    <p>
-      This is a social, slow paced ride. The ride always starts at 8pm at the
-      Dallas Farmer's Market, but the ride leader and ending location changes
-      each month. Check the Facebook group for details. Bring white front lights
-      and rear red lights, a helmet, and water. A bike lock and other bike tools
-      are encouraged, but not required.
-    </p>
-    <p>
-      Join a Dallas Bike Coalition Bike Bus coming in from multiple
-      neighborhoods across Dallas if you'd like to bike in to the event with a
-      group.
-    </p>
-    <p>
-      <a href="https://www.facebook.com/groups/criticalmassdallas"
-        >Read more about Critical Mass Dallas on the official Facebook group</a
-      >
-    </p>
-    <p>
-      <a href="https://en.wikipedia.org/wiki/Critical_Mass_(cycling)"
-        >more about Critical Mass (in general) on Wikipedia</a
-      >
-    </p>
-  </div>
+<Layout title="Google Calendar">
+  <section id="calendar-section">
+    <div id="calendar"></div>
+    <noscript>Calendar could not load. Please enable JavaScript.</noscript>
+    <p id="error-message" style="color: red;"></p>
+  </section>
 </Layout>
+
+<!-- Define the events data globally for the client-side script -->
+<script define:vars={{ events }} is:inline>
+  window.events = events;
+</script>
+
+<!-- Load the external calendar.ts script -->
+<script src="/scripts/fullCalendar.ts" type="module" is:inline></script>
