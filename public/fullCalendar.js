@@ -1,8 +1,10 @@
-import { Calendar } from "@fullcalendar/core";
-import dayGridPlugin from "@fullcalendar/daygrid";
-import listPlugin from "@fullcalendar/list";
-import rrulePlugin from "@fullcalendar/rrule";
-import timeGridPlugin from "@fullcalendar/timegrid";
+<>
+  <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/core@6.1.8/main.global.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@6.1.8/main.global.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/list@6.1.8/main.global.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/rrule@6.1.8/main.global.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/timegrid@6.1.8/main.global.min.js"></script>
+</>;
 
 export function initCalendar(events) {
   const calendarEl = document.getElementById("calendar");

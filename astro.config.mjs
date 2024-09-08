@@ -34,15 +34,4 @@ export default defineConfig({
     }),
     react(), // Required for Sanity Studio
   ],
-  vite: {
-    optimizeDeps: {
-      include: [
-        "@fullcalendar/core",
-        "@fullcalendar/daygrid",
-        "@fullcalendar/list",
-        "@fullcalendar/rrule",
-        "@fullcalendar/timegrid",
-      ],
-    },
-  },
 });
