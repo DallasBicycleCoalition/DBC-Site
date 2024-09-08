@@ -29,6 +29,16 @@ try {
     <noscript>Calendar could not load. Please enable JavaScript.</noscript>
     <p id="error-message" style="color: red;"></p>
   </section>
+
+  <!-- Event Details Modal -->
+  <div
+    id="event-modal"
+    style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: white; border: 1px solid black; padding: 20px; z-index: 1000;"
+  >
+    <h2 id="event-title"></h2>
+    <p id="event-description"></p>
+    <button id="close-modal">Close</button>
+  </div>
 </Layout>
 
 <!-- Define the events data globally for the client-side script -->
