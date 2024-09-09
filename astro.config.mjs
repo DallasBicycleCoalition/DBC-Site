@@ -38,7 +38,7 @@ export default defineConfig({
     define: {
       "process.env.CALENDAR_ID": JSON.stringify(process.env.CALENDAR_ID),
       "process.env.GOOGLE_CALENDAR_API_KEY": JSON.stringify(
-        process.env.GOOGLE_CALENDAR_API_KEY
+        process.env.GOOGLE_CALENDAR_API_KEY,
       ),
     },
   },

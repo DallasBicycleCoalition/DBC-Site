@@ -25,7 +25,6 @@ const data = await getLayout();
 
 <script is:inline type="module">
   function toggleMenu(menuToggle, navMenu) {
-    console.log("Toggling menu");
     navMenu.classList.toggle("active");
     menuToggle.classList.toggle("active");
     menuToggle.innerHTML = navMenu.classList.contains("active")
@@ -34,7 +33,6 @@ const data = await getLayout();
   }
 
   function init() {
-    console.log("Initializing navigation menu");
     const menuToggle = document.getElementById("menuToggle");
     const navMenu = document.getElementById("navMenu");
 
@@ -45,7 +43,6 @@ const data = await getLayout();
       document.addEventListener(
         "astro:before-swap",
         (event) => {
-          console.log("Before page swap: Cleaning up event listeners", event);
           menuToggle.removeEventListener("click", handleClick);
         },
         { once: true }
@@ -55,12 +52,26 @@ const data = await getLayout();
     }
   }
 
+  function forceFullPageReload() {
+    const calendarLink = document.querySelector('a[href="/calendar"]');
+
+    if (calendarLink) {
+      calendarLink.addEventListener("click", (event) => {
+        event.preventDefault(); // Stop Astro from intercepting the link
+        window.location.href = "/calendar"; // Force a full page reload
+      });
+    } else {
+      console.error("Calendar link not found.");
+    }
+  }
+
   // Initialize on first load
   init();
+  forceFullPageReload();
 
   // Re-initialize after swapping pages
   document.addEventListener("astro:after-swap", (event) => {
-    console.log("After page swap: Reinitializing navigation", event);
     init();
+    forceFullPageReload();
   });
 </script>

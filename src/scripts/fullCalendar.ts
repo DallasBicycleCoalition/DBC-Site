@@ -10,18 +10,12 @@ declare global {
   }
 }
 
-export function initCalendar(events: any) {
-  console.log("Initializing calendar with events:", events);
-
+function initCalendar(events: any) {
   const calendarEl = document.getElementById("calendar");
   const errorMessageEl = document.getElementById("error-message");
 
   if (calendarEl && errorMessageEl) {
-    console.log("Calendar element found, proceeding to initialize");
-
     const transformedEvents = events.map((event: any) => {
-      console.log("Processing event:", event);
-
       const isAllDay = !event.start.dateTime;
       let eventStart = new Date(event.start.dateTime || event.start.date);
       let eventEnd = event.end
@@ -34,7 +28,7 @@ export function initCalendar(events: any) {
         location: event.location,
         allDay: isAllDay,
         start: eventStart,
-        end: eventEnd
+        end: eventEnd,
       };
 
       if (event.recurrence && event.recurrence.length > 0) {
@@ -44,22 +38,21 @@ export function initCalendar(events: any) {
         // Adjust start date for all-day events because end.date is exclusive
         eventStart.setDate(eventStart.getDate() + 1);
         transformedEvent.start = eventStart;
-      } else {
-        // No recurrence or all-day, use setDates for normal events
-        transformedEvent.start = eventStart;
-        transformedEvent.end = eventEnd;
       }
 
       return transformedEvent;
     });
 
+    // Use window.matchMedia to detect mobile view
+    const initialView = window.matchMedia("(max-width: 768px)").matches ? "listMonth" : "dayGridMonth";
+
     const calendar = new Calendar(calendarEl, {
       plugins: [dayGridPlugin, timeGridPlugin, listPlugin, rrulePlugin],
-      initialView: "dayGridMonth",
+      initialView: initialView,
       headerToolbar: {
         left: "prev,next today",
         center: "title",
-        right: "dayGridMonth,timeGridWeek,timeGridDay,listMonth",
+        right: "dayGridMonth,timeGridWeek,timeGridDay"
       },
       views: {
         dayGridMonth: { buttonText: "Month" },
@@ -69,8 +62,6 @@ export function initCalendar(events: any) {
       },
       events: transformedEvents,
       eventClick: function (info) {
-        console.log("Event clicked:", info.event);
-
         const modal = document.getElementById("event-modal");
         const titleEl = document.getElementById("event-title");
         const descriptionEl = document.getElementById("event-description");
@@ -90,7 +81,6 @@ export function initCalendar(events: any) {
       },
     });
 
-    console.log("Rendering the calendar");
     calendar.render();
   } else {
     console.error("Calendar or error message element not found");
@@ -102,12 +92,20 @@ export function initCalendar(events: any) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  console.log("DOMContentLoaded: Initializing the calendar");
+  ensureCalendarInitialized();
+});
+
+document.addEventListener("astro:after-swap", () => {
+  requestAnimationFrame(() => {
+    ensureCalendarInitialized();
+  });
+});
+
+function ensureCalendarInitialized() {
   const calendarEl = document.getElementById("calendar");
 
   if (calendarEl) {
     const events = window.events || [];
-    console.log("Fetched events from window:", events);
 
     if (events.length > 0) {
       initCalendar(events);
@@ -116,22 +114,5 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   } else {
     console.error("Calendar element not found in DOM");
-}});
-
-document.addEventListener("astro:after-swap", () => {
-  console.log("astro:after-swap: Reinitializing calendar after page swap");
-  const calendarEl = document.getElementById("calendar");
-
-  if (calendarEl) {
-    const events = window.events || [];
-    console.log("Fetched events after swap:", events);
-
-    if (events.length > 0) {
-      initCalendar(events);
-    } else {
-      console.error("No events available after page swap");
-    }
-  } else {
-    console.error("Calendar element not found in DOM after swap");
   }
-});
+}

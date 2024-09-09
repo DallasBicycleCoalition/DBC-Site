@@ -15,5 +15,5 @@ export const schemaTypes = [
   policyPageSchema,
   policyTableRowSchema,
   postSchema,
-  weekWithoutDrivingSchema
+  weekWithoutDrivingSchema,
 ];

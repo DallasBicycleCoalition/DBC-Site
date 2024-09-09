@@ -127,4 +127,3 @@ export async function getWeekWithoutDrivingPage(): Promise<WeekWithoutDrivingPag
 
   return results;
 }
-
