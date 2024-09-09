@@ -44,6 +44,7 @@ function initCalendar(events: any) {
     });
 
     // Use window.matchMedia to detect mobile view
+    const isMobile = window.matchMedia("(max-width: 768px)").matches;
     const initialView = window.matchMedia("(max-width: 768px)").matches ? "listMonth" : "dayGridMonth";
 
     const calendar = new Calendar(calendarEl, {
@@ -52,7 +53,7 @@ function initCalendar(events: any) {
       headerToolbar: {
         left: "prev,next today",
         center: "title",
-        right: "dayGridMonth,timeGridWeek,timeGridDay"
+        right: "dayGridMonth,timeGridWeek,timeGridDay, listMonth"
       },
       views: {
         dayGridMonth: { buttonText: "Month" },
