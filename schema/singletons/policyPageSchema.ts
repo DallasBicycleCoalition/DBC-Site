@@ -59,5 +59,23 @@ export const policyPageSchema = defineType({
         },
       ],
     },
+    {
+      name: "legislativeDemands",
+      title: "Legislative Demands",
+      type: "object",
+      fields: [
+        {
+          name: "heading",
+          title: "Heading",
+          type: "string",
+        },
+        {
+          name: "content",
+          title: "Content",
+          type: "array",
+          of: [{ type: "block" }],
+        },
+      ],
+    },
   ],
 });

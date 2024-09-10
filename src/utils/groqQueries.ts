@@ -84,7 +84,11 @@ export async function getPolicyPage(): Promise<PolicyPageResult> {
         "policy": policy,
         "summary": summary,
         "moreInfo": moreInfo,
-      }
+      },
+      "legislativeDemands": {
+        "heading": legislativeDemands.heading,
+        "content": legislativeDemands.content
+      },
     }[0]`;
 
   const results = await sanityClient.fetch(policyPage);

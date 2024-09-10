@@ -148,64 +148,6 @@ export type Post = {
   } & CaptionedImage>;
 };
 
-export type PolicyTableRow = {
-  _type: "policyTableRow";
-  policy?: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
-      _key: string;
-    }>;
-    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
-    listItem?: "bullet" | "number";
-    markDefs?: Array<{
-      href?: string;
-      _type: "link";
-      _key: string;
-    }>;
-    level?: number;
-    _type: "block";
-    _key: string;
-  }>;
-  summary?: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
-      _key: string;
-    }>;
-    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
-    listItem?: "bullet" | "number";
-    markDefs?: Array<{
-      href?: string;
-      _type: "link";
-      _key: string;
-    }>;
-    level?: number;
-    _type: "block";
-    _key: string;
-  }>;
-  moreInfo?: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
-      _key: string;
-    }>;
-    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
-    listItem?: "bullet" | "number";
-    markDefs?: Array<{
-      href?: string;
-      _type: "link";
-      _key: string;
-    }>;
-    level?: number;
-    _type: "block";
-    _key: string;
-  }>;
-};
-
 export type PolicyPage = {
   _id: string;
   _type: "policyPage";
@@ -235,8 +177,83 @@ export type PolicyPage = {
     }>;
   };
   policyRows?: Array<{
+    policy?: Array<{
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }>;
+      style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+      listItem?: "bullet" | "number";
+      markDefs?: Array<{
+        href?: string;
+        _type: "link";
+        _key: string;
+      }>;
+      level?: number;
+      _type: "block";
+      _key: string;
+    }>;
+    summary?: Array<{
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }>;
+      style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+      listItem?: "bullet" | "number";
+      markDefs?: Array<{
+        href?: string;
+        _type: "link";
+        _key: string;
+      }>;
+      level?: number;
+      _type: "block";
+      _key: string;
+    }>;
+    moreInfo?: Array<{
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }>;
+      style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+      listItem?: "bullet" | "number";
+      markDefs?: Array<{
+        href?: string;
+        _type: "link";
+        _key: string;
+      }>;
+      level?: number;
+      _type: "block";
+      _key: string;
+    }>;
     _key: string;
-  } & PolicyTableRow>;
+  }>;
+  legislativeDemands?: {
+    heading?: string;
+    content?: Array<{
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }>;
+      style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+      listItem?: "bullet" | "number";
+      markDefs?: Array<{
+        href?: string;
+        _type: "link";
+        _key: string;
+      }>;
+      level?: number;
+      _type: "block";
+      _key: string;
+    }>;
+  };
 };
 
 export type Layout = {
@@ -445,7 +462,7 @@ export type SanityImageMetadata = {
   isOpaque?: boolean;
 };
 
-export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | WeekWithoutDriving | Post | PolicyTableRow | PolicyPage | Layout | Homepage | Slug | CaptionedImage | Author | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata;
+export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | WeekWithoutDriving | Post | PolicyPage | Layout | Homepage | Slug | CaptionedImage | Author | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./src/utils/groqQueries.ts
 // Variable: posts
@@ -564,7 +581,7 @@ export type HomePageResult = {
   };
 } | null;
 // Variable: policyPage
-// Query: *[_type == "policyPage"]{      _id,      _createdAt,      title,      "introBlock": {        "heading": introBlock.heading,        "content": introBlock.content      },      "policyRows": policyRows[] {        "policy": policy,        "summary": summary,        "moreInfo": info,      }    }[0]
+// Query: *[_type == "policyPage"]{      _id,      _createdAt,      title,      "introBlock": {        "heading": introBlock.heading,        "content": introBlock.content      },      "policyRows": policyRows[] {        "policy": policy,        "summary": summary,        "moreInfo": moreInfo,      },      "legislativeDemands": {        "heading": legislativeDemands.heading,        "content": legislativeDemands.content      },    }[0]
 export type PolicyPageResult = {
   _id: string;
   _createdAt: string;
@@ -627,8 +644,46 @@ export type PolicyPageResult = {
       _type: "block";
       _key: string;
     }> | null;
-    moreInfo: null;
+    moreInfo: Array<{
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }>;
+      style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+      listItem?: "bullet" | "number";
+      markDefs?: Array<{
+        href?: string;
+        _type: "link";
+        _key: string;
+      }>;
+      level?: number;
+      _type: "block";
+      _key: string;
+    }> | null;
   }> | null;
+  legislativeDemands: {
+    heading: string | null;
+    content: Array<{
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }>;
+      style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+      listItem?: "bullet" | "number";
+      markDefs?: Array<{
+        href?: string;
+        _type: "link";
+        _key: string;
+      }>;
+      level?: number;
+      _type: "block";
+      _key: string;
+    }> | null;
+  };
 } | null;
 // Variable: layout
 // Query: *[_type == "layout"][0]{      _id,      _createdAt,      "logo": {        "asset": logo.asset->url,        "altText": logo.altText      },      "landingPageLink": landingPageLink    }
@@ -676,7 +731,7 @@ declare module "@sanity/client" {
   interface SanityQueries {
     "\n      *[_type == \"post\" && slug.current == $slug][0]{\n        ...,\n        author->{\n          name\n        }\n      }": PostsResult;
     "\n    *[_type == \"homepage\"]{\n      _id,\n      _createdAt,\n      title,\n      \"slug\": slug.current,\n      content,\n      \"homePageHeroImage\": {\n        \"asset\": homePageHeroImage.asset->url,\n        \"altText\": homePageHeroImage.altText\n      },\n      \"whoWeAre\": {\n        \"heading\": whoWeAre.heading,\n        \"photo\": {\n          \"asset\": whoWeAre.photo.asset->url,\n          \"altText\": whoWeAre.photo.altText\n        },\n        \"content\" : whoWeAre.content\n      },\n      \"whatWeDo\": {\n        \"heading\": whatWeDo.heading,\n        \"whatWeDoPics\": whatWeDo.whatWeDoPics[] {\n          \"image\": image.asset->url,\n          \"altText\": altText,\n          \"caption\": caption\n        }\n      },\n      \"bikePlan\": {\n        \"heading\": bikePlan.heading,\n        \"content\": bikePlan.content\n      }\n    }[0]": HomePageResult;
-    "\n    *[_type == \"policyPage\"]{\n      _id,\n      _createdAt,\n      title,\n      \"introBlock\": {\n        \"heading\": introBlock.heading,\n        \"content\": introBlock.content\n      },\n      \"policyRows\": policyRows[] {\n        \"policy\": policy,\n        \"summary\": summary,\n        \"moreInfo\": info,\n      }\n    }[0]": PolicyPageResult;
+    "\n    *[_type == \"policyPage\"]{\n      _id,\n      _createdAt,\n      title,\n      \"introBlock\": {\n        \"heading\": introBlock.heading,\n        \"content\": introBlock.content\n      },\n      \"policyRows\": policyRows[] {\n        \"policy\": policy,\n        \"summary\": summary,\n        \"moreInfo\": moreInfo,\n      },\n      \"legislativeDemands\": {\n        \"heading\": legislativeDemands.heading,\n        \"content\": legislativeDemands.content\n      },\n    }[0]": PolicyPageResult;
     "\n    *[_type == \"layout\"][0]{\n      _id,\n      _createdAt,\n      \"logo\": {\n        \"asset\": logo.asset->url,\n        \"altText\": logo.altText\n      },\n      \"landingPageLink\": landingPageLink\n    }": LayoutResult;
     "\n    *[_type == \"weekWithoutDriving\"]{\n      _id,\n      _createdAt,\n      title,\n      \"introBlock\": {\n        \"heading\": introBlock.heading,\n        \"content\": introBlock.content\n      }\n    }[0]": WeekWithoutDrivingPageResult;
   }
