@@ -32,7 +32,32 @@ export const policyPageSchema = defineType({
       name: "policyRows",
       title: "Policy Rows",
       type: "array",
-      of: [{ type: "policyTableRow" }],
+      of: [
+        {
+          type: "object",
+          title: "Policy Table Row",
+          fields: [
+            {
+              name: "policy",
+              title: "Policy",
+              type: "array",
+              of: [{ type: "block" }],
+            },
+            {
+              name: "summary",
+              title: "Summary",
+              type: "array",
+              of: [{ type: "block" }],
+            },
+            {
+              name: "moreInfo",
+              title: "More Info",
+              type: "array",
+              of: [{ type: "block" }],
+            },
+          ],
+        },
+      ],
     },
   ],
 });
