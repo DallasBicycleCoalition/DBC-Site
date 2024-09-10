@@ -83,7 +83,7 @@ export async function getPolicyPage(): Promise<PolicyPageResult> {
       "policyRows": policyRows[] {
         "policy": policy,
         "summary": summary,
-        "moreInfo": info,
+        "moreInfo": moreInfo,
       }
     }[0]`;
 
