@@ -6,8 +6,8 @@ export const policyTableRowSchema = defineType({
   type: "object",
   fields: [
     {
-      name: "bill",
-      title: "Bill",
+      name: "policy",
+      title: "Policy",
       type: "array",
       of: [{ type: "block" }],
     },
@@ -18,20 +18,8 @@ export const policyTableRowSchema = defineType({
       of: [{ type: "block" }],
     },
     {
-      name: "info",
-      title: "Info",
-      type: "array",
-      of: [{ type: "block" }],
-    },
-    {
-      name: "position",
-      title: "Position",
-      type: "array",
-      of: [{ type: "block" }],
-    },
-    {
-      name: "showSupport",
-      title: "Show Support",
+      name: "moreInfo",
+      title: "More Info",
       type: "array",
       of: [{ type: "block" }],
     },

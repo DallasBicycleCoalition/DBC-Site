@@ -23,38 +23,28 @@ const policyPage = await getPolicyPage();
     <table class="policy-table">
       <thead>
         <tr>
-          <th>Bill</th>
+          <th>Policy</th>
           <th>Summary</th>
-          <th>Info</th>
-          <th>Position</th>
-          <th>Show Support</th>
+          <th>More Info</th>
         </tr>
       </thead>
       <tbody>
         {
           policyPage?.policyRows?.map(
             (row: {
-              bill: any;
+              policy: any;
               summary: any;
-              info: any;
-              position: any;
-              showSupport: any;
+              moreInfo: any;
             }) => (
               <tr>
-                <td data-label="Bill">
-                  <PortableText value={row.bill} />
+                <td data-label="Policy">
+                  <PortableText value={row.policy} />
                 </td>
                 <td data-label="Summary">
                   <PortableText value={row.summary} />
                 </td>
-                <td data-label="Info">
-                  <PortableText value={row.info} />
-                </td>
-                <td data-label="Position">
-                  <PortableText value={row.position} />
-                </td>
-                <td data-label="Show Support">
-                  <PortableText value={row.showSupport} />
+                <td data-label="More Info">
+                  <PortableText value={row.moreInfo} />
                 </td>
               </tr>
             )

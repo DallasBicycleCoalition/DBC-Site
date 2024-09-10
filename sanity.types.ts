@@ -150,7 +150,7 @@ export type Post = {
 
 export type PolicyTableRow = {
   _type: "policyTableRow";
-  bill?: Array<{
+  policy?: Array<{
     children?: Array<{
       marks?: Array<string>;
       text?: string;
@@ -186,43 +186,7 @@ export type PolicyTableRow = {
     _type: "block";
     _key: string;
   }>;
-  info?: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
-      _key: string;
-    }>;
-    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
-    listItem?: "bullet" | "number";
-    markDefs?: Array<{
-      href?: string;
-      _type: "link";
-      _key: string;
-    }>;
-    level?: number;
-    _type: "block";
-    _key: string;
-  }>;
-  position?: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
-      _key: string;
-    }>;
-    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
-    listItem?: "bullet" | "number";
-    markDefs?: Array<{
-      href?: string;
-      _type: "link";
-      _key: string;
-    }>;
-    level?: number;
-    _type: "block";
-    _key: string;
-  }>;
-  showSupport?: Array<{
+  moreInfo?: Array<{
     children?: Array<{
       marks?: Array<string>;
       text?: string;
@@ -600,7 +564,7 @@ export type HomePageResult = {
   };
 } | null;
 // Variable: policyPage
-// Query: *[_type == "policyPage"]{      _id,      _createdAt,      title,      "introBlock": {        "heading": introBlock.heading,        "content": introBlock.content      },      "policyRows": policyRows[] {        "bill": bill,        "summary": summary,        "info": info,        "position": position,        "showSupport": showSupport      }    }[0]
+// Query: *[_type == "policyPage"]{      _id,      _createdAt,      title,      "introBlock": {        "heading": introBlock.heading,        "content": introBlock.content      },      "policyRows": policyRows[] {        "policy": policy,        "summary": summary,        "moreInfo": info,      }    }[0]
 export type PolicyPageResult = {
   _id: string;
   _createdAt: string;
@@ -627,7 +591,7 @@ export type PolicyPageResult = {
     }> | null;
   };
   policyRows: Array<{
-    bill: Array<{
+    policy: Array<{
       children?: Array<{
         marks?: Array<string>;
         text?: string;
@@ -663,60 +627,7 @@ export type PolicyPageResult = {
       _type: "block";
       _key: string;
     }> | null;
-    info: Array<{
-      children?: Array<{
-        marks?: Array<string>;
-        text?: string;
-        _type: "span";
-        _key: string;
-      }>;
-      style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
-      listItem?: "bullet" | "number";
-      markDefs?: Array<{
-        href?: string;
-        _type: "link";
-        _key: string;
-      }>;
-      level?: number;
-      _type: "block";
-      _key: string;
-    }> | null;
-    position: Array<{
-      children?: Array<{
-        marks?: Array<string>;
-        text?: string;
-        _type: "span";
-        _key: string;
-      }>;
-      style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
-      listItem?: "bullet" | "number";
-      markDefs?: Array<{
-        href?: string;
-        _type: "link";
-        _key: string;
-      }>;
-      level?: number;
-      _type: "block";
-      _key: string;
-    }> | null;
-    showSupport: Array<{
-      children?: Array<{
-        marks?: Array<string>;
-        text?: string;
-        _type: "span";
-        _key: string;
-      }>;
-      style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
-      listItem?: "bullet" | "number";
-      markDefs?: Array<{
-        href?: string;
-        _type: "link";
-        _key: string;
-      }>;
-      level?: number;
-      _type: "block";
-      _key: string;
-    }> | null;
+    moreInfo: null;
   }> | null;
 } | null;
 // Variable: layout
@@ -765,7 +676,7 @@ declare module "@sanity/client" {
   interface SanityQueries {
     "\n      *[_type == \"post\" && slug.current == $slug][0]{\n        ...,\n        author->{\n          name\n        }\n      }": PostsResult;
     "\n    *[_type == \"homepage\"]{\n      _id,\n      _createdAt,\n      title,\n      \"slug\": slug.current,\n      content,\n      \"homePageHeroImage\": {\n        \"asset\": homePageHeroImage.asset->url,\n        \"altText\": homePageHeroImage.altText\n      },\n      \"whoWeAre\": {\n        \"heading\": whoWeAre.heading,\n        \"photo\": {\n          \"asset\": whoWeAre.photo.asset->url,\n          \"altText\": whoWeAre.photo.altText\n        },\n        \"content\" : whoWeAre.content\n      },\n      \"whatWeDo\": {\n        \"heading\": whatWeDo.heading,\n        \"whatWeDoPics\": whatWeDo.whatWeDoPics[] {\n          \"image\": image.asset->url,\n          \"altText\": altText,\n          \"caption\": caption\n        }\n      },\n      \"bikePlan\": {\n        \"heading\": bikePlan.heading,\n        \"content\": bikePlan.content\n      }\n    }[0]": HomePageResult;
-    "\n    *[_type == \"policyPage\"]{\n      _id,\n      _createdAt,\n      title,\n      \"introBlock\": {\n        \"heading\": introBlock.heading,\n        \"content\": introBlock.content\n      },\n      \"policyRows\": policyRows[] {\n        \"bill\": bill,\n        \"summary\": summary,\n        \"info\": info,\n        \"position\": position,\n        \"showSupport\": showSupport\n      }\n    }[0]": PolicyPageResult;
+    "\n    *[_type == \"policyPage\"]{\n      _id,\n      _createdAt,\n      title,\n      \"introBlock\": {\n        \"heading\": introBlock.heading,\n        \"content\": introBlock.content\n      },\n      \"policyRows\": policyRows[] {\n        \"policy\": policy,\n        \"summary\": summary,\n        \"moreInfo\": info,\n      }\n    }[0]": PolicyPageResult;
     "\n    *[_type == \"layout\"][0]{\n      _id,\n      _createdAt,\n      \"logo\": {\n        \"asset\": logo.asset->url,\n        \"altText\": logo.altText\n      },\n      \"landingPageLink\": landingPageLink\n    }": LayoutResult;
     "\n    *[_type == \"weekWithoutDriving\"]{\n      _id,\n      _createdAt,\n      title,\n      \"introBlock\": {\n        \"heading\": introBlock.heading,\n        \"content\": introBlock.content\n      }\n    }[0]": WeekWithoutDrivingPageResult;
   }

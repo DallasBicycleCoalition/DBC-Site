@@ -81,11 +81,9 @@ export async function getPolicyPage(): Promise<PolicyPageResult> {
         "content": introBlock.content
       },
       "policyRows": policyRows[] {
-        "bill": bill,
+        "policy": policy,
         "summary": summary,
-        "info": info,
-        "position": position,
-        "showSupport": showSupport
+        "moreInfo": info,
       }
     }[0]`;
 
