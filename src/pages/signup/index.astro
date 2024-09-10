@@ -1,0 +1,33 @@
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title="Join the Email List">
+  <section id="action-network-section">
+    <div id="email-list-widget">
+      <link
+        href="https://actionnetwork.org/css/style-embed-whitelabel-v3.css"
+        rel="stylesheet"
+        type="text/css"
+      />
+
+      <div id="can-form-area-join-the-dbc-email-list" style="width: 100%"></div>
+
+      <script>
+        if (typeof window !== "undefined") {
+          const formContainer = document.getElementById(
+            "can-form-area-join-the-dbc-email-list"
+          );
+          if (formContainer) {
+            const script = document.createElement("script");
+            script.src =
+              "https://actionnetwork.org/widgets/v5/form/join-the-dbc-email-list?format=js&source=widget";
+            formContainer.appendChild(script);
+          } else {
+            console.error("Form container not found");
+          }
+        }
+      </script>
+    </div>
+  </section>
+</Layout>

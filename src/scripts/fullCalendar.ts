@@ -98,12 +98,6 @@ document.addEventListener("DOMContentLoaded", () => {
   ensureCalendarInitialized();
 });
 
-document.addEventListener("astro:after-swap", () => {
-  requestAnimationFrame(() => {
-    ensureCalendarInitialized();
-  });
-});
-
 function ensureCalendarInitialized() {
   const calendarEl = document.getElementById("calendar");
 

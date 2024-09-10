@@ -151,24 +151,29 @@ header nav a {
 
 footer {
   display: flex;
+  flex-direction: column; /* Stacks items vertically */
   padding: 3em 10vw;
   margin-top: 2em;
   background-color: #dedede;
 }
 
-footer p {
-  margin: 0;
-  font-size: 0.9em;
-  color: #555;
+.footer-item {
+  margin-bottom: 1em; /* Adds padding between the items */
 }
 
 footer a {
   color: #007acc;
   text-decoration: none;
+  font-size: 1.2em; /* Slightly larger font for the links */
 }
 
 footer a:hover {
   text-decoration: underline;
+}
+
+footer img {
+  margin-top: 1em;
+  max-width: 100%; /* Ensures the image resizes responsively */
 }
 
 div.normal-copy p:not(:first-child):not(:-moz-first-node) {
@@ -315,6 +320,44 @@ h1 {
 /* Style for alternating row colors (optional) */
 .policy-table tbody tr:nth-child(even) {
   background-color: #ebebeb; /* Light background color for odd rows */
+}
+
+#event-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  max-width: 600px;
+  max-height: 80vh; /* Ensure the modal doesn’t exceed the viewport height */
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow-y: auto; /* Enable scrolling if content exceeds the max height */
+  z-index: 1000;
+}
+
+#event-title {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+#event-description {
+  font-size: 1rem;
+  margin-bottom: 20px;
+}
+
+#close-modal {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #007acc;
+  color: white;
+  text-align: center;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px;
 }
 
 @media (max-width: 900px) {
