@@ -45,7 +45,9 @@ function initCalendar(events: any) {
 
     // Use window.matchMedia to detect mobile view
     const isMobile = window.matchMedia("(max-width: 768px)").matches;
-    const initialView = window.matchMedia("(max-width: 768px)").matches ? "listMonth" : "dayGridMonth";
+    const initialView = window.matchMedia("(max-width: 768px)").matches
+      ? "listMonth"
+      : "dayGridMonth";
 
     const calendar = new Calendar(calendarEl, {
       plugins: [dayGridPlugin, timeGridPlugin, listPlugin, rrulePlugin],
@@ -53,7 +55,7 @@ function initCalendar(events: any) {
       headerToolbar: {
         left: "prev,next today",
         center: "title",
-        right: "dayGridMonth,timeGridWeek,timeGridDay,listMonth"
+        right: "dayGridMonth,timeGridWeek,timeGridDay,listMonth",
       },
       views: {
         dayGridMonth: { buttonText: "Month" },
@@ -70,7 +72,7 @@ function initCalendar(events: any) {
 
         if (modal && titleEl && descriptionEl && closeModalButton) {
           titleEl.textContent = info.event.title;
-          descriptionEl.textContent =
+          descriptionEl.innerHTML =
             info.event.extendedProps.description || "No description available.";
 
           modal.style.display = "block";
