@@ -3281,7 +3281,7 @@
         },
         "optional": true
       },
-      "mission": {
+      "vision": {
         "type": "objectAttribute",
         "value": {
           "type": "object",
@@ -3476,7 +3476,7 @@
         },
         "optional": true
       },
-      "vision": {
+      "mission": {
         "type": "objectAttribute",
         "value": {
           "type": "object",

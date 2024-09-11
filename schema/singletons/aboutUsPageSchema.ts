@@ -11,8 +11,8 @@ export const aboutUsSchema = defineType({
       type: "string",
     },
     {
-      name: "mission",
-      title: "Mission",
+      name: "vision",
+      title: "Vision",
       type: "object",
       fields: [
         {
@@ -29,8 +29,8 @@ export const aboutUsSchema = defineType({
       ],
     },
     {
-      name: "vision",
-      title: "Vision",
+      name: "mission",
+      title: "Mission",
       type: "object",
       fields: [
         {

@@ -469,7 +469,7 @@ export type AboutUs = {
   _updatedAt: string;
   _rev: string;
   title?: string;
-  mission?: {
+  vision?: {
     heading?: string;
     content?: Array<{
       children?: Array<{
@@ -490,7 +490,7 @@ export type AboutUs = {
       _key: string;
     }>;
   };
-  vision?: {
+  mission?: {
     heading?: string;
     content?: Array<{
       children?: Array<{
