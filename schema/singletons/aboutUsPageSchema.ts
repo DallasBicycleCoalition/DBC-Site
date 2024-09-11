@@ -2,7 +2,7 @@ import { defineType } from "sanity";
 
 export const aboutUsSchema = defineType({
   name: "aboutUs",
-  title: "about Us",
+  title: "About Us",
   type: "document",
   fields: [
     {
