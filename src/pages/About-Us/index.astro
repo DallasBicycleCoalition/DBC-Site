@@ -34,10 +34,10 @@ const aboutUsPage = await getAboutUsPage();
   </section>
 
   <section id="team-section">
-    <h2>Meet Our Team</h2>
+    <h2>{aboutUsPage?.team?.heading || "Meet Our Team"}</h2>
     <ul>
       {
-        aboutUsPage?.team?.map((member) => (
+        aboutUsPage?.team?.members?.map((member) => (
           <li>{member?.name && <PortableText value={member.name} />}</li>
         ))
       }

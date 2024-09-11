@@ -49,17 +49,29 @@ export const aboutUsSchema = defineType({
     {
       name: "team",
       title: "Team",
-      type: "array",
-      of: [
+      type: "object",
+      fields: [
         {
-          type: "object",
-          title: "Team Member",
-          fields: [
+          name: "heading",
+          title: "Heading",
+          type: "string",
+        },
+        {
+          name: "members",
+          title: "Members",
+          type: "array",
+          of: [
             {
-              name: "name",
-              title: "Name",
-              type: "array",
-              of: [{ type: "block" }],
+              type: "object",
+              title: "Team Member",
+              fields: [
+                {
+                  name: "name",
+                  title: "Name",
+                  type: "array",
+                  of: [{ type: "block" }],
+                },
+              ],
             },
           ],
         },

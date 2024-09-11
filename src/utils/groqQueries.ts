@@ -128,8 +128,11 @@ export async function getAboutUsPage(): Promise<AboutUsPageResult> {
         "heading": vision.heading,
         "content": vision.content
       },
-      "team": team[] {
-        "name": name
+      "team": {
+        "heading": team.heading,
+        "members": team.members[]{
+          "name": name
+        }
       }
     }[0]`;
 
