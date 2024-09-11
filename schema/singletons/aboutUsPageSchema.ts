@@ -12,7 +12,7 @@ export const aboutUsSchema = defineType({
     },
     {
       name: "mission",
-      title: "Intro Block",
+      title: "Mission",
       type: "object",
       fields: [
         {
