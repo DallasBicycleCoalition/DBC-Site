@@ -1,6 +1,7 @@
 import groq from "groq";
 import { sanityClient } from "sanity:client";
 import type {
+  AboutUsPageResult,
   HomePageResult,
   LayoutResult,
   PolicyPageResult,
@@ -10,10 +11,10 @@ import type {
 
 export async function getPosts(
   start: number = 0,
-  limit: number = 10,
+  limit: number = 10
 ): Promise<PostsResult[]> {
   return await sanityClient.fetch(
-    groq`*[_type == "post" && defined(slug.current)] | order(_createdAt desc) [${start}...${start + limit}]`,
+    groq`*[_type == "post" && defined(slug.current)] | order(_createdAt desc) [${start}...${start + limit}]`
   );
 }
 
@@ -109,6 +110,30 @@ export async function getLayout(): Promise<LayoutResult> {
     }`;
 
   const results = await sanityClient.fetch(layout);
+
+  return results;
+}
+
+export async function getAboutUsPage(): Promise<AboutUsPageResult> {
+  const aboutUsPage = groq`
+    *[_type == "aboutUs"]{
+      _id,
+      _createdAt,
+      title,
+      "mission": {
+        "heading": mission.heading,
+        "content": mission.content
+      },
+      "vision": {
+        "heading": vision.heading,
+        "content": vision.content
+      },
+      "team": team[] {
+        "name": name
+      }
+    }[0]`;
+
+  const results = await sanityClient.fetch(aboutUsPage);
 
   return results;
 }

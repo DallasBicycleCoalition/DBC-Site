@@ -1,0 +1,46 @@
+---
+import { PortableText } from "@portabletext/react";
+import Layout from "../../layouts/Layout.astro";
+import { getAboutUsPage } from "../../utils/groqQueries";
+
+const aboutUsPage = await getAboutUsPage();
+---
+
+<Layout title={aboutUsPage?.title || "About Us"}>
+  <section class="hero">
+    <h1>{aboutUsPage?.title}</h1>
+  </section>
+
+  <section id="mission-section">
+    <h2>{aboutUsPage?.mission.heading}</h2>
+    <div class="normal-copy">
+      {
+        aboutUsPage?.mission.content && (
+          <PortableText value={aboutUsPage.mission.content} />
+        )
+      }
+    </div>
+  </section>
+
+  <section id="vision-section">
+    <h2>{aboutUsPage?.vision.heading}</h2>
+    <div class="normal-copy">
+      {
+        aboutUsPage?.vision.content && (
+          <PortableText value={aboutUsPage.vision.content} />
+        )
+      }
+    </div>
+  </section>
+
+  <section id="team-section">
+    <h2>Meet Our Team</h2>
+    <ul>
+      {
+        aboutUsPage?.team?.map((member) => (
+          <li>{member?.name && <PortableText value={member.name} />}</li>
+        ))
+      }
+    </ul>
+  </section>
+</Layout>
