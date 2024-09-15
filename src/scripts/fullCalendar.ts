@@ -1,4 +1,4 @@
-import { Calendar } from "@fullcalendar/core";
+import { Calendar, type EventInput } from "@fullcalendar/core";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import listPlugin from "@fullcalendar/list";
 import rrulePlugin from "@fullcalendar/rrule";
@@ -10,19 +10,24 @@ declare global {
   }
 }
 
+interface TransformedEvent extends EventInput {
+  description?: string;
+  location?: string;
+}
+
 function initCalendar(events: any) {
   const calendarEl = document.getElementById("calendar");
   const errorMessageEl = document.getElementById("error-message");
 
   if (calendarEl && errorMessageEl) {
-    const transformedEvents = events.map((event: any) => {
+    const transformedEvents: TransformedEvent[] = events.map((event: any) => {
       const isAllDay = !event.start.dateTime;
       let eventStart = new Date(event.start.dateTime || event.start.date);
-      let eventEnd = event.end
+      let eventEnd: Date | undefined = event.end
         ? new Date(event.end.dateTime || event.end.date)
-        : null;
+        : undefined;
 
-      const transformedEvent: any = {
+      const transformedEvent: TransformedEvent = {
         title: event.summary,
         description: event.description,
         location: event.location,
@@ -33,9 +38,9 @@ function initCalendar(events: any) {
 
       if (event.recurrence && event.recurrence.length > 0) {
         // Handle recurrence rule
-        transformedEvent.rrule = `DTSTART:${eventStart.toISOString().replace(/[-:.]/g, "").slice(0, 15)}Z\n${event.recurrence[0]}`;
+        transformedEvent.rrule = event.recurrence[0].replace("RRULE:", "");
       } else if (isAllDay && eventStart) {
-        // Adjust start date for all-day events because end.date is exclusive
+        // Adjust start date for non-recurring all-day events
         eventStart.setDate(eventStart.getDate() + 1);
         transformedEvent.start = eventStart;
       }
@@ -44,7 +49,6 @@ function initCalendar(events: any) {
     });
 
     // Use window.matchMedia to detect mobile view
-    const isMobile = window.matchMedia("(max-width: 768px)").matches;
     const initialView = window.matchMedia("(max-width: 768px)").matches
       ? "listMonth"
       : "dayGridMonth";
