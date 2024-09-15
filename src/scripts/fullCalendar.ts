@@ -1,19 +1,9 @@
-import { Calendar, type EventInput } from "@fullcalendar/core";
+import { Calendar } from "@fullcalendar/core";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import listPlugin from "@fullcalendar/list";
 import rrulePlugin from "@fullcalendar/rrule";
 import timeGridPlugin from "@fullcalendar/timegrid";
-
-declare global {
-  interface Window {
-    events: any;
-  }
-}
-
-interface TransformedEvent extends EventInput {
-  description?: string;
-  location?: string;
-}
+import type { TransformedEvent } from "../types/events.ts";
 
 function initCalendar(events: any) {
   const calendarEl = document.getElementById("calendar");
