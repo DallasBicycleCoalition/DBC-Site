@@ -19,7 +19,7 @@ const data = await getLayout();
   <button id="menuToggle" aria-label="Toggle navigation">&#9776;</button>
   <nav id="navMenu">
     <a href="/calendar" onclick="window.location.href='/calendar'; return false;">Calendar</a>
-    <a href="/Week-Without-Driving">Week Without Driving</a>
+    <a href="/week-without-driving">Week Without Driving</a>
   </nav>
 </header>
 
@@ -54,7 +54,7 @@ const data = await getLayout();
 
   // Initialize on first load
   init();
-  
+
   // Re-initialize after swapping pages
   document.addEventListener("astro:after-swap", () => {
     init();
