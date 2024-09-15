@@ -1,33 +1,10 @@
 ---
 import { PortableText } from '@portabletext/react';
-import imageUrlBuilder from '@sanity/image-url';
-import type { SanityImageSource } from '@sanity/image-url/lib/types/types';
 import Layout from '../layouts/Layout.astro';
-import { getHomePage } from '../utils/sanity';
+import { getHomePage } from '../utils/groqQueries';
+import { urlFor } from '../utils/utils';
 
-// Fetch data on the server side
 const homePage = await getHomePage();
-const projectId = import.meta.env.PUBLIC_SANITY_PROJECT_ID;
-const dataset = import.meta.env.PUBLIC_SANITY_DATASET;
-
-// Set up the image URL builder
-const builder = imageUrlBuilder({
-  projectId: projectId,
-  dataset: dataset,
-});
-
-// Get the URL of an image
-function urlFor(source: SanityImageSource) {
-  let url = '';
-  if (source) {
-    url = builder.image(source).url();
-    console.log('Image URL:', url);
-  } else {
-    url = 'https://picsum.photos/500/500';
-  }
-
-  return url;
-}
 ---
 
 <Layout title={homePage?.title || 'Default Title'}>
@@ -36,7 +13,7 @@ function urlFor(source: SanityImageSource) {
     {
       homePage?.homePageHeroImage?.asset && (
         <img
-          src={urlFor(homePage.homePageHeroImage.asset)}
+          src={urlFor(homePage.homePageHeroImage.asset).url()}
           alt={homePage.homePageHeroImage.altText || 'Hero image'}
         />
       )
@@ -49,7 +26,7 @@ function urlFor(source: SanityImageSource) {
       {
         homePage?.whoWeAre.photo.asset && (
           <img
-            src={urlFor(homePage.whoWeAre.photo.asset)}
+            src={urlFor(homePage.whoWeAre.photo.asset).url()}
             alt={homePage.whoWeAre.photo.altText || 'Who we are image'}
           />
         )
@@ -75,7 +52,7 @@ function urlFor(source: SanityImageSource) {
             caption: unknown;
           }) => (
             <div>
-              <img src={urlFor(pic.image)} alt={pic.altText} />
+              <img src={urlFor(pic.image).url()} alt={pic.altText} />
               <p>{pic.caption}</p>
             </div>
           )

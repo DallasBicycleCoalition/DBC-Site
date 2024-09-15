@@ -1,23 +1,7 @@
 ---
-import imageUrlBuilder from "@sanity/image-url";
-import type { SanityImageSource } from "@sanity/image-url/lib/types/types";
-import { getLayout } from "../utils/sanity";
+import { getLayout } from "../utils/groqQueries";
+import { urlFor } from "../utils/utils";
 
-// Setup Sanity image builder
-const projectId = import.meta.env.PUBLIC_SANITY_PROJECT_ID;
-const dataset = import.meta.env.PUBLIC_SANITY_DATASET;
-
-const builder = imageUrlBuilder({
-  projectId: projectId,
-  dataset: dataset,
-});
-
-// Generate image URLs
-function urlFor(source: SanityImageSource) {
-  return source ? builder.image(source).url() : "https://picsum.photos/500/500";
-}
-
-// Fetching layout data
 const data = await getLayout();
 ---
 
@@ -25,26 +9,54 @@ const data = await getLayout();
   <a href={data?.landingPageLink || "/"}>
     {
       data?.logo && data.logo.asset && (
-        <img src={urlFor(data.logo.asset)} alt={data.logo.altText || "Logo"} />
+        <img
+          src={urlFor(data.logo.asset).url()}
+          alt={data.logo.altText || "Logo"}
+        />
       )
     }
   </a>
-  <nav>
-    <a href="/calendar">Calendar</a>
+  <button id="menuToggle" aria-label="Toggle navigation">&#9776;</button>
+  <nav id="navMenu">
+    <a href="/calendar" onclick="window.location.href='/calendar'; return false;">Calendar</a>
+    <a href="/week-without-driving">Week Without Driving</a>
   </nav>
 </header>
 
-<style>
-  header {
-    display: flex;
+<script is:inline type="module">
+  function toggleMenu(menuToggle, navMenu) {
+    navMenu.classList.toggle("active");
+    menuToggle.classList.toggle("active");
+    menuToggle.innerHTML = navMenu.classList.contains("active")
+      ? "&#10005;"
+      : "&#9776;";
   }
 
-  header nav {
-    display: flex;
-    align-content: center;
-    justify-content: right;
-    align-items: center;
-    padding: 1em;
-    flex: 1;
+  function init() {
+    const menuToggle = document.getElementById("menuToggle");
+    const navMenu = document.getElementById("navMenu");
+
+    if (menuToggle && navMenu) {
+      const handleClick = () => toggleMenu(menuToggle, navMenu);
+      menuToggle.addEventListener("click", handleClick);
+
+      document.addEventListener(
+        "astro:before-swap",
+        () => {
+          menuToggle.removeEventListener("click", handleClick);
+        },
+        { once: true }
+      );
+    } else {
+      console.error("Menu toggle button or navigation menu is missing.");
+    }
   }
-</style>
+
+  // Initialize on first load
+  init();
+
+  // Re-initialize after swapping pages
+  document.addEventListener("astro:after-swap", () => {
+    init();
+  });
+</script>

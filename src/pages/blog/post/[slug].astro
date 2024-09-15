@@ -1,0 +1,53 @@
+---
+import { PortableText } from "@portabletext/react";
+import type { PostsResult } from "../../../../sanity.types";
+import Layout from "../../../layouts/Layout.astro";
+import { getPost, getPosts } from "../../../utils/groqQueries";
+import { urlFor } from "../../../utils/utils";
+
+export async function getStaticPaths() {
+  const posts = await getPosts();
+
+  return posts
+    .filter(
+      (post): post is PostsResult & { slug: { current: string } } =>
+        post?.slug !== undefined
+    )
+    .map((post) => ({
+      params: { slug: post.slug.current },
+    }));
+}
+
+const { slug } = Astro.params;
+const post: PostsResult = await getPost(slug);
+
+if (!post) {
+  throw new Error(`Post with slug '${slug}' not found`);
+}
+---
+
+<Layout title={post.title}>
+  <article class="blog-post">
+    <h1>{post.title}</h1>
+    <p class="post-date-author">
+      {
+        post._createdAt.slice(0, 10) == post._updatedAt.slice(0, 10)
+          ? `${post.author?.name} • Created ${new Date(post._createdAt).toLocaleDateString()}`
+          : `${post.author?.name} • Created ${new Date(post._createdAt).toLocaleDateString()} • Last Updated ${new Date(post._updatedAt).toLocaleDateString()}`
+      }
+    </p>
+    {
+      post.mainImage && post.mainImage.asset && (
+        <img
+          src={urlFor(post.mainImage).width(800).height(400).url()}
+          alt={post.mainImage.altText || "Image"}
+          class="main-post-image"
+          loading="lazy"
+        />
+      )
+    }
+    <div class="normal-copy">
+      {post.body && <PortableText value={post.body} />}
+    </div>
+  </article>
+</Layout>

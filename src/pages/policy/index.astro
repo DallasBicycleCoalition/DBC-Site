@@ -1,0 +1,67 @@
+---
+import { PortableText } from "@portabletext/react";
+import Layout from "../../layouts/Layout.astro";
+import { getPolicyPage } from "../../utils/groqQueries";
+
+const policyPage = await getPolicyPage();
+---
+
+<Layout title={policyPage?.title || "Policy Page"}>
+  <section class="policy-page-intro">
+    <h1>{policyPage?.title}</h1>
+    <h2>{policyPage?.introBlock.heading}</h2>
+    {
+      policyPage?.introBlock.content && (
+        <div>
+          <PortableText value={policyPage?.introBlock.content} />
+        </div>
+      )
+    }
+  </section>
+
+  <section class="policy-table-section">
+    <table class="policy-table">
+      <thead>
+        <tr>
+          <th>Policy</th>
+          <th>Summary</th>
+          <th>More Info</th>
+        </tr>
+      </thead>
+      <tbody>
+        {
+          policyPage?.policyRows?.map(
+            (row: {
+              policy: any;
+              summary: any;
+              moreInfo: any;
+            }) => (
+              <tr>
+                <td data-label="Policy">
+                  <PortableText value={row.policy} />
+                </td>
+                <td data-label="Summary">
+                  <PortableText value={row.summary} />
+                </td>
+                <td data-label="More Info">
+                  <PortableText value={row.moreInfo} />
+                </td>
+              </tr>
+            )
+          )
+        }
+      </tbody>
+    </table>
+  </section>
+
+  <section class="policy-page-intro">
+    <h2>{policyPage?.legislativeDemands.heading}</h2>
+    {
+      policyPage?.legislativeDemands.content && (
+        <div>
+          <PortableText value={policyPage?.legislativeDemands.content} />
+        </div>
+      )
+    }
+  </section>
+</Layout>

@@ -7,8 +7,8 @@ const projectId = "wfdg37xd";
 const dataset = "production";
 
 export default defineConfig({
-  name: "project-name",
-  title: "Project Name",
+  name: "dallas-bicycle-coalition",
+  title: "Dallas Bicycle Coalition",
   projectId,
   dataset,
   plugins: [structureTool(), visionTool()],

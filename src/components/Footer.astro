@@ -1,26 +1,27 @@
----
-/*
-import imageUrlBuilder from '@sanity/image-url';
-import type { SanityImageSource } from '@sanity/image-url/lib/types/types';
-import { getLayout } from '../utils/sanity';
+<footer>
+  <!-- DBC Logo -->
+  <div class="footer-logo">
+    <img
+      src="/DallasBicycleCoalition_Badge_only.png"
+      alt="DBC Logo"
+    />
+  </div>
 
-// Setup Sanity image builder
-const projectId = import.meta.env.PUBLIC_SANITY_PROJECT_ID;
-const dataset = import.meta.env.PUBLIC_SANITY_DATASET;
+  <!-- Signup Link to the Email List and GitHub Link -->
+  <div class="footer-links">
+    <div class="footer-item">
+      <a href="/signup" onclick="window.location.href='/signup'; return false;"
+        >Join our Email List</a
+      >
+    </div>
 
-const builder = imageUrlBuilder({
-  projectId: projectId,
-  dataset: dataset,
-});
-
-// Function to generate image URLs
-function urlFor(source: SanityImageSource) {
-  return source ? builder.image(source).url() : 'https://picsum.photos/500/500';
-}
-
-// Fetching layout data
-const data = await getLayout();
-*/
----
-
-<footer></footer>
+    <div class="footer-item">
+      <a
+        href="https://github.com/DallasBicycleCoalition/DBC-Site"
+        target="_blank"
+      >
+        View on GitHub
+      </a>
+    </div>
+  </div>
+</footer>
