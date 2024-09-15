@@ -27,11 +27,31 @@ function initCalendar(events: any) {
       };
 
       if (event.recurrence && event.recurrence.length > 0) {
-        // Handle recurrence rule
-        transformedEvent.rrule = event.recurrence[0].replace("RRULE:", "");
+        // Helper function to format date for DTSTART
+        const formatDateForDTSTART = (date: Date) => {
+          const y = date.getFullYear();
+          const m = String(date.getMonth() + 1).padStart(2, "0");
+          const d = String(date.getDate()).padStart(2, "0");
+          const h = String(date.getHours()).padStart(2, "0");
+          const min = String(date.getMinutes()).padStart(2, "0");
+          const s = String(date.getSeconds()).padStart(2, "0");
+          return `${y}${m}${d}T${h}${min}${s}`;
+        };
+
+        // Use the helper function to get the formatted DTSTART
+        const dtstart = formatDateForDTSTART(eventStart);
+
+        // Update the transformedEvent.rrule with the correct DTSTART
+        transformedEvent.rrule = `DTSTART:${dtstart}\n${event.recurrence[0]}`;
       } else if (isAllDay && eventStart) {
         // Adjust start date for non-recurring all-day events
         eventStart.setDate(eventStart.getDate() + 1);
+
+        // Ensure eventEnd is defined before modifying it
+        if (eventEnd) {
+          eventEnd.setDate(eventEnd.getDate() + 1);
+        }
+
         transformedEvent.start = eventStart;
       }
 
