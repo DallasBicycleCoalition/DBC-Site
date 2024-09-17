@@ -120,6 +120,8 @@ header {
 
 header {
   display: flex;
+  justify-content: center; /* This centers the child .header-stuff horizontally */
+  align-items: center; /* This centers the child .header-stuff vertically, optional */
 }
 
 header img {
@@ -138,6 +140,12 @@ header nav {
 
 header nav a {
   padding: 1em;
+}
+
+.header-stuff {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 #menuToggle {
@@ -161,13 +169,29 @@ footer {
   margin-right: 2em; /* Space between logo and the links */
 }
 
+.footer-logo img {
+  margin-top: 1em;
+  max-width: 100%; /* Ensures the image resizes responsively */
+  max-height: 4em;
+}
+
 .footer-links {
   display: flex;
   flex-direction: column; /* Stack links vertically */
 }
 
+.footer-socials {
+  display: flex;
+}
+
 .footer-item {
   margin-bottom: 1em; /* Adds padding between the items */
+}
+
+.footer-item img {
+  margin-right: 0.5em;
+  width: 24px;
+  height: 24px;
 }
 
 footer a {
@@ -178,12 +202,6 @@ footer a {
 
 footer a:hover {
   text-decoration: underline;
-}
-
-footer img {
-  margin-top: 1em;
-  max-width: 100%; /* Ensures the image resizes responsively */
-  max-height: 4em;
 }
 
 div.normal-copy p:not(:first-child):not(:-moz-first-node) {
