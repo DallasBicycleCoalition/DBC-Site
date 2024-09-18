@@ -27,3 +27,6 @@ Template used as reference: https://github.com/sanity-io/sanity-template-astro-c
 - New content is published
 - Sanity pings Cloudflare that content has been updated, it pulls the latest branch from Github
 - Cloudflare attempts to build and deploy to production site, using API calls to get content from Sanity
+
+![image](https://github.com/user-attachments/assets/87019581-ce4d-4e84-bcc4-53ab321c7f3e)
+
