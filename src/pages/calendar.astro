@@ -1,5 +1,5 @@
 ---
-import Layout from "../../layouts/Layout.astro";
+import Layout from "../layouts/Layout.astro";
 
 // Fetch events from Google Calendar on the server side
 const calendarId = import.meta.env.CALENDAR_ID;
@@ -46,4 +46,4 @@ try {
 </script>
 
 <!-- Load the external calendar.ts script -->
-<script src="../../scripts/fullCalendar.ts"></script>
+<script src="../scripts/fullCalendar.ts"></script>
