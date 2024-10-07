@@ -37,7 +37,8 @@
     "react": "18.3.1",
     "react-dom": "18.3.1",
     "rrule": "^2.8.1",
-    "sanity": "^3.59.1"
+    "sanity": "^3.59.1",
+    "sanity-plugin-recurring-dates": "^1.2.0"
   },
   "devDependencies": {
     "@portabletext/types": "2.0.13",

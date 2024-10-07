@@ -1,5 +1,6 @@
 import { visionTool } from "@sanity/vision";
 import { defineConfig } from "sanity";
+import { recurringDates } from "sanity-plugin-recurring-dates";
 import { structureTool } from "sanity/structure";
 import { schemaTypes } from "./schema/index";
 
@@ -11,6 +12,6 @@ export default defineConfig({
   title: "Dallas Bicycle Coalition",
   projectId,
   dataset,
-  plugins: [structureTool(), visionTool()],
+  plugins: [structureTool(), visionTool(), recurringDates()],
   schema: { types: schemaTypes },
 });
