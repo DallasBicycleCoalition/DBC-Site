@@ -5,54 +5,35 @@ import rrulePlugin from "@fullcalendar/rrule";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import type { TransformedEvent } from "../types/events.ts";
 
+// Helper to convert Sanity block content to plain text
+function getSanityText(blocks: any[]): string {
+  return blocks
+    .map((block) => block.children.map((child: any) => child.text).join(""))
+    .join("\n");
+}
+
 function initCalendar(events: any) {
   const calendarEl = document.getElementById("calendar");
   const errorMessageEl = document.getElementById("error-message");
 
   if (calendarEl && errorMessageEl) {
     const transformedEvents: TransformedEvent[] = events.map((event: any) => {
-      const isAllDay = !event.start.dateTime;
-      let eventStart = new Date(event.start.dateTime || event.start.date);
-      let eventEnd: Date | undefined = event.end
-        ? new Date(event.end.dateTime || event.end.date)
-        : undefined;
+      let eventStart = new Date(event.date.startDate);
+      let eventEnd = event.date.endDate ? new Date(event.date.endDate) : undefined;
 
       const transformedEvent: TransformedEvent = {
-        title: event.summary,
-        description: event.description,
+        title: event.title,
+        description: getSanityText(event.description),
         location: event.location,
-        allDay: isAllDay,
+        allDay: false, // You can adjust this based on the event data from Sanity
         start: eventStart,
         end: eventEnd,
       };
 
-      if (event.recurrence && event.recurrence.length > 0) {
-        // Helper function to format date for DTSTART
-        const formatDateForDTSTART = (date: Date) => {
-          const y = date.getFullYear();
-          const m = String(date.getMonth() + 1).padStart(2, "0");
-          const d = String(date.getDate()).padStart(2, "0");
-          const h = String(date.getHours()).padStart(2, "0");
-          const min = String(date.getMinutes()).padStart(2, "0");
-          const s = String(date.getSeconds()).padStart(2, "0");
-          return `${y}${m}${d}T${h}${min}${s}`;
-        };
-
-        // Use the helper function to get the formatted DTSTART
-        const dtstart = formatDateForDTSTART(eventStart);
-
-        // Update the transformedEvent.rrule with the correct DTSTART
-        transformedEvent.rrule = `DTSTART:${dtstart}\n${event.recurrence[0]}`;
-      } else if (isAllDay && eventStart) {
-        // Adjust start date for non-recurring all-day events
-        eventStart.setDate(eventStart.getDate() + 1);
-
-        // Ensure eventEnd is defined before modifying it
-        if (eventEnd) {
-          eventEnd.setDate(eventEnd.getDate() + 1);
-        }
-
-        transformedEvent.start = eventStart;
+      if (event.date.rrule) {
+        // Add rrule for recurring events
+        const dtstart = eventStart.toISOString().replace(/[-:]/g, "").split(".")[0];
+        transformedEvent.rrule = `DTSTART:${dtstart}\n${event.date.rrule}`;
       }
 
       return transformedEvent;

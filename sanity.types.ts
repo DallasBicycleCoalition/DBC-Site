@@ -403,47 +403,6 @@ export type AboutUs = {
   };
 };
 
-export type RecurringEvent = {
-  _id: string;
-  _type: "recurringEvent";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  title?: string;
-  date?: RecurringDates;
-  location?: string;
-  excerpt?: string;
-  description?: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
-      _key: string;
-    }>;
-    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
-    listItem?: "bullet" | "number";
-    markDefs?: Array<{
-      href?: string;
-      _type: "link";
-      _key: string;
-    }>;
-    level?: number;
-    _type: "block";
-    _key: string;
-  }>;
-  photo?: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    _type: "image";
-  };
-};
-
 export type Post = {
   _id: string;
   _type: "post";
@@ -500,14 +459,14 @@ export type Slug = {
   source?: string;
 };
 
-export type Event = {
+export type Events = {
   _id: string;
-  _type: "event";
+  _type: "events";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
   title?: string;
-  date?: string;
+  date?: RecurringDates;
   location?: string;
   excerpt?: string;
   description?: Array<{
@@ -627,7 +586,7 @@ export type RecurringDates = {
   rrule?: string;
 };
 
-export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | WeekWithoutDriving | PolicyPage | Layout | Homepage | CaptionedImage | AboutUs | RecurringEvent | Post | Slug | Event | Author | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata | RecurringDates;
+export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | WeekWithoutDriving | PolicyPage | Layout | Homepage | CaptionedImage | AboutUs | Post | Slug | Events | Author | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata | RecurringDates;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./src/utils/groqQueries.ts
 // Variable: posts
@@ -933,6 +892,40 @@ export type AboutUsPageResult = {
     }> | null;
   };
 } | null;
+// Variable: eventsPage
+// Query: *[_type == "events"]{      _id,      _createdAt,      title,      date,      location,      excerpt,      description,      photo {        asset -> {          _id,          url        }      }    }
+export type EventsPageResult = Array<{
+  _id: string;
+  _createdAt: string;
+  title: string | null;
+  date: RecurringDates | null;
+  location: string | null;
+  excerpt: string | null;
+  description: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }> | null;
+  photo: {
+    asset: {
+      _id: string;
+      url: string | null;
+    } | null;
+  } | null;
+}>;
 // Variable: weekWithoutDrivingPage
 // Query: *[_type == "weekWithoutDriving"]{      _id,      _createdAt,      title,      "introBlock": {        "heading": introBlock.heading,        "content": introBlock.content      }    }[0]
 export type WeekWithoutDrivingPageResult = {
@@ -971,6 +964,7 @@ declare module "@sanity/client" {
     "\n    *[_type == \"policyPage\"]{\n      _id,\n      _createdAt,\n      title,\n      \"introBlock\": {\n        \"heading\": introBlock.heading,\n        \"content\": introBlock.content\n      },\n      \"policyRows\": policyRows[] {\n        \"policy\": policy,\n        \"summary\": summary,\n        \"moreInfo\": moreInfo,\n      },\n      \"legislativeDemands\": {\n        \"heading\": legislativeDemands.heading,\n        \"content\": legislativeDemands.content\n      },\n    }[0]": PolicyPageResult;
     "\n    *[_type == \"layout\"][0]{\n      _id,\n      _createdAt,\n      \"logo\": {\n        \"asset\": logo.asset->url,\n        \"altText\": logo.altText\n      },\n      \"landingPageLink\": landingPageLink\n    }": LayoutResult;
     "\n    *[_type == \"aboutUs\"]{\n      _id,\n      _createdAt,\n      title,\n      \"mission\": {\n        \"heading\": mission.heading,\n        \"content\": mission.content\n      },\n      \"vision\": {\n        \"heading\": vision.heading,\n        \"content\": vision.content\n      },\n      \"team\": {\n        \"heading\": team.heading,\n        \"members\": team.members[]{\n          \"name\": name\n        }\n      }\n    }[0]": AboutUsPageResult;
+    "\n    *[_type == \"events\"]{\n      _id,\n      _createdAt,\n      title,\n      date,\n      location,\n      excerpt,\n      description,\n      photo {\n        asset -> {\n          _id,\n          url\n        }\n      }\n    }\n  ": EventsPageResult;
     "\n    *[_type == \"weekWithoutDriving\"]{\n      _id,\n      _createdAt,\n      title,\n      \"introBlock\": {\n        \"heading\": introBlock.heading,\n        \"content\": introBlock.content\n      }\n    }[0]": WeekWithoutDrivingPageResult;
   }
 }

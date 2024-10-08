@@ -2,6 +2,7 @@ import groq from "groq";
 import { sanityClient } from "sanity:client";
 import type {
   AboutUsPageResult,
+  EventsPageResult,
   HomePageResult,
   LayoutResult,
   PolicyPageResult,
@@ -140,6 +141,31 @@ export async function getAboutUsPage(): Promise<AboutUsPageResult> {
 
   return results;
 }
+
+export async function getEventsPage(): Promise<EventsPageResult> {
+  const eventsPage = groq`
+    *[_type == "events"]{
+      _id,
+      _createdAt,
+      title,
+      date,
+      location,
+      excerpt,
+      description,
+      photo {
+        asset -> {
+          _id,
+          url
+        }
+      }
+    }
+  `;
+
+  const results = await sanityClient.fetch(eventsPage);
+
+  return results;
+}
+
 
 export async function getWeekWithoutDrivingPage(): Promise<WeekWithoutDrivingPageResult> {
   const weekWithoutDrivingPage = groq`
