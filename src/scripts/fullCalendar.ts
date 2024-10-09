@@ -19,20 +19,25 @@ function initCalendar(events: any) {
   if (calendarEl && errorMessageEl) {
     const transformedEvents: TransformedEvent[] = events.map((event: any) => {
       let eventStart = new Date(event.date.startDate);
-      let eventEnd = event.date.endDate ? new Date(event.date.endDate) : undefined;
+      let eventEnd = event.date.endDate
+        ? new Date(event.date.endDate)
+        : undefined;
 
       const transformedEvent: TransformedEvent = {
         title: event.title,
         description: getSanityText(event.description),
         location: event.location,
-        allDay: false, // You can adjust this based on the event data from Sanity
+        allDay: event.allDay,
         start: eventStart,
         end: eventEnd,
       };
 
       if (event.date.rrule) {
-        // Add rrule for recurring events
-        const dtstart = eventStart.toISOString().replace(/[-:]/g, "").split(".")[0];
+        // Use toISOString() to keep UTC for DTSTART and don't strip the 'Z'
+        const dtstart =
+          eventStart.toISOString().replace(/[-:]/g, "").split(".")[0] + "Z";
+
+        // Keep the rrule in UTC, FullCalendar will handle the conversion for local time
         transformedEvent.rrule = `DTSTART:${dtstart}\n${event.date.rrule}`;
       }
 
@@ -46,6 +51,7 @@ function initCalendar(events: any) {
 
     const calendar = new Calendar(calendarEl, {
       plugins: [dayGridPlugin, timeGridPlugin, listPlugin, rrulePlugin],
+      timeZone: "local", // Keep everything in UTC, as you requested
       initialView: initialView,
       headerToolbar: {
         left: "prev,next today",

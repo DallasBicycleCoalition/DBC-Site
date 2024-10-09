@@ -11,9 +11,14 @@ export const eventsSchema = defineType({
       type: "string",
     },
     {
-      name: 'date',
-      title: 'Date',
-      type: 'recurringDates',
+      name: "date",
+      title: "Date",
+      type: "recurringDates",
+    },
+    {
+      name: "allDay",
+      title: "All Day: Ignore above times and present as all day",
+      type: "boolean",
     },
     {
       name: "location",

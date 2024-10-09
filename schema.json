@@ -3491,6 +3491,13 @@
         },
         "optional": true
       },
+      "allDay": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "boolean"
+        },
+        "optional": true
+      },
       "location": {
         "type": "objectAttribute",
         "value": {
