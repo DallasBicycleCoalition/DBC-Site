@@ -47,7 +47,7 @@ function initCalendar(events: IncomingEvent[]) {
       },
       events: transformedEvents,
       eventClick: function (info) {
-        const modalOverlay = document.getElementById("modal-overlay");
+        const modalOverlay = document.getElementById("modal-overlay") as HTMLElement;
         const titleEl = document.getElementById("event-title");
         const descriptionEl = document.getElementById("event-description");
 
@@ -72,7 +72,7 @@ function initCalendar(events: IncomingEvent[]) {
 document.addEventListener("DOMContentLoaded", () => {
   ensureCalendarInitialized();
 
-  const modalOverlay = document.getElementById("modal-overlay");
+  const modalOverlay = document.getElementById("modal-overlay") as HTMLElement;
   const closeModalButton = document.getElementById("close-modal");
 
   if (modalOverlay && closeModalButton) {
@@ -86,6 +86,15 @@ document.addEventListener("DOMContentLoaded", () => {
     // Close modal when clicking on close button
     closeModalButton.addEventListener("click", () => {
       modalOverlay.style.display = "none";
+    });
+
+    // Close modal when pressing the Escape key
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" || event.key === "Esc") {
+        if (modalOverlay.style.display === "block") {
+          modalOverlay.style.display = "none";
+        }
+      }
     });
   }
 });
