@@ -18,13 +18,12 @@ const events = eventsFromSanity.map((event) => ({
     <p id="error-message" style="color: red;"></p>
   </section>
 
-  <div
-    id="event-modal"
-    style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: white; border: 1px solid black; padding: 20px; z-index: 1000;"
-  >
-    <h2 id="event-title"></h2>
-    <div id="event-description"></div>
-    <button id="close-modal">Close</button>
+  <div id="modal-overlay" class="modal-overlay">
+    <div id="event-modal" class="event-modal">
+      <h2 id="event-title"></h2>
+      <div id="event-description"></div>
+      <button id="close-modal">Close</button>
+    </div>
   </div>
 </Layout>
 

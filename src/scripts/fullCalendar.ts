@@ -47,21 +47,14 @@ function initCalendar(events: IncomingEvent[]) {
       },
       events: transformedEvents,
       eventClick: function (info) {
-        const modal = document.getElementById("event-modal");
+        const modalOverlay = document.getElementById("modal-overlay");
         const titleEl = document.getElementById("event-title");
         const descriptionEl = document.getElementById("event-description");
-        const closeModalButton = document.getElementById("close-modal");
 
-        if (modal && titleEl && descriptionEl && closeModalButton) {
+        if (modalOverlay && titleEl && descriptionEl) {
           titleEl.textContent = info.event.title;
-
           descriptionEl.innerHTML = info.event.extendedProps.description;
-
-          modal.style.display = "block";
-
-          closeModalButton.addEventListener("click", () => {
-            modal.style.display = "none";
-          });
+          modalOverlay.style.display = "block";
         }
       },
     });
@@ -78,6 +71,23 @@ function initCalendar(events: IncomingEvent[]) {
 
 document.addEventListener("DOMContentLoaded", () => {
   ensureCalendarInitialized();
+
+  const modalOverlay = document.getElementById("modal-overlay");
+  const closeModalButton = document.getElementById("close-modal");
+
+  if (modalOverlay && closeModalButton) {
+    // Close modal when clicking on overlay
+    modalOverlay.addEventListener("click", (event) => {
+      if (event.target === modalOverlay) {
+        modalOverlay.style.display = "none";
+      }
+    });
+
+    // Close modal when clicking on close button
+    closeModalButton.addEventListener("click", () => {
+      modalOverlay.style.display = "none";
+    });
+  }
 });
 
 function ensureCalendarInitialized() {
