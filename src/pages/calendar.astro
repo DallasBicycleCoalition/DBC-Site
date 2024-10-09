@@ -1,9 +1,14 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import { getEventsPage } from "../utils/groqQueries";
+import { toHTML } from "@portabletext/to-html";
 
-// Fetch events from Sanity on the server side
-const events = await getEventsPage();
+const eventsFromSanity = await getEventsPage();
+
+const events = eventsFromSanity.map((event) => ({
+  ...event,
+  description: event.description ? toHTML(event.description) : "",
+}));
 ---
 
 <Layout title="Event Calendar">
@@ -13,21 +18,19 @@ const events = await getEventsPage();
     <p id="error-message" style="color: red;"></p>
   </section>
 
-  <!-- Event Details Modal -->
   <div
     id="event-modal"
     style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: white; border: 1px solid black; padding: 20px; z-index: 1000;"
   >
     <h2 id="event-title"></h2>
-    <p id="event-description"></p>
+    <div id="event-description"></div>
     <button id="close-modal">Close</button>
   </div>
 </Layout>
 
 <!-- Define the events data globally for the client-side script -->
 <script define:vars={{ events }} is:inline>
-  window.events = events; // Pass the server-fetched events to the client
+  window.events = events;
 </script>
 
-<!-- Load the external calendar.ts script -->
 <script src="../scripts/fullCalendar.ts"></script>

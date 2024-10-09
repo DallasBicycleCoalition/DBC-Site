@@ -3,55 +3,36 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import listPlugin from "@fullcalendar/list";
 import rrulePlugin from "@fullcalendar/rrule";
 import timeGridPlugin from "@fullcalendar/timegrid";
-import type { TransformedEvent } from "../types/events.ts";
+import type { TransformedEvent } from "../types/events";
 
-// Helper to convert Sanity block content to plain text
-function getSanityText(blocks: any[]): string {
-  return blocks
-    .map((block) => block.children.map((child: any) => child.text).join(""))
-    .join("\n");
-}
-
-function initCalendar(events: any) {
+function initCalendar(events: IncomingEvent[]) {
   const calendarEl = document.getElementById("calendar");
   const errorMessageEl = document.getElementById("error-message");
 
   if (calendarEl && errorMessageEl) {
-    const transformedEvents: TransformedEvent[] = events.map((event: any) => {
+    const transformedEvents: TransformedEvent[] = events.map((event) => {
       let eventStart = new Date(event.date.startDate);
       let eventEnd = event.date.endDate
         ? new Date(event.date.endDate)
         : undefined;
 
-      const transformedEvent: TransformedEvent = {
+      return {
         title: event.title,
-        description: getSanityText(event.description),
+        description: event.description,
         location: event.location,
         allDay: event.allDay,
         start: eventStart,
         end: eventEnd,
       };
-
-      if (event.date.rrule) {
-        // Use toISOString() to keep UTC for DTSTART and don't strip the 'Z'
-        const dtstart =
-          eventStart.toISOString().replace(/[-:]/g, "").split(".")[0] + "Z";
-
-        // Keep the rrule in UTC, FullCalendar will handle the conversion for local time
-        transformedEvent.rrule = `DTSTART:${dtstart}\n${event.date.rrule}`;
-      }
-
-      return transformedEvent;
     });
 
-    // Use window.matchMedia to detect mobile view
     const initialView = window.matchMedia("(max-width: 768px)").matches
       ? "listMonth"
       : "dayGridMonth";
 
     const calendar = new Calendar(calendarEl, {
       plugins: [dayGridPlugin, timeGridPlugin, listPlugin, rrulePlugin],
-      timeZone: "local", // Keep everything in UTC, as you requested
+      timeZone: "local",
       initialView: initialView,
       headerToolbar: {
         left: "prev,next today",
@@ -73,8 +54,8 @@ function initCalendar(events: any) {
 
         if (modal && titleEl && descriptionEl && closeModalButton) {
           titleEl.textContent = info.event.title;
-          descriptionEl.innerHTML =
-            info.event.extendedProps.description || "No description available.";
+
+          descriptionEl.innerHTML = info.event.extendedProps.description;
 
           modal.style.display = "block";
 
@@ -103,7 +84,7 @@ function ensureCalendarInitialized() {
   const calendarEl = document.getElementById("calendar");
 
   if (calendarEl) {
-    const events = window.events || [];
+    const events: IncomingEvent[] = (window.events || []) as IncomingEvent[];
 
     if (events.length > 0) {
       initCalendar(events);
