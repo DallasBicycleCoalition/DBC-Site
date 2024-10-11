@@ -16,6 +16,10 @@ function initCalendar(events: IncomingEvent[]) {
         ? new Date(event.date.endDate)
         : undefined;
 
+      if (eventEnd && eventStart.toDateString() !== eventEnd.toDateString()) {
+        eventEnd = new Date(eventEnd.setDate(eventEnd.getDate() + 1));
+      }
+
       return {
         title: event.title,
         description: event.description,
@@ -47,7 +51,9 @@ function initCalendar(events: IncomingEvent[]) {
       },
       events: transformedEvents,
       eventClick: function (info) {
-        const modalOverlay = document.getElementById("modal-overlay") as HTMLElement;
+        const modalOverlay = document.getElementById(
+          "modal-overlay"
+        ) as HTMLElement;
         const titleEl = document.getElementById("event-title");
         const descriptionEl = document.getElementById("event-description");
 
