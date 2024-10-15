@@ -1,0 +1,35 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { getEventsPage } from "../utils/groqQueries";
+import { toHTML } from "@portabletext/to-html";
+
+const eventsFromSanity = await getEventsPage();
+
+const events = eventsFromSanity.map((event) => ({
+  ...event,
+  description: event.description ? toHTML(event.description) : "",
+}));
+---
+
+<Layout title="Event Calendar">
+  <section id="calendar-section">
+    <div id="calendar"></div>
+    <noscript>Calendar could not load. Please enable JavaScript.</noscript>
+    <p id="error-message" style="color: red;"></p>
+  </section>
+
+  <div id="modal-overlay" class="modal-overlay">
+    <div id="event-modal" class="event-modal">
+      <h2 id="event-title"></h2>
+      <div id="event-description"></div>
+      <button id="close-modal">Close</button>
+    </div>
+  </div>
+</Layout>
+
+<!-- Define the events data globally for the client-side script -->
+<script define:vars={{ events }} is:inline>
+  window.events = events;
+</script>
+
+<script src="../scripts/fullCalendar.ts"></script>

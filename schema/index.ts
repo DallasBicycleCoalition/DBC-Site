@@ -1,4 +1,5 @@
 import { authorSchema } from "./documents/authorSchema";
+import { eventsSchema } from "./documents/eventsSchema";
 import { postSchema } from "./documents/postSchema";
 
 import { aboutUsSchema } from "./singletons/aboutUsPageSchema";
@@ -8,13 +9,15 @@ import { layoutSchema } from "./singletons/layoutSchema";
 import { policyPageSchema } from "./singletons/policyPageSchema";
 import { weekWithoutDrivingSchema } from "./singletons/weekWithoutDrivingSchema";
 
-export const schemaTypes = [
+const documentSchemas = [authorSchema, eventsSchema, postSchema];
+
+const singletonSchemas = [
   aboutUsSchema,
-  authorSchema,
   captionedImageSchema,
   homePageSchema,
   layoutSchema,
   policyPageSchema,
-  postSchema,
   weekWithoutDrivingSchema,
 ];
+
+export const schemaTypes = [...documentSchemas, ...singletonSchemas];

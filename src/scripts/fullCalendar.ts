@@ -3,31 +3,34 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import listPlugin from "@fullcalendar/list";
 import rrulePlugin from "@fullcalendar/rrule";
 import timeGridPlugin from "@fullcalendar/timegrid";
-import type { TransformedEvent } from "../types/events.ts";
+import type { TransformedEvent } from "../types/events";
 
-function initCalendar(events: any) {
+function initCalendar(events: IncomingEvent[]) {
   const calendarEl = document.getElementById("calendar");
   const errorMessageEl = document.getElementById("error-message");
 
   if (calendarEl && errorMessageEl) {
     const transformedEvents: TransformedEvent[] = events.map((event: any) => {
-      const isAllDay = !event.start.dateTime;
-      let eventStart = new Date(event.start.dateTime || event.start.date);
-      let eventEnd: Date | undefined = event.end
-        ? new Date(event.end.dateTime || event.end.date)
+      let eventStart = new Date(event.date.startDate);
+      let eventEnd = event.date.endDate
+        ? new Date(event.date.endDate)
         : undefined;
 
+      if (eventEnd && eventStart.toDateString() !== eventEnd.toDateString()) {
+        eventStart = new Date(eventStart.setDate(eventStart.getDate() - 1));
+        eventEnd = new Date(eventEnd.setDate(eventEnd.getDate() + 1));
+      }
+
       const transformedEvent: TransformedEvent = {
-        title: event.summary,
+        title: event.title,
         description: event.description,
         location: event.location,
-        allDay: isAllDay,
+        allDay: event.allDay,
         start: eventStart,
         end: eventEnd,
       };
 
-      if (event.recurrence && event.recurrence.length > 0) {
-        // Helper function to format date for DTSTART
+      if (event.date.rrule) {
         const formatDateForDTSTART = (date: Date) => {
           const y = date.getFullYear();
           const m = String(date.getMonth() + 1).padStart(2, "0");
@@ -38,33 +41,22 @@ function initCalendar(events: any) {
           return `${y}${m}${d}T${h}${min}${s}`;
         };
 
-        // Use the helper function to get the formatted DTSTART
         const dtstart = formatDateForDTSTART(eventStart);
-
-        // Update the transformedEvent.rrule with the correct DTSTART
-        transformedEvent.rrule = `DTSTART:${dtstart}\n${event.recurrence[0]}`;
-      } else if (isAllDay && eventStart) {
-        // Adjust start date for non-recurring all-day events
+        transformedEvent.rrule = `DTSTART:${dtstart}\n${event.date.rrule}`;
+      } else if (event.allDay && eventStart) {
         eventStart.setDate(eventStart.getDate() + 1);
-
-        // Ensure eventEnd is defined before modifying it
-        if (eventEnd) {
-          eventEnd.setDate(eventEnd.getDate() + 1);
-        }
-
-        transformedEvent.start = eventStart;
       }
 
       return transformedEvent;
     });
 
-    // Use window.matchMedia to detect mobile view
     const initialView = window.matchMedia("(max-width: 768px)").matches
       ? "listMonth"
       : "dayGridMonth";
 
     const calendar = new Calendar(calendarEl, {
       plugins: [dayGridPlugin, timeGridPlugin, listPlugin, rrulePlugin],
+      timeZone: "local",
       initialView: initialView,
       headerToolbar: {
         left: "prev,next today",
@@ -79,21 +71,16 @@ function initCalendar(events: any) {
       },
       events: transformedEvents,
       eventClick: function (info) {
-        const modal = document.getElementById("event-modal");
+        const modalOverlay = document.getElementById(
+          "modal-overlay"
+        ) as HTMLElement;
         const titleEl = document.getElementById("event-title");
         const descriptionEl = document.getElementById("event-description");
-        const closeModalButton = document.getElementById("close-modal");
 
-        if (modal && titleEl && descriptionEl && closeModalButton) {
+        if (modalOverlay && titleEl && descriptionEl) {
           titleEl.textContent = info.event.title;
-          descriptionEl.innerHTML =
-            info.event.extendedProps.description || "No description available.";
-
-          modal.style.display = "block";
-
-          closeModalButton.addEventListener("click", () => {
-            modal.style.display = "none";
-          });
+          descriptionEl.innerHTML = info.event.extendedProps.description;
+          modalOverlay.style.display = "block";
         }
       },
     });
@@ -110,13 +97,36 @@ function initCalendar(events: any) {
 
 document.addEventListener("DOMContentLoaded", () => {
   ensureCalendarInitialized();
+
+  const modalOverlay = document.getElementById("modal-overlay") as HTMLElement;
+  const closeModalButton = document.getElementById("close-modal");
+
+  if (modalOverlay && closeModalButton) {
+    modalOverlay.addEventListener("click", (event) => {
+      if (event.target === modalOverlay) {
+        modalOverlay.style.display = "none";
+      }
+    });
+
+    closeModalButton.addEventListener("click", () => {
+      modalOverlay.style.display = "none";
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" || event.key === "Esc") {
+        if (modalOverlay.style.display === "block") {
+          modalOverlay.style.display = "none";
+        }
+      }
+    });
+  }
 });
 
 function ensureCalendarInitialized() {
   const calendarEl = document.getElementById("calendar");
 
   if (calendarEl) {
-    const events = window.events || [];
+    const events: IncomingEvent[] = (window.events || []) as IncomingEvent[];
 
     if (events.length > 0) {
       initCalendar(events);
