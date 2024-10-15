@@ -409,6 +409,25 @@ h1 {
   padding: 20px;
 }
 
+#can_embed_form form {
+  display: grid !important;
+  place-items: center;
+}
+
+.can_embed.v5 #can_embed_form h2 {
+  display: flex;
+  justify-content: center;
+}
+
+#can_embed_form:not(.full) #action_info {
+  display: flex;
+  justify-content: center;
+}
+
+.can_embed.form #can_embed_form_inner > h2 {
+  border-bottom: 0px !important;
+}
+
 @media (max-width: 900px) {
   .image-gallery {
     flex-direction: column;
@@ -425,6 +444,7 @@ h1 {
 @media (max-width: 768px) {
   #menuToggle {
     display: block;
+    margin-bottom: 1.25em;
   }
 
   #navMenu {
