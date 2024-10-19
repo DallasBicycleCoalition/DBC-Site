@@ -446,7 +446,7 @@ h1 {
   margin-bottom: 1em;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 768px) {
   .image-gallery {
     flex-direction: column;
     align-items: center;
@@ -457,9 +457,7 @@ h1 {
     justify-content: space-between;
     display: block;
   }
-}
 
-@media (max-width: 768px) {
   #menuToggle {
     display: block;
     margin-bottom: 1.25em;
