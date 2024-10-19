@@ -57,9 +57,7 @@ h1,
 h2,
 h3,
 h4,
-button,
-input,
-label {
+button {
   line-height: 1.1;
   margin-bottom: 0.5em;
   margin-top: 1em;

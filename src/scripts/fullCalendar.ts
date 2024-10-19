@@ -8,13 +8,10 @@ import type { TransformedEvent } from "../types/events";
 function initCalendar(events: IncomingEvent[]) {
   const calendarEl = document.getElementById("calendar");
   const errorMessageEl = document.getElementById("error-message");
-  const categoryFilterEl = document.getElementById(
-    "category-filter"
-  ) as HTMLSelectElement;
 
   let filteredEvents = [...events]; // Start with all events
 
-  if (calendarEl && errorMessageEl && categoryFilterEl) {
+  if (calendarEl && errorMessageEl) {
     const renderCalendar = () => {
       const transformedEvents: TransformedEvent[] = filteredEvents.map(
         (event: any) => {
@@ -101,16 +98,18 @@ function initCalendar(events: IncomingEvent[]) {
 
     renderCalendar();
 
-    // Listen for category filter changes
-    categoryFilterEl.addEventListener("change", () => {
-      const selectedCategory = categoryFilterEl.value;
+    // Listen for category filter changes from the custom CategoryFilterDropdown component
+    window.addEventListener("filterEvents", (event: Event) => {
+      const customEvent = event as CustomEvent;
+      const selectedCategories = customEvent.detail.selectedCategories;
 
-      // Filter events based on the selected category
-      if (selectedCategory === "all") {
+      // Filter events based on selected categories
+      if (selectedCategories.length === 0) {
+        // No categories selected, show all events
         filteredEvents = [...events];
       } else {
-        filteredEvents = events.filter(
-          (event) => event.category === selectedCategory
+        filteredEvents = events.filter((event) =>
+          selectedCategories.includes(event.category)
         );
       }
 
@@ -127,6 +126,7 @@ function initCalendar(events: IncomingEvent[]) {
   }
 }
 
+// Ensure the DOM is fully loaded before running the script
 document.addEventListener("DOMContentLoaded", () => {
   ensureCalendarInitialized();
 

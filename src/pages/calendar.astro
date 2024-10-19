@@ -1,5 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import CategoryFilterDropdown from "../components/DropdownFilter.astro"; // Import the new component
+import { eventCategories } from "../types/constants";
 import { getEventsPage } from "../utils/groqQueries";
 import { toHTML } from "@portabletext/to-html";
 
@@ -14,12 +16,7 @@ const events = eventsFromSanity.map((event) => ({
 <Layout title="Event Calendar">
   <section id="calendar-section">
     <div id="filter">
-      <label for="category-filter">Filter:</label>
-      <select id="category-filter">
-        <option value="all">All</option>
-        <option value="our-event">Our Event</option>
-        <option value="outside-group-event">Outside Group Event</option>
-      </select>
+      <CategoryFilterDropdown categories={eventCategories} />
     </div>
 
     <div id="calendar"></div>
