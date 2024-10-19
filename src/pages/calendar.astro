@@ -13,12 +13,14 @@ const events = eventsFromSanity.map((event) => ({
 
 <Layout title="Event Calendar">
   <section id="calendar-section">
-    <label for="category-filter">Filter by category:</label>
-    <select id="category-filter">
-      <option value="all">All</option>
-      <option value="our-event">Our Event</option>
-      <option value="outside-group-event">Outside Group Event</option>
-    </select>
+    <div id="filter">
+      <label for="category-filter">Filter:</label>
+      <select id="category-filter">
+        <option value="all">All</option>
+        <option value="our-event">Our Event</option>
+        <option value="outside-group-event">Outside Group Event</option>
+      </select>
+    </div>
 
     <div id="calendar"></div>
     <noscript>Calendar could not load. Please enable JavaScript.</noscript>
