@@ -55,7 +55,7 @@ function initCalendar(events: IncomingEvent[]) {
           }
 
           return transformedEvent;
-        }
+        },
       );
 
       const initialView = window.matchMedia("(max-width: 768px)").matches
@@ -80,7 +80,7 @@ function initCalendar(events: IncomingEvent[]) {
         events: transformedEvents,
         eventClick: function (info) {
           const modalOverlay = document.getElementById(
-            "modal-overlay"
+            "modal-overlay",
           ) as HTMLElement;
           const titleEl = document.getElementById("event-title");
           const descriptionEl = document.getElementById("event-description");
@@ -109,7 +109,7 @@ function initCalendar(events: IncomingEvent[]) {
         filteredEvents = [...events];
       } else {
         filteredEvents = events.filter((event) =>
-          selectedCategories.includes(event.category)
+          selectedCategories.includes(event.category),
         );
       }
 
