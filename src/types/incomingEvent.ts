@@ -1,4 +1,5 @@
 interface IncomingEvent {
+    category: string;
     title: string;
     description?: string;
     location?: string;

@@ -3483,6 +3483,23 @@
         },
         "optional": true
       },
+      "category": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "union",
+          "of": [
+            {
+              "type": "string",
+              "value": "our-event"
+            },
+            {
+              "type": "string",
+              "value": "outside-group-event"
+            }
+          ]
+        },
+        "optional": true
+      },
       "date": {
         "type": "objectAttribute",
         "value": {

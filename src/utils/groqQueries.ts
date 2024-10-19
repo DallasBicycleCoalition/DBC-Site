@@ -148,6 +148,7 @@ export async function getEventsPage(): Promise<EventsPageResult> {
       _id,
       _createdAt,
       title,
+      category,
       date,
       allDay,
       location,

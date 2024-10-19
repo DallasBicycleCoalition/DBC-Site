@@ -466,6 +466,7 @@ export type Events = {
   _updatedAt: string;
   _rev: string;
   title?: string;
+  category?: "our-event" | "outside-group-event";
   date?: RecurringDates;
   allDay?: boolean;
   location?: string;
@@ -894,11 +895,12 @@ export type AboutUsPageResult = {
   };
 } | null;
 // Variable: eventsPage
-// Query: *[_type == "events"]{      _id,      _createdAt,      title,      date,      allDay,      location,      excerpt,      description,      photo {        asset -> {          _id,          url        }      }    }
+// Query: *[_type == "events"]{      _id,      _createdAt,      title,      category,      date,      allDay,      location,      excerpt,      description,      photo {        asset -> {          _id,          url        }      }    }
 export type EventsPageResult = Array<{
   _id: string;
   _createdAt: string;
   title: string | null;
+  category: "our-event" | "outside-group-event" | null;
   date: RecurringDates | null;
   allDay: boolean | null;
   location: string | null;
@@ -966,7 +968,7 @@ declare module "@sanity/client" {
     "\n    *[_type == \"policyPage\"]{\n      _id,\n      _createdAt,\n      title,\n      \"introBlock\": {\n        \"heading\": introBlock.heading,\n        \"content\": introBlock.content\n      },\n      \"policyRows\": policyRows[] {\n        \"policy\": policy,\n        \"summary\": summary,\n        \"moreInfo\": moreInfo,\n      },\n      \"legislativeDemands\": {\n        \"heading\": legislativeDemands.heading,\n        \"content\": legislativeDemands.content\n      },\n    }[0]": PolicyPageResult;
     "\n    *[_type == \"layout\"][0]{\n      _id,\n      _createdAt,\n      \"logo\": {\n        \"asset\": logo.asset->url,\n        \"altText\": logo.altText\n      },\n      \"landingPageLink\": landingPageLink\n    }": LayoutResult;
     "\n    *[_type == \"aboutUs\"]{\n      _id,\n      _createdAt,\n      title,\n      \"mission\": {\n        \"heading\": mission.heading,\n        \"content\": mission.content\n      },\n      \"vision\": {\n        \"heading\": vision.heading,\n        \"content\": vision.content\n      },\n      \"team\": {\n        \"heading\": team.heading,\n        \"members\": team.members[]{\n          \"name\": name\n        }\n      }\n    }[0]": AboutUsPageResult;
-    "\n    *[_type == \"events\"]{\n      _id,\n      _createdAt,\n      title,\n      date,\n      allDay,\n      location,\n      excerpt,\n      description,\n      photo {\n        asset -> {\n          _id,\n          url\n        }\n      }\n    }\n  ": EventsPageResult;
+    "\n    *[_type == \"events\"]{\n      _id,\n      _createdAt,\n      title,\n      category,\n      date,\n      allDay,\n      location,\n      excerpt,\n      description,\n      photo {\n        asset -> {\n          _id,\n          url\n        }\n      }\n    }\n  ": EventsPageResult;
     "\n    *[_type == \"weekWithoutDriving\"]{\n      _id,\n      _createdAt,\n      title,\n      \"introBlock\": {\n        \"heading\": introBlock.heading,\n        \"content\": introBlock.content\n      }\n    }[0]": WeekWithoutDrivingPageResult;
   }
 }

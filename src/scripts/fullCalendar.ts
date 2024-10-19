@@ -8,84 +8,116 @@ import type { TransformedEvent } from "../types/events";
 function initCalendar(events: IncomingEvent[]) {
   const calendarEl = document.getElementById("calendar");
   const errorMessageEl = document.getElementById("error-message");
+  const categoryFilterEl = document.getElementById(
+    "category-filter"
+  ) as HTMLSelectElement;
 
-  if (calendarEl && errorMessageEl) {
-    const transformedEvents: TransformedEvent[] = events.map((event: any) => {
-      let eventStart = new Date(event.date.startDate);
-      let eventEnd = event.date.endDate
-        ? new Date(event.date.endDate)
-        : undefined;
+  let filteredEvents = [...events]; // Start with all events
 
-      if (eventEnd && eventStart.toDateString() !== eventEnd.toDateString()) {
-        eventStart = new Date(eventStart.setDate(eventStart.getDate() - 1));
-        eventEnd = new Date(eventEnd.setDate(eventEnd.getDate() + 1));
-      }
+  if (calendarEl && errorMessageEl && categoryFilterEl) {
+    const renderCalendar = () => {
+      const transformedEvents: TransformedEvent[] = filteredEvents.map(
+        (event: any) => {
+          let eventStart = new Date(event.date.startDate);
+          let eventEnd = event.date.endDate
+            ? new Date(event.date.endDate)
+            : undefined;
 
-      const transformedEvent: TransformedEvent = {
-        title: event.title,
-        description: event.description,
-        location: event.location,
-        allDay: event.allDay,
-        start: eventStart,
-        end: eventEnd,
-      };
+          if (
+            eventEnd &&
+            eventStart.toDateString() !== eventEnd.toDateString()
+          ) {
+            eventStart = new Date(eventStart.setDate(eventStart.getDate() - 1));
+            eventEnd = new Date(eventEnd.setDate(eventEnd.getDate() + 1));
+          }
 
-      if (event.date.rrule) {
-        const formatDateForDTSTART = (date: Date) => {
-          const y = date.getFullYear();
-          const m = String(date.getMonth() + 1).padStart(2, "0");
-          const d = String(date.getDate()).padStart(2, "0");
-          const h = String(date.getHours()).padStart(2, "0");
-          const min = String(date.getMinutes()).padStart(2, "0");
-          const s = String(date.getSeconds()).padStart(2, "0");
-          return `${y}${m}${d}T${h}${min}${s}`;
-        };
+          const transformedEvent: TransformedEvent = {
+            title: event.title,
+            description: event.description,
+            location: event.location,
+            allDay: event.allDay,
+            start: eventStart,
+            end: eventEnd,
+          };
 
-        const dtstart = formatDateForDTSTART(eventStart);
-        transformedEvent.rrule = `DTSTART:${dtstart}\n${event.date.rrule}`;
-      } else if (event.allDay && eventStart) {
-        eventStart.setDate(eventStart.getDate() + 1);
-      }
+          if (event.date.rrule) {
+            const formatDateForDTSTART = (date: Date) => {
+              const y = date.getFullYear();
+              const m = String(date.getMonth() + 1).padStart(2, "0");
+              const d = String(date.getDate()).padStart(2, "0");
+              const h = String(date.getHours()).padStart(2, "0");
+              const min = String(date.getMinutes()).padStart(2, "0");
+              const s = String(date.getSeconds()).padStart(2, "0");
+              return `${y}${m}${d}T${h}${min}${s}`;
+            };
 
-      return transformedEvent;
-    });
+            const dtstart = formatDateForDTSTART(eventStart);
+            transformedEvent.rrule = `DTSTART:${dtstart}\n${event.date.rrule}`;
+          } else if (event.allDay && eventStart) {
+            eventStart.setDate(eventStart.getDate() + 1);
+          }
 
-    const initialView = window.matchMedia("(max-width: 768px)").matches
-      ? "listMonth"
-      : "dayGridMonth";
-
-    const calendar = new Calendar(calendarEl, {
-      plugins: [dayGridPlugin, timeGridPlugin, listPlugin, rrulePlugin],
-      timeZone: "local",
-      initialView: initialView,
-      headerToolbar: {
-        left: "prev,next today",
-        center: "title",
-        right: "dayGridMonth,timeGridWeek,timeGridDay,listMonth",
-      },
-      views: {
-        dayGridMonth: { buttonText: "Month" },
-        timeGridWeek: { buttonText: "Week" },
-        timeGridDay: { buttonText: "Day" },
-        listMonth: { buttonText: "Agenda" },
-      },
-      events: transformedEvents,
-      eventClick: function (info) {
-        const modalOverlay = document.getElementById(
-          "modal-overlay"
-        ) as HTMLElement;
-        const titleEl = document.getElementById("event-title");
-        const descriptionEl = document.getElementById("event-description");
-
-        if (modalOverlay && titleEl && descriptionEl) {
-          titleEl.textContent = info.event.title;
-          descriptionEl.innerHTML = info.event.extendedProps.description;
-          modalOverlay.style.display = "block";
+          return transformedEvent;
         }
-      },
-    });
+      );
 
-    calendar.render();
+      const initialView = window.matchMedia("(max-width: 768px)").matches
+        ? "listMonth"
+        : "dayGridMonth";
+
+      const calendar = new Calendar(calendarEl, {
+        plugins: [dayGridPlugin, timeGridPlugin, listPlugin, rrulePlugin],
+        timeZone: "local",
+        initialView: initialView,
+        headerToolbar: {
+          left: "prev,next today",
+          center: "title",
+          right: "dayGridMonth,timeGridWeek,timeGridDay,listMonth",
+        },
+        views: {
+          dayGridMonth: { buttonText: "Month" },
+          timeGridWeek: { buttonText: "Week" },
+          timeGridDay: { buttonText: "Day" },
+          listMonth: { buttonText: "Agenda" },
+        },
+        events: transformedEvents,
+        eventClick: function (info) {
+          const modalOverlay = document.getElementById(
+            "modal-overlay"
+          ) as HTMLElement;
+          const titleEl = document.getElementById("event-title");
+          const descriptionEl = document.getElementById("event-description");
+
+          if (modalOverlay && titleEl && descriptionEl) {
+            titleEl.textContent = info.event.title;
+            descriptionEl.innerHTML = info.event.extendedProps.description;
+            modalOverlay.style.display = "block";
+          }
+        },
+      });
+
+      calendar.render();
+    };
+
+    renderCalendar();
+
+    // Listen for category filter changes
+    categoryFilterEl.addEventListener("change", () => {
+      const selectedCategory = categoryFilterEl.value;
+
+      // Filter events based on the selected category
+      if (selectedCategory === "all") {
+        filteredEvents = [...events];
+      } else {
+        filteredEvents = events.filter(
+          (event) => event.category === selectedCategory
+        );
+      }
+
+      // Clear and re-render the calendar with filtered events
+      calendarEl.innerHTML = "";
+      renderCalendar();
+    });
   } else {
     console.error("Calendar or error message element not found");
     if (errorMessageEl) {

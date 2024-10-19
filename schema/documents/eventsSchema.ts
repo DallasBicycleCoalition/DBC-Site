@@ -11,6 +11,17 @@ export const eventsSchema = defineType({
       type: "string",
     },
     {
+      name: "category",
+      title: "Category",
+      type: "string",
+      options: {
+        list: [
+          { title: "Our event", value: "our-event" },
+          { title: "Outside group event", value: "outside-group-event" },
+        ],
+      },
+    },
+    {
       name: "date",
       title: "Date",
       type: "recurringDates",
