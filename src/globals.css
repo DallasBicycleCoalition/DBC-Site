@@ -304,6 +304,29 @@ h1 {
   font-style: italic;
 }
 
+/* Styling for the post container */
+.post {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 4em;
+}
+
+/* Styling for the image */
+.post-image {
+  width: 11em;
+  height: auto;
+  margin-right: 1em;
+}
+
+/* Styling for the content beside the image */
+.post-content h2 {
+  margin: 0;
+}
+
+.post-content p {
+  margin: 0.25em 0;
+}
+
 /* Center the Layout */
 .policy-page-intro {
   max-width: 1300px; /* Adjust the maximum width as needed */
