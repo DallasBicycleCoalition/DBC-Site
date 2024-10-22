@@ -149,7 +149,7 @@ export async function getEventsPage(): Promise<EventsPageResult> {
       _id,
       _createdAt,
       title,
-      "tags": coalesce(tags[]{ _ref }, []),
+      tags,
       date,
       allDay,
       location,
