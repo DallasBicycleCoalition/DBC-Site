@@ -100,20 +100,29 @@ function initCalendar(events: IncomingEvent[]) {
 
     renderCalendar();
 
-    // Listen for category filter changes from the custom CategoryFilterDropdown component
+    // Listen for tag filter changes from the custom TagsFilterDropdown component
     window.addEventListener("filterEvents", (event: Event) => {
       const customEvent = event as CustomEvent;
-      const selectedCategories = customEvent.detail.selectedCategories;
+      const selectedTags = customEvent.detail.selectedTags;
 
-      // Filter events based on selected categories
-      if (selectedCategories.length === 0) {
-        // No categories selected, show all events
+      console.log("Selected Tags:", selectedTags);
+
+      if (selectedTags.length === 0) {
         filteredEvents = [...events];
       } else {
-        filteredEvents = events.filter((event) =>
-          selectedCategories.includes(event.category)
-        );
+        filteredEvents = events.filter((event) => {
+          // Add a null check for event.tags
+          if (!event.tags || event.tags.length === 0) {
+            return false; // If no tags, exclude this event when filtering by tags
+          }
+
+          return event.tags.some((tag: { _ref: string }) =>
+            selectedTags.includes(tag._ref)
+          );
+        });
       }
+
+      console.log("Filtered Events:", filteredEvents);
 
       // Clear and re-render the calendar with filtered events
       calendarEl.innerHTML = "";
@@ -161,6 +170,8 @@ function ensureCalendarInitialized() {
 
   if (calendarEl) {
     const events: IncomingEvent[] = (window.events || []) as IncomingEvent[];
+
+    console.log("Events data:", events); // Add this line
 
     if (events.length > 0) {
       initCalendar(events);

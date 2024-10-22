@@ -1,6 +1,5 @@
 // eventsSchema.ts
 import { defineType } from "sanity";
-import { eventCategories } from "../../src/types/constants";
 
 export const eventsSchema = defineType({
   name: "events",
@@ -13,12 +12,10 @@ export const eventsSchema = defineType({
       type: "string",
     },
     {
-      name: "category",
-      title: "Category",
-      type: "string",
-      options: {
-        list: eventCategories,
-      },
+      name: "tags",
+      title: "Tags",
+      type: "array",
+      of: [{ type: "reference", to: [{ type: "tag" }] }],
     },
     {
       name: "date",

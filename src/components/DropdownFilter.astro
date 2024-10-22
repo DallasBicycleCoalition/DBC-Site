@@ -1,10 +1,12 @@
 ---
-interface Category {
-  value: string;
-  title: string;
-}
+import { getTags } from "../utils/groqQueries";
 
-const categories: Category[] = Astro.props.categories;
+const sanityTags = await getTags();
+
+const tags: Tag[] = sanityTags.map((tag: { _id: any; name: any }) => ({
+  value: tag._id,
+  title: tag.name,
+}));
 ---
 
 <div class="dropdown-filter">
@@ -12,15 +14,15 @@ const categories: Category[] = Astro.props.categories;
   <div id="dropdown-content" class="dropdown-content hidden">
     <ul>
       {
-        categories.map((category) => (
+        tags.map((tag) => (
           <li>
             <input
               type="checkbox"
-              id={category.value}
-              value={category.value}
-              class="category-checkbox"
+              id={tag.value}
+              value={tag.value}
+              class="tags-checkbox"
             />
-            <label for={category.value}>{category.title}</label>
+            <label for={tag.value}>{tag.title}</label>
           </li>
         ))
       }
@@ -29,7 +31,7 @@ const categories: Category[] = Astro.props.categories;
 </div>
 
 <script is:inline>
-  const checkboxes = document.querySelectorAll(".category-checkbox");
+  const checkboxes = document.querySelectorAll(".tags-checkbox");
   const dropdownContent = document.getElementById("dropdown-content");
   const dropdownToggle = document.getElementById("dropdown-toggle");
 
@@ -53,13 +55,13 @@ const categories: Category[] = Astro.props.categories;
   // Listen for changes in checkboxes
   checkboxes.forEach((checkbox) => {
     checkbox.addEventListener("change", () => {
-      const selectedCategories = Array.from(checkboxes)
+      const selectedTags = Array.from(checkboxes)
         .filter((checkbox) => checkbox.checked)
         .map((checkbox) => checkbox.value);
 
       // Dispatch the custom event with the selected categories
       const event = new CustomEvent("filterEvents", {
-        detail: { selectedCategories },
+        detail: { selectedTags },
       });
 
       window.dispatchEvent(event);

@@ -7,15 +7,16 @@ import type {
   LayoutResult,
   PolicyPageResult,
   PostsResult,
+  TagsResult,
   WeekWithoutDrivingPageResult,
 } from "../../sanity.types";
 
 export async function getPosts(
   start: number = 0,
-  limit: number = 10,
+  limit: number = 10
 ): Promise<PostsResult[]> {
   return await sanityClient.fetch(
-    groq`*[_type == "post" && defined(slug.current)] | order(_createdAt desc) [${start}...${start + limit}]`,
+    groq`*[_type == "post" && defined(slug.current)] | order(_createdAt desc) [${start}...${start + limit}]`
   );
 }
 
@@ -148,7 +149,7 @@ export async function getEventsPage(): Promise<EventsPageResult> {
       _id,
       _createdAt,
       title,
-      category,
+      "tags": coalesce(tags[]{ _ref }, []),
       date,
       allDay,
       location,
@@ -164,6 +165,20 @@ export async function getEventsPage(): Promise<EventsPageResult> {
   `;
 
   const results = await sanityClient.fetch(eventsPage);
+
+  return results;
+}
+
+export async function getTags(): Promise<TagsResult> {
+  const tags = groq`
+    *[_type == "tag"]{
+      _id,
+      name,
+      description
+    }
+  `;
+
+  const results = await sanityClient.fetch(tags);
 
   return results;
 }
