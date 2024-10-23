@@ -14,7 +14,7 @@ function initCalendar(events: IncomingEvent[]) {
   if (calendarEl && errorMessageEl) {
     const renderCalendar = () => {
       const transformedEvents: TransformedEvent[] = filteredEvents.map(
-        (event: any) => {
+        (event: IncomingEvent) => {
           let eventStart = new Date(event.date.startDate);
           let eventEnd = event.date.endDate
             ? new Date(event.date.endDate)

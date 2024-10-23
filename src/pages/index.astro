@@ -42,21 +42,17 @@ const homePage = await getHomePage();
   </section>
 
   <section id="what-we-do">
-    <h2>{homePage?.whatWeDo.heading}</h2>
+    <h2>{homePage?.whatWeDo?.heading}</h2>
     <div class="image-gallery">
       {
-        homePage?.whatWeDo.whatWeDoPics?.map(
-          (pic: {
-            image: any;
-            altText: string | null | undefined;
-            caption: unknown;
-          }) => (
-            <div>
-              <img src={urlFor(pic.image).url()} alt={pic.altText} />
-              <p>{pic.caption}</p>
-            </div>
-          )
-        )
+        homePage?.whatWeDo?.whatWeDoPics?.map((pic) => (
+          <div>
+            {pic.image && (
+              <img src={urlFor(pic.image).url()} alt={pic.altText || "Image"} />
+            )}
+            <p>{pic.caption}</p>
+          </div>
+        ))
       }
     </div>
   </section>

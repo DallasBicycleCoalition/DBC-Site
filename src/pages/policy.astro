@@ -30,25 +30,19 @@ const policyPage = await getPolicyPage();
       </thead>
       <tbody>
         {
-          policyPage?.policyRows?.map(
-            (row: {
-              policy: any;
-              summary: any;
-              moreInfo: any;
-            }) => (
-              <tr>
-                <td data-label="Policy">
-                  <PortableText value={row.policy} />
-                </td>
-                <td data-label="Summary">
-                  <PortableText value={row.summary} />
-                </td>
-                <td data-label="More Info">
-                  <PortableText value={row.moreInfo} />
-                </td>
-              </tr>
-            )
-          )
+          policyPage?.policyRows?.map((row) => (
+            <tr>
+              <td data-label="Policy">
+                {row.policy && <PortableText value={row.policy} />}
+              </td>
+              <td data-label="Summary">
+                {row.summary && <PortableText value={row.summary} />}
+              </td>
+              <td data-label="More Info">
+                {row.moreInfo && <PortableText value={row.moreInfo} />}
+              </td>
+            </tr>
+          ))
         }
       </tbody>
     </table>
