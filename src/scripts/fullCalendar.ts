@@ -114,8 +114,8 @@ function initCalendar(events: IncomingEvent[]) {
             return false; // If no tags, exclude this event when filtering by tags
           }
 
-          return event.tags.some((tag: { _ref: string }) =>
-            selectedTags.includes(tag._ref)
+          return event.tags.some((tag: { id: string }) =>
+            selectedTags.includes(tag.id)
           );
         });
       }

@@ -4,9 +4,10 @@ import { getTags } from "../utils/groqQueries";
 const sanityTags = await getTags();
 
 const tags: Tag[] = sanityTags.map(
-  (tag: { _id: string; name: string | null; description: string | null }) => ({
-    id: tag._id,
+  (tag: { id: string; name: string | null; description: string | null }) => ({
+    id: tag.id,
     name: tag.name ?? "",
+    description: tag.description ?? undefined,
   })
 );
 ---

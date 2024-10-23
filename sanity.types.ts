@@ -911,18 +911,16 @@ export type AboutUsPageResult = {
   };
 } | null;
 // Variable: eventsPage
-// Query: *[_type == "events"]{      _id,      _createdAt,      title,      "tags": coalesce(tags[], []),      date,      allDay,      location,      excerpt,      description,      photo {        asset -> {          _id,          url        }      }    }
+// Query: *[_type == "events"]{      _id,      _createdAt,      title,      "tags": tags[]->{ "id": _id, name, description },      date,      allDay,      location,      excerpt,      description,      photo {        asset -> {          _id,          url        }      }    }
 export type EventsPageResult = Array<{
   _id: string;
   _createdAt: string;
   title: string | null;
   tags: Array<{
-    _ref: string;
-    _type: "reference";
-    _weak?: boolean;
-    _key: string;
-    [internalGroqTypeReferenceTo]?: "tag";
-  }> | Array<never>;
+    id: string;
+    name: string | null;
+    description: string | null;
+  }> | null;
   date: RecurringDates | null;
   allDay: boolean | null;
   location: string | null;
@@ -953,9 +951,9 @@ export type EventsPageResult = Array<{
   } | null;
 }>;
 // Variable: tags
-// Query: *[_type == "tag"]{      _id,      name,      description    }
+// Query: *[_type == "tag"]{      "id": _id,      name,      description    }
 export type TagsResult = Array<{
-  _id: string;
+  id: string;
   name: string | null;
   description: string | null;
 }>;
@@ -997,8 +995,8 @@ declare module "@sanity/client" {
     "\n    *[_type == \"policyPage\"]{\n      _id,\n      _createdAt,\n      title,\n      \"introBlock\": {\n        \"heading\": introBlock.heading,\n        \"content\": introBlock.content\n      },\n      \"policyRows\": policyRows[] {\n        \"policy\": policy,\n        \"summary\": summary,\n        \"moreInfo\": moreInfo,\n      },\n      \"legislativeDemands\": {\n        \"heading\": legislativeDemands.heading,\n        \"content\": legislativeDemands.content\n      },\n    }[0]": PolicyPageResult;
     "\n    *[_type == \"layout\"][0]{\n      _id,\n      _createdAt,\n      \"logo\": {\n        \"asset\": logo.asset->url,\n        \"altText\": logo.altText\n      },\n      \"landingPageLink\": landingPageLink\n    }": LayoutResult;
     "\n    *[_type == \"aboutUs\"]{\n      _id,\n      _createdAt,\n      title,\n      \"mission\": {\n        \"heading\": mission.heading,\n        \"content\": mission.content\n      },\n      \"vision\": {\n        \"heading\": vision.heading,\n        \"content\": vision.content\n      },\n      \"team\": {\n        \"heading\": team.heading,\n        \"members\": team.members[]{\n          \"name\": name\n        }\n      }\n    }[0]": AboutUsPageResult;
-    "\n    *[_type == \"events\"]{\n      _id,\n      _createdAt,\n      title,\n      \"tags\": coalesce(tags[], []),\n      date,\n      allDay,\n      location,\n      excerpt,\n      description,\n      photo {\n        asset -> {\n          _id,\n          url\n        }\n      }\n    }\n  ": EventsPageResult;
-    "\n    *[_type == \"tag\"]{\n      _id,\n      name,\n      description\n    }\n  ": TagsResult;
+    "\n    *[_type == \"events\"]{\n      _id,\n      _createdAt,\n      title,\n      \"tags\": tags[]->{ \"id\": _id, name, description },\n      date,\n      allDay,\n      location,\n      excerpt,\n      description,\n      photo {\n        asset -> {\n          _id,\n          url\n        }\n      }\n    }\n  ": EventsPageResult;
+    "\n    *[_type == \"tag\"]{\n      \"id\": _id,\n      name,\n      description\n    }\n  ": TagsResult;
     "\n    *[_type == \"weekWithoutDriving\"]{\n      _id,\n      _createdAt,\n      title,\n      \"introBlock\": {\n        \"heading\": introBlock.heading,\n        \"content\": introBlock.content\n      }\n    }[0]": WeekWithoutDrivingPageResult;
   }
 }

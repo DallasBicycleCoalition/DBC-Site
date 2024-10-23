@@ -1,5 +1,5 @@
 interface IncomingEvent {
-  tags: any;
+  tags: Tag[];
   title: string;
   description?: string;
   location?: string;
@@ -7,5 +7,6 @@ interface IncomingEvent {
   date: {
     startDate: string | Date;
     endDate?: string | Date;
+    rrule?: string;
   };
 }

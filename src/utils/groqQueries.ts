@@ -149,7 +149,7 @@ export async function getEventsPage(): Promise<EventsPageResult> {
       _id,
       _createdAt,
       title,
-      tags,
+      "tags": tags[]->{ "id": _id, name, description },
       date,
       allDay,
       location,
@@ -172,7 +172,7 @@ export async function getEventsPage(): Promise<EventsPageResult> {
 export async function getTags(): Promise<TagsResult> {
   const tags = groq`
     *[_type == "tag"]{
-      _id,
+      "id": _id,
       name,
       description
     }
