@@ -1,4 +1,4 @@
-interface IncomingEvent {
+interface SanityEvent {
   tags: Tag[];
   title: string;
   description?: string;

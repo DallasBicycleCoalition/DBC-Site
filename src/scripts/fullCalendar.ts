@@ -5,7 +5,7 @@ import rrulePlugin from "@fullcalendar/rrule";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import type { TransformedEvent } from "../types/events";
 
-function initCalendar(events: IncomingEvent[]) {
+function initCalendar(events: SanityEvent[]) {
   const calendarEl = document.getElementById("calendar");
   const errorMessageEl = document.getElementById("error-message");
 
@@ -14,7 +14,7 @@ function initCalendar(events: IncomingEvent[]) {
   if (calendarEl && errorMessageEl) {
     const renderCalendar = () => {
       const transformedEvents: TransformedEvent[] = filteredEvents.map(
-        (event: IncomingEvent) => {
+        (event: SanityEvent) => {
           let eventStart = new Date(event.date.startDate);
           let eventEnd = event.date.endDate
             ? new Date(event.date.endDate)
@@ -164,7 +164,7 @@ function ensureCalendarInitialized() {
   const calendarEl = document.getElementById("calendar");
 
   if (calendarEl) {
-    const events: IncomingEvent[] = (window.events || []) as IncomingEvent[];
+    const events: SanityEvent[] = (window.events || []) as SanityEvent[];
 
     if (events.length > 0) {
       initCalendar(events);
