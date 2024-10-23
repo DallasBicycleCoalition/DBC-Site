@@ -109,9 +109,8 @@ function initCalendar(events: IncomingEvent[]) {
         filteredEvents = [...events];
       } else {
         filteredEvents = events.filter((event) => {
-          // Add a null check for event.tags
           if (!event.tags || event.tags.length === 0) {
-            return false; // If no tags, exclude this event when filtering by tags
+            return false;
           }
 
           return event.tags.some((tag: { id: string }) =>
@@ -166,8 +165,6 @@ function ensureCalendarInitialized() {
 
   if (calendarEl) {
     const events: IncomingEvent[] = (window.events || []) as IncomingEvent[];
-
-    console.log("Events data:", events); // Add this line
 
     if (events.length > 0) {
       initCalendar(events);

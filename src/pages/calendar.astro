@@ -1,7 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import TagsFilterDropdown from "../components/DropdownFilter.astro"; // Import the Dropdown component
-import { getEventsPage, getTags } from "../utils/groqQueries"; // Import the tag query
+import TagsFilterDropdown from "../components/DropdownFilter.astro";
+import { getEventsPage, getTags } from "../utils/groqQueries";
 import { toHTML } from "@portabletext/to-html";
 
 const eventsFromSanity = await getEventsPage();
