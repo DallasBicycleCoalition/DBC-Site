@@ -3,10 +3,12 @@ import { getTags } from "../utils/groqQueries";
 
 const sanityTags = await getTags();
 
-const tags: Tag[] = sanityTags.map((tag: { _id: any; name: any }) => ({
-  value: tag._id,
-  title: tag.name,
-}));
+const tags: Tag[] = sanityTags.map(
+  (tag: { _id: string; name: string | null; description: string | null }) => ({
+    id: tag._id,
+    name: tag.name ?? "",
+  })
+);
 ---
 
 <div class="dropdown-filter">
@@ -18,11 +20,11 @@ const tags: Tag[] = sanityTags.map((tag: { _id: any; name: any }) => ({
           <li>
             <input
               type="checkbox"
-              id={tag.value}
-              value={tag.value}
+              id={tag.id}
+              value={tag.id}
               class="tags-checkbox"
             />
-            <label for={tag.value}>{tag.title}</label>
+            <label for={tag.id}>{tag.name}</label>
           </li>
         ))
       }

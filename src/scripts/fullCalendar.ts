@@ -105,8 +105,6 @@ function initCalendar(events: IncomingEvent[]) {
       const customEvent = event as CustomEvent;
       const selectedTags = customEvent.detail.selectedTags;
 
-      console.log("Selected Tags:", selectedTags);
-
       if (selectedTags.length === 0) {
         filteredEvents = [...events];
       } else {
@@ -121,8 +119,6 @@ function initCalendar(events: IncomingEvent[]) {
           );
         });
       }
-
-      console.log("Filtered Events:", filteredEvents);
 
       // Clear and re-render the calendar with filtered events
       calendarEl.innerHTML = "";
