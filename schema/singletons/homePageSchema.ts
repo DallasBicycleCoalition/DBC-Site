@@ -2,7 +2,7 @@ import { defineType } from "sanity";
 
 export const homePageSchema = defineType({
   name: "homepage",
-  title: "HomePage",
+  title: "Home Page",
   type: "document",
   fields: [
     {
