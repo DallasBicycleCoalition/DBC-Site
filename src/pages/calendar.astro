@@ -20,9 +20,13 @@ const tags = sanityTags.map((tag) => ({
 
 <Layout title="Event Calendar">
   <section id="calendar-section">
-    <div id="filter">
-      <TagsFilterDropdown tags={tags} />
-    </div>
+    {
+      tags.length > 0 && (
+        <div id="filter">
+          <TagsFilterDropdown tags={tags} />
+        </div>
+      )
+    }
 
     <div id="calendar"></div>
     <noscript>Calendar could not load. Please enable JavaScript.</noscript>
