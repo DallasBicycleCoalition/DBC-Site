@@ -7,6 +7,7 @@ import type {
   LayoutResult,
   PolicyPageResult,
   PostsResult,
+  TagsResult,
   WeekWithoutDrivingPageResult,
 } from "../../sanity.types";
 
@@ -148,6 +149,7 @@ export async function getEventsPage(): Promise<EventsPageResult> {
       _id,
       _createdAt,
       title,
+      "tags": tags[]->{ "id": _id, name, description },
       date,
       allDay,
       location,
@@ -167,6 +169,19 @@ export async function getEventsPage(): Promise<EventsPageResult> {
   return results;
 }
 
+export async function getTags(): Promise<TagsResult> {
+  const tags = groq`
+    *[_type == "tag"]{
+      "id": _id,
+      name,
+      description
+    }
+  `;
+
+  const results = await sanityClient.fetch(tags);
+
+  return results;
+}
 
 export async function getWeekWithoutDrivingPage(): Promise<WeekWithoutDrivingPageResult> {
   const weekWithoutDrivingPage = groq`

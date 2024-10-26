@@ -12,6 +12,19 @@ export default defineConfig({
   title: "Dallas Bicycle Coalition",
   projectId,
   dataset,
-  plugins: [structureTool(), visionTool(), recurringDates()],
+  plugins: [
+    structureTool({
+      structure: (S) =>
+        S.list()
+          .title("Content")
+          .items([
+            ...S.documentTypeListItems().sort((a, b) =>
+              (a.getTitle() ?? "").localeCompare(b.getTitle() ?? "")
+            ),
+          ]),
+    }),
+    visionTool(),
+    recurringDates(),
+  ],
   schema: { types: schemaTypes },
 });

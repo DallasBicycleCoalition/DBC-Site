@@ -6,21 +6,32 @@ const data = await getLayout();
 ---
 
 <header>
-  <a href={data?.landingPageLink || "/"}>
-    {
-      data?.logo && data.logo.asset && (
-        <img
-          src={urlFor(data.logo.asset).url()}
-          alt={data.logo.altText || "Logo"}
-        />
-      )
-    }
-  </a>
+  <div class="logo-container">
+    <a href={data?.landingPageLink || "/"}>
+      {
+        data?.logo && data.logo.asset && (
+          <img
+            src={urlFor(data.logo.asset).url()}
+            alt={data.logo.altText || "Logo"}
+          />
+        )
+      }
+    </a>
+  </div>
   <button id="menuToggle" aria-label="Toggle navigation">&#9776;</button>
   <nav id="navMenu">
-    <a href="/calendar" onclick="window.location.href='/calendar'; return false;">Calendar</a>
-    <a href="/blog/page/1">Blog</a>
-    <a href="/week-without-driving">Week Without Driving</a>
+    <div class="nav-item">
+      <a
+        href="/calendar"
+        onclick="window.location.href='/calendar'; return false;">Calendar</a
+      >
+    </div>
+    <div class="nav-item">
+      <a href="/blog/page/1">Blog</a>
+    </div>
+    <div class="nav-item">
+      <a href="/week-without-driving">Week Without Driving</a>
+    </div>
   </nav>
 </header>
 

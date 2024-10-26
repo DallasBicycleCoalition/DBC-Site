@@ -1,0 +1,121 @@
+---
+import { getTags } from "../utils/groqQueries";
+
+const sanityTags = await getTags();
+
+const tags: Tag[] = sanityTags.map(
+  (tag: { id: string; name: string | null; description: string | null }) => ({
+    id: tag.id,
+    name: tag.name ?? "",
+    description: tag.description ?? undefined,
+  })
+);
+---
+
+<div class="dropdown-filter">
+  <button id="dropdown-toggle">Event Type ▼</button>
+  <div id="dropdown-content" class="dropdown-content hidden">
+    <ul>
+      {
+        tags.map((tag) => (
+          <li>
+            <input
+              type="checkbox"
+              id={tag.id}
+              value={tag.id}
+              class="tags-checkbox"
+            />
+            <label for={tag.id}>{tag.name}</label>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</div>
+
+<script is:inline>
+  const checkboxes = document.querySelectorAll(".tags-checkbox");
+  const dropdownContent = document.getElementById("dropdown-content");
+  const dropdownToggle = document.getElementById("dropdown-toggle");
+
+  // Toggle the dropdown visibility and update the button icon
+  dropdownToggle.addEventListener("click", () => {
+    const isHidden = dropdownContent.classList.toggle("hidden");
+    dropdownToggle.innerHTML = isHidden ? "Event Type ▼" : "Event Type ▲";
+  });
+
+  // Hide dropdown if clicking outside of it
+  document.addEventListener("click", (event) => {
+    const isClickInside =
+      dropdownContent.contains(event.target) ||
+      dropdownToggle.contains(event.target);
+    if (!isClickInside) {
+      dropdownContent.classList.add("hidden");
+      dropdownToggle.innerHTML = "Event Type ▼"; // Update to down arrow when hidden
+    }
+  });
+
+  // Listen for changes in checkboxes
+  checkboxes.forEach((checkbox) => {
+    checkbox.addEventListener("change", () => {
+      const selectedTags = Array.from(checkboxes)
+        .filter((checkbox) => checkbox.checked)
+        .map((checkbox) => checkbox.value);
+
+      // Dispatch the custom event with the selected categories
+      const event = new CustomEvent("filterEvents", {
+        detail: { selectedTags },
+      });
+
+      window.dispatchEvent(event);
+    });
+  });
+</script>
+
+<style>
+  .dropdown-filter {
+    position: relative;
+    display: inline-block;
+  }
+
+  .dropdown-content {
+    display: block;
+    position: absolute;
+    background-color: white;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    padding: 12px;
+    z-index: 1;
+    width: max-content;
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
+
+  li {
+    margin: 0 0;
+  }
+
+  #dropdown-content > ul:nth-child(1) {
+    margin: 0;
+  }
+
+  button#dropdown-toggle {
+    width: 100%;
+    color: rgb(255, 255, 255);
+    background-color: #2c3e50;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    border-radius: 6px;
+  }
+
+  button#dropdown-toggle:hover {
+    opacity: 0.9;
+  }
+</style>

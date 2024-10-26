@@ -57,9 +57,7 @@ h1,
 h2,
 h3,
 h4,
-button,
-input,
-label {
+button {
   line-height: 1.1;
   margin-bottom: 0.5em;
   margin-top: 1em;
@@ -120,32 +118,25 @@ header {
 
 header {
   display: flex;
-  justify-content: center; /* This centers the child .header-stuff horizontally */
-  align-items: center; /* This centers the child .header-stuff vertically, optional */
+  justify-content: center;
+  align-items: center;
 }
 
-header img {
-  padding-top: 2em;
-  padding-bottom: 2em;
+.logo-container {
+  padding-bottom: 1em;
 }
 
 header nav {
   display: flex;
   align-content: center;
-  justify-content: right;
+  justify-content: flex-end;
   align-items: center;
   padding: 1em;
   flex: 1;
 }
 
-header nav a {
+header nav .nav-item {
   padding: 1em;
-}
-
-.header-stuff {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 }
 
 #menuToggle {
@@ -304,6 +295,29 @@ h1 {
   font-style: italic;
 }
 
+/* Styling for the post container */
+.post {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 4em;
+}
+
+/* Styling for the image */
+.post-image {
+  width: 11em;
+  height: auto;
+  margin-right: 1em;
+}
+
+/* Styling for the content beside the image */
+.post-content h2 {
+  margin: 0;
+}
+
+.post-content p {
+  margin: 0.25em 0;
+}
+
 /* Center the Layout */
 .policy-page-intro {
   max-width: 1300px; /* Adjust the maximum width as needed */
@@ -428,7 +442,11 @@ h1 {
   border-bottom: 0px !important;
 }
 
-@media (max-width: 900px) {
+#filter {
+  margin-bottom: 1em;
+}
+
+@media (max-width: 768px) {
   .image-gallery {
     flex-direction: column;
     align-items: center;
@@ -439,9 +457,7 @@ h1 {
     justify-content: space-between;
     display: block;
   }
-}
 
-@media (max-width: 768px) {
   #menuToggle {
     display: block;
     margin-bottom: 1.25em;
