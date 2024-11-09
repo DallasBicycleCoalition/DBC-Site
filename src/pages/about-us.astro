@@ -43,4 +43,15 @@ const aboutUsPage = await getAboutUsPage();
       }
     </ul>
   </section>
+
+  <section id="howToHelp-section">
+    <h2>{aboutUsPage?.howToHelp.heading}</h2>
+    <div class="normal-copy">
+      {
+        aboutUsPage?.howToHelp.content && (
+          <PortableText value={aboutUsPage.howToHelp.content} />
+        )
+      }
+    </div>
+  </section>
 </Layout>

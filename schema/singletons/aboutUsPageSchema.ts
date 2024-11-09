@@ -77,5 +77,23 @@ export const aboutUsSchema = defineType({
         },
       ],
     },
+    {
+      name: "howToHelp",
+      title: "How to help",
+      type: "object",
+      fields: [
+        {
+          name: "heading",
+          title: "Heading",
+          type: "string",
+        },
+        {
+          name: "content",
+          title: "Content",
+          type: "array",
+          of: [{ type: "block" }],
+        },
+      ],
+    },
   ],
 });
