@@ -85,11 +85,78 @@ function initCalendar(events: SanityEvent[]) {
             "modal-overlay"
           ) as HTMLElement;
           const titleEl = document.getElementById("event-title");
+          const dateEl = document.getElementById("event-date");
+          const locationEl = document.getElementById("event-location");
           const descriptionEl = document.getElementById("event-description");
 
-          if (modalOverlay && titleEl && descriptionEl) {
+          if (
+            modalOverlay &&
+            titleEl &&
+            dateEl &&
+            locationEl &&
+            descriptionEl
+          ) {
             titleEl.textContent = info.event.title;
-            descriptionEl.innerHTML = info.event.extendedProps.description;
+
+            // Extract start and end dates
+            const startDate = info.event.start
+              ? new Date(info.event.start)
+              : null;
+            const endDate = info.event.end ? new Date(info.event.end) : null;
+            const allDay = info.event.allDay;
+
+            let dateText = "When: ";
+            if (allDay) {
+              // Handle all-day event display
+              if (
+                startDate &&
+                endDate &&
+                startDate.toDateString() === endDate.toDateString()
+              ) {
+                // Single-day all-day event
+                dateText += startDate.toLocaleDateString();
+              } else if (startDate && endDate) {
+                // Multi-day all-day event
+                dateText += `${startDate.toLocaleDateString()} - ${endDate.toLocaleDateString()}`;
+              } else if (startDate) {
+                // All-day event with only a start date
+                dateText += `${startDate.toLocaleDateString()}, All Day`;
+              }
+            } else if (startDate && endDate) {
+              // Not an all-day event, include date and time
+              const startDateStr = startDate.toLocaleDateString();
+              const endDateStr = endDate.toLocaleDateString();
+              const startTime = startDate.toLocaleTimeString([], {
+                hour: "2-digit",
+                minute: "2-digit",
+              });
+              const endTime = endDate.toLocaleTimeString([], {
+                hour: "2-digit",
+                minute: "2-digit",
+              });
+
+              if (startDateStr === endDateStr) {
+                // Same date, show time range on the same day
+                dateText += `${startDateStr}, ${startTime} - ${endTime}`;
+              } else {
+                // Different dates, show full start and end date with times
+                dateText += `${startDateStr}, ${startTime} - ${endDateStr}, ${endTime}`;
+              }
+            } else if (startDate) {
+              // Only start date is available
+              dateText += `${startDate.toLocaleDateString()}, ${startDate.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}`;
+            }
+
+            dateEl.textContent = dateText;
+
+            if (info.event.extendedProps.location) {
+              locationEl.textContent = `Where: ${info.event.extendedProps.location}`;
+            } else {
+              locationEl.textContent = ""; // Clear content if no location
+            }
+
+            descriptionEl.innerHTML = `<strong>Description</strong> ${info.event.extendedProps.description || "No description available."}`;
+
             modalOverlay.style.display = "block";
           }
         },
