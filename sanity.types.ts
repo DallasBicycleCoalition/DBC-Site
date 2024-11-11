@@ -401,6 +401,27 @@ export type AboutUs = {
       _key: string;
     }>;
   };
+  howToHelp?: {
+    heading?: string;
+    content?: Array<{
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }>;
+      style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+      listItem?: "bullet" | "number";
+      markDefs?: Array<{
+        href?: string;
+        _type: "link";
+        _key: string;
+      }>;
+      level?: number;
+      _type: "block";
+      _key: string;
+    }>;
+  };
 };
 
 export type Tag = {
@@ -839,7 +860,7 @@ export type LayoutResult = {
   landingPageLink: string | null;
 } | null;
 // Variable: aboutUsPage
-// Query: *[_type == "aboutUs"]{      _id,      _createdAt,      title,      "mission": {        "heading": mission.heading,        "content": mission.content      },      "vision": {        "heading": vision.heading,        "content": vision.content      },      "team": {        "heading": team.heading,        "members": team.members[]{          "name": name        }      }    }[0]
+// Query: *[_type == "aboutUs"]{      _id,      _createdAt,      title,      "mission": {        "heading": mission.heading,        "content": mission.content      },      "vision": {        "heading": vision.heading,        "content": vision.content      },      "team": {        "heading": team.heading,        "members": team.members[]{          "name": name        }      },      "howToHelp": {        "heading": howToHelp.heading,        "content": howToHelp.content      },    }[0]
 export type AboutUsPageResult = {
   _id: string;
   _createdAt: string;
@@ -907,6 +928,27 @@ export type AboutUsPageResult = {
         _type: "block";
         _key: string;
       }> | null;
+    }> | null;
+  };
+  howToHelp: {
+    heading: string | null;
+    content: Array<{
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }>;
+      style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+      listItem?: "bullet" | "number";
+      markDefs?: Array<{
+        href?: string;
+        _type: "link";
+        _key: string;
+      }>;
+      level?: number;
+      _type: "block";
+      _key: string;
     }> | null;
   };
 } | null;
@@ -994,7 +1036,7 @@ declare module "@sanity/client" {
     "\n    *[_type == \"homepage\"]{\n      _id,\n      _createdAt,\n      title,\n      \"slug\": slug.current,\n      content,\n      \"homePageHeroImage\": {\n        \"asset\": homePageHeroImage.asset->url,\n        \"altText\": homePageHeroImage.altText\n      },\n      \"whoWeAre\": {\n        \"heading\": whoWeAre.heading,\n        \"photo\": {\n          \"asset\": whoWeAre.photo.asset->url,\n          \"altText\": whoWeAre.photo.altText\n        },\n        \"content\" : whoWeAre.content\n      },\n      \"whatWeDo\": {\n        \"heading\": whatWeDo.heading,\n        \"whatWeDoPics\": whatWeDo.whatWeDoPics[] {\n          \"image\": image.asset->url,\n          \"altText\": altText,\n          \"caption\": caption\n        }\n      },\n      \"bikePlan\": {\n        \"heading\": bikePlan.heading,\n        \"content\": bikePlan.content\n      }\n    }[0]": HomePageResult;
     "\n    *[_type == \"policyPage\"]{\n      _id,\n      _createdAt,\n      title,\n      \"introBlock\": {\n        \"heading\": introBlock.heading,\n        \"content\": introBlock.content\n      },\n      \"policyRows\": policyRows[] {\n        \"policy\": policy,\n        \"summary\": summary,\n        \"moreInfo\": moreInfo,\n      },\n      \"legislativeDemands\": {\n        \"heading\": legislativeDemands.heading,\n        \"content\": legislativeDemands.content\n      },\n    }[0]": PolicyPageResult;
     "\n    *[_type == \"layout\"][0]{\n      _id,\n      _createdAt,\n      \"logo\": {\n        \"asset\": logo.asset->url,\n        \"altText\": logo.altText\n      },\n      \"landingPageLink\": landingPageLink\n    }": LayoutResult;
-    "\n    *[_type == \"aboutUs\"]{\n      _id,\n      _createdAt,\n      title,\n      \"mission\": {\n        \"heading\": mission.heading,\n        \"content\": mission.content\n      },\n      \"vision\": {\n        \"heading\": vision.heading,\n        \"content\": vision.content\n      },\n      \"team\": {\n        \"heading\": team.heading,\n        \"members\": team.members[]{\n          \"name\": name\n        }\n      }\n    }[0]": AboutUsPageResult;
+    "\n    *[_type == \"aboutUs\"]{\n      _id,\n      _createdAt,\n      title,\n      \"mission\": {\n        \"heading\": mission.heading,\n        \"content\": mission.content\n      },\n      \"vision\": {\n        \"heading\": vision.heading,\n        \"content\": vision.content\n      },\n      \"team\": {\n        \"heading\": team.heading,\n        \"members\": team.members[]{\n          \"name\": name\n        }\n      },\n      \"howToHelp\": {\n        \"heading\": howToHelp.heading,\n        \"content\": howToHelp.content\n      },\n    }[0]": AboutUsPageResult;
     "\n    *[_type == \"events\"]{\n      _id,\n      _createdAt,\n      title,\n      \"tags\": tags[]->{ \"id\": _id, name, description },\n      date,\n      allDay,\n      location,\n      excerpt,\n      description,\n      photo {\n        asset -> {\n          _id,\n          url\n        }\n      }\n    }\n  ": EventsPageResult;
     "\n    *[_type == \"tag\"]{\n      \"id\": _id,\n      name,\n      description\n    }\n  ": TagsResult;
     "\n    *[_type == \"weekWithoutDriving\"]{\n      _id,\n      _createdAt,\n      title,\n      \"introBlock\": {\n        \"heading\": introBlock.heading,\n        \"content\": introBlock.content\n      }\n    }[0]": WeekWithoutDrivingPageResult;

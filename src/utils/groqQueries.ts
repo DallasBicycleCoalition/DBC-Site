@@ -135,7 +135,11 @@ export async function getAboutUsPage(): Promise<AboutUsPageResult> {
         "members": team.members[]{
           "name": name
         }
-      }
+      },
+      "howToHelp": {
+        "heading": howToHelp.heading,
+        "content": howToHelp.content
+      },
     }[0]`;
 
   const results = await sanityClient.fetch(aboutUsPage);
