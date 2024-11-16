@@ -311,6 +311,21 @@ export type Homepage = {
   };
 };
 
+export type EmailCityCouncil = {
+  _id: string;
+  _type: "emailCityCouncil";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  links?: Array<{
+    title?: string;
+    url?: string;
+    _type: "link";
+    _key: string;
+  }>;
+};
+
 export type CaptionedImage = {
   _type: "captionedImage";
   image?: {
@@ -625,7 +640,7 @@ export type RecurringDates = {
   rrule?: string;
 };
 
-export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | WeekWithoutDriving | PolicyPage | Layout | Homepage | CaptionedImage | AboutUs | Tag | Post | Slug | Events | Author | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata | RecurringDates;
+export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | WeekWithoutDriving | PolicyPage | Layout | Homepage | EmailCityCouncil | CaptionedImage | AboutUs | Tag | Post | Slug | Events | Author | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata | RecurringDates;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./src/utils/groqQueries.ts
 // Variable: posts
@@ -1027,6 +1042,17 @@ export type WeekWithoutDrivingPageResult = {
     }> | null;
   };
 } | null;
+// Variable: emailCityCouncil
+// Query: *[_type == "emailCityCouncil"]{      _id,      _createdAt,      title,      "links": links[]{        "title": title,        "url": url      }    }[0]
+export type EmailCityCouncilResult = {
+  _id: string;
+  _createdAt: string;
+  title: string | null;
+  links: Array<{
+    title: string | null;
+    url: string | null;
+  }> | null;
+} | null;
 
 // Query TypeMap
 import "@sanity/client";
@@ -1040,5 +1066,6 @@ declare module "@sanity/client" {
     "\n    *[_type == \"events\"]{\n      _id,\n      _createdAt,\n      title,\n      \"tags\": tags[]->{ \"id\": _id, name, description },\n      date,\n      allDay,\n      location,\n      excerpt,\n      description,\n      photo {\n        asset -> {\n          _id,\n          url\n        }\n      }\n    }\n  ": EventsPageResult;
     "\n    *[_type == \"tag\"]{\n      \"id\": _id,\n      name,\n      description\n    }\n  ": TagsResult;
     "\n    *[_type == \"weekWithoutDriving\"]{\n      _id,\n      _createdAt,\n      title,\n      \"introBlock\": {\n        \"heading\": introBlock.heading,\n        \"content\": introBlock.content\n      }\n    }[0]": WeekWithoutDrivingPageResult;
+    "\n    *[_type == \"emailCityCouncil\"]{\n      _id,\n      _createdAt,\n      title,\n      \"links\": links[]{\n        \"title\": title,\n        \"url\": url\n      }\n    }[0]": EmailCityCouncilResult;
   }
 }

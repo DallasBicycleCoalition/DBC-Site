@@ -1,0 +1,87 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { getEmailCityCouncil } from "../../utils/groqQueries";
+
+const emailCityCouncil = await getEmailCityCouncil();
+const links = emailCityCouncil?.links || [];
+---
+
+<Layout title={emailCityCouncil?.title || "Email City Council"}>
+  <section id="email-section">
+    <h1>{emailCityCouncil?.title || "Email City Council"}</h1>
+    <select id="email-dropdown" class="dropdown">
+      <option value="">-- Generate email draft --</option>
+      {links.map((link) => <option value={link.url}>{link.title}</option>)}
+    </select>
+
+    <a id="send-email-link" href="#" target="_blank">
+      <button id="send-email-button" disabled>Send Email</button>
+    </a>
+  </section>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const dropdown = document.getElementById(
+        "email-dropdown"
+      ) as HTMLSelectElement | null;
+      const sendEmailLink = document.getElementById(
+        "send-email-link"
+      ) as HTMLAnchorElement | null;
+      const sendEmailButton = document.getElementById(
+        "send-email-button"
+      ) as HTMLButtonElement | null;
+
+      if (!dropdown || !sendEmailLink || !sendEmailButton) {
+        console.error("Required elements not found in the DOM.");
+        return;
+      }
+
+      dropdown.addEventListener("change", () => {
+        const selectedUrl = dropdown.value;
+
+        sendEmailLink.href = selectedUrl || "#";
+
+        sendEmailButton.disabled = !selectedUrl;
+      });
+    });
+  </script>
+
+  <style>
+
+#email-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    #email-dropdown {
+      text-align: center;
+      text-align-last: center;
+      padding: 0.5em;
+      margin: 0 auto;
+      display: block;
+    }
+    
+    h1 {
+      font-size: 2rem;
+    }
+
+    button {
+      padding: 0.5em 1em;
+      color: white;
+      background-color: blue;
+      border: none;
+      cursor: pointer;
+    }
+
+    button:disabled {
+      background-color: gray;
+      cursor: not-allowed;
+    }
+
+    option {
+      text-align: center;
+    }
+  </style>
+</Layout>

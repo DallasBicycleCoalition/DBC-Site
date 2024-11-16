@@ -5,6 +5,7 @@ import { tagSchema } from "./documents/tag";
 
 import { aboutUsSchema } from "./singletons/aboutUsPageSchema";
 import { captionedImageSchema } from "./singletons/captionedImageSchema";
+import { emailCityCouncilSchema } from "./singletons/emailCityCouncilSchema";
 import { homePageSchema } from "./singletons/homePageSchema";
 import { layoutSchema } from "./singletons/layoutSchema";
 import { policyPageSchema } from "./singletons/policyPageSchema";
@@ -15,6 +16,7 @@ const documentSchemas = [authorSchema, eventsSchema, postSchema, tagSchema];
 const singletonSchemas = [
   aboutUsSchema,
   captionedImageSchema,
+  emailCityCouncilSchema,
   homePageSchema,
   layoutSchema,
   policyPageSchema,

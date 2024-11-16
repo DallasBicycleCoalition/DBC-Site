@@ -2,6 +2,7 @@ import groq from "groq";
 import { sanityClient } from "sanity:client";
 import type {
   AboutUsPageResult,
+  EmailCityCouncilResult,
   EventsPageResult,
   HomePageResult,
   LayoutResult,
@@ -200,6 +201,23 @@ export async function getWeekWithoutDrivingPage(): Promise<WeekWithoutDrivingPag
     }[0]`;
 
   const results = await sanityClient.fetch(weekWithoutDrivingPage);
+
+  return results;
+}
+
+export async function getEmailCityCouncil(): Promise<EmailCityCouncilResult> {
+  const emailCityCouncil = groq`
+    *[_type == "emailCityCouncil"]{
+      _id,
+      _createdAt,
+      title,
+      "links": links[]{
+        "title": title,
+        "url": url
+      }
+    }[0]`;
+
+  const results = await sanityClient.fetch(emailCityCouncil);
 
   return results;
 }
