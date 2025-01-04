@@ -29,7 +29,7 @@
     "@types/fullcalendar": "^3.8.0",
     "@types/react": "18.3.11",
     "@types/react-dom": "18.3.0",
-    "astro": "^4.16.6",
+    "astro": "^4.16.18",
     "astro-portabletext": "0.10.0",
     "autoprefixer": "10.4.20",
     "googleapis": "^144.0.0",
