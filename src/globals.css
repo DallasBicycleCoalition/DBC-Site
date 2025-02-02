@@ -203,6 +203,10 @@ div.normal-copy p:not(:last-child):not(:-moz-last-node) {
   margin-bottom: 1em;
 }
 
+.normal-copy p {
+  margin-bottom: 1em;
+}
+
 .visually-hidden {
   border: 0;
   clip: rect(0 0 0 0);
