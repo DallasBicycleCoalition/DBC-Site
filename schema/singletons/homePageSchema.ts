@@ -108,5 +108,38 @@ export const homePageSchema = defineType({
         },
       ],
     },
+    {
+      name: "dallasBikeRide",
+      title: "Dallas Bike Ride 2025",
+      type: "object",
+      fields: [
+        {
+          name: "heading",
+          title: "Heading",
+          type: "string",
+        },
+        {
+          name: "photo",
+          title: "Dallas Bike Ride Photo",
+          type: "image",
+          fields: [
+            {
+              name: "altText",
+              type: "string",
+              title: "Alternative text",
+            },
+          ],
+          options: {
+            hotspot: true,
+          },
+        },
+        {
+          name: "content",
+          title: "Content",
+          type: "array",
+          of: [{ type: "block" }],
+        },
+      ],
+    },
   ],
 });
