@@ -264,10 +264,6 @@ div.normal-copy p:not(:last-child):not(:-moz-last-node) {
 }
 
 /* Specific element styling */
-#bike-plan {
-  text-align: center;
-}
-
 .main-post-image {
   margin-bottom: 1em;
   margin-top: 1em;

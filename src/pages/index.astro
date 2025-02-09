@@ -56,17 +56,62 @@ const homePage = await getHomePage();
       }
     </div>
   </section>
-
-  <section id="bike-plan">
-    <h2>{homePage?.bikePlan.heading}</h2>
-    <div class="two-cols">
-      {
-        homePage?.bikePlan.content && (
-          <div class="normal-copy">
-            <PortableText value={homePage.bikePlan.content} />
-          </div>
-        )
-      }
-    </div>
+  
+  <section id="sections">
+    <section id="bike-plan">
+      <h2>{homePage?.bikePlan.heading}</h2>
+      <div class="two-cols">
+        {
+          homePage?.bikePlan.content && (
+            <div class="normal-copy">
+              <PortableText value={homePage.bikePlan.content} />
+            </div>
+          )
+        }
+      </div>
+    </section>
+  
+    <section id="bike-ride">
+      <h2>{homePage?.dallasBikeRide.heading}</h2>
+      <div>
+        {
+          homePage?.dallasBikeRide.photo.asset && (
+            <img
+              id="bike-ride-img"
+              src={urlFor(homePage.dallasBikeRide.photo.asset).url()}
+              alt={homePage.dallasBikeRide.photo.altText || "Dallas Bike Ride image"}
+            />
+          )
+        }
+        {
+          homePage?.dallasBikeRide.content && (
+            <div class="normal-copy">
+              <PortableText value={homePage.dallasBikeRide.content} />
+            </div>
+          )
+        }
+      </div>
+    </section>
   </section>
+
+  
+
+  <style>
+    #sections {
+      display:flex;
+      flex-wrap: wrap;
+      gap: 2em;
+    }
+    #bike-plan {
+      flex: 1;
+    }
+    #bike-ride {
+      flex: 1;
+    }
+    #bike-ride-img {
+      min-width: 300px;
+      margin-bottom: 5px;
+    }
+  </style>
+
 </Layout>

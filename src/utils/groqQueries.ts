@@ -66,7 +66,15 @@ export async function getHomePage(): Promise<HomePageResult> {
       "bikePlan": {
         "heading": bikePlan.heading,
         "content": bikePlan.content
-      }
+      },
+      "dallasBikeRide": {
+        "heading": dallasBikeRide.heading,
+        "photo": {
+          "asset": dallasBikeRide.photo.asset->url,
+          "altText": dallasBikeRide.photo.altText
+        },
+        "content" : dallasBikeRide.content
+      },
     }[0]`;
 
   const results = await sanityClient.fetch(homePage);
