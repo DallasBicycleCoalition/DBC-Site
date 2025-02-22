@@ -5,5 +5,6 @@ export {};
 declare global {
   interface Window {
     events: TransformedEvent;
+    calendar: any;
   }
 }

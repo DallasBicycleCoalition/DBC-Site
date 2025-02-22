@@ -5,240 +5,287 @@ import rrulePlugin from "@fullcalendar/rrule";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import type { TransformedEvent } from "../types/events";
 
-function initCalendar(events: SanityEvent[]) {
-  const calendarEl = document.getElementById("calendar");
-  const errorMessageEl = document.getElementById("error-message");
+// --- Modal Functions ---
 
-  let filteredEvents = [...events]; // Start with all events
+const modalElements = {
+  overlay: document.getElementById("modal-overlay") as HTMLElement,
+  title: document.getElementById("event-title"),
+  date: document.getElementById("event-date"),
+  location: document.getElementById("event-location"),
+  description: document.getElementById("event-description"),
+  closeButton: document.getElementById("close-modal"),
+};
 
-  if (calendarEl && errorMessageEl) {
-    const renderCalendar = () => {
-      const transformedEvents: TransformedEvent[] = filteredEvents.map(
-        (event: SanityEvent) => {
-          let eventStart = new Date(event.date.startDate);
-          let eventEnd = event.date.endDate
-            ? new Date(event.date.endDate)
-            : undefined;
+function formatDateText(event: any): string {
+  const startDate = event.start ? new Date(event.start) : null;
+  const endDate = event.end ? new Date(event.end) : null;
+  const allDay = event.allDay;
+  let dateText = "When: ";
 
-          if (
-            eventEnd &&
-            eventStart.toDateString() !== eventEnd.toDateString()
-          ) {
-            eventStart = new Date(eventStart.setDate(eventStart.getDate() - 1));
-            eventEnd = new Date(eventEnd.setDate(eventEnd.getDate() + 1));
-          } else if (event.allDay) {
-            eventStart = new Date(eventStart.setDate(eventStart.getDate() - 1));
-          }
+  if (allDay) {
+    if (
+      startDate &&
+      endDate &&
+      startDate.toDateString() === endDate.toDateString()
+    ) {
+      dateText += startDate.toLocaleDateString();
+    } else if (startDate && endDate) {
+      dateText += `${startDate.toLocaleDateString()} - ${endDate.toLocaleDateString()}`;
+    } else if (startDate) {
+      dateText += `${startDate.toLocaleDateString()}, All Day`;
+    }
+  } else if (startDate && endDate) {
+    const startStr = startDate.toLocaleDateString();
+    const endStr = endDate.toLocaleDateString();
+    const startTime = startDate.toLocaleTimeString([], {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+    const endTime = endDate.toLocaleTimeString([], {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+    dateText +=
+      startStr === endStr
+        ? `${startStr}, ${startTime} - ${endTime}`
+        : `${startStr}, ${startTime} - ${endStr}, ${endTime}`;
+  } else if (startDate) {
+    dateText += `${startDate.toLocaleDateString()}, ${startDate.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}`;
+  }
+  return dateText;
+}
 
-          const transformedEvent: TransformedEvent = {
-            title: event.title,
-            description: event.description,
-            location: event.location,
-            allDay: event.allDay,
-            start: eventStart,
-            end: eventEnd,
-          };
+function openEventModal(
+  event: {
+    id: string;
+    title: string;
+    start: Date | null;
+    end: Date | null;
+    allDay: boolean;
+    extendedProps: { description?: string; location?: string };
+  },
+  updateURL = true
+): void {
+  if (
+    !modalElements.overlay ||
+    !modalElements.title ||
+    !modalElements.date ||
+    !modalElements.location ||
+    !modalElements.description
+  ) {
+    return;
+  }
 
-          if (event.date.rrule) {
-            const formatDateForDTSTART = (date: Date) => {
-              const y = date.getFullYear();
-              const m = String(date.getMonth() + 1).padStart(2, "0");
-              const d = String(date.getDate()).padStart(2, "0");
-              const h = String(date.getHours()).padStart(2, "0");
-              const min = String(date.getMinutes()).padStart(2, "0");
-              const s = String(date.getSeconds()).padStart(2, "0");
-              return `${y}${m}${d}T${h}${min}${s}`;
-            };
+  modalElements.title.textContent = event.title;
+  modalElements.date.textContent = formatDateText(event);
+  modalElements.location.textContent = event.extendedProps.location
+    ? `Where: ${event.extendedProps.location}`
+    : "";
+  modalElements.description.innerHTML = `<strong>Description</strong> ${event.extendedProps.description || "No description available."}`;
+  modalElements.overlay.style.display = "block";
 
-            const dtstart = formatDateForDTSTART(eventStart);
-            transformedEvent.rrule = `DTSTART:${dtstart}\n${event.date.rrule}`;
-          } else if (event.allDay && eventStart) {
-            eventStart.setDate(eventStart.getDate() + 1);
-          }
+  if (updateURL) {
+    const startParam = event.start
+      ? `&start=${encodeURIComponent(new Date(event.start.getTime() - 86400000).toISOString())}`
+      : "";
+    history.pushState(
+      { eventId: event.id },
+      "",
+      `?event=${event.id}${startParam}`
+    );
+  }
+}
 
-          return transformedEvent;
-        }
-      );
+function closeEventModal(): void {
+  if (modalElements.overlay) {
+    modalElements.overlay.style.display = "none";
+  }
+  history.pushState({}, "", window.location.pathname);
+}
 
-      const initialView = window.matchMedia("(max-width: 768px)").matches
-        ? "listMonth"
-        : "dayGridMonth";
+// --- URL Handling ---
 
-      const calendar = new Calendar(calendarEl, {
-        plugins: [dayGridPlugin, timeGridPlugin, listPlugin, rrulePlugin],
-        timeZone: "local",
-        initialView: initialView,
-        headerToolbar: {
-          left: "prev,next today",
-          center: "title",
-          right: "dayGridMonth,timeGridWeek,timeGridDay,listMonth",
+function checkForEventInURL(): void {
+  const params = new URLSearchParams(window.location.search);
+  const eventId = params.get("event");
+  const startStr = params.get("start");
+
+  if (eventId) {
+    const eventData = (window.events || []).find(
+      (e: any) => e.id === eventId || e._id === eventId
+    );
+
+    if (eventData) {
+      // Use the start date from the URL if provided, else default to the event's first instance
+      const instanceStart = startStr
+        ? new Date(startStr)
+        : new Date(eventData.date.startDate);
+
+      const simulatedEvent = {
+        id: eventData.id || eventData._id,
+        title: eventData.title,
+        start: instanceStart,
+        end: eventData.date.endDate ? new Date(eventData.date.endDate) : null,
+        allDay: eventData.allDay,
+        extendedProps: {
+          description: eventData.description,
+          location: eventData.location,
         },
-        views: {
-          dayGridMonth: { buttonText: "Month" },
-          timeGridWeek: { buttonText: "Week" },
-          timeGridDay: { buttonText: "Day" },
-          listMonth: { buttonText: "Agenda" },
-        },
-        events: transformedEvents,
-        eventClick: function (info) {
-          const modalOverlay = document.getElementById(
-            "modal-overlay"
-          ) as HTMLElement;
-          const titleEl = document.getElementById("event-title");
-          const dateEl = document.getElementById("event-date");
-          const locationEl = document.getElementById("event-location");
-          const descriptionEl = document.getElementById("event-description");
+      };
 
-          if (
-            modalOverlay &&
-            titleEl &&
-            dateEl &&
-            locationEl &&
-            descriptionEl
-          ) {
-            titleEl.textContent = info.event.title;
-
-            // Extract start and end dates
-            const startDate = info.event.start
-              ? new Date(info.event.start)
-              : null;
-            const endDate = info.event.end ? new Date(info.event.end) : null;
-            const allDay = info.event.allDay;
-
-            let dateText = "When: ";
-            if (allDay) {
-              // Handle all-day event display
-              if (
-                startDate &&
-                endDate &&
-                startDate.toDateString() === endDate.toDateString()
-              ) {
-                // Single-day all-day event
-                dateText += startDate.toLocaleDateString();
-              } else if (startDate && endDate) {
-                // Multi-day all-day event
-                dateText += `${startDate.toLocaleDateString()} - ${endDate.toLocaleDateString()}`;
-              } else if (startDate) {
-                // All-day event with only a start date
-                dateText += `${startDate.toLocaleDateString()}, All Day`;
-              }
-            } else if (startDate && endDate) {
-              // Not an all-day event, include date and time
-              const startDateStr = startDate.toLocaleDateString();
-              const endDateStr = endDate.toLocaleDateString();
-              const startTime = startDate.toLocaleTimeString([], {
-                hour: "2-digit",
-                minute: "2-digit",
-              });
-              const endTime = endDate.toLocaleTimeString([], {
-                hour: "2-digit",
-                minute: "2-digit",
-              });
-
-              if (startDateStr === endDateStr) {
-                // Same date, show time range on the same day
-                dateText += `${startDateStr}, ${startTime} - ${endTime}`;
-              } else {
-                // Different dates, show full start and end date with times
-                dateText += `${startDateStr}, ${startTime} - ${endDateStr}, ${endTime}`;
-              }
-            } else if (startDate) {
-              // Only start date is available
-              dateText += `${startDate.toLocaleDateString()}, ${startDate.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}`;
-            }
-
-            dateEl.textContent = dateText;
-
-            if (info.event.extendedProps.location) {
-              locationEl.textContent = `Where: ${info.event.extendedProps.location}`;
-            } else {
-              locationEl.textContent = ""; // Clear content if no location
-            }
-
-            descriptionEl.innerHTML = `<strong>Description</strong> ${info.event.extendedProps.description || "No description available."}`;
-
-            modalOverlay.style.display = "block";
-          }
-        },
-      });
-
-      calendar.render();
-    };
-
-    renderCalendar();
-
-    // Listen for tag filter changes from the custom TagsFilterDropdown component
-    window.addEventListener("filterEvents", (event: Event) => {
-      const customEvent = event as CustomEvent;
-      const selectedTags = customEvent.detail.selectedTags;
-
-      if (selectedTags.length === 0) {
-        filteredEvents = [...events];
+      if (window.calendar) {
+        window.calendar.gotoDate(simulatedEvent.start);
       } else {
-        filteredEvents = events.filter((event) => {
-          if (!event.tags || event.tags.length === 0) {
-            return false;
-          }
-
-          return event.tags.some((tag: { id: string }) =>
-            selectedTags.includes(tag.id)
-          );
+        document.addEventListener("calendarReady", () => {
+          window.calendar.gotoDate(simulatedEvent.start);
         });
       }
 
-      // Clear and re-render the calendar with filtered events
-      calendarEl.innerHTML = "";
-      renderCalendar();
-    });
-  } else {
-    console.error("Calendar or error message element not found");
+      openEventModal(simulatedEvent, false);
+    }
+  }
+}
+
+// --- Calendar Initialization ---
+
+function formatDateForDTSTART(date: Date): string {
+  const pad = (n: number) => String(n).padStart(2, "0");
+  return `${date.getFullYear()}${pad(date.getMonth() + 1)}${pad(date.getDate())}T${pad(date.getHours())}${pad(date.getMinutes())}${pad(date.getSeconds())}`;
+}
+
+function transformEvent(event: any): TransformedEvent {
+  let eventStart = new Date(event.date.startDate);
+  let eventEnd = event.date.endDate ? new Date(event.date.endDate) : undefined;
+
+  if (eventEnd && eventStart.toDateString() !== eventEnd.toDateString()) {
+    eventStart.setDate(eventStart.getDate() - 1);
+    if (eventEnd) eventEnd.setDate(eventEnd.getDate() + 1);
+  } else if (event.allDay) {
+    eventStart.setDate(eventStart.getDate() - 1);
+  }
+
+  const transformedEvent: TransformedEvent = {
+    id: event._id,
+    title: event.title,
+    description: event.description,
+    location: event.location,
+    allDay: event.allDay,
+    start: eventStart,
+    end: eventEnd,
+  };
+
+  if (event.date.rrule) {
+    const dtstart = formatDateForDTSTART(eventStart);
+    transformedEvent.rrule = `DTSTART:${dtstart}\n${event.date.rrule}`;
+  } else if (event.allDay && eventStart) {
+    eventStart.setDate(eventStart.getDate() + 1);
+  }
+
+  return transformedEvent;
+}
+
+function initCalendar(events: TransformedEvent[]): void {
+  const calendarEl = document.getElementById("calendar");
+  const errorMessageEl = document.getElementById("error-message");
+
+  if (!calendarEl || !errorMessageEl) {
+    console.error("Required calendar elements not found");
     if (errorMessageEl) {
       errorMessageEl.innerText =
         "Calendar could not be loaded. Missing required elements.";
     }
+    return;
+  }
+
+  let filteredEvents = [...events];
+
+  const renderCalendar = (): void => {
+    const transformedEvents: TransformedEvent[] =
+      filteredEvents.map(transformEvent);
+    const initialView = window.matchMedia("(max-width: 768px)").matches
+      ? "listMonth"
+      : "dayGridMonth";
+
+    const calendar = new Calendar(calendarEl, {
+      plugins: [dayGridPlugin, timeGridPlugin, listPlugin, rrulePlugin],
+      timeZone: "local",
+      initialView,
+      headerToolbar: {
+        left: "prev,next today",
+        center: "title",
+        right: "dayGridMonth,timeGridWeek,timeGridDay,listMonth",
+      },
+      views: {
+        dayGridMonth: { buttonText: "Month" },
+        timeGridWeek: { buttonText: "Week" },
+        timeGridDay: { buttonText: "Day" },
+        listMonth: { buttonText: "Agenda" },
+      },
+      events: transformedEvents,
+      eventClick: (info) => openEventModal(info.event),
+    });
+
+    calendar.render();
+    window.calendar = calendar;
+    document.dispatchEvent(new Event("calendarReady"));
+  };
+
+  renderCalendar();
+
+  // Listen for tag filter changes from the dropdown component
+  window.addEventListener("filterEvents", (e: Event) => {
+    const { selectedTags } = (e as CustomEvent).detail;
+    filteredEvents =
+      selectedTags.length === 0
+        ? [...events]
+        : events.filter((event) =>
+            event.tags?.some((tag: { id: string }) =>
+              selectedTags.includes(tag.id)
+            )
+          );
+    calendarEl.innerHTML = "";
+    renderCalendar();
+  });
+}
+
+function ensureCalendarInitialized(): void {
+  const calendarEl = document.getElementById("calendar");
+
+  // Ensure TypeScript treats window.events as an array
+  const events = (window.events as TransformedEvent[]) || [];
+
+  if (calendarEl && events.length > 0) {
+    initCalendar(events);
+  } else {
+    console.error("No events available or calendar element missing.");
   }
 }
 
-// Ensure the DOM is fully loaded before running the script
+// --- DOM and Navigation Handlers ---
+
 document.addEventListener("DOMContentLoaded", () => {
   ensureCalendarInitialized();
 
-  const modalOverlay = document.getElementById("modal-overlay") as HTMLElement;
-  const closeModalButton = document.getElementById("close-modal");
-
-  if (modalOverlay && closeModalButton) {
-    modalOverlay.addEventListener("click", (event) => {
-      if (event.target === modalOverlay) {
-        modalOverlay.style.display = "none";
-      }
+  // Modal close handlers
+  if (modalElements.overlay && modalElements.closeButton) {
+    modalElements.overlay.addEventListener("click", (e) => {
+      if (e.target === modalElements.overlay) closeEventModal();
     });
-
-    closeModalButton.addEventListener("click", () => {
-      modalOverlay.style.display = "none";
-    });
-
-    document.addEventListener("keydown", (event) => {
-      if (event.key === "Escape" || event.key === "Esc") {
-        if (modalOverlay.style.display === "block") {
-          modalOverlay.style.display = "none";
-        }
-      }
-    });
+    modalElements.closeButton.addEventListener("click", closeEventModal);
   }
+  document.addEventListener("keydown", (e) => {
+    if (
+      (e.key === "Escape" || e.key === "Esc") &&
+      modalElements.overlay.style.display === "block"
+    ) {
+      closeEventModal();
+    }
+  });
+
+  // Open modal if URL has an event id
+  checkForEventInURL();
 });
 
-function ensureCalendarInitialized() {
-  const calendarEl = document.getElementById("calendar");
-
-  if (calendarEl) {
-    const events: SanityEvent[] = (window.events || []) as SanityEvent[];
-
-    if (events.length > 0) {
-      initCalendar(events);
-    } else {
-      console.error("No events available to initialize calendar");
-    }
-  } else {
-    console.error("Calendar element not found in DOM");
-  }
-}
+window.addEventListener("popstate", () => {
+  window.location.reload();
+});

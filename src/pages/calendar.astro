@@ -9,6 +9,7 @@ const sanityTags = await getTags();
 
 const events = eventsFromSanity.map((event) => ({
   ...event,
+  id: event._id,
   description: event.description ? toHTML(event.description) : "",
 }));
 
