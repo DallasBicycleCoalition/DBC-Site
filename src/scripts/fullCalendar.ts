@@ -5,7 +5,135 @@ import rrulePlugin from "@fullcalendar/rrule";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import type { TransformedEvent } from "../types/events";
 
-function initCalendar(events: SanityEvent[]) {
+// Opens the modal with event details and updates the URL (if desired)
+function openEventModal(
+  event: {
+    id: string;
+    title: string;
+    start: Date | null;
+    end: Date | null;
+    allDay: boolean;
+    extendedProps: { description?: string; location?: string };
+  },
+  updateURL = true
+) {
+  const modalOverlay = document.getElementById("modal-overlay") as HTMLElement;
+  const titleEl = document.getElementById("event-title");
+  const dateEl = document.getElementById("event-date");
+  const locationEl = document.getElementById("event-location");
+  const descriptionEl = document.getElementById("event-description");
+
+  if (modalOverlay && titleEl && dateEl && locationEl && descriptionEl) {
+    titleEl.textContent = event.title;
+
+    const startDate = event.start ? new Date(event.start) : null;
+    const endDate = event.end ? new Date(event.end) : null;
+    const allDay = event.allDay;
+    let dateText = "When: ";
+    if (allDay) {
+      if (
+        startDate &&
+        endDate &&
+        startDate.toDateString() === endDate.toDateString()
+      ) {
+        dateText += startDate.toLocaleDateString();
+      } else if (startDate && endDate) {
+        dateText += `${startDate.toLocaleDateString()} - ${endDate.toLocaleDateString()}`;
+      } else if (startDate) {
+        dateText += `${startDate.toLocaleDateString()}, All Day`;
+      }
+    } else if (startDate && endDate) {
+      const startDateStr = startDate.toLocaleDateString();
+      const endDateStr = endDate.toLocaleDateString();
+      const startTime = startDate.toLocaleTimeString([], {
+        hour: "2-digit",
+        minute: "2-digit",
+      });
+      const endTime = endDate.toLocaleTimeString([], {
+        hour: "2-digit",
+        minute: "2-digit",
+      });
+      if (startDateStr === endDateStr) {
+        dateText += `${startDateStr}, ${startTime} - ${endTime}`;
+      } else {
+        dateText += `${startDateStr}, ${startTime} - ${endDateStr}, ${endTime}`;
+      }
+    } else if (startDate) {
+      dateText += `${startDate.toLocaleDateString()}, ${startDate.toLocaleTimeString(
+        [],
+        {
+          hour: "2-digit",
+          minute: "2-digit",
+        }
+      )}`;
+    }
+    dateEl.textContent = dateText;
+
+    if (event.extendedProps.location) {
+      locationEl.textContent = `Where: ${event.extendedProps.location}`;
+    } else {
+      locationEl.textContent = "";
+    }
+
+    descriptionEl.innerHTML = `<strong>Description</strong> ${
+      event.extendedProps.description || "No description available."
+    }`;
+
+    modalOverlay.style.display = "block";
+
+    if (updateURL) {
+      history.pushState({ eventId: event.id }, "", `?event=${event.id}`);
+    }
+  }
+}
+
+// Closes the modal and resets the URL
+function closeEventModal() {
+  const modalOverlay = document.getElementById("modal-overlay") as HTMLElement;
+  if (modalOverlay) {
+    modalOverlay.style.display = "none";
+  }
+  history.pushState({}, "", window.location.pathname);
+}
+
+// On page load, check if the URL contains an event id and open its modal if so
+function checkForEventInURL() {
+  const params = new URLSearchParams(window.location.search);
+  const eventId = params.get("event");
+
+  if (eventId) {
+    const eventData = (window.events || []).find(
+      (e: any) => e.id === eventId || e._id === eventId
+    );
+
+    if (eventData) {
+      const simulatedEvent = {
+        id: eventData.id || eventData._id,
+        title: eventData.title,
+        start: new Date(eventData.date.startDate),
+        end: eventData.date.endDate ? new Date(eventData.date.endDate) : null,
+        allDay: eventData.allDay,
+        extendedProps: {
+          description: eventData.description,
+          location: eventData.location,
+        },
+      };
+
+      // Wait until FullCalendar is initialized before jumping to the event's date
+      if (window.calendar) {
+        window.calendar.gotoDate(simulatedEvent.start);
+      } else {
+        document.addEventListener("calendarReady", () => {
+          window.calendar.gotoDate(simulatedEvent.start);
+        });
+      }
+
+      openEventModal(simulatedEvent, false);
+    }
+  }
+}
+
+function initCalendar(events: any[]) {
   const calendarEl = document.getElementById("calendar");
   const errorMessageEl = document.getElementById("error-message");
 
@@ -14,7 +142,7 @@ function initCalendar(events: SanityEvent[]) {
   if (calendarEl && errorMessageEl) {
     const renderCalendar = () => {
       const transformedEvents: TransformedEvent[] = filteredEvents.map(
-        (event: SanityEvent) => {
+        (event: any) => {
           let eventStart = new Date(event.date.startDate);
           let eventEnd = event.date.endDate
             ? new Date(event.date.endDate)
@@ -31,6 +159,7 @@ function initCalendar(events: SanityEvent[]) {
           }
 
           const transformedEvent: TransformedEvent = {
+            id: event._id, // Now pulling the id from _id
             title: event.title,
             description: event.description,
             location: event.location,
@@ -81,88 +210,17 @@ function initCalendar(events: SanityEvent[]) {
         },
         events: transformedEvents,
         eventClick: function (info) {
-          const modalOverlay = document.getElementById(
-            "modal-overlay"
-          ) as HTMLElement;
-          const titleEl = document.getElementById("event-title");
-          const dateEl = document.getElementById("event-date");
-          const locationEl = document.getElementById("event-location");
-          const descriptionEl = document.getElementById("event-description");
-
-          if (
-            modalOverlay &&
-            titleEl &&
-            dateEl &&
-            locationEl &&
-            descriptionEl
-          ) {
-            titleEl.textContent = info.event.title;
-
-            // Extract start and end dates
-            const startDate = info.event.start
-              ? new Date(info.event.start)
-              : null;
-            const endDate = info.event.end ? new Date(info.event.end) : null;
-            const allDay = info.event.allDay;
-
-            let dateText = "When: ";
-            if (allDay) {
-              // Handle all-day event display
-              if (
-                startDate &&
-                endDate &&
-                startDate.toDateString() === endDate.toDateString()
-              ) {
-                // Single-day all-day event
-                dateText += startDate.toLocaleDateString();
-              } else if (startDate && endDate) {
-                // Multi-day all-day event
-                dateText += `${startDate.toLocaleDateString()} - ${endDate.toLocaleDateString()}`;
-              } else if (startDate) {
-                // All-day event with only a start date
-                dateText += `${startDate.toLocaleDateString()}, All Day`;
-              }
-            } else if (startDate && endDate) {
-              // Not an all-day event, include date and time
-              const startDateStr = startDate.toLocaleDateString();
-              const endDateStr = endDate.toLocaleDateString();
-              const startTime = startDate.toLocaleTimeString([], {
-                hour: "2-digit",
-                minute: "2-digit",
-              });
-              const endTime = endDate.toLocaleTimeString([], {
-                hour: "2-digit",
-                minute: "2-digit",
-              });
-
-              if (startDateStr === endDateStr) {
-                // Same date, show time range on the same day
-                dateText += `${startDateStr}, ${startTime} - ${endTime}`;
-              } else {
-                // Different dates, show full start and end date with times
-                dateText += `${startDateStr}, ${startTime} - ${endDateStr}, ${endTime}`;
-              }
-            } else if (startDate) {
-              // Only start date is available
-              dateText += `${startDate.toLocaleDateString()}, ${startDate.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}`;
-            }
-
-            dateEl.textContent = dateText;
-
-            if (info.event.extendedProps.location) {
-              locationEl.textContent = `Where: ${info.event.extendedProps.location}`;
-            } else {
-              locationEl.textContent = ""; // Clear content if no location
-            }
-
-            descriptionEl.innerHTML = `<strong>Description</strong> ${info.event.extendedProps.description || "No description available."}`;
-
-            modalOverlay.style.display = "block";
-          }
+          openEventModal(info.event);
         },
       });
 
       calendar.render();
+
+      // Store the calendar instance globally so we can use it elsewhere
+      window.calendar = calendar;
+
+      // Dispatch an event so `checkForEventInURL()` knows FullCalendar is ready
+      document.dispatchEvent(new Event("calendarReady"));
     };
 
     renderCalendar();
@@ -179,7 +237,6 @@ function initCalendar(events: SanityEvent[]) {
           if (!event.tags || event.tags.length === 0) {
             return false;
           }
-
           return event.tags.some((tag: { id: string }) =>
             selectedTags.includes(tag.id)
           );
@@ -209,21 +266,49 @@ document.addEventListener("DOMContentLoaded", () => {
   if (modalOverlay && closeModalButton) {
     modalOverlay.addEventListener("click", (event) => {
       if (event.target === modalOverlay) {
-        modalOverlay.style.display = "none";
+        closeEventModal();
       }
     });
 
     closeModalButton.addEventListener("click", () => {
-      modalOverlay.style.display = "none";
+      closeEventModal();
     });
 
     document.addEventListener("keydown", (event) => {
       if (event.key === "Escape" || event.key === "Esc") {
         if (modalOverlay.style.display === "block") {
-          modalOverlay.style.display = "none";
+          closeEventModal();
         }
       }
     });
+  }
+
+  // Check URL for event parameter on load
+  checkForEventInURL();
+});
+
+// Handle browser navigation (back/forward)
+window.addEventListener("popstate", () => {
+  const params = new URLSearchParams(window.location.search);
+  const eventId = params.get("event");
+  if (eventId) {
+    const eventData = (window.events || []).find((e: any) => e.id === eventId);
+    if (eventData) {
+      const simulatedEvent = {
+        id: eventData.id,
+        title: eventData.title,
+        start: new Date(eventData.date.startDate),
+        end: eventData.date.endDate ? new Date(eventData.date.endDate) : null,
+        allDay: eventData.allDay,
+        extendedProps: {
+          description: eventData.description,
+          location: eventData.location,
+        },
+      };
+      openEventModal(simulatedEvent, false);
+    }
+  } else {
+    closeEventModal();
   }
 });
 
@@ -231,7 +316,7 @@ function ensureCalendarInitialized() {
   const calendarEl = document.getElementById("calendar");
 
   if (calendarEl) {
-    const events: SanityEvent[] = (window.events || []) as SanityEvent[];
+    const events: any[] = (window.events || []) as any[];
 
     if (events.length > 0) {
       initCalendar(events);
