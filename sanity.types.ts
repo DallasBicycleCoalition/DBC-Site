@@ -385,6 +385,24 @@ export type AboutUs = {
   title?: string;
   vision?: {
     heading?: string;
+    highlightedContent?: Array<{
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }>;
+      style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+      listItem?: "bullet" | "number";
+      markDefs?: Array<{
+        href?: string;
+        _type: "link";
+        _key: string;
+      }>;
+      level?: number;
+      _type: "block";
+      _key: string;
+    }>;
     content?: Array<{
       children?: Array<{
         marks?: Array<string>;
@@ -403,9 +421,39 @@ export type AboutUs = {
       _type: "block";
       _key: string;
     }>;
+    photo?: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      altText?: string;
+      _type: "image";
+    };
   };
   mission?: {
     heading?: string;
+    highlightedContent?: Array<{
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }>;
+      style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+      listItem?: "bullet" | "number";
+      markDefs?: Array<{
+        href?: string;
+        _type: "link";
+        _key: string;
+      }>;
+      level?: number;
+      _type: "block";
+      _key: string;
+    }>;
     content?: Array<{
       children?: Array<{
         marks?: Array<string>;
@@ -424,6 +472,18 @@ export type AboutUs = {
       _type: "block";
       _key: string;
     }>;
+    photo?: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      altText?: string;
+      _type: "image";
+    };
   };
   team?: {
     heading?: string;
@@ -677,8 +737,59 @@ export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./src/utils/groqQueries.ts
 // Variable: posts
-// Query: *[_type == "post" && slug.current == $slug][0]{        ...,        author->{          name        }      }
-export type PostsResult = {
+// Query: *[_type == "post" && defined(slug.current)] | order(_createdAt desc) [$start...$end]
+export type PostsResult = Array<{
+  _id: string;
+  _type: "post";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  slug?: Slug;
+  author?: {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "author";
+  };
+  publishedAt?: string;
+  mainImage?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    altText?: string;
+    _type: "image";
+  };
+  excerpt?: string;
+  body?: Array<{
+    _key: string;
+  } & CaptionedImage | {
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+}>;
+// Variable: post
+// Query: *[_type == "post" && slug.current == $slug][0]{ ..., author->{ name } }
+export type PostResult = {
   _id: string;
   _type: "post";
   _createdAt: string;
@@ -725,7 +836,7 @@ export type PostsResult = {
   }>;
 } | null;
 // Variable: homePage
-// Query: *[_type == "homepage"]{      _id,      _createdAt,      title,      "slug": slug.current,      content,      "homePageHeroImage": {        "asset": homePageHeroImage.asset->url,        "altText": homePageHeroImage.altText      },      "whoWeAre": {        "heading": whoWeAre.heading,        "photo": {          "asset": whoWeAre.photo.asset->url,          "altText": whoWeAre.photo.altText        },        "content" : whoWeAre.content      },      "whatWeDo": {        "heading": whatWeDo.heading,        "whatWeDoPics": whatWeDo.whatWeDoPics[] {          "image": image.asset->url,          "altText": altText,          "caption": caption        }      },      "bikePlan": {        "heading": bikePlan.heading,        "content": bikePlan.content      },      "dallasBikeRide": {        "heading": dallasBikeRide.heading,        "photo": {          "asset": dallasBikeRide.photo.asset->url,          "altText": dallasBikeRide.photo.altText        },        "content" : dallasBikeRide.content      },    }[0]
+// Query: *[_type == "homepage"]{      _id, _createdAt, title, "slug": slug.current, content,      "homePageHeroImage": { "asset": homePageHeroImage.asset->url, "altText": homePageHeroImage.altText },      "whoWeAre": {        "heading": whoWeAre.heading,        "photo": { "asset": whoWeAre.photo.asset->url, "altText": whoWeAre.photo.altText },        "content": whoWeAre.content      },      "whatWeDo": {        "heading": whatWeDo.heading,        "whatWeDoPics": whatWeDo.whatWeDoPics[] { "image": image.asset->url, "altText": altText, "caption": caption }      },      "bikePlan": { "heading": bikePlan.heading, "content": bikePlan.content },      "dallasBikeRide": {        "heading": dallasBikeRide.heading,        "photo": { "asset": dallasBikeRide.photo.asset->url, "altText": dallasBikeRide.photo.altText },        "content": dallasBikeRide.content      }    }[0]
 export type HomePageResult = {
   _id: string;
   _createdAt: string;
@@ -817,7 +928,7 @@ export type HomePageResult = {
   };
 } | null;
 // Variable: policyPage
-// Query: *[_type == "policyPage"]{      _id,      _createdAt,      title,      "introBlock": {        "heading": introBlock.heading,        "content": introBlock.content      },      "policyRows": policyRows[] {        "policy": policy,        "summary": summary,        "moreInfo": moreInfo,      },      "legislativeDemands": {        "heading": legislativeDemands.heading,        "content": legislativeDemands.content      },    }[0]
+// Query: *[_type == "policyPage"]{      _id, _createdAt, title,      "introBlock": { "heading": introBlock.heading, "content": introBlock.content },      "policyRows": policyRows[] { "policy": policy, "summary": summary, "moreInfo": moreInfo },      "legislativeDemands": { "heading": legislativeDemands.heading, "content": legislativeDemands.content }    }[0]
 export type PolicyPageResult = {
   _id: string;
   _createdAt: string;
@@ -922,7 +1033,7 @@ export type PolicyPageResult = {
   };
 } | null;
 // Variable: layout
-// Query: *[_type == "layout"][0]{      _id,      _createdAt,      "logo": {        "asset": logo.asset->url,        "altText": logo.altText      },      "landingPageLink": landingPageLink    }
+// Query: *[_type == "layout"][0]{      _id, _createdAt,      "logo": { "asset": logo.asset->url, "altText": logo.altText },      "landingPageLink": landingPageLink    }
 export type LayoutResult = {
   _id: string;
   _createdAt: string;
@@ -933,7 +1044,7 @@ export type LayoutResult = {
   landingPageLink: string | null;
 } | null;
 // Variable: aboutUsPage
-// Query: *[_type == "aboutUs"]{      _id,      _createdAt,      title,      "mission": {        "heading": mission.heading,        "content": mission.content      },      "vision": {        "heading": vision.heading,        "content": vision.content      },      "team": {        "heading": team.heading,        "members": team.members[]{          "name": name        }      },      "howToHelp": {        "heading": howToHelp.heading,        "content": howToHelp.content      },    }[0]
+// Query: *[_type == "aboutUs"]{      _id, _createdAt, title,      "mission": { "heading": mission.heading, "content": mission.content, "highlightedContent": mission.highlightedContent, "photo": { "asset": mission.photo.asset->url, "altText": mission.photo.altText } },      "vision": { "heading": vision.heading, "content": vision.content, "highlightedContent": vision.highlightedContent, "photo": { "asset": vision.photo.asset->url, "altText": vision.photo.altText } },      "team": { "heading": team.heading, "members": team.members[]{ "name": name } },      "howToHelp": { "heading": howToHelp.heading, "content": howToHelp.content }    }[0]
 export type AboutUsPageResult = {
   _id: string;
   _createdAt: string;
@@ -958,6 +1069,28 @@ export type AboutUsPageResult = {
       _type: "block";
       _key: string;
     }> | null;
+    highlightedContent: Array<{
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }>;
+      style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+      listItem?: "bullet" | "number";
+      markDefs?: Array<{
+        href?: string;
+        _type: "link";
+        _key: string;
+      }>;
+      level?: number;
+      _type: "block";
+      _key: string;
+    }> | null;
+    photo: {
+      asset: string | null;
+      altText: string | null;
+    };
   };
   vision: {
     heading: string | null;
@@ -979,6 +1112,28 @@ export type AboutUsPageResult = {
       _type: "block";
       _key: string;
     }> | null;
+    highlightedContent: Array<{
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }>;
+      style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+      listItem?: "bullet" | "number";
+      markDefs?: Array<{
+        href?: string;
+        _type: "link";
+        _key: string;
+      }>;
+      level?: number;
+      _type: "block";
+      _key: string;
+    }> | null;
+    photo: {
+      asset: string | null;
+      altText: string | null;
+    };
   };
   team: {
     heading: string | null;
@@ -1026,7 +1181,7 @@ export type AboutUsPageResult = {
   };
 } | null;
 // Variable: eventsPage
-// Query: *[_type == "events"]{      _id,      _createdAt,      title,      "tags": tags[]->{ "id": _id, name, description },      date,      allDay,      location,      excerpt,      description,      photo {        asset -> {          _id,          url        }      }    }
+// Query: *[_type == "events"]{      _id, _createdAt, title,      "tags": tags[]->{ "id": _id, name, description },      date, allDay, location, excerpt, description,      photo { asset -> { _id, url } }    }
 export type EventsPageResult = Array<{
   _id: string;
   _createdAt: string;
@@ -1066,14 +1221,14 @@ export type EventsPageResult = Array<{
   } | null;
 }>;
 // Variable: tags
-// Query: *[_type == "tag"]{      "id": _id,      name,      description    }
+// Query: *[_type == "tag"]{ "id": _id, name, description }
 export type TagsResult = Array<{
   id: string;
   name: string | null;
   description: string | null;
 }>;
 // Variable: weekWithoutDrivingPage
-// Query: *[_type == "weekWithoutDriving"]{      _id,      _createdAt,      title,      "introBlock": {        "heading": introBlock.heading,        "content": introBlock.content      }    }[0]
+// Query: *[_type == "weekWithoutDriving"]{      _id, _createdAt, title,      "introBlock": { "heading": introBlock.heading, "content": introBlock.content }    }[0]
 export type WeekWithoutDrivingPageResult = {
   _id: string;
   _createdAt: string;
@@ -1101,7 +1256,7 @@ export type WeekWithoutDrivingPageResult = {
   };
 } | null;
 // Variable: emailCityCouncil
-// Query: *[_type == "emailCityCouncil"]{      _id,      _createdAt,      title,      "links": links[]{        "title": title,        "url": url      }    }[0]
+// Query: *[_type == "emailCityCouncil"]{      _id, _createdAt, title,      "links": links[]{ "title": title, "url": url }    }[0]
 export type EmailCityCouncilResult = {
   _id: string;
   _createdAt: string;
@@ -1116,14 +1271,15 @@ export type EmailCityCouncilResult = {
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    "\n      *[_type == \"post\" && slug.current == $slug][0]{\n        ...,\n        author->{\n          name\n        }\n      }": PostsResult;
-    "\n    *[_type == \"homepage\"]{\n      _id,\n      _createdAt,\n      title,\n      \"slug\": slug.current,\n      content,\n      \"homePageHeroImage\": {\n        \"asset\": homePageHeroImage.asset->url,\n        \"altText\": homePageHeroImage.altText\n      },\n      \"whoWeAre\": {\n        \"heading\": whoWeAre.heading,\n        \"photo\": {\n          \"asset\": whoWeAre.photo.asset->url,\n          \"altText\": whoWeAre.photo.altText\n        },\n        \"content\" : whoWeAre.content\n      },\n      \"whatWeDo\": {\n        \"heading\": whatWeDo.heading,\n        \"whatWeDoPics\": whatWeDo.whatWeDoPics[] {\n          \"image\": image.asset->url,\n          \"altText\": altText,\n          \"caption\": caption\n        }\n      },\n      \"bikePlan\": {\n        \"heading\": bikePlan.heading,\n        \"content\": bikePlan.content\n      },\n      \"dallasBikeRide\": {\n        \"heading\": dallasBikeRide.heading,\n        \"photo\": {\n          \"asset\": dallasBikeRide.photo.asset->url,\n          \"altText\": dallasBikeRide.photo.altText\n        },\n        \"content\" : dallasBikeRide.content\n      },\n    }[0]": HomePageResult;
-    "\n    *[_type == \"policyPage\"]{\n      _id,\n      _createdAt,\n      title,\n      \"introBlock\": {\n        \"heading\": introBlock.heading,\n        \"content\": introBlock.content\n      },\n      \"policyRows\": policyRows[] {\n        \"policy\": policy,\n        \"summary\": summary,\n        \"moreInfo\": moreInfo,\n      },\n      \"legislativeDemands\": {\n        \"heading\": legislativeDemands.heading,\n        \"content\": legislativeDemands.content\n      },\n    }[0]": PolicyPageResult;
-    "\n    *[_type == \"layout\"][0]{\n      _id,\n      _createdAt,\n      \"logo\": {\n        \"asset\": logo.asset->url,\n        \"altText\": logo.altText\n      },\n      \"landingPageLink\": landingPageLink\n    }": LayoutResult;
-    "\n    *[_type == \"aboutUs\"]{\n      _id,\n      _createdAt,\n      title,\n      \"mission\": {\n        \"heading\": mission.heading,\n        \"content\": mission.content\n      },\n      \"vision\": {\n        \"heading\": vision.heading,\n        \"content\": vision.content\n      },\n      \"team\": {\n        \"heading\": team.heading,\n        \"members\": team.members[]{\n          \"name\": name\n        }\n      },\n      \"howToHelp\": {\n        \"heading\": howToHelp.heading,\n        \"content\": howToHelp.content\n      },\n    }[0]": AboutUsPageResult;
-    "\n    *[_type == \"events\"]{\n      _id,\n      _createdAt,\n      title,\n      \"tags\": tags[]->{ \"id\": _id, name, description },\n      date,\n      allDay,\n      location,\n      excerpt,\n      description,\n      photo {\n        asset -> {\n          _id,\n          url\n        }\n      }\n    }\n  ": EventsPageResult;
-    "\n    *[_type == \"tag\"]{\n      \"id\": _id,\n      name,\n      description\n    }\n  ": TagsResult;
-    "\n    *[_type == \"weekWithoutDriving\"]{\n      _id,\n      _createdAt,\n      title,\n      \"introBlock\": {\n        \"heading\": introBlock.heading,\n        \"content\": introBlock.content\n      }\n    }[0]": WeekWithoutDrivingPageResult;
-    "\n    *[_type == \"emailCityCouncil\"]{\n      _id,\n      _createdAt,\n      title,\n      \"links\": links[]{\n        \"title\": title,\n        \"url\": url\n      }\n    }[0]": EmailCityCouncilResult;
+    "\n    *[_type == \"post\" && defined(slug.current)] | order(_createdAt desc) [$start...$end]\n  ": PostsResult;
+    "\n    *[_type == \"post\" && slug.current == $slug][0]{ ..., author->{ name } }\n  ": PostResult;
+    "\n    *[_type == \"homepage\"]{\n      _id, _createdAt, title, \"slug\": slug.current, content,\n      \"homePageHeroImage\": { \"asset\": homePageHeroImage.asset->url, \"altText\": homePageHeroImage.altText },\n      \"whoWeAre\": {\n        \"heading\": whoWeAre.heading,\n        \"photo\": { \"asset\": whoWeAre.photo.asset->url, \"altText\": whoWeAre.photo.altText },\n        \"content\": whoWeAre.content\n      },\n      \"whatWeDo\": {\n        \"heading\": whatWeDo.heading,\n        \"whatWeDoPics\": whatWeDo.whatWeDoPics[] { \"image\": image.asset->url, \"altText\": altText, \"caption\": caption }\n      },\n      \"bikePlan\": { \"heading\": bikePlan.heading, \"content\": bikePlan.content },\n      \"dallasBikeRide\": {\n        \"heading\": dallasBikeRide.heading,\n        \"photo\": { \"asset\": dallasBikeRide.photo.asset->url, \"altText\": dallasBikeRide.photo.altText },\n        \"content\": dallasBikeRide.content\n      }\n    }[0]\n  ": HomePageResult;
+    "\n    *[_type == \"policyPage\"]{\n      _id, _createdAt, title,\n      \"introBlock\": { \"heading\": introBlock.heading, \"content\": introBlock.content },\n      \"policyRows\": policyRows[] { \"policy\": policy, \"summary\": summary, \"moreInfo\": moreInfo },\n      \"legislativeDemands\": { \"heading\": legislativeDemands.heading, \"content\": legislativeDemands.content }\n    }[0]\n  ": PolicyPageResult;
+    "\n    *[_type == \"layout\"][0]{\n      _id, _createdAt,\n      \"logo\": { \"asset\": logo.asset->url, \"altText\": logo.altText },\n      \"landingPageLink\": landingPageLink\n    }\n  ": LayoutResult;
+    "\n    *[_type == \"aboutUs\"]{\n      _id, _createdAt, title,\n      \"mission\": { \"heading\": mission.heading, \"content\": mission.content, \"highlightedContent\": mission.highlightedContent, \"photo\": { \"asset\": mission.photo.asset->url, \"altText\": mission.photo.altText } },\n      \"vision\": { \"heading\": vision.heading, \"content\": vision.content, \"highlightedContent\": vision.highlightedContent, \"photo\": { \"asset\": vision.photo.asset->url, \"altText\": vision.photo.altText } },\n      \"team\": { \"heading\": team.heading, \"members\": team.members[]{ \"name\": name } },\n      \"howToHelp\": { \"heading\": howToHelp.heading, \"content\": howToHelp.content }\n    }[0]\n  ": AboutUsPageResult;
+    "\n    *[_type == \"events\"]{\n      _id, _createdAt, title,\n      \"tags\": tags[]->{ \"id\": _id, name, description },\n      date, allDay, location, excerpt, description,\n      photo { asset -> { _id, url } }\n    }\n  ": EventsPageResult;
+    "\n    *[_type == \"tag\"]{ \"id\": _id, name, description }\n  ": TagsResult;
+    "\n    *[_type == \"weekWithoutDriving\"]{\n      _id, _createdAt, title,\n      \"introBlock\": { \"heading\": introBlock.heading, \"content\": introBlock.content }\n    }[0]\n  ": WeekWithoutDrivingPageResult;
+    "\n    *[_type == \"emailCityCouncil\"]{\n      _id, _createdAt, title,\n      \"links\": links[]{ \"title\": title, \"url\": url }\n    }[0]\n  ": EmailCityCouncilResult;
   }
 }

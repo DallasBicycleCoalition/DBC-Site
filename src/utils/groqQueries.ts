@@ -86,8 +86,8 @@ export async function getAboutUsPage(): Promise<AboutUsPageResult> {
   const aboutUsPage = groq`
     *[_type == "aboutUs"]{
       _id, _createdAt, title,
-      "mission": { "heading": mission.heading, "content": mission.content },
-      "vision": { "heading": vision.heading, "content": vision.content },
+      "mission": { "heading": mission.heading, "content": mission.content, "highlightedContent": mission.highlightedContent, "photo": { "asset": mission.photo.asset->url, "altText": mission.photo.altText } },
+      "vision": { "heading": vision.heading, "content": vision.content, "highlightedContent": vision.highlightedContent, "photo": { "asset": vision.photo.asset->url, "altText": vision.photo.altText } },
       "team": { "heading": team.heading, "members": team.members[]{ "name": name } },
       "howToHelp": { "heading": howToHelp.heading, "content": howToHelp.content }
     }[0]

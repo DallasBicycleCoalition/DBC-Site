@@ -2,21 +2,35 @@
 import { PortableText } from "@portabletext/react";
 import Layout from "../layouts/Layout.astro";
 import { getAboutUsPage } from "../utils/groqQueries";
+import { urlFor } from "../utils/utils";
 
 const aboutUsPage = await getAboutUsPage();
 ---
 
 <Layout title={aboutUsPage?.title || "About Us"}>
-  <section class="hero">
-    <h1>{aboutUsPage?.title}</h1>
-  </section>
-
   <section id="mission-section">
-    <h2>{aboutUsPage?.mission.heading}</h2>
-    <div class="normal-copy">
+    <div class="content">
+      <h2>{aboutUsPage?.mission.heading}</h2>
+      <div class="highlighted-copy">
+        {
+          aboutUsPage?.mission.highlightedContent && (
+            <PortableText value={aboutUsPage.mission.highlightedContent} />
+          )
+        }
+      </div>
+      <div class="normal-copy">
+        {
+          aboutUsPage?.mission.content && (
+            <PortableText value={aboutUsPage.mission.content} />
+          )
+        }
+      </div>
       {
-        aboutUsPage?.mission.content && (
-          <PortableText value={aboutUsPage.mission.content} />
+        aboutUsPage?.mission.photo?.asset && (
+          <img
+            src={urlFor(aboutUsPage.mission.photo.asset).url()}
+            alt={aboutUsPage.mission.photo.altText || "Mission Image"}
+          />
         )
       }
     </div>
@@ -24,6 +38,13 @@ const aboutUsPage = await getAboutUsPage();
 
   <section id="vision-section">
     <h2>{aboutUsPage?.vision.heading}</h2>
+    <div class="highlighted-copy">
+      {
+        aboutUsPage?.vision.highlightedContent && (
+          <PortableText value={aboutUsPage.vision.highlightedContent} />
+        )
+      }
+    </div>
     <div class="normal-copy">
       {
         aboutUsPage?.vision.content && (
@@ -31,6 +52,14 @@ const aboutUsPage = await getAboutUsPage();
         )
       }
     </div>
+    {
+      aboutUsPage?.vision.photo?.asset && (
+        <img
+          src={urlFor(aboutUsPage.vision.photo.asset).url()}
+          alt={aboutUsPage.vision.photo.altText || "Vision Image"}
+        />
+      )
+    }
   </section>
 
   <section id="team-section">
@@ -54,4 +83,12 @@ const aboutUsPage = await getAboutUsPage();
       }
     </div>
   </section>
+
+  <style>
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+  </style>
 </Layout>
