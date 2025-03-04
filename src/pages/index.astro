@@ -56,7 +56,7 @@ const homePage = await getHomePage();
       }
     </div>
   </section>
-  
+
   <section id="sections">
     <section id="bike-plan">
       <h2>{homePage?.bikePlan.heading}</h2>
@@ -70,7 +70,7 @@ const homePage = await getHomePage();
         }
       </div>
     </section>
-  
+
     <section id="bike-ride">
       <h2>{homePage?.dallasBikeRide.heading}</h2>
       <div>
@@ -79,7 +79,10 @@ const homePage = await getHomePage();
             <img
               id="bike-ride-img"
               src={urlFor(homePage.dallasBikeRide.photo.asset).url()}
-              alt={homePage.dallasBikeRide.photo.altText || "Dallas Bike Ride image"}
+              alt={
+                homePage.dallasBikeRide.photo.altText ||
+                "Dallas Bike Ride image"
+              }
             />
           )
         }
@@ -94,11 +97,9 @@ const homePage = await getHomePage();
     </section>
   </section>
 
-  
-
   <style>
     #sections {
-      display:flex;
+      display: flex;
       flex-wrap: wrap;
       gap: 2em;
     }
@@ -113,5 +114,4 @@ const homePage = await getHomePage();
       margin-bottom: 5px;
     }
   </style>
-
 </Layout>
