@@ -117,6 +117,21 @@ export const aboutUsSchema = defineType({
             },
           ],
         },
+        {
+          name: "photo",
+          title: "Team Photo",
+          type: "image",
+          fields: [
+            {
+              name: "altText",
+              type: "string",
+              title: "Alternative text",
+            },
+          ],
+          options: {
+            hotspot: true,
+          },
+        },
       ],
     },
     {

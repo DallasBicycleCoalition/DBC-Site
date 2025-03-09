@@ -508,6 +508,18 @@ export type AboutUs = {
       }>;
       _key: string;
     }>;
+    photo?: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      altText?: string;
+      _type: "image";
+    };
   };
   howToHelp?: {
     heading?: string;
@@ -1044,7 +1056,7 @@ export type LayoutResult = {
   landingPageLink: string | null;
 } | null;
 // Variable: aboutUsPage
-// Query: *[_type == "aboutUs"]{      _id, _createdAt, title,      "mission": { "heading": mission.heading, "content": mission.content, "highlightedContent": mission.highlightedContent, "photo": { "asset": mission.photo.asset->url, "altText": mission.photo.altText } },      "vision": { "heading": vision.heading, "content": vision.content, "highlightedContent": vision.highlightedContent, "photo": { "asset": vision.photo.asset->url, "altText": vision.photo.altText } },      "team": { "heading": team.heading, "members": team.members[]{ "name": name } },      "howToHelp": { "heading": howToHelp.heading, "content": howToHelp.content }    }[0]
+// Query: *[_type == "aboutUs"]{      _id, _createdAt, title,      "mission": { "heading": mission.heading, "content": mission.content, "highlightedContent": mission.highlightedContent, "photo": { "asset": mission.photo.asset->url, "altText": mission.photo.altText } },      "vision": { "heading": vision.heading, "content": vision.content, "highlightedContent": vision.highlightedContent, "photo": { "asset": vision.photo.asset->url, "altText": vision.photo.altText } },      "team": { "heading": team.heading, "members": team.members[]{ "name": name }, "photo": { "asset": team.photo.asset->url, "altText": team.photo.altText } },      "howToHelp": { "heading": howToHelp.heading, "content": howToHelp.content }    }[0]
 export type AboutUsPageResult = {
   _id: string;
   _createdAt: string;
@@ -1157,6 +1169,10 @@ export type AboutUsPageResult = {
         _key: string;
       }> | null;
     }> | null;
+    photo: {
+      asset: string | null;
+      altText: string | null;
+    };
   };
   howToHelp: {
     heading: string | null;
@@ -1276,7 +1292,7 @@ declare module "@sanity/client" {
     "\n    *[_type == \"homepage\"]{\n      _id, _createdAt, title, \"slug\": slug.current, content,\n      \"homePageHeroImage\": { \"asset\": homePageHeroImage.asset->url, \"altText\": homePageHeroImage.altText },\n      \"whoWeAre\": {\n        \"heading\": whoWeAre.heading,\n        \"photo\": { \"asset\": whoWeAre.photo.asset->url, \"altText\": whoWeAre.photo.altText },\n        \"content\": whoWeAre.content\n      },\n      \"whatWeDo\": {\n        \"heading\": whatWeDo.heading,\n        \"whatWeDoPics\": whatWeDo.whatWeDoPics[] { \"image\": image.asset->url, \"altText\": altText, \"caption\": caption }\n      },\n      \"bikePlan\": { \"heading\": bikePlan.heading, \"content\": bikePlan.content },\n      \"dallasBikeRide\": {\n        \"heading\": dallasBikeRide.heading,\n        \"photo\": { \"asset\": dallasBikeRide.photo.asset->url, \"altText\": dallasBikeRide.photo.altText },\n        \"content\": dallasBikeRide.content\n      }\n    }[0]\n  ": HomePageResult;
     "\n    *[_type == \"policyPage\"]{\n      _id, _createdAt, title,\n      \"introBlock\": { \"heading\": introBlock.heading, \"content\": introBlock.content },\n      \"policyRows\": policyRows[] { \"policy\": policy, \"summary\": summary, \"moreInfo\": moreInfo },\n      \"legislativeDemands\": { \"heading\": legislativeDemands.heading, \"content\": legislativeDemands.content }\n    }[0]\n  ": PolicyPageResult;
     "\n    *[_type == \"layout\"][0]{\n      _id, _createdAt,\n      \"logo\": { \"asset\": logo.asset->url, \"altText\": logo.altText },\n      \"landingPageLink\": landingPageLink\n    }\n  ": LayoutResult;
-    "\n    *[_type == \"aboutUs\"]{\n      _id, _createdAt, title,\n      \"mission\": { \"heading\": mission.heading, \"content\": mission.content, \"highlightedContent\": mission.highlightedContent, \"photo\": { \"asset\": mission.photo.asset->url, \"altText\": mission.photo.altText } },\n      \"vision\": { \"heading\": vision.heading, \"content\": vision.content, \"highlightedContent\": vision.highlightedContent, \"photo\": { \"asset\": vision.photo.asset->url, \"altText\": vision.photo.altText } },\n      \"team\": { \"heading\": team.heading, \"members\": team.members[]{ \"name\": name } },\n      \"howToHelp\": { \"heading\": howToHelp.heading, \"content\": howToHelp.content }\n    }[0]\n  ": AboutUsPageResult;
+    "\n    *[_type == \"aboutUs\"]{\n      _id, _createdAt, title,\n      \"mission\": { \"heading\": mission.heading, \"content\": mission.content, \"highlightedContent\": mission.highlightedContent, \"photo\": { \"asset\": mission.photo.asset->url, \"altText\": mission.photo.altText } },\n      \"vision\": { \"heading\": vision.heading, \"content\": vision.content, \"highlightedContent\": vision.highlightedContent, \"photo\": { \"asset\": vision.photo.asset->url, \"altText\": vision.photo.altText } },\n      \"team\": { \"heading\": team.heading, \"members\": team.members[]{ \"name\": name }, \"photo\": { \"asset\": team.photo.asset->url, \"altText\": team.photo.altText } },\n      \"howToHelp\": { \"heading\": howToHelp.heading, \"content\": howToHelp.content }\n    }[0]\n  ": AboutUsPageResult;
     "\n    *[_type == \"events\"]{\n      _id, _createdAt, title,\n      \"tags\": tags[]->{ \"id\": _id, name, description },\n      date, allDay, location, excerpt, description,\n      photo { asset -> { _id, url } }\n    }\n  ": EventsPageResult;
     "\n    *[_type == \"tag\"]{ \"id\": _id, name, description }\n  ": TagsResult;
     "\n    *[_type == \"weekWithoutDriving\"]{\n      _id, _createdAt, title,\n      \"introBlock\": { \"heading\": introBlock.heading, \"content\": introBlock.content }\n    }[0]\n  ": WeekWithoutDrivingPageResult;

@@ -8,7 +8,7 @@ const aboutUsPage = await getAboutUsPage();
 ---
 
 <Layout title={aboutUsPage?.title || "About Us"}>
-  <section id="mission-section">
+  <section id="mission-section" class="two-cols">
     <div class="content">
       <h2>{aboutUsPage?.mission.heading}</h2>
       <div class="highlighted-copy">
@@ -25,33 +25,18 @@ const aboutUsPage = await getAboutUsPage();
           )
         }
       </div>
-      {
-        aboutUsPage?.mission.photo?.asset && (
-          <img
-            src={urlFor(aboutUsPage.mission.photo.asset).url()}
-            alt={aboutUsPage.mission.photo.altText || "Mission Image"}
-          />
-        )
-      }
     </div>
+    {
+      aboutUsPage?.mission.photo?.asset && (
+        <img
+          src={urlFor(aboutUsPage.mission.photo.asset).url()}
+          alt={aboutUsPage.mission.photo.altText || "Mission Image"}
+        />
+      )
+    }
   </section>
 
-  <section id="vision-section">
-    <h2>{aboutUsPage?.vision.heading}</h2>
-    <div class="highlighted-copy">
-      {
-        aboutUsPage?.vision.highlightedContent && (
-          <PortableText value={aboutUsPage.vision.highlightedContent} />
-        )
-      }
-    </div>
-    <div class="normal-copy">
-      {
-        aboutUsPage?.vision.content && (
-          <PortableText value={aboutUsPage.vision.content} />
-        )
-      }
-    </div>
+  <section id="vision-section" class="two-cols">
     {
       aboutUsPage?.vision.photo?.asset && (
         <img
@@ -60,17 +45,44 @@ const aboutUsPage = await getAboutUsPage();
         />
       )
     }
+    <div class="content">
+      <h2>{aboutUsPage?.vision.heading}</h2>
+      <div class="highlighted-copy">
+        {
+          aboutUsPage?.vision.highlightedContent && (
+            <PortableText value={aboutUsPage.vision.highlightedContent} />
+          )
+        }
+      </div>
+      <div class="normal-copy">
+        {
+          aboutUsPage?.vision.content && (
+            <PortableText value={aboutUsPage.vision.content} />
+          )
+        }
+      </div>
+    </div>
   </section>
 
-  <section id="team-section">
-    <h2>{aboutUsPage?.team?.heading || "Meet Our Team"}</h2>
-    <ul>
-      {
-        aboutUsPage?.team?.members?.map((member) => (
-          <li>{member?.name && <PortableText value={member.name} />}</li>
-        ))
-      }
-    </ul>
+  <section id="team-section" class="two-cols">
+    <div class="content">
+      <h2>{aboutUsPage?.team?.heading || "Meet Our Team"}</h2>
+      <ul>
+        {
+          aboutUsPage?.team?.members?.map((member) => (
+            <li>{member?.name && <PortableText value={member.name} />}</li>
+          ))
+        }
+      </ul>
+    </div>
+    {
+      aboutUsPage?.team?.photo?.asset && (
+        <img
+          src={urlFor(aboutUsPage.team.photo.asset).url()}
+          alt={aboutUsPage.team.photo.altText || "Team Image"}
+        />
+      )
+    }
   </section>
 
   <section id="howToHelp-section">
@@ -89,6 +101,16 @@ const aboutUsPage = await getAboutUsPage();
       max-width: 100%;
       height: auto;
       display: block;
+    }
+    .two-cols {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .highlighted-copy {
+      font-size: 3em;
+      line-height: 1;
+      font-weight: bold;
     }
   </style>
 </Layout>
