@@ -21,16 +21,24 @@ const data = await getLayout();
   <button id="menuToggle" aria-label="Toggle navigation">&#9776;</button>
   <nav id="navMenu">
     <div class="nav-item">
+      <a href="/about-us">About Us</a>
+    </div>
+    <div class="nav-item">
+      <a href="/blog/page/1">Join</a>
+    </div>
+    <div class="nav-item">
+      <a href="/blog/page/1">Blog</a>
+    </div>
+    <div class="nav-item">
       <a
         href="/calendar"
         onclick="window.location.href='/calendar'; return false;">Calendar</a
       >
     </div>
     <div class="nav-item">
-      <a href="/blog/page/1">Blog</a>
-    </div>
-    <div class="nav-item">
-      <a href="/about-us">About Us</a>
+      <a href="/signup" onclick="window.location.href='/signup'; return false;"
+        >Join our Email List</a
+      >
     </div>
   </nav>
 </header>
@@ -72,3 +80,30 @@ const data = await getLayout();
     init();
   });
 </script>
+
+<style>
+  #menuToggle {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 1000;
+  }
+
+  header nav {
+    display: flex;
+    align-content: center;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 1em;
+    padding-right: 8em;
+    font-size: 1.25em;
+    font-weight: bold;
+    flex: 1;
+  }
+
+  header nav .nav-item {
+    padding: 1em;
+  }
+</style>

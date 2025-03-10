@@ -7,12 +7,6 @@
   <!-- Signup Link to the Email List and GitHub Link -->
   <div class="footer-links">
     <div class="footer-item">
-      <a href="/signup" onclick="window.location.href='/signup'; return false;"
-        >Join our Email List</a
-      >
-    </div>
-
-    <div class="footer-item">
       <a
         href="https://github.com/DallasBicycleCoalition/DBC-Site"
         target="_blank"
@@ -25,21 +19,64 @@
     <div class="footer-socials">
       <div class="footer-item">
         <a href="https://instagram.com/dallasbicyclecoalition" target="_blank">
-          <img
-            src="/Instagram_Glyph_Black.svg"
-            alt="Instagram Logo"
-          />
+          <img src="/Instagram_Glyph_Black.svg" alt="Instagram Logo" />
         </a>
       </div>
 
       <div class="footer-item">
         <a href="https://facebook.com/dallasbicyclecoalition" target="_blank">
-          <img
-            src="/facebook-logo-Black.png"
-            alt="Facebook Logo"
-          />
+          <img src="/facebook-logo-Black.png" alt="Facebook Logo" />
         </a>
       </div>
     </div>
   </div>
 </footer>
+
+<style>
+  footer {
+    display: flex;
+    align-items: flex-start; /* Align items to the start of the footer */
+    padding: 2.5em 10vw;
+    margin-top: 2em;
+    background-color: #dedede;
+  }
+
+  .footer-logo {
+    margin-right: 2em; /* Space between logo and the links */
+  }
+
+  .footer-logo img {
+    margin-top: 1em;
+    max-width: 100%; /* Ensures the image resizes responsively */
+    max-height: 4em;
+  }
+
+  .footer-links {
+    display: flex;
+    flex-direction: column; /* Stack links vertically */
+  }
+
+  .footer-socials {
+    display: flex;
+  }
+
+  .footer-item {
+    margin-bottom: 1em; /* Adds padding between the items */
+  }
+
+  .footer-item img {
+    margin-right: 0.5em;
+    width: 24px;
+    height: 24px;
+  }
+
+  footer a {
+    color: #007acc;
+    text-decoration: none;
+    font-size: 1.2em; /* Slightly larger font for the links */
+  }
+
+  footer a:hover {
+    text-decoration: underline;
+  }
+</style>
