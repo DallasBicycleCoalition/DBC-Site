@@ -124,6 +124,12 @@ header {
 
 .logo-container {
   padding-bottom: 1em;
+  padding-left: 5.5em;
+  padding-top: 2em;
+}
+
+body > header:nth-child(1) {
+  background-color: #f8f7f5;
 }
 
 header nav {
