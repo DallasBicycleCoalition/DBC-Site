@@ -59,3 +59,51 @@ const policyPage = await getPolicyPage();
     }
   </section>
 </Layout>
+
+<style>
+  /* Center the Layout */
+  .policy-page-intro {
+    max-width: 1300px; /* Adjust the maximum width as needed */
+    margin: 0 auto; /* Center the container */
+  }
+
+  .policy-table-section {
+    max-width: 1300px;
+    margin: 3em auto; /* Add space above and below the table */
+  }
+
+  /* Style the table */
+  .policy-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  /* Table header styling */
+  .policy-table thead th {
+    padding: 1em; /* Add padding to the table headers */
+    text-align: left; /* Align header text to the left */
+    background-color: #cccccc; /* Light background color for the header */
+    border-bottom: 2px solid #000000; /* Add a bottom border to the header */
+  }
+
+  /* Table row and cell styling */
+  .policy-table tbody tr {
+    border-bottom: 1px solid #ddd; /* Add a bottom border to rows */
+  }
+
+  .policy-table tbody td {
+    padding: 1em; /* Increase padding between columns */
+    min-width: 125px; /* Set a minimum width for each cell */
+    word-wrap: break-word; /* Allow text to wrap within cells */
+  }
+
+  /* Increase row spacing */
+  .policy-table tbody tr:not(:last-child) {
+    margin-bottom: 0.5em; /* Add margin between rows */
+  }
+
+  /* Style for alternating row colors (optional) */
+  .policy-table tbody tr:nth-child(even) {
+    background-color: #ebebeb; /* Light background color for odd rows */
+  }
+</style>

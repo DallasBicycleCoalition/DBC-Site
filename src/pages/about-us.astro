@@ -67,13 +67,15 @@ const aboutUsPage = await getAboutUsPage();
   <section id="team-section" class="two-cols">
     <div class="content">
       <h2>{aboutUsPage?.team?.heading || "Meet Our Team"}</h2>
-      <ul>
+      <div class="team-members">
         {
           aboutUsPage?.team?.members?.map((member) => (
-            <li>{member?.name && <PortableText value={member.name} />}</li>
+            <div class="team-member">
+              {member?.name && <PortableText value={member.name} />}
+            </div>
           ))
         }
-      </ul>
+      </div>
     </div>
     {
       aboutUsPage?.team?.photo?.asset && (
@@ -84,33 +86,43 @@ const aboutUsPage = await getAboutUsPage();
       )
     }
   </section>
-
-  <section id="howToHelp-section">
-    <h2>{aboutUsPage?.howToHelp.heading}</h2>
-    <div class="normal-copy">
-      {
-        aboutUsPage?.howToHelp.content && (
-          <PortableText value={aboutUsPage.howToHelp.content} />
-        )
-      }
-    </div>
-  </section>
-
   <style>
+    #vision-section {
+      background-color: #002c7d;
+      color: #ffffff;
+    }
+
+    #team-section {
+      background-color: #f5f5f5;
+    }
+
     img {
       max-width: 100%;
       height: auto;
       display: block;
     }
+
     .two-cols {
       display: flex;
       align-items: center;
       justify-content: center;
     }
+
     .highlighted-copy {
       font-size: 3em;
       line-height: 1;
       font-weight: bold;
+    }
+
+    .team-members {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1em;
+    }
+
+    .team-member {
+      flex: 1 1 calc(50% - 1em); /* Adjust the width to fit two columns */
+      min-width: 15em;
     }
   </style>
 </Layout>

@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;900&display=swap");
+
 /* Thanks: https://piccalil.li/blog/a-more-modern-css-reset/ */
 
 /* Box sizing rules */
@@ -25,7 +27,7 @@ html {
 body {
   min-height: 100vh;
   line-height: 1.5;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Montserrat", sans-serif;
   font-size: 1.1em;
 }
 
@@ -112,20 +114,14 @@ main {
 
 /* Page container width adjustments */
 main,
-header {
-  margin: 0 10vw;
+header,
+footer {
+  margin: 0 9vw;
 }
 
-header {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.logo-container {
-  padding-bottom: 1em;
-  padding-left: 5.5em;
-  padding-top: 2em;
+strong,
+b {
+  font-weight: 900;
 }
 
 body > header:nth-child(1) {
@@ -255,112 +251,7 @@ h1 {
   margin: 0.25em 0;
 }
 
-/* Center the Layout */
-.policy-page-intro {
-  max-width: 1300px; /* Adjust the maximum width as needed */
-  margin: 0 auto; /* Center the container */
-}
-
-.policy-table-section {
-  max-width: 1300px;
-  margin: 3em auto; /* Add space above and below the table */
-}
-
-/* Style the table */
-.policy-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-/* Table header styling */
-.policy-table thead th {
-  padding: 1em; /* Add padding to the table headers */
-  text-align: left; /* Align header text to the left */
-  background-color: #cccccc; /* Light background color for the header */
-  border-bottom: 2px solid #000000; /* Add a bottom border to the header */
-}
-
-/* Table row and cell styling */
-.policy-table tbody tr {
-  border-bottom: 1px solid #ddd; /* Add a bottom border to rows */
-}
-
-.policy-table tbody td {
-  padding: 1em; /* Increase padding between columns */
-  min-width: 125px; /* Set a minimum width for each cell */
-  word-wrap: break-word; /* Allow text to wrap within cells */
-}
-
-/* Increase row spacing */
-.policy-table tbody tr:not(:last-child) {
-  margin-bottom: 0.5em; /* Add margin between rows */
-}
-
-/* Style for alternating row colors (optional) */
-.policy-table tbody tr:nth-child(even) {
-  background-color: #ebebeb; /* Light background color for odd rows */
-}
-
-#event-modal {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 80%;
-  max-width: 600px;
-  max-height: 80vh; /* Ensure the modal doesn’t exceed the viewport height */
-  background-color: white;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  padding: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  overflow-y: auto; /* Enable scrolling if content exceeds the max height */
-  z-index: 1000;
-}
-
-#event-title {
-  font-size: 1.5rem;
-  margin-bottom: 10px;
-}
-
-#event-description {
-  font-size: 1rem;
-  margin-top: 2em;
-  margin-bottom: 20px;
-}
-
-#close-modal {
-  display: inline-block;
-  padding: 10px 20px;
-  background-color: #007acc;
-  color: white;
-  text-align: center;
-  border-radius: 4px;
-  cursor: pointer;
-  margin-top: 10px;
-}
-
-.modal-overlay {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 1000;
-}
-
-.event-modal {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: white;
-  border: 1px solid black;
-  padding: 20px;
-}
-
+/* Style for signup page, can't be put into a style block...*/
 #can_embed_form form {
   display: grid !important;
   place-items: center;
@@ -378,10 +269,6 @@ h1 {
 
 .can_embed.form #can_embed_form_inner > h2 {
   border-bottom: 0px !important;
-}
-
-#filter {
-  margin-bottom: 1em;
 }
 
 @media (max-width: 768px) {

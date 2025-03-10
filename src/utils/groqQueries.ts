@@ -6,6 +6,7 @@ import type {
   HomePageResult,
   LayoutResult,
   PolicyPageResult,
+  PostResult,
   PostsResult,
   TagsResult,
   WeekWithoutDrivingPageResult,
@@ -23,7 +24,7 @@ export async function getPosts(
   return fetchSanityData(posts, { start, end: start + limit });
 }
 
-export async function getPost(slug: string): Promise<PostsResult> {
+export async function getPost(slug: string): Promise<PostResult> {
   const post = groq`
     *[_type == "post" && slug.current == $slug][0]{ ..., author->{ name } }
   `;
@@ -75,7 +76,9 @@ export async function getLayout(): Promise<LayoutResult> {
     *[_type == "layout"][0]{
       _id, _createdAt,
       "logo": { "asset": logo.asset->url, "altText": logo.altText },
-      "landingPageLink": landingPageLink
+      "landingPageLink": landingPageLink,
+      "footerBackground": { "asset": footerBackground.asset->url, "altText": footerBackground.altText },
+
     }
   `;
 
@@ -89,7 +92,6 @@ export async function getAboutUsPage(): Promise<AboutUsPageResult> {
       "mission": { "heading": mission.heading, "content": mission.content, "highlightedContent": mission.highlightedContent, "photo": { "asset": mission.photo.asset->url, "altText": mission.photo.altText } },
       "vision": { "heading": vision.heading, "content": vision.content, "highlightedContent": vision.highlightedContent, "photo": { "asset": vision.photo.asset->url, "altText": vision.photo.altText } },
       "team": { "heading": team.heading, "members": team.members[]{ "name": name }, "photo": { "asset": team.photo.asset->url, "altText": team.photo.altText } },
-      "howToHelp": { "heading": howToHelp.heading, "content": howToHelp.content }
     }[0]
   `;
 
