@@ -87,13 +87,38 @@ const aboutUsPage = await getAboutUsPage();
     }
   </section>
   <style>
+    #mission-section h2 {
+      font-weight: bold;
+      color: #cd011c;
+      font-size: 1.25em;
+      letter-spacing: 0.2em;
+    }
+    #mission-section {
+      padding: 3em; /* Add padding to create space around the content */
+    }
+    #mission-section img {
+      position: relative; /* Add padding to create space around the content */
+      right: 4em;
+    }
+
+    #mission-section > div:nth-child(1) > div:nth-child(3) {
+      font-size: 1.15em;
+      max-width: 25em;
+    }
+
+    #mission-section > div:nth-child(1) > div:nth-child(2) {
+      padding-top: .55em;
+      padding-bottom: 1em;
+    }
     #vision-section {
       background-color: #002c7d;
       color: #ffffff;
+      padding: 3em; /* Add padding to create space around the content */
     }
 
     #team-section {
       background-color: #f5f5f5;
+      padding: 3em; /* Add padding to create space around the content */
     }
 
     img {
@@ -109,9 +134,10 @@ const aboutUsPage = await getAboutUsPage();
     }
 
     .highlighted-copy {
-      font-size: 3em;
-      line-height: 1;
+      font-size: 2.25em;
       font-weight: bold;
+      line-height: 1.25;
+      max-width: 15em;
     }
 
     .team-members {
@@ -123,6 +149,10 @@ const aboutUsPage = await getAboutUsPage();
     .team-member {
       flex: 1 1 calc(50% - 1em); /* Adjust the width to fit two columns */
       min-width: 15em;
+    }
+
+    .content {
+      margin: 5em; /* Add margin to create space around the content */
     }
   </style>
 </Layout>

@@ -154,6 +154,11 @@ function formatDateForDTSTART(date: Date): string {
 }
 
 function transformEvent(event: any): TransformedEvent {
+  if (!event.date) {
+    console.error("Event date is null or undefined", event);
+    throw new Error("Event date is null or undefined");
+  }
+
   let eventStart = new Date(event.date.startDate);
   let eventEnd = event.date.endDate ? new Date(event.date.endDate) : undefined;
 
