@@ -20,20 +20,23 @@ const data = await getLayout();
   </div>
   <button id="menuToggle" aria-label="Toggle navigation">&#9776;</button>
   <nav id="navMenu">
-    <div class="nav-item">
+    <div class="nav-item" id="aboutUsNavItem">
       <a href="/about-us">About Us</a>
     </div>
-    <div class="nav-item">
+    <div class="nav-item" id="blogNavItem">
       <a href="/blog/page/1">Blog</a>
     </div>
-    <div class="nav-item">
+    <div class="nav-item" id="calendarNavItem">
       <a
         href="/calendar"
         onclick="window.location.href='/calendar'; return false;">Calendar</a
       >
     </div>
-    <div class="nav-item">
-      <a href="/signup" onclick="window.location.href='/signup'; return false;"
+    <div class="nav-item" id="signupNavItem">
+      <a
+        href="/signup"
+        class="email-list-link"
+        onclick="window.location.href='/signup'; return false;"
         >Join our Email List</a
       >
     </div>
@@ -66,6 +69,16 @@ const data = await getLayout();
       );
     } else {
       console.error("Menu toggle button or navigation menu is missing.");
+    }
+
+    // Highlight the current page
+    const currentPage = window.location.pathname;
+    if (currentPage === "/about-us") {
+      document.getElementById("aboutUsNavItem").classList.add("active");
+    } else if (currentPage === "/blog/page/1") {
+      document.getElementById("blogNavItem").classList.add("active");
+    } else if (currentPage === "/calendar") {
+      document.getElementById("calendarNavItem").classList.add("active");
     }
   }
 
@@ -105,7 +118,9 @@ const data = await getLayout();
     justify-content: flex-end;
     align-items: center;
     padding: 1em;
-    padding-right: 8em;
+    padding-right: 8.25em;
+    padding-top: 2em;
+    color: #cd011c;
     font-size: 1.25em;
     font-weight: bold;
     flex: 1;
@@ -115,7 +130,22 @@ const data = await getLayout();
     padding: 1em;
   }
 
+  header nav .nav-item a {
+    text-decoration: none; /* Remove underline from nav items */
+  }
+
+  header nav .nav-item.active a {
+    color: #002c7d; /* Change this to the color you want for the active page */
+  }
+
   body > header:nth-child(1) {
     padding-bottom: 1.25em;
+  }
+
+  .email-list-link {
+    color: white;
+    background-color: #cd011c;
+    padding: 0.5em 1em;
+    border-radius: 25px;
   }
 </style>

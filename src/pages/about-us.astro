@@ -98,7 +98,7 @@ const aboutUsPage = await getAboutUsPage();
     }
     #mission-section img {
       position: relative; /* Add padding to create space around the content */
-      right: 4em;
+      right: 5em;
     }
 
     #mission-section > div:nth-child(1) > div:nth-child(3) {
@@ -107,18 +107,45 @@ const aboutUsPage = await getAboutUsPage();
     }
 
     #mission-section > div:nth-child(1) > div:nth-child(2) {
-      padding-top: .55em;
+      padding-top: 0.55em;
       padding-bottom: 1em;
     }
+
     #vision-section {
       background-color: #002c7d;
       color: #ffffff;
       padding: 3em; /* Add padding to create space around the content */
     }
 
+    #vision-section > div:nth-child(1) > div:nth-child(3) {
+      font-size: 1.15em;
+      max-width: 25em;
+    }
+
+    #vision-section > div:nth-child(1) > div:nth-child(2) {
+      padding-top: 0.55em;
+      padding-bottom: 1em;
+    }
+
+    #vision-section img {
+      transform: translateX(5em); /* Adjust the value as needed */
+    }
+
+    #vision-section .content {
+      transform: translateX(5em); /* Adjust the value as needed */
+    }
+
     #team-section {
       background-color: #f5f5f5;
       padding: 3em; /* Add padding to create space around the content */
+    }
+
+    #team-section > div:nth-child(1) {
+      transform: translateY(-5em);
+    }
+
+    #team-section > div:nth-child(1) > h2:nth-child(1) {
+      padding-bottom: 2em;
     }
 
     img {
@@ -133,6 +160,10 @@ const aboutUsPage = await getAboutUsPage();
       justify-content: center;
     }
 
+    .two-cols.inverted {
+      flex-direction: row-reverse;
+    }
+
     .highlighted-copy {
       font-size: 2.25em;
       font-weight: bold;
@@ -141,14 +172,18 @@ const aboutUsPage = await getAboutUsPage();
     }
 
     .team-members {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1em;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr); /* Create two columns */
+      gap: 0.5em;
+      font-size: 2em;
+      max-width: 1em;
+      line-height: 1em;
+      font-weight: bold;
     }
 
     .team-member {
-      flex: 1 1 calc(50% - 1em); /* Adjust the width to fit two columns */
-      min-width: 15em;
+      flex: 1 1 auto; /* Adjust the width to fit the grid */
+      min-width: 10em;
     }
 
     .content {
