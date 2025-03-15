@@ -110,6 +110,7 @@ const data = await getLayout();
   .logo-container {
     padding-left: 6.75em;
     padding-top: 2em;
+    flex-shrink: 0; /* Prevent the logo container from shrinking */
   }
 
   header nav {
@@ -124,18 +125,16 @@ const data = await getLayout();
     font-size: 1.25em;
     font-weight: bold;
     flex: 1;
-  }
-
-  header nav .nav-item {
-    padding: 1em;
+    gap: clamp(0.25em, 2vw, 2em); /* Dynamic gap between nav items */
   }
 
   header nav .nav-item a {
-    text-decoration: none; /* Remove underline from nav items */
+    text-decoration: none;
+    white-space: nowrap;
   }
 
   header nav .nav-item.active a {
-    color: #002c7d; /* Change this to the color you want for the active page */
+    color: #002c7d;
   }
 
   body > header:nth-child(1) {
@@ -147,5 +146,30 @@ const data = await getLayout();
     background-color: #cd011c;
     padding: 0.5em 1em;
     border-radius: 25px;
+  }
+
+  @media (max-width: 768px) {
+    #menuToggle {
+      display: block;
+      margin-bottom: 1.25em;
+    }
+
+    #navMenu {
+      display: none;
+      flex-direction: column;
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 100%;
+      height: 100vh;
+      background-color: white;
+      justify-content: center;
+      gap: clamp(20px, 5vw, 40px); /* Dynamic gap in mobile view */
+      z-index: 999;
+    }
+
+    #navMenu.active {
+      display: flex;
+    }
   }
 </style>
