@@ -172,30 +172,6 @@ div.normal-copy p:not(:last-child):not(:-moz-last-node) {
   width: 100%;
 }
 
-.image-gallery {
-  display: flex;
-  gap: 1em;
-}
-
-.image-gallery img {
-  object-fit: cover;
-}
-
-.image-gallery > * {
-  flex: 1;
-}
-
-.image-gallery div {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.image-gallery p {
-  width: 90%;
-  text-align: center;
-}
-
 /* Specific element styling */
 .main-post-image {
   margin-bottom: 1em;

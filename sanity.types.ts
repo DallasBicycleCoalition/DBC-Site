@@ -279,6 +279,24 @@ export type Homepage = {
       altText?: string;
       _type: "image";
     };
+    highlightedContent?: Array<{
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }>;
+      style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+      listItem?: "bullet" | "number";
+      markDefs?: Array<{
+        href?: string;
+        _type: "link";
+        _key: string;
+      }>;
+      level?: number;
+      _type: "block";
+      _key: string;
+    }>;
     content?: Array<{
       children?: Array<{
         marks?: Array<string>;
@@ -306,6 +324,24 @@ export type Homepage = {
   };
   bikePlan?: {
     heading?: string;
+    highlightedContent?: Array<{
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }>;
+      style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+      listItem?: "bullet" | "number";
+      markDefs?: Array<{
+        href?: string;
+        _type: "link";
+        _key: string;
+      }>;
+      level?: number;
+      _type: "block";
+      _key: string;
+    }>;
     content?: Array<{
       children?: Array<{
         marks?: Array<string>;
@@ -324,9 +360,6 @@ export type Homepage = {
       _type: "block";
       _key: string;
     }>;
-  };
-  dallasBikeRide?: {
-    heading?: string;
     photo?: {
       asset?: {
         _ref: string;
@@ -340,24 +373,6 @@ export type Homepage = {
       altText?: string;
       _type: "image";
     };
-    content?: Array<{
-      children?: Array<{
-        marks?: Array<string>;
-        text?: string;
-        _type: "span";
-        _key: string;
-      }>;
-      style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
-      listItem?: "bullet" | "number";
-      markDefs?: Array<{
-        href?: string;
-        _type: "link";
-        _key: string;
-      }>;
-      level?: number;
-      _type: "block";
-      _key: string;
-    }>;
   };
 };
 
@@ -391,6 +406,7 @@ export type CaptionedImage = {
     _type: "image";
   };
   altText?: string;
+  highlightedCaption?: string;
   caption?: string;
 };
 
@@ -853,7 +869,7 @@ export type PostResult = {
   }>;
 } | null;
 // Variable: homePage
-// Query: *[_type == "homepage"]{      _id, _createdAt, title, "slug": slug.current, content,      "homePageHeroImage": { "asset": homePageHeroImage.asset->url, "altText": homePageHeroImage.altText },      "whoWeAre": {        "heading": whoWeAre.heading,        "photo": { "asset": whoWeAre.photo.asset->url, "altText": whoWeAre.photo.altText },        "content": whoWeAre.content      },      "whatWeDo": {        "heading": whatWeDo.heading,        "whatWeDoPics": whatWeDo.whatWeDoPics[] { "image": image.asset->url, "altText": altText, "caption": caption }      },      "bikePlan": { "heading": bikePlan.heading, "content": bikePlan.content },      "dallasBikeRide": {        "heading": dallasBikeRide.heading,        "photo": { "asset": dallasBikeRide.photo.asset->url, "altText": dallasBikeRide.photo.altText },        "content": dallasBikeRide.content      }    }[0]
+// Query: *[_type == "homepage"]{      _id, _createdAt, title, "slug": slug.current, content,      "homePageHeroImage": { "asset": homePageHeroImage.asset->url, "altText": homePageHeroImage.altText },      "whoWeAre": {        "heading": whoWeAre.heading,        "photo": { "asset": whoWeAre.photo.asset->url, "altText": whoWeAre.photo.altText },        "highlightedContent": whoWeAre.highlightedContent,        "content": whoWeAre.content      },      "whatWeDo": {        "heading": whatWeDo.heading,        "whatWeDoPics": whatWeDo.whatWeDoPics[] { "image": image.asset->url, "altText": altText, "highlightedCaption": highlightedCaption, "caption": caption }      },      "bikePlan": {        "heading": bikePlan.heading,        "highlightedContent": bikePlan.highlightedContent,        "content": bikePlan.content,        "photo": { "asset": bikePlan.photo.asset->url, "altText": bikePlan.photo.altText }      },      "dallasBikeRide": {        "heading": dallasBikeRide.heading,        "photo": { "asset": dallasBikeRide.photo.asset->url, "altText": dallasBikeRide.photo.altText },        "content": dallasBikeRide.content      }    }[0]
 export type HomePageResult = {
   _id: string;
   _createdAt: string;
@@ -870,6 +886,24 @@ export type HomePageResult = {
       asset: string | null;
       altText: string | null;
     };
+    highlightedContent: Array<{
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }>;
+      style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+      listItem?: "bullet" | "number";
+      markDefs?: Array<{
+        href?: string;
+        _type: "link";
+        _key: string;
+      }>;
+      level?: number;
+      _type: "block";
+      _key: string;
+    }> | null;
     content: Array<{
       children?: Array<{
         marks?: Array<string>;
@@ -894,11 +928,30 @@ export type HomePageResult = {
     whatWeDoPics: Array<{
       image: string | null;
       altText: string | null;
+      highlightedCaption: string | null;
       caption: string | null;
     }> | null;
   };
   bikePlan: {
     heading: string | null;
+    highlightedContent: Array<{
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }>;
+      style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+      listItem?: "bullet" | "number";
+      markDefs?: Array<{
+        href?: string;
+        _type: "link";
+        _key: string;
+      }>;
+      level?: number;
+      _type: "block";
+      _key: string;
+    }> | null;
     content: Array<{
       children?: Array<{
         marks?: Array<string>;
@@ -917,31 +970,18 @@ export type HomePageResult = {
       _type: "block";
       _key: string;
     }> | null;
-  };
-  dallasBikeRide: {
-    heading: string | null;
     photo: {
       asset: string | null;
       altText: string | null;
     };
-    content: Array<{
-      children?: Array<{
-        marks?: Array<string>;
-        text?: string;
-        _type: "span";
-        _key: string;
-      }>;
-      style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
-      listItem?: "bullet" | "number";
-      markDefs?: Array<{
-        href?: string;
-        _type: "link";
-        _key: string;
-      }>;
-      level?: number;
-      _type: "block";
-      _key: string;
-    }> | null;
+  };
+  dallasBikeRide: {
+    heading: null;
+    photo: {
+      asset: null;
+      altText: null;
+    };
+    content: null;
   };
 } | null;
 // Variable: policyPage
@@ -1277,7 +1317,7 @@ declare module "@sanity/client" {
   interface SanityQueries {
     "\n    *[_type == \"post\" && defined(slug.current)] | order(_createdAt desc) [$start...$end]\n  ": PostsResult;
     "\n    *[_type == \"post\" && slug.current == $slug][0]{ ..., author->{ name } }\n  ": PostResult;
-    "\n    *[_type == \"homepage\"]{\n      _id, _createdAt, title, \"slug\": slug.current, content,\n      \"homePageHeroImage\": { \"asset\": homePageHeroImage.asset->url, \"altText\": homePageHeroImage.altText },\n      \"whoWeAre\": {\n        \"heading\": whoWeAre.heading,\n        \"photo\": { \"asset\": whoWeAre.photo.asset->url, \"altText\": whoWeAre.photo.altText },\n        \"content\": whoWeAre.content\n      },\n      \"whatWeDo\": {\n        \"heading\": whatWeDo.heading,\n        \"whatWeDoPics\": whatWeDo.whatWeDoPics[] { \"image\": image.asset->url, \"altText\": altText, \"caption\": caption }\n      },\n      \"bikePlan\": { \"heading\": bikePlan.heading, \"content\": bikePlan.content },\n      \"dallasBikeRide\": {\n        \"heading\": dallasBikeRide.heading,\n        \"photo\": { \"asset\": dallasBikeRide.photo.asset->url, \"altText\": dallasBikeRide.photo.altText },\n        \"content\": dallasBikeRide.content\n      }\n    }[0]\n  ": HomePageResult;
+    "\n    *[_type == \"homepage\"]{\n      _id, _createdAt, title, \"slug\": slug.current, content,\n      \"homePageHeroImage\": { \"asset\": homePageHeroImage.asset->url, \"altText\": homePageHeroImage.altText },\n      \"whoWeAre\": {\n        \"heading\": whoWeAre.heading,\n        \"photo\": { \"asset\": whoWeAre.photo.asset->url, \"altText\": whoWeAre.photo.altText },\n        \"highlightedContent\": whoWeAre.highlightedContent,\n        \"content\": whoWeAre.content\n      },\n      \"whatWeDo\": {\n        \"heading\": whatWeDo.heading,\n        \"whatWeDoPics\": whatWeDo.whatWeDoPics[] { \"image\": image.asset->url, \"altText\": altText, \"highlightedCaption\": highlightedCaption, \"caption\": caption }\n      },\n      \"bikePlan\": {\n        \"heading\": bikePlan.heading,\n        \"highlightedContent\": bikePlan.highlightedContent,\n        \"content\": bikePlan.content,\n        \"photo\": { \"asset\": bikePlan.photo.asset->url, \"altText\": bikePlan.photo.altText }\n      },\n      \"dallasBikeRide\": {\n        \"heading\": dallasBikeRide.heading,\n        \"photo\": { \"asset\": dallasBikeRide.photo.asset->url, \"altText\": dallasBikeRide.photo.altText },\n        \"content\": dallasBikeRide.content\n      }\n    }[0]\n  ": HomePageResult;
     "\n    *[_type == \"policyPage\"]{\n      _id, _createdAt, title,\n      \"introBlock\": { \"heading\": introBlock.heading, \"content\": introBlock.content },\n      \"policyRows\": policyRows[] { \"policy\": policy, \"summary\": summary, \"moreInfo\": moreInfo },\n      \"legislativeDemands\": { \"heading\": legislativeDemands.heading, \"content\": legislativeDemands.content }\n    }[0]\n  ": PolicyPageResult;
     "\n    *[_type == \"layout\"][0]{\n      _id, _createdAt,\n      \"logo\": { \"asset\": logo.asset->url, \"altText\": logo.altText },\n      \"landingPageLink\": landingPageLink,\n      \"footerBackground\": { \"asset\": footerBackground.asset->url, \"altText\": footerBackground.altText },\n\n    }\n  ": LayoutResult;
     "\n    *[_type == \"aboutUs\"]{\n      _id, _createdAt, title,\n      \"mission\": { \"heading\": mission.heading, \"content\": mission.content, \"highlightedContent\": mission.highlightedContent, \"photo\": { \"asset\": mission.photo.asset->url, \"altText\": mission.photo.altText } },\n      \"vision\": { \"heading\": vision.heading, \"content\": vision.content, \"highlightedContent\": vision.highlightedContent, \"photo\": { \"asset\": vision.photo.asset->url, \"altText\": vision.photo.altText } },\n      \"team\": { \"heading\": team.heading, \"members\": team.members[]{ \"name\": name }, \"photo\": { \"asset\": team.photo.asset->url, \"altText\": team.photo.altText } },\n    }[0]\n  ": AboutUsPageResult;

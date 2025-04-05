@@ -20,36 +20,44 @@ const homePage = await getHomePage();
     }
   </section>
 
-  <section id="who-we-are">
-    <h2>Who We Are</h2>
-    <div class="two-cols">
-      {
-        homePage?.whoWeAre.photo.asset && (
-          <img
-            src={urlFor(homePage.whoWeAre.photo.asset).url()}
-            alt={homePage.whoWeAre.photo.altText || "Who we are image"}
-          />
-        )
-      }
-      {
-        homePage?.whoWeAre.content && (
-          <div class="normal-copy">
+  <section id="who-we-are" class="two-cols">
+    {
+      homePage?.whoWeAre.photo.asset && (
+        <img
+          src={urlFor(homePage.whoWeAre.photo.asset).url()}
+          alt={homePage.whoWeAre.photo.altText || "Who we are image"}
+          class="who-we-are-img"
+        />
+      )
+    }
+    <div class="content">
+      <h2>{homePage?.whoWeAre?.heading}</h2>
+      <div class="highlighted-copy">
+        {
+          homePage?.whoWeAre.highlightedContent && (
+            <PortableText value={homePage.whoWeAre.highlightedContent} />
+          )
+        }
+      </div>
+      <div class="normal-copy">
+        {
+          homePage?.whoWeAre.content && (
             <PortableText value={homePage.whoWeAre.content} />
-          </div>
-        )
-      }
+          )
+        }
+      </div>
     </div>
   </section>
 
   <section id="what-we-do">
-    <h2>{homePage?.whatWeDo?.heading}</h2>
     <div class="image-gallery">
       {
         homePage?.whatWeDo?.whatWeDoPics?.map((pic) => (
-          <div>
+          <div class="image-item">
             {pic.image && (
               <img src={urlFor(pic.image).url()} alt={pic.altText || "Image"} />
             )}
+            <p>{pic.highlightedCaption}</p>
             <p>{pic.caption}</p>
           </div>
         ))
@@ -57,44 +65,33 @@ const homePage = await getHomePage();
     </div>
   </section>
 
-  <section id="sections">
-    <section id="bike-plan">
-      <h2>{homePage?.bikePlan.heading}</h2>
-      <div class="two-cols">
+  <section id="bike-plan" class="bike-plan-layout">
+    {
+      homePage?.bikePlan.photo?.asset && (
+        <img
+          src={urlFor(homePage.bikePlan.photo.asset).url()}
+          alt={homePage.bikePlan.photo.altText || "Bike plan image"}
+          class="bike-plan-img"
+        />
+      )
+    }
+    <div class="content">
+      <h2>{homePage?.bikePlan?.heading}</h2>
+      <div class="highlighted-copy">
+        {
+          homePage?.bikePlan.highlightedContent && (
+            <PortableText value={homePage.bikePlan.highlightedContent} />
+          )
+        }
+      </div>
+      <div class="normal-copy">
         {
           homePage?.bikePlan.content && (
-            <div class="normal-copy">
-              <PortableText value={homePage.bikePlan.content} />
-            </div>
+            <PortableText value={homePage.bikePlan.content} />
           )
         }
       </div>
-    </section>
-
-    <section id="bike-ride">
-      <h2>{homePage?.dallasBikeRide.heading}</h2>
-      <div>
-        {
-          homePage?.dallasBikeRide.photo.asset && (
-            <img
-              id="bike-ride-img"
-              src={urlFor(homePage.dallasBikeRide.photo.asset).url()}
-              alt={
-                homePage.dallasBikeRide.photo.altText ||
-                "Dallas Bike Ride image"
-              }
-            />
-          )
-        }
-        {
-          homePage?.dallasBikeRide.content && (
-            <div class="normal-copy">
-              <PortableText value={homePage.dallasBikeRide.content} />
-            </div>
-          )
-        }
-      </div>
-    </section>
+    </div>
   </section>
 
   <style>
@@ -104,14 +101,118 @@ const homePage = await getHomePage();
       gap: 2em;
     }
     #bike-plan {
+      background: #002c7d;
+      color: white;
+    }
+    .bike-plan-layout {
+      display: flex;
+      flex-direction: row-reverse; /* Reverse the order of content and image */
+      align-items: center; /* Align items vertically */
+      justify-content: space-between; /* Ensure proper spacing between elements */
+      width: 100%; /* Ensure the container spans the full width */
+    }
+    .bike-plan-img {
+      flex-shrink: 0; /* Prevent the image from shrinking */
+      max-width: 50%; /* Ensure the image doesn't take up too much space */
+      padding: 4em;
+      box-sizing: border-box;
+      border-radius: 5em;
+    }
+    .highlighted-copy {
+      font-size: 2.25em;
+      font-weight: bold;
+      line-height: 1.25;
+      max-width: 15em;
+    }
+    .content {
+      flex: 1; /* Allow the content to take up remaining space */
+      margin: 5em;
+      background:;
+      color: white;
+    }
+    #who-we-are {
+      background: #cd011c;
+    }
+    .who-we-are-img {
+      padding: 4em;
+      padding-left: 8em;
+      box-sizing: border-box;
+      border-radius: 5em;
+    }
+    #what-we-do {
+      background: #f8f7f5;
+    }
+    .image-gallery {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1em;
+      padding: 6em; /* Update padding to 8em */
+    }
+
+    .image-gallery img {
+      object-fit: cover;
+      border-radius: 1em; /* Round the corners of images */
+    }
+
+    .image-gallery > * {
       flex: 1;
     }
-    #bike-ride {
-      flex: 1;
+
+    .image-gallery div {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25em; /* Add gap between elements inside div */
+      align-items: center;
     }
-    #bike-ride-img {
-      min-width: 300px;
-      margin-bottom: 5px;
+
+    .image-gallery p {
+      width: 90%;
+      text-align: center;
+      font-size: larger;
+    }
+
+    .image-gallery p:first-of-type {
+      /* Highlighted caption */
+      font-size: 2.5em; /* Update font size to 2.5em */
+      color: #cd011c; /* Set the color to cd011c */
+      font-weight: bold;
+    }
+
+    .two-cols.reverse {
+      flex-direction: row-reverse; /* Reverse the order of content and image */
+    }
+
+    #who-we-are > div:nth-child(2) > h2:nth-child(1) {
+      margin-top: 3em; /* Add top margin to the heading */
+      margin-bottom: 2em; /* Add bottom margin to the heading */
+    }
+
+    #who-we-are > div:nth-child(2) > div:nth-child(2) {
+      margin-bottom: 1em; /* Add bottom margin to the highlighted content */
+    }
+
+    #who-we-are > div:nth-child(2) > div:nth-child(3) {
+      width: 28em;
+      font-size: larger;
+    }
+
+    #bike-plan > div:nth-child(2) > h2:nth-child(1) {
+      margin-top: 3em; /* Add top margin to the heading */
+      margin-bottom: 2em; /* Add bottom margin to the heading */
+    }
+
+    #bike-plan > div:nth-child(2) > div:nth-child(2) {
+      margin-bottom: 1em; /* Add bottom margin to the highlighted content */
+    }
+
+    #bike-plan > div:nth-child(2) > div:nth-child(3) {
+      width: 28em; /* Set the width of the normal content */
+      font-size: larger;
+    }
+
+    #bike-plan > div:nth-child(2) {
+      margin-bottom: 13em;
+      margin-left: 8em;
     }
   </style>
 </Layout>

@@ -65,6 +65,12 @@ export const homePageSchema = defineType({
           },
         },
         {
+          name: "highlightedContent",
+          title: "Highlighted Content",
+          type: "array",
+          of: [{ type: "block" }],
+        },
+        {
           name: "content",
           title: "Content",
           type: "array",
@@ -101,26 +107,20 @@ export const homePageSchema = defineType({
           type: "string",
         },
         {
+          name: "highlightedContent",
+          title: "Highlighted Content",
+          type: "array",
+          of: [{ type: "block" }],
+        },
+        {
           name: "content",
           title: "Content",
           type: "array",
           of: [{ type: "block" }],
         },
-      ],
-    },
-    {
-      name: "dallasBikeRide",
-      title: "Dallas Bike Ride 2025",
-      type: "object",
-      fields: [
-        {
-          name: "heading",
-          title: "Heading",
-          type: "string",
-        },
         {
           name: "photo",
-          title: "Dallas Bike Ride Photo",
+          title: "Bike Plan Photo",
           type: "image",
           fields: [
             {
@@ -132,12 +132,6 @@ export const homePageSchema = defineType({
           options: {
             hotspot: true,
           },
-        },
-        {
-          name: "content",
-          title: "Content",
-          type: "array",
-          of: [{ type: "block" }],
         },
       ],
     },

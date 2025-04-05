@@ -40,13 +40,19 @@ export async function getHomePage(): Promise<HomePageResult> {
       "whoWeAre": {
         "heading": whoWeAre.heading,
         "photo": { "asset": whoWeAre.photo.asset->url, "altText": whoWeAre.photo.altText },
+        "highlightedContent": whoWeAre.highlightedContent,
         "content": whoWeAre.content
       },
       "whatWeDo": {
         "heading": whatWeDo.heading,
-        "whatWeDoPics": whatWeDo.whatWeDoPics[] { "image": image.asset->url, "altText": altText, "caption": caption }
+        "whatWeDoPics": whatWeDo.whatWeDoPics[] { "image": image.asset->url, "altText": altText, "highlightedCaption": highlightedCaption, "caption": caption }
       },
-      "bikePlan": { "heading": bikePlan.heading, "content": bikePlan.content },
+      "bikePlan": {
+        "heading": bikePlan.heading,
+        "highlightedContent": bikePlan.highlightedContent,
+        "content": bikePlan.content,
+        "photo": { "asset": bikePlan.photo.asset->url, "altText": bikePlan.photo.altText }
+      },
       "dallasBikeRide": {
         "heading": dallasBikeRide.heading,
         "photo": { "asset": dallasBikeRide.photo.asset->url, "altText": dallasBikeRide.photo.altText },
