@@ -40,28 +40,32 @@ const hasNextPage = posts.length === limit;
 ---
 
 <Layout title={"Blog Posts"}>
-  <h1>Blog Posts</h1>
-  <div>
+  <div class="blog-posts">
     {
       posts.filter(hasValidSlug).map((post) => (
         <div class="post">
-          <img
-            class="post-image"
-            src={
-              post.mainImage?.asset
-                ? urlFor(post.mainImage.asset).url()
-                : "/DallasBicycleCoalition_Badge_only.png"
-            }
-            alt={post.mainImage?.altText || "Default image"}
-          />
-          <div class="post-content">
-            <h2>
-              <a href={`/blog/post/${post?.slug?.current}`}>{post?.title}</a>
+          <div class="post-image-container">
+            <img
+              class="post-image"
+              src={
+                post.mainImage?.asset
+                  ? urlFor(post.mainImage.asset).url()
+                  : "/DallasBicycleCoalition_Badge_only.png"
+              }
+              alt={post.mainImage?.altText || "Default image"}
+            />
+          </div>
+          <div>
+            <p id="post-date">{new Date(post._createdAt).toLocaleDateString('en-US', {
+              month: 'long', day: 'numeric', year: 'numeric'
+            })}</p>
+            <h2 >
+              <a id="post-title" href={`/blog/post/${post?.slug?.current}`}>{post?.title}</a>
             </h2>
-            <p>{post.excerpt}</p>
-            <p>{new Date(post._createdAt).toLocaleDateString()}</p>
+            <p id="post-content">{post.excerpt}</p>
           </div>
         </div>
+        <hr class="post-separator" />
       ))
     }
   </div>
@@ -74,3 +78,64 @@ const hasNextPage = posts.length === limit;
     {hasNextPage && <a href={`/blog/page/${currentPage + 1}`}>Next &raquo;</a>}
   </div>
 </Layout>
+
+<style>
+  .post {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px; /* Space between image and text */
+  }
+
+  .post-image-container {
+    flex-shrink: 0; /* Prevent the image from shrinking */
+  }
+
+  .post-image {
+    width: 525px; /* Fixed width */
+    height: 325px; /* Fixed height */
+    object-fit: contain; /* Fit the image within the dimensions while maintaining aspect ratio */
+    border-radius: 8px;
+  }
+
+  #post-content {
+    width: 35em;
+    font-size: larger;
+    }
+
+  .post-separator {
+    width: 100%; /* Ensure the separator spans the full width */
+    border: 1px solid #ccc;
+    visibility: visible; /* Ensure the separator is visible */
+    margin-bottom: 4em;
+  }
+
+  .blog-posts {
+    width: 80em;
+    margin: 0 auto; /* Center the container */
+    margin-top: 2em;
+  }
+
+  /* Element | http://localhost:4321/blog/page/1 */
+
+  div.post:nth-child(1) > div:nth-child(2) {
+    margin-top: 2em;
+  }
+
+  #post-title {
+    font-size: 1.5em;
+    margin: 0;
+    text-decoration: none;
+  }
+
+  #post-date {
+    text-decoration: none;
+    color: #cd011c;
+    font-size: 1.25em;
+    font-weight: bold;
+    margin-bottom: 1.0em;
+  }
+
+  .post-content h2 {
+    margin-bottom: 1em;
+  }
+</style>
