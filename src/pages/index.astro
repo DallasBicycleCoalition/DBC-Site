@@ -95,63 +95,66 @@ const homePage = await getHomePage();
   </section>
 
   <style>
+    /* General Styles */
     #sections {
       display: flex;
       flex-wrap: wrap;
       gap: 2em;
     }
-    #bike-plan {
-      background: #002c7d;
-      color: white;
+
+    /* Hero Section */
+    .hero img {
+      width: 100%;
+      height: auto;
     }
-    .bike-plan-layout {
-      display: flex;
-      flex-direction: row-reverse; /* Reverse the order of content and image */
-      align-items: center; /* Align items vertically */
-      justify-content: space-between; /* Ensure proper spacing between elements */
-      width: 100%; /* Ensure the container spans the full width */
-    }
-    .bike-plan-img {
-      flex-shrink: 0; /* Prevent the image from shrinking */
-      max-width: 50%; /* Ensure the image doesn't take up too much space */
-      padding: 4em;
-      box-sizing: border-box;
-      border-radius: 5em;
-    }
-    .highlighted-copy {
-      font-size: 2.25em;
-      font-weight: bold;
-      line-height: 1.25;
-      max-width: 15em;
-    }
-    .content {
-      flex: 1; /* Allow the content to take up remaining space */
-      margin: 5em;
-      background:;
-      color: white;
-    }
+
+    /* Who We Are Section */
     #who-we-are {
       background: #cd011c;
     }
+
     .who-we-are-img {
-      padding: 4em;
-      padding-left: 8em;
+      padding: 4em 4em 4em 8em;
       box-sizing: border-box;
       border-radius: 5em;
     }
+
+    #who-we-are .content {
+      flex: 1;
+      margin: 5em;
+      color: white;
+    }
+
+    #who-we-are h2 {
+      margin: 3em 0 2em;
+    }
+
+    #who-we-are .highlighted-copy {
+      margin-bottom: 1em;
+      font-size: 2.5em;
+      font-weight: bold;
+    }
+
+    #who-we-are .normal-copy {
+      width: 28em;
+      font-size: larger;
+    }
+
+    /* What We Do Section */
     #what-we-do {
       background: #f8f7f5;
     }
+
     .image-gallery {
       display: flex;
       flex-wrap: wrap;
       gap: 1em;
-      padding: 6em; /* Update padding to 8em */
+      padding: 6em;
     }
 
     .image-gallery img {
       object-fit: cover;
-      border-radius: 1em; /* Round the corners of images */
+      border-radius: 1em;
     }
 
     .image-gallery > * {
@@ -161,7 +164,7 @@ const homePage = await getHomePage();
     .image-gallery div {
       display: flex;
       flex-direction: column;
-      gap: 1.25em; /* Add gap between elements inside div */
+      gap: 1.25em;
       align-items: center;
     }
 
@@ -172,47 +175,51 @@ const homePage = await getHomePage();
     }
 
     .image-gallery p:first-of-type {
-      /* Highlighted caption */
-      font-size: 2.5em; /* Update font size to 2.5em */
-      color: #cd011c; /* Set the color to cd011c */
+      font-size: 2.5em;
+      color: #cd011c;
       font-weight: bold;
     }
 
-    .two-cols.reverse {
-      flex-direction: row-reverse; /* Reverse the order of content and image */
+    /* Bike Plan Section */
+    #bike-plan {
+      background: #002c7d;
+      color: white;
     }
 
-    #who-we-are > div:nth-child(2) > h2:nth-child(1) {
-      margin-top: 3em; /* Add top margin to the heading */
-      margin-bottom: 2em; /* Add bottom margin to the heading */
+    .bike-plan-layout {
+      display: flex;
+      flex-direction: row-reverse;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
     }
 
-    #who-we-are > div:nth-child(2) > div:nth-child(2) {
-      margin-bottom: 1em; /* Add bottom margin to the highlighted content */
+    .bike-plan-img {
+      flex-shrink: 0;
+      max-width: 50%;
+      padding: 4em;
+      box-sizing: border-box;
+      border-radius: 5em;
     }
 
-    #who-we-are > div:nth-child(2) > div:nth-child(3) {
+    #bike-plan .content {
+      flex: 1;
+      margin: 5em 0 13em 8em;
+    }
+
+    #bike-plan h2 {
+      margin: 3em 0 2em;
+    }
+
+    #bike-plan .highlighted-copy {
+      margin-bottom: 1em;
+      font-size: 2.5em;
+      font-weight: bold;
+    }
+
+    #bike-plan .normal-copy {
       width: 28em;
       font-size: larger;
-    }
-
-    #bike-plan > div:nth-child(2) > h2:nth-child(1) {
-      margin-top: 3em; /* Add top margin to the heading */
-      margin-bottom: 2em; /* Add bottom margin to the heading */
-    }
-
-    #bike-plan > div:nth-child(2) > div:nth-child(2) {
-      margin-bottom: 1em; /* Add bottom margin to the highlighted content */
-    }
-
-    #bike-plan > div:nth-child(2) > div:nth-child(3) {
-      width: 28em; /* Set the width of the normal content */
-      font-size: larger;
-    }
-
-    #bike-plan > div:nth-child(2) {
-      margin-bottom: 13em;
-      margin-left: 8em;
     }
   </style>
 </Layout>
