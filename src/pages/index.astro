@@ -221,5 +221,27 @@ const homePage = await getHomePage();
       width: 28em;
       font-size: larger;
     }
+
+    .visually-hidden {
+      border: 0;
+      clip: rect(0 0 0 0);
+      height: auto;
+      margin: 0;
+      overflow: hidden;
+      padding: 0;
+      position: absolute;
+      width: 1px;
+      white-space: nowrap;
+    }
+    .hero img {
+      width: 100%;
+    }
+
+    @media (max-width: 768px) {
+      .image-gallery {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
   </style>
 </Layout>

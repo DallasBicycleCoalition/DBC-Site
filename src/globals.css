@@ -140,18 +140,6 @@ div.normal-copy p:not(:last-child):not(:-moz-last-node) {
   margin-bottom: 1em;
 }
 
-.visually-hidden {
-  border: 0;
-  clip: rect(0 0 0 0);
-  height: auto;
-  margin: 0;
-  overflow: hidden;
-  padding: 0;
-  position: absolute;
-  width: 1px;
-  white-space: nowrap;
-}
-
 .two-cols {
   display: flex;
   flex-wrap: wrap;
@@ -165,10 +153,6 @@ div.normal-copy p:not(:last-child):not(:-moz-last-node) {
 
 .two-cols img {
   height: 100%;
-  width: 100%;
-}
-
-.hero img {
   width: 100%;
 }
 
@@ -190,87 +174,6 @@ div.normal-copy p:not(:last-child):not(:-moz-last-node) {
 
 .can_embed.form #can_embed_form_inner > h2 {
   border-bottom: 0px !important;
-}
-
-@media (max-width: 768px) {
-  .image-gallery {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .fc .fc-toolbar {
-    align-items: center;
-    justify-content: space-between;
-    display: block;
-  }
-
-  .policy-table thead tr {
-    display: none; /* Hide header */
-  }
-
-  .policy-table tr {
-    margin-bottom: 1rem;
-    border: 1px solid black; /* Black border around each box */
-    border-radius: 5px;
-    display: flex;
-    flex-direction: column;
-    position: relative; /* Position relative to allow for the pseudo-element */
-  }
-
-  .policy-table td {
-    display: flex;
-    padding: 10px 0;
-    border: none;
-    border-bottom: 1px solid #ddd;
-  }
-
-  .policy-table td:before {
-    content: attr(data-label);
-    font-weight: bold;
-    width: 100px;
-    flex-shrink: 0;
-    margin-right: 25px;
-  }
-
-  .policy-table tbody tr:not(:last-child) {
-    margin-bottom: 2em; /* Add margin between rows */
-    background-color: white;
-  }
-
-  .policy-table td:last-child {
-    border-bottom: 1px solid #000000; /* Add a bottom border to rows */
-  }
-
-  /* New CSS for a continuous vertical line */
-  .policy-table tr::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 125px; /* Align with the data-label width */
-    bottom: 0;
-    width: 1px;
-    background-color: black; /* The vertical line color */
-  }
-
-  /* Ensure calendar fits nicely on mobile */
-  #calendar {
-    max-width: 100%;
-    margin: 0;
-    padding: 0;
-  }
-
-  /* Adjust event modal on mobile for full-screen display */
-  #event-modal {
-    width: 90%;
-    top: 10%;
-    left: 50%;
-    transform: translate(-50%, 0);
-  }
-
-  /* Ensure calendar view switches to a compact list */
-  .fc-listMonth-view {
-    font-size: 0.9rem;
-  }
 }
 
 @media (max-width: 500px) {
