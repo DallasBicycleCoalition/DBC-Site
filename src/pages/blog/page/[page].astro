@@ -59,7 +59,7 @@ const hasNextPage = posts.length === limit;
             <p id="post-date">{new Date(post._createdAt).toLocaleDateString('en-US', {
               month: 'long', day: 'numeric', year: 'numeric'
             })}</p>
-            <h2 >
+            <h2>
               <a id="post-title" href={`/blog/post/${post?.slug?.current}`}>{post?.title}</a>
             </h2>
             <p id="post-content">{post.excerpt}</p>
@@ -80,45 +80,40 @@ const hasNextPage = posts.length === limit;
 </Layout>
 
 <style>
-  .post {
-    display: flex;
-    align-items: flex-start;
-    gap: 20px; /* Space between image and text */
-  }
-
-  .post-image-container {
-    flex-shrink: 0; /* Prevent the image from shrinking */
-  }
-
-  .post-image {
-    width: 525px; /* Fixed width */
-    height: 325px; /* Fixed height */
-    object-fit: contain; /* Fit the image within the dimensions while maintaining aspect ratio */
-    border-radius: 8px;
-  }
-
-  #post-content {
-    width: 35em;
-    font-size: larger;
-    }
-
-  .post-separator {
-    width: 100%; /* Ensure the separator spans the full width */
-    border: 1px solid #ccc;
-    visibility: visible; /* Ensure the separator is visible */
-    margin-bottom: 4em;
-  }
-
+  /* General layout styling */
   .blog-posts {
     width: 80em;
-    margin: 0 auto; /* Center the container */
-    margin-top: 2em;
+    margin: 2em auto 0;
   }
-
-  /* Element | http://localhost:4321/blog/page/1 */
 
   div.post:nth-child(1) > div:nth-child(2) {
     margin-top: 2em;
+  }
+
+  .post {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+  }
+
+  /* Image styling */
+  .post-image-container {
+    flex-shrink: 0;
+  }
+
+  .post-image {
+    width: 525px;
+    height: 325px;
+    object-fit: contain;
+    border-radius: 8px;
+  }
+
+  /* Post content styling */
+  #post-date {
+    color: #cd011c;
+    font-size: 1.25em;
+    font-weight: bold;
+    margin-bottom: 1em;
   }
 
   #post-title {
@@ -127,15 +122,15 @@ const hasNextPage = posts.length === limit;
     text-decoration: none;
   }
 
-  #post-date {
-    text-decoration: none;
-    color: #cd011c;
-    font-size: 1.25em;
-    font-weight: bold;
-    margin-bottom: 1.0em;
+  #post-content {
+    width: 35em;
+    font-size: larger;
   }
 
-  .post-content h2 {
-    margin-bottom: 1em;
+  /* Separator styling */
+  .post-separator {
+    width: 100%;
+    border: 1px solid #ccc;
+    margin-bottom: 4em;
   }
 </style>
