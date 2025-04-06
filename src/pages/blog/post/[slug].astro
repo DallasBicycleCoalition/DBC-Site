@@ -27,27 +27,95 @@ if (!post) {
 ---
 
 <Layout title={post.title}>
+  {
+    post.mainImage && post.mainImage.asset && (
+      <img
+        src={urlFor(post.mainImage).width(1400).height(600).url()}
+        alt={post.mainImage.altText || "Image"}
+        class="main-post-image"
+        loading="lazy"
+      />
+    )
+  }
   <article class="blog-post">
-    <h1>{post.title}</h1>
-    <p class="post-date-author">
+    <p id="post-date">
       {
-        post._createdAt.slice(0, 10) == post._updatedAt.slice(0, 10)
-          ? `${post.author?.name} • Created ${new Date(post._createdAt).toLocaleDateString()}`
-          : `${post.author?.name} • Created ${new Date(post._createdAt).toLocaleDateString()} • Last Updated ${new Date(post._updatedAt).toLocaleDateString()}`
+        new Date(post._createdAt).toLocaleDateString("en-US", {
+          month: "long",
+          day: "numeric",
+          year: "numeric",
+        })
       }
     </p>
-    {
-      post.mainImage && post.mainImage.asset && (
-        <img
-          src={urlFor(post.mainImage).width(800).height(400).url()}
-          alt={post.mainImage.altText || "Image"}
-          class="main-post-image"
-          loading="lazy"
-        />
-      )
-    }
-    <div class="normal-copy">
+    <h1 id="post-title">{post.title}</h1>
+    <p class="post-author">
+      POSTED BY {post.author?.name.toUpperCase()}
+    </p>
+    <div class="normal-copy" id="post-content">
       {post.body && <PortableText value={post.body} />}
     </div>
   </article>
+
+  <style>
+    /* General layout styling */
+    .blog-post {
+      max-width: 60rem;
+      margin: 0 auto;
+    }
+
+    /* Main image styling */
+    .main-post-image {
+      margin: 2em auto 4em;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+
+    /* Title and author styling */
+    #post-title {
+      font-size: 3em;
+      font-weight: bold;
+      margin: 0.5em 0;
+    }
+
+    .post-author {
+      margin-bottom: 2em;
+      color: #032f7f;
+      font-size: larger;
+    }
+
+    /* Date styling */
+    #post-date {
+      color: #cd011c;
+      font-size: 1.25em;
+      font-weight: bold;
+      margin-bottom: 1em;
+    }
+
+    /* Content styling */
+    #post-content {
+      width: 45em;
+      font-size: larger;
+    }
+
+    /* Additional reusable styles */
+    .post {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 4em;
+    }
+
+    .post-image {
+      width: 11em;
+      height: auto;
+      margin-right: 1em;
+    }
+
+    .post-content h2 {
+      margin: 0;
+    }
+
+    .post-content p {
+      margin: 0.25em 0;
+    }
+  </style>
 </Layout>
