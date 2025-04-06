@@ -126,29 +126,30 @@ const homePage = await getHomePage();
     }
 
     .who-we-are-img {
-      padding: 4em;
+      padding: clamp(2em, 5vw, 4em);
       box-sizing: border-box;
       border-radius: 5em;
+      max-width: clamp(40em, 80%, 45em); /* Added max-width */
     }
 
     #who-we-are .content {
       flex: 1;
-      margin: 5em;
+      margin: clamp(2em, 5vw, 5em);
       color: white;
     }
 
     #who-we-are h2 {
-      margin: 3em 0 2em;
+      margin: clamp(1em, 3vw, 3em) 0 clamp(1em, 2vw, 2em);
     }
 
     #who-we-are .highlighted-copy {
       margin-bottom: 1em;
-      font-size: 2.5em;
+      font-size: clamp(1.5em, 4vw, 2.5em);
       font-weight: bold;
     }
 
     #who-we-are .normal-copy {
-      width: 28em;
+      width: clamp(20em, 50%, 28em);
       font-size: larger;
     }
 
@@ -161,7 +162,7 @@ const homePage = await getHomePage();
       display: flex;
       flex-wrap: wrap;
       gap: 1em;
-      padding: 6em;
+      padding: clamp(2em, 5vw, 6em);
     }
 
     .image-gallery img {
@@ -170,7 +171,7 @@ const homePage = await getHomePage();
     }
 
     .image-gallery > * {
-      flex: 1;
+      flex: 1 1 clamp(15em, 30%, 25em);
     }
 
     .image-gallery div {
@@ -187,7 +188,7 @@ const homePage = await getHomePage();
     }
 
     .image-gallery p:first-of-type {
-      font-size: 2.5em;
+      font-size: clamp(1.5em, 4vw, 2.5em);
       color: #cd011c;
       font-weight: bold;
     }
@@ -199,80 +200,60 @@ const homePage = await getHomePage();
     }
 
     .bike-plan-img {
-      padding: 4em;
+      padding: clamp(2em, 5vw, 4em);
       box-sizing: border-box;
       border-radius: 5em;
+      max-width: clamp(40em, 80%, 45em); /* Added max-width */
     }
 
     #bike-plan .content {
       flex: 1;
-      margin: 5em 0 13em 8em;
+      margin: clamp(2em, 5vw, 5em) 0 clamp(5em, 10vw, 13em) clamp(2em, 5vw, 8em);
       color: white;
+      width: clamp(20em, 50%, 28em);
     }
 
     #bike-plan h2 {
-      margin: 3em 0 2em;
+      margin: clamp(1em, 3vw, 3em) 0 clamp(1em, 2vw, 2em);
     }
 
     #bike-plan .highlighted-copy {
       margin-bottom: 1em;
-      font-size: 2.5em;
+      font-size: clamp(1.5em, 4vw, 2.5em);
       font-weight: bold;
     }
 
     #bike-plan .normal-copy {
-      width: 28em;
       font-size: larger;
     }
 
-    @media (max-width: 1024px) and (min-width: 769px) {
-      #who-we-are .content {
-        margin: 3em;
+    /* Media Query for Single Column Layout */
+    @media (max-width: 1500px) {
+      .two-cols {
+        flex-direction: column;
       }
-      #bike-plan {
-        flex-direction: row;
-        padding: 3em;
-      }
-      .bike-plan-img {
-        padding: 3em;
-        border-radius: 3em;
-      }
-    }
 
-    @media (max-width: 768px) {
-      #who-we-are h2 {
-        margin-top: 0em;
+      .two-cols img {
+        margin: 0 auto;
       }
-      .who-we-are-img {
-        padding: 2em;
-        border-radius: 3em;
-      }
-      #who-we-are .content {
-        margin: 2em;
-        font-size: 1em;
-      }
-      #who-we-are .normal-copy {
-        width: 100%;
+
+      .two-cols .content {
+        margin: 2em auto;
+        width: 90%;
       }
 
       .image-gallery {
-        padding: 2em;
-        grid-template-columns: 1fr;
+        flex-direction: column;
+        align-items: center;
       }
 
-      #bike-plan h2 {
-        margin-top: 0em;
+      .image-gallery > * {
+        flex: 1 1 100%;
       }
-      .bike-plan-img {
-        padding: 2em;
-        border-radius: 3em;
-      }
-      #bike-plan .content {
-        margin: 2em;
-        font-size: 1em;
-      }
-      #bike-plan .normal-copy {
-        width: 100%;
+
+      /* Explicitly override row-reverse for bike-plan */
+      #bike-plan.two-cols {
+        flex-direction: column;
       }
     }
   </style>

@@ -28,7 +28,7 @@ body {
   min-height: 100vh;
   line-height: 1.5;
   font-family: "Montserrat", sans-serif;
-  font-size: 1.1em;
+  font-size: clamp(1em, 1.1vw, 1.1em);
 }
 
 /* Remove default margin in favour of better control in authored CSS */
@@ -61,8 +61,8 @@ h3,
 h4,
 button {
   line-height: 1.1;
-  margin-bottom: 0.5em;
-  margin-top: 1em;
+  margin-bottom: clamp(0.5em, 1vw, 1em);
+  margin-top: clamp(1em, 2vw, 1.5em);
 }
 
 /* Balance text wrapping on headings */
@@ -116,7 +116,7 @@ main {
 main,
 header,
 footer {
-  margin: 0 6.25vw;
+  margin: 0 clamp(1em, 6.25vw, 6.25vw);
 }
 
 strong,
@@ -143,16 +143,15 @@ div.normal-copy p:not(:last-child):not(:-moz-last-node) {
 .two-cols {
   display: flex;
   flex-wrap: wrap;
-  gap: 1em;
+  gap: clamp(1em, 2vw, 1em);
 }
 
 .two-cols > * {
-  flex: 1;
-  min-width: 15em;
+  flex: 1 1 clamp(15em, 30%, 25em);
 }
 
 .two-cols img {
-  height: 100%;
+  height: auto;
   width: 100%;
 }
 
