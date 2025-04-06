@@ -177,7 +177,8 @@ div.normal-copy p:not(:last-child):not(:-moz-last-node) {
 }
 
 @media (max-width: 500px) {
-  main {
+  main,
+  footer {
     margin: 0 1em;
   }
   header {

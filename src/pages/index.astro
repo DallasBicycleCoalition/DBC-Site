@@ -65,7 +65,7 @@ const homePage = await getHomePage();
     </div>
   </section>
 
-  <section id="bike-plan" class="bike-plan-layout">
+  <section id="bike-plan" class="two-cols">
     {
       homePage?.bikePlan.photo?.asset && (
         <img
@@ -108,13 +108,25 @@ const homePage = await getHomePage();
       height: auto;
     }
 
+    .visually-hidden {
+      border: 0;
+      clip: rect(0 0 0 0);
+      height: auto;
+      margin: 0;
+      overflow: hidden;
+      padding: 0;
+      position: absolute;
+      width: 1px;
+      white-space: nowrap;
+    }
+
     /* Who We Are Section */
     #who-we-are {
       background: #cd011c;
     }
 
     .who-we-are-img {
-      padding: 4em 4em 4em 8em;
+      padding: 4em;
       box-sizing: border-box;
       border-radius: 5em;
     }
@@ -183,20 +195,10 @@ const homePage = await getHomePage();
     /* Bike Plan Section */
     #bike-plan {
       background: #002c7d;
-      color: white;
-    }
-
-    .bike-plan-layout {
-      display: flex;
       flex-direction: row-reverse;
-      align-items: center;
-      justify-content: space-between;
-      width: 100%;
     }
 
     .bike-plan-img {
-      flex-shrink: 0;
-      max-width: 50%;
       padding: 4em;
       box-sizing: border-box;
       border-radius: 5em;
@@ -205,6 +207,7 @@ const homePage = await getHomePage();
     #bike-plan .content {
       flex: 1;
       margin: 5em 0 13em 8em;
+      color: white;
     }
 
     #bike-plan h2 {
@@ -222,25 +225,54 @@ const homePage = await getHomePage();
       font-size: larger;
     }
 
-    .visually-hidden {
-      border: 0;
-      clip: rect(0 0 0 0);
-      height: auto;
-      margin: 0;
-      overflow: hidden;
-      padding: 0;
-      position: absolute;
-      width: 1px;
-      white-space: nowrap;
-    }
-    .hero img {
-      width: 100%;
+    @media (max-width: 1024px) and (min-width: 769px) {
+      #who-we-are .content {
+        margin: 3em;
+      }
+      #bike-plan {
+        flex-direction: row;
+        padding: 3em;
+      }
+      .bike-plan-img {
+        padding: 3em;
+        border-radius: 3em;
+      }
     }
 
     @media (max-width: 768px) {
+      #who-we-are h2 {
+        margin-top: 0em;
+      }
+      .who-we-are-img {
+        padding: 2em;
+        border-radius: 3em;
+      }
+      #who-we-are .content {
+        margin: 2em;
+        font-size: 1em;
+      }
+      #who-we-are .normal-copy {
+        width: 100%;
+      }
+
       .image-gallery {
-        flex-direction: column;
-        align-items: center;
+        padding: 2em;
+        grid-template-columns: 1fr;
+      }
+
+      #bike-plan h2 {
+        margin-top: 0em;
+      }
+      .bike-plan-img {
+        padding: 2em;
+        border-radius: 3em;
+      }
+      #bike-plan .content {
+        margin: 2em;
+        font-size: 1em;
+      }
+      #bike-plan .normal-copy {
+        width: 100%;
       }
     }
   </style>
