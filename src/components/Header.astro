@@ -148,10 +148,16 @@ const data = await getLayout();
     border-radius: 25px;
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 1100px) {
     #menuToggle {
       display: block;
       margin-bottom: 1.25em;
+      padding-right: 5em; /* Add right-side padding */
+      font-size: 32px; /* Increase font size for a larger icon */
+    }
+
+    header {
+      justify-content: space-between; /* Add space between elements */
     }
 
     #navMenu {
@@ -170,6 +176,17 @@ const data = await getLayout();
 
     #navMenu.active {
       display: flex;
+    }
+  }
+
+  @media (max-width: 500px) {
+    .logo-container[data-astro-cid-3ef6ksr2] {
+      padding-left: 1.25em;
+      padding-top: 2em;
+      flex-shrink: 0;
+    }
+    header nav {
+      padding: 0em;
     }
   }
 </style>

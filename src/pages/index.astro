@@ -96,6 +96,10 @@ const homePage = await getHomePage();
 
   <style>
     /* General Styles */
+    html, body {
+      overflow-x: hidden; /* Prevent horizontal scrolling */
+    }
+
     #sections {
       display: flex;
       flex-wrap: wrap;
@@ -134,7 +138,7 @@ const homePage = await getHomePage();
 
     #who-we-are .content {
       flex: 1;
-      margin: clamp(2em, 5vw, 5em);
+      margin: clamp(0em, 5vw, 5em);
       color: white;
     }
 
@@ -149,7 +153,6 @@ const homePage = await getHomePage();
     }
 
     #who-we-are .normal-copy {
-      width: clamp(20em, 50%, 28em);
       font-size: larger;
     }
 
@@ -210,7 +213,6 @@ const homePage = await getHomePage();
       flex: 1;
       margin: clamp(2em, 5vw, 5em) 0 clamp(5em, 10vw, 13em) clamp(2em, 5vw, 8em);
       color: white;
-      width: clamp(20em, 50%, 28em);
     }
 
     #bike-plan h2 {
