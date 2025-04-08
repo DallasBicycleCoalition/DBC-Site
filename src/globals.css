@@ -180,6 +180,37 @@ div.normal-copy p:not(:last-child):not(:-moz-last-node) {
   border-bottom: 0px !important;
 }
 
+#calendar {
+  margin-bottom: 1em;
+}
+
+@media (max-width: 768px) {
+  .fc .fc-toolbar {
+    align-items: center;
+    justify-content: space-between;
+    display: block;
+  }
+
+  /* Ensure calendar fits nicely on mobile */
+  #calendar {
+    max-width: 100%;
+    padding: 0;
+  }
+
+  /* Adjust event modal on mobile for full-screen display */
+  #event-modal {
+    width: 90%;
+    top: 10%;
+    left: 50%;
+    transform: translate(-50%, 0);
+  }
+
+  /* Ensure calendar view switches to a compact list */
+  .fc-listMonth-view {
+    font-size: 0.9rem;
+  }
+}
+
 @media (max-width: 500px) {
   main,
   footer {

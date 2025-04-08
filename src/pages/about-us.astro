@@ -206,7 +206,17 @@ const aboutUsPage = await getAboutUsPage();
       }
     }
 
-    @media screen and (max-width: 500px) {
+    @media screen and (max-width: 1100px) {
+      .two-cols {
+        flex-direction: column;
+      }
+
+      #vision-section {
+        flex-direction: column-reverse;
+      }
+    }
+
+    @media screen and (max-width: 750px) {
       #vision-section {
         flex-direction: column-reverse;
         flex-wrap: unset;
@@ -215,6 +225,10 @@ const aboutUsPage = await getAboutUsPage();
       .team-members {
         display: unset;
         line-height: unset;
+      }
+
+      #team-section, #vision-section, #mission-section {
+        padding: 0.75em;
       }
     }
   </style>

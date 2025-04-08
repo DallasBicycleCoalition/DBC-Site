@@ -4,11 +4,11 @@ import Layout from "../../../layouts/Layout.astro";
 import { getPosts } from "../../../utils/groqQueries";
 import { urlFor } from "../../../utils/utils";
 
-const limit = 10;
+const limit = 2;
 
 // Generate paths for pagination
 export async function getStaticPaths() {
-  const limit = 10;
+  const limit = 2;
   const totalPosts = await getPosts(0, Number.MAX_SAFE_INTEGER);
   const totalPages = Math.ceil(totalPosts.length / limit);
 
@@ -36,7 +36,17 @@ function hasValidSlug(
 }
 
 // Check if there's a next page
+const totalPosts = await getPosts(0, Number.MAX_SAFE_INTEGER);
+const totalPages = Math.ceil(totalPosts.length / limit);
 const hasNextPage = posts.length === limit;
+
+// Generate pagination numbers
+const paginationNumbers = Array.from({ length: Math.min(3, totalPages) }, (_, i) => {
+  if (totalPages <= 3) return i + 1;
+  if (currentPage === 1) return i + 1;
+  if (currentPage === totalPages) return totalPages - 2 + i;
+  return currentPage - 1 + i;
+});
 ---
 
 <Layout title={"Blog Posts"}>
@@ -70,18 +80,27 @@ const hasNextPage = posts.length === limit;
     }
   </div>
   <div class="pagination">
+    {currentPage > 1 && (
+      <a href={`/blog/page/${currentPage - 1}`} class="pagination-arrow">&laquo;</a>
+    )}
     {
-      currentPage > 1 && (
-        <a href={`/blog/page/${currentPage - 1}`}>&laquo; Previous</a>
-      )
+      paginationNumbers.map((pageNumber) => (
+        <a
+          href={`/blog/page/${pageNumber}`}
+          class={`pagination-number ${pageNumber === currentPage ? "active" : ""}`}
+        >
+          {pageNumber}
+        </a>
+      ))
     }
-    {hasNextPage && <a href={`/blog/page/${currentPage + 1}`}>Next &raquo;</a>}
+    {hasNextPage && (
+      <a href={`/blog/page/${currentPage + 1}`} class="pagination-arrow">&raquo;</a>
+    )}
   </div>
 </Layout>
 
 <style>
   .blog-posts {
-    width: 90%;
     max-width: 80em;
     margin: 2em auto 0;
     display: flex;
@@ -133,19 +152,47 @@ const hasNextPage = posts.length === limit;
   .post-separator {
     width: 100%;
     border: 1px solid #ccc;
-    margin: 2em 0;
+    margin-bottom: 1em;
   }
 
   .pagination {
     display: flex;
-    justify-content: space-between;
-    margin-top: 2em;
+    justify-content: center;
+    gap: 1em;
+    margin-bottom: 1em;
   }
 
-  .pagination a {
+  .pagination-arrow {
     font-size: clamp(1em, 1.25vw, 1.25em);
     text-decoration: none;
-    color: #007acc;
+    color: #000000;
+    padding: 0.5em;
+    border: 1px solid #000000;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 2.5em;
+    height: 2.5em;
+  }
+
+  .pagination-number {
+    font-size: clamp(1em, 1.25vw, 1.25em);
+    text-decoration: none;
+    color: #000000;
+    padding: 0.5em;
+    border: 1px solid #000000;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 2.5em;
+    height: 2.5em;
+  }
+
+  .pagination-number.active {
+    background-color: #ffffff;
+    color: #000000;
   }
 
   @media (max-width: 768px) {
@@ -157,6 +204,16 @@ const hasNextPage = posts.length === limit;
     .post > div:nth-child(2) {
       flex: 1 1 100%;
       max-width: 100%;
+    }
+
+    .pagination {
+      gap: 0.25em;
+    }
+
+    .pagination-arrow,
+    .pagination-number {
+      width: 2em;
+      height: 2em;
     }
   }
 </style>

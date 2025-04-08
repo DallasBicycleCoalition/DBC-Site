@@ -73,4 +73,34 @@ const layout = await getLayout();
   footer a:hover {
     text-decoration: underline;
   }
+
+  @media (max-width: 650px) {
+    footer {
+      flex-direction: column; /* Stack logo and socials vertically */
+      align-items: center; /* Center items horizontally */
+      padding: 2em 5vw; /* Adjust padding for smaller screens */
+    }
+
+    .footer-logo {
+      margin-right: 0; /* Remove right margin for stacked layout */
+      margin-bottom: 1em; /* Add spacing below the logo */
+    }
+
+    .footer-logo img {
+      max-height: 7em; /* Reduce logo size for smaller screens */
+    }
+
+    .footer-socials {
+      justify-content: center; /* Center social icons */
+    }
+
+    .footer-item {
+      margin-left: 1em; /* Reduce spacing between icons */
+    }
+
+    .footer-item img {
+      width: 40px; /* Reduce icon size */
+      height: 40px;
+    }
+  }
 </style>
