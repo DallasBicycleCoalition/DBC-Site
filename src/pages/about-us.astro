@@ -182,11 +182,7 @@ const aboutUsPage = await getAboutUsPage();
       margin: 5em;
     }
 
-    /* Responsive adjustments for screens up to 1024px wide */
     @media screen and (max-width: 1400px) {
-      .two-cols {
-        flex-direction: column;
-      }
       #mission-section,
       #vision-section,
       #team-section {
@@ -207,6 +203,18 @@ const aboutUsPage = await getAboutUsPage();
       }
       #team-section > div:nth-child(1) {
         transform: none;
+      }
+    }
+
+    @media screen and (max-width: 500px) {
+      #vision-section {
+        flex-direction: column-reverse;
+        flex-wrap: unset;
+      }
+
+      .team-members {
+        display: unset;
+        line-height: unset;
       }
     }
   </style>
