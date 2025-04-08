@@ -222,13 +222,27 @@ const aboutUsPage = await getAboutUsPage();
         flex-wrap: unset;
       }
 
+      .content {
+        margin: 2em;
+      }
+
       .team-members {
         display: unset;
         line-height: unset;
       }
 
-      #team-section, #vision-section, #mission-section {
+      #team-section,
+      #vision-section,
+      #mission-section {
         padding: 0.75em;
+      }
+
+      .highlighted-copy {
+        font-size: 1.25em; /* Adjusted font size for smaller screens */
+      }
+
+      .normal-copy {
+        font-size: 1em; /* Adjusted font size for smaller screens */
       }
     }
   </style>
