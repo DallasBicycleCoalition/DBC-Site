@@ -9,7 +9,7 @@ const {
   PUBLIC_SANITY_STUDIO_DATASET,
   PUBLIC_SANITY_PROJECT_ID,
   PUBLIC_SANITY_DATASET,
-  SANITY_API_TOKEN
+  SANITY_API_TOKEN,
 } = loadEnv(import.meta.env.MODE, process.cwd(), "");
 
 // Different environments use different variables
@@ -36,4 +36,13 @@ export default defineConfig({
     }),
     react(), // Required for Sanity Studio
   ],
+  vite: {
+    resolve: {
+      // Use react-dom/server.edge instead of react-dom/server.browser for React 19.
+      // Without this, MessageChannel from node:worker_threads needs to be polyfilled.
+      alias: import.meta.env.PROD && {
+        "react-dom/server": "react-dom/server.edge",
+      },
+    },
+  },
 });
