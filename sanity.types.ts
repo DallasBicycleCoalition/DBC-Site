@@ -391,6 +391,46 @@ export type EmailCityCouncil = {
   }>;
 };
 
+export type CityCouncilQuestionnaire = {
+  _id: string;
+  _type: "cityCouncilQuestionnaire";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  mainImage?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    altText?: string;
+    _type: "image";
+  };
+  body?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+};
+
 export type CaptionedImage = {
   _type: "captionedImage";
   image?: {
@@ -764,7 +804,7 @@ export type RecurringDates = {
   rrule?: string;
 };
 
-export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | WeekWithoutDriving | PolicyPage | Layout | Homepage | EmailCityCouncil | CaptionedImage | AboutUs | Tag | Post | Slug | Events | Author | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata | RecurringDates;
+export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | WeekWithoutDriving | PolicyPage | Layout | Homepage | EmailCityCouncil | CityCouncilQuestionnaire | CaptionedImage | AboutUs | Tag | Post | Slug | Events | Author | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata | RecurringDates;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./src/utils/groqQueries.ts
 // Variable: posts
@@ -1310,6 +1350,35 @@ export type EmailCityCouncilResult = {
     url: string | null;
   }> | null;
 } | null;
+// Variable: cityCouncilQuestionnaire
+// Query: *[_type == "cityCouncilQuestionnaire"]{      _id, _createdAt, title,      "mainImage": { "asset": mainImage.asset->url, "altText": mainImage.altText },      body    }[0]
+export type CityCouncilQuestionnaireResult = {
+  _id: string;
+  _createdAt: string;
+  title: string | null;
+  mainImage: {
+    asset: string | null;
+    altText: string | null;
+  };
+  body: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }> | null;
+} | null;
 
 // Query TypeMap
 import "@sanity/client";
@@ -1325,5 +1394,6 @@ declare module "@sanity/client" {
     "\n    *[_type == \"tag\"]{ \"id\": _id, name, description }\n  ": TagsResult;
     "\n    *[_type == \"weekWithoutDriving\"]{\n      _id, _createdAt, title,\n      \"introBlock\": { \"heading\": introBlock.heading, \"content\": introBlock.content }\n    }[0]\n  ": WeekWithoutDrivingPageResult;
     "\n    *[_type == \"emailCityCouncil\"]{\n      _id, _createdAt, title,\n      \"links\": links[]{ \"title\": title, \"url\": url }\n    }[0]\n  ": EmailCityCouncilResult;
+    "\n    *[_type == \"cityCouncilQuestionnaire\"]{\n      _id, _createdAt, title,\n      \"mainImage\": { \"asset\": mainImage.asset->url, \"altText\": mainImage.altText },\n      body\n    }[0]\n  ": CityCouncilQuestionnaireResult;
   }
 }

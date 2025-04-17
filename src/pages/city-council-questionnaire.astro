@@ -1,0 +1,47 @@
+---
+import { PortableText } from "@portabletext/react";
+import Layout from "../layouts/Layout.astro";
+import { getCityCouncilQuestionnaire } from "../utils/groqQueries";
+
+const cityCouncilQuestionnaire = await getCityCouncilQuestionnaire();
+---
+
+<Layout title={cityCouncilQuestionnaire?.title || "City Council Questionnaire"}>
+  <section class="hero">
+    {
+      cityCouncilQuestionnaire?.mainImage?.asset && (
+        <img
+          src={cityCouncilQuestionnaire.mainImage.asset}
+          alt={
+            cityCouncilQuestionnaire.mainImage.altText ||
+            "City Council Questionnaire"
+          }
+          class="main-image"
+          loading="lazy"
+        />
+      )
+    }
+  </section>
+
+  <section id="content-block">
+    <div class="normal-copy">
+      {
+        cityCouncilQuestionnaire?.body && (
+          <PortableText value={cityCouncilQuestionnaire.body} />
+        )
+      }
+    </div>
+  </section>
+
+  <style>
+    /* Main image styling */
+    .main-image {
+      margin: 2em auto 4em;
+      object-fit: cover;
+      border-radius: 10px;
+      max-width: 90%;
+      width: 1200px;
+      height: auto;
+    }
+  </style>
+</Layout>
