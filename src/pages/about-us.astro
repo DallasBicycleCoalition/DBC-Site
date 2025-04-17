@@ -2,56 +2,248 @@
 import { PortableText } from "@portabletext/react";
 import Layout from "../layouts/Layout.astro";
 import { getAboutUsPage } from "../utils/groqQueries";
+import { urlFor } from "../utils/utils";
 
 const aboutUsPage = await getAboutUsPage();
 ---
 
 <Layout title={aboutUsPage?.title || "About Us"}>
-  <section class="hero">
-    <h1>{aboutUsPage?.title}</h1>
+  <section id="mission-section" class="two-cols">
+    <div class="content">
+      <h2>{aboutUsPage?.mission.heading}</h2>
+      <div class="highlighted-copy">
+        {
+          aboutUsPage?.mission.highlightedContent && (
+            <PortableText value={aboutUsPage.mission.highlightedContent} />
+          )
+        }
+      </div>
+      <div class="normal-copy">
+        {
+          aboutUsPage?.mission.content && (
+            <PortableText value={aboutUsPage.mission.content} />
+          )
+        }
+      </div>
+    </div>
+    {
+      aboutUsPage?.mission.photo?.asset && (
+        <img
+          src={urlFor(aboutUsPage.mission.photo.asset).url()}
+          alt={aboutUsPage.mission.photo.altText || "Mission Image"}
+        />
+      )
+    }
   </section>
 
-  <section id="mission-section">
-    <h2>{aboutUsPage?.mission.heading}</h2>
-    <div class="normal-copy">
-      {
-        aboutUsPage?.mission.content && (
-          <PortableText value={aboutUsPage.mission.content} />
-        )
-      }
+  <section id="vision-section" class="two-cols">
+    {
+      aboutUsPage?.vision.photo?.asset && (
+        <img
+          src={urlFor(aboutUsPage.vision.photo.asset).url()}
+          alt={aboutUsPage.vision.photo.altText || "Vision Image"}
+        />
+      )
+    }
+    <div class="content">
+      <h2>{aboutUsPage?.vision.heading}</h2>
+      <div class="highlighted-copy">
+        {
+          aboutUsPage?.vision.highlightedContent && (
+            <PortableText value={aboutUsPage.vision.highlightedContent} />
+          )
+        }
+      </div>
+      <div class="normal-copy">
+        {
+          aboutUsPage?.vision.content && (
+            <PortableText value={aboutUsPage.vision.content} />
+          )
+        }
+      </div>
     </div>
   </section>
 
-  <section id="vision-section">
-    <h2>{aboutUsPage?.vision.heading}</h2>
-    <div class="normal-copy">
-      {
-        aboutUsPage?.vision.content && (
-          <PortableText value={aboutUsPage.vision.content} />
-        )
-      }
+  <section id="team-section" class="two-cols">
+    <div class="content">
+      <h2>{aboutUsPage?.team?.heading || "Meet Our Team"}</h2>
+      <div class="team-members">
+        {
+          aboutUsPage?.team?.members?.map((member) => (
+            <div class="team-member">
+              {member?.name && <PortableText value={member.name} />}
+            </div>
+          ))
+        }
+      </div>
     </div>
+    {
+      aboutUsPage?.team?.photo?.asset && (
+        <img
+          src={urlFor(aboutUsPage.team.photo.asset).url()}
+          alt={aboutUsPage.team.photo.altText || "Team Image"}
+        />
+      )
+    }
   </section>
+  <style>
+    #mission-section h2 {
+      font-weight: bold;
+      color: #cd011c;
+      font-size: 1.25em;
+      letter-spacing: 0.2em;
+    }
+    #mission-section {
+      padding: 3em;
+    }
+    #mission-section img {
+      position: relative;
+      right: 5em;
+    }
+    #mission-section > div:nth-child(1) > div:nth-child(3) {
+      font-size: 1.15em;
+      max-width: 25em;
+    }
+    #mission-section > div:nth-child(1) > div:nth-child(2) {
+      padding-top: 0.55em;
+      padding-bottom: 1em;
+    }
+    #vision-section {
+      background-color: #002c7d;
+      color: #ffffff;
+      padding: 3em;
+    }
+    div.content:nth-child(2) > div:nth-child(3) {
+      font-size: 1.15em;
+      max-width: 30em;
+    }
 
-  <section id="team-section">
-    <h2>{aboutUsPage?.team?.heading || "Meet Our Team"}</h2>
-    <ul>
-      {
-        aboutUsPage?.team?.members?.map((member) => (
-          <li>{member?.name && <PortableText value={member.name} />}</li>
-        ))
-      }
-    </ul>
-  </section>
+    #vision-section > div:nth-child(2) > div:nth-child(2) {
+      padding-top: 0.55em;
+      padding-bottom: 1em;
+    }
 
-  <section id="howToHelp-section">
-    <h2>{aboutUsPage?.howToHelp.heading}</h2>
-    <div class="normal-copy">
-      {
-        aboutUsPage?.howToHelp.content && (
-          <PortableText value={aboutUsPage.howToHelp.content} />
-        )
+    #vision-section img {
+      transform: translateX(5em);
+    }
+    #vision-section .content {
+      transform: translateX(5em);
+    }
+    #team-section h2 {
+      font-weight: bold;
+      color: #cd011c;
+      font-size: 1.25em;
+      letter-spacing: 0.2em;
+    }
+    #team-section {
+      background-color: #f5f5f5;
+      padding: 3em;
+    }
+    #team-section > div:nth-child(1) {
+      transform: translateY(-5em);
+    }
+    #team-section > div:nth-child(1) > h2:nth-child(1) {
+      padding-bottom: 2em;
+    }
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+    .two-cols {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .two-cols.inverted {
+      flex-direction: row-reverse;
+    }
+    .highlighted-copy {
+      font-size: 2.25em;
+      font-weight: bold;
+      line-height: 1.25;
+      max-width: 15em;
+    }
+    .team-members {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.5em;
+      font-size: clamp(1.5em, 2vw, 2em); /* Responsive font sizing */
+      max-width: 100%; /* Allow the grid to take up the available space */
+      line-height: 1em;
+      font-weight: bold;
+    }
+    .team-member {
+      flex: 1 1 auto;
+      min-width: 10em;
+    }
+    .content {
+      margin: 5em;
+    }
+
+    @media screen and (max-width: 1400px) {
+      #mission-section,
+      #vision-section,
+      #team-section {
+        padding: 2em;
       }
-    </div>
-  </section>
+      .content {
+        margin: 2em;
+      }
+      /* Remove horizontal offsets on smaller screens */
+      #mission-section img {
+        position: static;
+        right: auto;
+        transform: none;
+      }
+      #vision-section img,
+      #vision-section .content {
+        transform: none;
+      }
+      #team-section > div:nth-child(1) {
+        transform: none;
+      }
+    }
+
+    @media screen and (max-width: 1100px) {
+      .two-cols {
+        flex-direction: column;
+      }
+
+      #vision-section {
+        flex-direction: column-reverse;
+      }
+    }
+
+    @media screen and (max-width: 750px) {
+      #vision-section {
+        flex-direction: column-reverse;
+        flex-wrap: unset;
+      }
+
+      .content {
+        margin: 2em;
+      }
+
+      .team-members {
+        display: unset;
+        line-height: unset;
+      }
+
+      #team-section,
+      #vision-section,
+      #mission-section {
+        padding: 0.75em;
+      }
+
+      .highlighted-copy {
+        font-size: 1.25em; /* Adjusted font size for smaller screens */
+      }
+
+      .normal-copy {
+        font-size: 1em; /* Adjusted font size for smaller screens */
+      }
+    }
+  </style>
 </Layout>

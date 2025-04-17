@@ -30,5 +30,17 @@ export const layoutSchema = defineType({
       title: "Landing Page Link",
       type: "url",
     },
+    {
+      name: "footerBackground",
+      title: "Footer Background",
+      type: "image",
+      fields: [
+        {
+          name: "altText",
+          type: "string",
+          title: "Alternative text",
+        },
+      ],
+    },
   ],
 });

@@ -1,45 +1,106 @@
-<footer>
+---
+import { getLayout } from "../utils/groqQueries";
+
+const layout = await getLayout();
+---
+
+<footer style={`background-image: url(${layout!.footerBackground.asset});`}>
   <!-- DBC Logo -->
   <div class="footer-logo">
     <img src="/DallasBicycleCoalition_Badge_only.png" alt="DBC Logo" />
   </div>
 
-  <!-- Signup Link to the Email List and GitHub Link -->
-  <div class="footer-links">
+  <!-- Social Media Links -->
+  <div class="footer-socials">
     <div class="footer-item">
-      <a href="/signup" onclick="window.location.href='/signup'; return false;"
-        >Join our Email List</a
-      >
-    </div>
-
-    <div class="footer-item">
-      <a
-        href="https://github.com/DallasBicycleCoalition/DBC-Site"
-        target="_blank"
-      >
-        View on GitHub
+      <a href="https://facebook.com/dallasbicyclecoalition" target="_blank">
+        <img src="/facebook-logo-Black.png" alt="Facebook Logo" />
       </a>
     </div>
 
-    <!-- Social Media Links -->
-    <div class="footer-socials">
-      <div class="footer-item">
-        <a href="https://instagram.com/dallasbicyclecoalition" target="_blank">
-          <img
-            src="/Instagram_Glyph_Black.svg"
-            alt="Instagram Logo"
-          />
-        </a>
-      </div>
-
-      <div class="footer-item">
-        <a href="https://facebook.com/dallasbicyclecoalition" target="_blank">
-          <img
-            src="/facebook-logo-Black.png"
-            alt="Facebook Logo"
-          />
-        </a>
-      </div>
+    <div class="footer-item">
+      <a href="https://instagram.com/dallasbicyclecoalition" target="_blank">
+        <img src="/Instagram_Glyph_Black.svg" alt="Instagram Logo" />
+      </a>
     </div>
   </div>
 </footer>
+
+<style>
+  footer {
+    display: flex;
+    justify-content: space-between; /* Space between logo and socials */
+    align-items: center; /* Center items vertically */
+    padding: 4em 10vw;
+    background-color: #dedede;
+    background-size: cover; /* Ensure the background image covers the entire footer */
+    background-position: center; /* Center the background image */
+  }
+
+  .footer-logo {
+    margin-right: 2em; /* Space between logo and the links */
+  }
+
+  .footer-logo img {
+    margin-top: 1em;
+    max-width: 100%; /* Ensures the image resizes responsively */
+    max-height: 10em;
+  }
+
+  .footer-socials {
+    display: flex;
+    align-items: center; /* Center items vertically */
+    justify-content: flex-end; /* Align items to the right */
+    flex: 1;
+  }
+
+  .footer-item {
+    margin-left: 2em; /* Adds padding between the items */
+  }
+
+  .footer-item img {
+    filter: invert(1); /* Invert the color of the icons */
+    width: 57px;
+    height: 57px;
+  }
+
+  footer a {
+    color: #007acc;
+    text-decoration: none;
+    font-size: 1.2em; /* Slightly larger font for the links */
+  }
+
+  footer a:hover {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 650px) {
+    footer {
+      flex-direction: column; /* Stack logo and socials vertically */
+      align-items: center; /* Center items horizontally */
+      padding: 2em 5vw; /* Adjust padding for smaller screens */
+    }
+
+    .footer-logo {
+      margin-right: 0; /* Remove right margin for stacked layout */
+      margin-bottom: 1em; /* Add spacing below the logo */
+    }
+
+    .footer-logo img {
+      max-height: 7em; /* Reduce logo size for smaller screens */
+    }
+
+    .footer-socials {
+      justify-content: center; /* Center social icons */
+    }
+
+    .footer-item {
+      margin-left: 1em; /* Reduce spacing between icons */
+    }
+
+    .footer-item img {
+      width: 40px; /* Reduce icon size */
+      height: 40px;
+    }
+  }
+</style>

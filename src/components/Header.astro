@@ -20,17 +20,25 @@ const data = await getLayout();
   </div>
   <button id="menuToggle" aria-label="Toggle navigation">&#9776;</button>
   <nav id="navMenu">
-    <div class="nav-item">
+    <div class="nav-item" id="aboutUsNavItem">
+      <a href="/about-us">About Us</a>
+    </div>
+    <div class="nav-item" id="blogNavItem">
+      <a href="/blog/page/1">Blog</a>
+    </div>
+    <div class="nav-item" id="calendarNavItem">
       <a
         href="/calendar"
         onclick="window.location.href='/calendar'; return false;">Calendar</a
       >
     </div>
-    <div class="nav-item">
-      <a href="/blog/page/1">Blog</a>
-    </div>
-    <div class="nav-item">
-      <a href="/about-us">About Us</a>
+    <div class="nav-item" id="signupNavItem">
+      <a
+        href="/signup"
+        class="email-list-link"
+        onclick="window.location.href='/signup'; return false;"
+        >Join our Email List</a
+      >
     </div>
   </nav>
 </header>
@@ -62,6 +70,16 @@ const data = await getLayout();
     } else {
       console.error("Menu toggle button or navigation menu is missing.");
     }
+
+    // Highlight the current page
+    const currentPage = window.location.pathname;
+    if (currentPage === "/about-us") {
+      document.getElementById("aboutUsNavItem").classList.add("active");
+    } else if (currentPage === "/blog/page/1") {
+      document.getElementById("blogNavItem").classList.add("active");
+    } else if (currentPage === "/calendar") {
+      document.getElementById("calendarNavItem").classList.add("active");
+    }
   }
 
   // Initialize on first load
@@ -72,3 +90,101 @@ const data = await getLayout();
     init();
   });
 </script>
+
+<style>
+  #menuToggle {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 1000;
+  }
+
+  header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .logo-container {
+    padding-left: 6.75em;
+    padding-top: 2em;
+    flex-shrink: 0; /* Prevent the logo container from shrinking */
+  }
+
+  header nav {
+    display: flex;
+    align-content: center;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 1em;
+    padding-right: 8.25em;
+    padding-top: 2em;
+    color: #cd011c;
+    font-size: 1.25em;
+    font-weight: bold;
+    flex: 1;
+    gap: clamp(0.25em, 2vw, 2em); /* Dynamic gap between nav items */
+  }
+
+  header nav .nav-item a {
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  header nav .nav-item.active a {
+    color: #002c7d;
+  }
+
+  body > header:nth-child(1) {
+    padding-bottom: 1.25em;
+  }
+
+  .email-list-link {
+    color: white;
+    background-color: #cd011c;
+    padding: 0.5em 1em;
+    border-radius: 25px;
+  }
+
+  @media (max-width: 1100px) {
+    #menuToggle {
+      display: block;
+      margin-bottom: 1.25em;
+      padding-right: 5em; /* Add right-side padding */
+      font-size: 32px; /* Increase font size for a larger icon */
+    }
+
+    header {
+      justify-content: space-between; /* Add space between elements */
+    }
+
+    #navMenu {
+      display: none;
+      flex-direction: column;
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 100%;
+      height: 100vh;
+      background-color: white;
+      justify-content: center;
+      gap: clamp(20px, 5vw, 40px); /* Dynamic gap in mobile view */
+      z-index: 999;
+    }
+
+    #navMenu.active {
+      display: flex;
+    }
+
+    .logo-container[data-astro-cid-3ef6ksr2] {
+      padding-left: 1.25em;
+      padding-top: 2em;
+      flex-shrink: 0;
+    }
+    header nav {
+      padding: 0em;
+    }
+  }
+</style>

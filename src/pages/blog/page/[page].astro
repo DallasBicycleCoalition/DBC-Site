@@ -1,14 +1,15 @@
 ---
+// @ts-nocheck
 import type { PostsResult } from "../../../../sanity.types";
 import Layout from "../../../layouts/Layout.astro";
 import { getPosts } from "../../../utils/groqQueries";
 import { urlFor } from "../../../utils/utils";
 
-const limit = 10;
+const limit = 2;
 
 // Generate paths for pagination
 export async function getStaticPaths() {
-  const limit = 10;
+  const limit = 2;
   const totalPosts = await getPosts(0, Number.MAX_SAFE_INTEGER);
   const totalPages = Math.ceil(totalPosts.length / limit);
 
@@ -36,41 +37,184 @@ function hasValidSlug(
 }
 
 // Check if there's a next page
+const totalPosts = await getPosts(0, Number.MAX_SAFE_INTEGER);
+const totalPages = Math.ceil(totalPosts.length / limit);
 const hasNextPage = posts.length === limit;
+
+// Generate pagination numbers
+const paginationNumbers = Array.from({ length: Math.min(3, totalPages) }, (_, i) => {
+  if (totalPages <= 3) return i + 1;
+  if (currentPage === 1) return i + 1;
+  if (currentPage === totalPages) return totalPages - 2 + i;
+  return currentPage - 1 + i;
+});
 ---
 
 <Layout title={"Blog Posts"}>
-  <h1>Blog Posts</h1>
-  <div>
+  <div class="blog-posts">
     {
       posts.filter(hasValidSlug).map((post) => (
         <div class="post">
-          <img
-            class="post-image"
-            src={
-              post.mainImage?.asset
-                ? urlFor(post.mainImage.asset).url()
-                : "/DallasBicycleCoalition_Badge_only.png"
-            }
-            alt={post.mainImage?.altText || "Default image"}
-          />
-          <div class="post-content">
+          <div class="post-image-container">
+            <img
+              class="post-image"
+              src={
+                post.mainImage?.asset
+                  ? urlFor(post.mainImage.asset).url()
+                  : "/DallasBicycleCoalition_Badge_only.png"
+              }
+              alt={post.mainImage?.altText || "Default image"}
+            />
+          </div>
+          <div>
+            <p id="post-date">{new Date(post._createdAt).toLocaleDateString('en-US', {
+              month: 'long', day: 'numeric', year: 'numeric'
+            })}</p>
             <h2>
-              <a href={`/blog/post/${post?.slug?.current}`}>{post?.title}</a>
+              <a id="post-title" href={`/blog/post/${post?.slug?.current}`}>{post?.title}</a>
             </h2>
-            <p>{post.excerpt}</p>
-            <p>{new Date(post._createdAt).toLocaleDateString()}</p>
+            <p id="post-content">{post.excerpt}</p>
           </div>
         </div>
+        <hr class="post-separator" />
       ))
     }
   </div>
   <div class="pagination">
+    {currentPage > 1 && (
+      <a href={`/blog/page/${currentPage - 1}`} class="pagination-arrow">&laquo;</a>
+    )}
     {
-      currentPage > 1 && (
-        <a href={`/blog/page/${currentPage - 1}`}>&laquo; Previous</a>
-      )
+      paginationNumbers.map((pageNumber) => (
+        <a
+          href={`/blog/page/${pageNumber}`}
+          class={`pagination-number ${pageNumber === currentPage ? "active" : ""}`}
+        >
+          {pageNumber}
+        </a>
+      ))
     }
-    {hasNextPage && <a href={`/blog/page/${currentPage + 1}`}>Next &raquo;</a>}
+    {hasNextPage && (
+      <a href={`/blog/page/${currentPage + 1}`} class="pagination-arrow">&raquo;</a>
+    )}
   </div>
 </Layout>
+
+<style>
+  .blog-posts {
+    max-width: 80em;
+    margin: 2em auto 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+  }
+
+  .post {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 1.5em;
+  }
+
+  .post-image-container {
+    flex: 1 1 30%;
+    max-width: 30%;
+  }
+
+  .post-image {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+
+  .post > div:nth-child(2) {
+    flex: 1 1 55%;
+    max-width: 55%;
+  }
+
+  #post-date {
+    color: #cd011c;
+    font-size: clamp(1em, 1.25vw, 1.25em);
+    font-weight: bold;
+    margin-bottom: 0.5em;
+  }
+
+  #post-title {
+    font-size: clamp(1.25em, 2vw, 1.5em);
+    margin: 0;
+    text-decoration: none;
+  }
+
+  #post-content {
+    font-size: clamp(1em, 1.5vw, 1.25em);
+  }
+
+  .post-separator {
+    width: 100%;
+    border: 1px solid #ccc;
+    margin-bottom: 1em;
+  }
+
+  .pagination {
+    display: flex;
+    justify-content: center;
+    gap: 1em;
+    margin-bottom: 1em;
+  }
+
+  .pagination-arrow {
+    font-size: clamp(1em, 1.25vw, 1.25em);
+    text-decoration: none;
+    color: #000000;
+    padding: 0.5em;
+    border: 1px solid #000000;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 2.5em;
+    height: 2.5em;
+  }
+
+  .pagination-number {
+    font-size: clamp(1em, 1.25vw, 1.25em);
+    text-decoration: none;
+    color: #000000;
+    padding: 0.5em;
+    border: 1px solid #000000;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 2.5em;
+    height: 2.5em;
+  }
+
+  .pagination-number.active {
+    background-color: #ffffff;
+    color: #000000;
+  }
+
+  @media (max-width: 768px) {
+    .post {
+      flex-direction: column;
+    }
+
+    .post-image-container,
+    .post > div:nth-child(2) {
+      flex: 1 1 100%;
+      max-width: 100%;
+    }
+
+    .pagination {
+      gap: 0.25em;
+    }
+
+    .pagination-arrow,
+    .pagination-number {
+      width: 2em;
+      height: 2em;
+    }
+  }
+</style>

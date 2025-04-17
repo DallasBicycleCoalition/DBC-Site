@@ -21,6 +21,7 @@ export const eventsSchema = defineType({
       name: "date",
       title: "Date",
       type: "recurringDates",
+      validation: (Rule) => Rule.required().error("Date is required"),
     },
     {
       name: "allDay",

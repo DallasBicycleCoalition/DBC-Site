@@ -20,98 +20,239 @@ const homePage = await getHomePage();
     }
   </section>
 
-  <section id="who-we-are">
-    <h2>Who We Are</h2>
-    <div class="two-cols">
-      {
-        homePage?.whoWeAre.photo.asset && (
-          <img
-            src={urlFor(homePage.whoWeAre.photo.asset).url()}
-            alt={homePage.whoWeAre.photo.altText || "Who we are image"}
-          />
-        )
-      }
-      {
-        homePage?.whoWeAre.content && (
-          <div class="normal-copy">
+  <section id="who-we-are" class="two-cols">
+    {
+      homePage?.whoWeAre.photo.asset && (
+        <img
+          src={urlFor(homePage.whoWeAre.photo.asset).url()}
+          alt={homePage.whoWeAre.photo.altText || "Who we are image"}
+          class="who-we-are-img"
+        />
+      )
+    }
+    <div class="content">
+      <h2>{homePage?.whoWeAre?.heading}</h2>
+      <div class="highlighted-copy">
+        {
+          homePage?.whoWeAre.highlightedContent && (
+            <PortableText value={homePage.whoWeAre.highlightedContent} />
+          )
+        }
+      </div>
+      <div class="normal-copy">
+        {
+          homePage?.whoWeAre.content && (
             <PortableText value={homePage.whoWeAre.content} />
-          </div>
-        )
-      }
+          )
+        }
+      </div>
     </div>
   </section>
 
   <section id="what-we-do">
-    <h2>{homePage?.whatWeDo?.heading}</h2>
     <div class="image-gallery">
       {
         homePage?.whatWeDo?.whatWeDoPics?.map((pic) => (
-          <div>
+          <div class="image-item">
             {pic.image && (
               <img src={urlFor(pic.image).url()} alt={pic.altText || "Image"} />
             )}
+            <p>{pic.highlightedCaption}</p>
             <p>{pic.caption}</p>
           </div>
         ))
       }
     </div>
   </section>
-  
-  <section id="sections">
-    <section id="bike-plan">
-      <h2>{homePage?.bikePlan.heading}</h2>
-      <div class="two-cols">
+
+  <section id="bike-plan" class="two-cols">
+    {
+      homePage?.bikePlan.photo?.asset && (
+        <img
+          src={urlFor(homePage.bikePlan.photo.asset).url()}
+          alt={homePage.bikePlan.photo.altText || "Bike plan image"}
+          class="bike-plan-img"
+        />
+      )
+    }
+    <div class="content">
+      <h2>{homePage?.bikePlan?.heading}</h2>
+      <div class="highlighted-copy">
+        {
+          homePage?.bikePlan.highlightedContent && (
+            <PortableText value={homePage.bikePlan.highlightedContent} />
+          )
+        }
+      </div>
+      <div class="normal-copy">
         {
           homePage?.bikePlan.content && (
-            <div class="normal-copy">
-              <PortableText value={homePage.bikePlan.content} />
-            </div>
+            <PortableText value={homePage.bikePlan.content} />
           )
         }
       </div>
-    </section>
-  
-    <section id="bike-ride">
-      <h2>{homePage?.dallasBikeRide.heading}</h2>
-      <div>
-        {
-          homePage?.dallasBikeRide.photo.asset && (
-            <img
-              id="bike-ride-img"
-              src={urlFor(homePage.dallasBikeRide.photo.asset).url()}
-              alt={homePage.dallasBikeRide.photo.altText || "Dallas Bike Ride image"}
-            />
-          )
-        }
-        {
-          homePage?.dallasBikeRide.content && (
-            <div class="normal-copy">
-              <PortableText value={homePage.dallasBikeRide.content} />
-            </div>
-          )
-        }
-      </div>
-    </section>
+    </div>
   </section>
 
-  
-
   <style>
+    /* General Styles */
     #sections {
-      display:flex;
+      display: flex;
       flex-wrap: wrap;
       gap: 2em;
     }
+
+    /* Hero Section */
+    .hero img {
+      width: 100%;
+      height: auto;
+    }
+
+    .visually-hidden {
+      border: 0;
+      clip: rect(0 0 0 0);
+      height: auto;
+      margin: 0;
+      overflow: hidden;
+      padding: 0;
+      position: absolute;
+      width: 1px;
+      white-space: nowrap;
+    }
+
+    /* Who We Are Section */
+    #who-we-are {
+      background: #cd011c;
+    }
+
+    .who-we-are-img {
+      padding: clamp(2em, 5vw, 4em);
+      box-sizing: border-box;
+      border-radius: 5em;
+      max-width: clamp(40em, 80%, 45em); /* Added max-width */
+    }
+
+    #who-we-are .content {
+      flex: 1;
+      margin: clamp(0em, 5vw, 5em);
+      color: white;
+    }
+
+    #who-we-are h2 {
+      margin: clamp(1em, 3vw, 3em) 0 clamp(1em, 2vw, 2em);
+    }
+
+    #who-we-are .highlighted-copy {
+      margin-bottom: 1em;
+      font-size: clamp(1.5em, 4vw, 2.5em);
+      font-weight: bold;
+    }
+
+    #who-we-are .normal-copy {
+      font-size: larger;
+    }
+
+    /* What We Do Section */
+    #what-we-do {
+      background: #f8f7f5;
+    }
+
+    .image-gallery {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1em;
+      padding: clamp(2em, 5vw, 6em);
+    }
+
+    .image-gallery img {
+      object-fit: cover;
+      border-radius: 1em;
+    }
+
+    .image-gallery > * {
+      flex: 1 1 clamp(15em, 30%, 25em);
+    }
+
+    .image-gallery div {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25em;
+      align-items: center;
+    }
+
+    .image-gallery p {
+      width: 90%;
+      text-align: center;
+      font-size: larger;
+    }
+
+    .image-gallery p:first-of-type {
+      font-size: clamp(1.5em, 4vw, 2.5em);
+      color: #cd011c;
+      font-weight: bold;
+    }
+
+    /* Bike Plan Section */
     #bike-plan {
-      flex: 1;
+      background: #002c7d;
+      flex-direction: row-reverse;
     }
-    #bike-ride {
-      flex: 1;
+
+    .bike-plan-img {
+      padding: clamp(2em, 5vw, 4em);
+      box-sizing: border-box;
+      border-radius: 5em;
+      max-width: clamp(40em, 80%, 45em); /* Added max-width */
     }
-    #bike-ride-img {
-      min-width: 300px;
-      margin-bottom: 5px;
+
+    #bike-plan .content {
+      flex: 1;
+      margin: clamp(2em, 5vw, 5em) 0 clamp(5em, 10vw, 13em) clamp(2em, 5vw, 8em);
+      color: white;
+    }
+
+    #bike-plan h2 {
+      margin: clamp(1em, 3vw, 3em) 0 clamp(1em, 2vw, 2em);
+    }
+
+    #bike-plan .highlighted-copy {
+      margin-bottom: 1em;
+      font-size: clamp(1.5em, 4vw, 2.5em);
+      font-weight: bold;
+    }
+
+    #bike-plan .normal-copy {
+      font-size: larger;
+    }
+
+    /* Media Query for Single Column Layout */
+    @media (max-width: 1500px) {
+      .two-cols {
+        flex-direction: column;
+      }
+
+      .two-cols img {
+        margin: 0 auto;
+      }
+
+      .two-cols .content {
+        margin: 2em auto;
+        width: 90%;
+      }
+
+      .image-gallery {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .image-gallery > * {
+        flex: 1 1 100%;
+      }
+
+      /* Explicitly override row-reverse for bike-plan */
+      #bike-plan.two-cols {
+        flex-direction: column;
+      }
     }
   </style>
-
 </Layout>

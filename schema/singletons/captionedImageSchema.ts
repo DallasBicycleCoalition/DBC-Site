@@ -17,6 +17,11 @@ export const captionedImageSchema = defineType({
       type: "string",
     },
     {
+      name: "highlightedCaption",
+      title: "Highlighted Caption",
+      type: "string",
+    },
+    {
       name: "caption",
       title: "Caption",
       type: "string",

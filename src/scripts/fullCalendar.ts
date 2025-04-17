@@ -154,6 +154,11 @@ function formatDateForDTSTART(date: Date): string {
 }
 
 function transformEvent(event: any): TransformedEvent {
+  if (!event.date) {
+    console.error("Event date is null or undefined", event);
+    throw new Error("Event date is null or undefined");
+  }
+
   let eventStart = new Date(event.date.startDate);
   let eventEnd = event.date.endDate ? new Date(event.date.endDate) : undefined;
 
@@ -210,16 +215,25 @@ function initCalendar(events: TransformedEvent[]): void {
       plugins: [dayGridPlugin, timeGridPlugin, listPlugin, rrulePlugin],
       timeZone: "local",
       initialView,
-      headerToolbar: {
-        left: "prev,next today",
-        center: "title",
-        right: "dayGridMonth,timeGridWeek,timeGridDay,listMonth",
-      },
+      headerToolbar: window.matchMedia("(max-width: 768px)").matches
+        ? {
+            left: "prev,next today",
+            center: "",
+            right: "",
+          }
+        : {
+            left: "prev,next today",
+            center: "title",
+            right: "dayGridMonth,timeGridWeek,timeGridDay,listMonth",
+          },
       views: {
         dayGridMonth: { buttonText: "Month" },
         timeGridWeek: { buttonText: "Week" },
         timeGridDay: { buttonText: "Day" },
-        listMonth: { buttonText: "Agenda" },
+        listMonth: {
+          buttonText: "Agenda",
+          contentHeight: 650, // Adjust the height here
+        },
       },
       events: transformedEvents,
       eventClick: (info) => openEventModal(info.event),

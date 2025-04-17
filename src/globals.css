@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;900&display=swap");
+
 /* Thanks: https://piccalil.li/blog/a-more-modern-css-reset/ */
 
 /* Box sizing rules */
@@ -25,8 +27,8 @@ html {
 body {
   min-height: 100vh;
   line-height: 1.5;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 1.1em;
+  font-family: "Montserrat", sans-serif;
+  font-size: clamp(1em, 1.1vw, 1.1em);
 }
 
 /* Remove default margin in favour of better control in authored CSS */
@@ -59,8 +61,8 @@ h3,
 h4,
 button {
   line-height: 1.1;
-  margin-bottom: 0.5em;
-  margin-top: 1em;
+  margin-bottom: clamp(0.5em, 1vw, 1em);
+  margin-top: clamp(1em, 2vw, 1.5em);
 }
 
 /* Balance text wrapping on headings */
@@ -112,87 +114,23 @@ main {
 
 /* Page container width adjustments */
 main,
-header {
-  margin: 0 10vw;
-}
-
-header {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.logo-container {
-  padding-bottom: 1em;
-}
-
-header nav {
-  display: flex;
-  align-content: center;
-  justify-content: flex-end;
-  align-items: center;
-  padding: 1em;
-  flex: 1;
-}
-
-header nav .nav-item {
-  padding: 1em;
-}
-
-#menuToggle {
-  display: none;
-  background: none;
-  border: none;
-  font-size: 24px;
-  cursor: pointer;
-  z-index: 1000;
-}
-
+header,
 footer {
-  display: flex;
-  align-items: flex-start; /* Align items to the start of the footer */
-  padding: 2.5em 10vw;
-  margin-top: 2em;
-  background-color: #dedede;
+  margin: 0 clamp(1em, 6.25vw, 6.25vw);
 }
 
-.footer-logo {
-  margin-right: 2em; /* Space between logo and the links */
+html,
+body {
+  overflow-x: hidden; /* Prevent horizontal scrolling */
 }
 
-.footer-logo img {
-  margin-top: 1em;
-  max-width: 100%; /* Ensures the image resizes responsively */
-  max-height: 4em;
+strong,
+b {
+  font-weight: 900;
 }
 
-.footer-links {
-  display: flex;
-  flex-direction: column; /* Stack links vertically */
-}
-
-.footer-socials {
-  display: flex;
-}
-
-.footer-item {
-  margin-bottom: 1em; /* Adds padding between the items */
-}
-
-.footer-item img {
-  margin-right: 0.5em;
-  width: 24px;
-  height: 24px;
-}
-
-footer a {
-  color: #007acc;
-  text-decoration: none;
-  font-size: 1.2em; /* Slightly larger font for the links */
-}
-
-footer a:hover {
-  text-decoration: underline;
+body > header:nth-child(1) {
+  background-color: #f8f7f5;
 }
 
 div.normal-copy p:not(:first-child):not(:-moz-first-node) {
@@ -207,223 +145,22 @@ div.normal-copy p:not(:last-child):not(:-moz-last-node) {
   margin-bottom: 1em;
 }
 
-.visually-hidden {
-  border: 0;
-  clip: rect(0 0 0 0);
-  height: auto;
-  margin: 0;
-  overflow: hidden;
-  padding: 0;
-  position: absolute;
-  width: 1px;
-  white-space: nowrap;
-}
-
 .two-cols {
   display: flex;
   flex-wrap: wrap;
-  gap: 1em;
+  gap: clamp(1em, 2vw, 1em);
 }
 
 .two-cols > * {
-  flex: 1;
-  min-width: 15em;
+  flex: 1 1 clamp(15em, 30%, 25em);
 }
 
 .two-cols img {
-  height: 100%;
-  width: 100%;
-}
-
-.hero img {
-  width: 100%;
-}
-
-.image-gallery {
-  display: flex;
-  gap: 1em;
-}
-
-.image-gallery img {
-  object-fit: cover;
-}
-
-.image-gallery > * {
-  flex: 1;
-}
-
-.image-gallery div {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.image-gallery p {
-  width: 90%;
-  text-align: center;
-}
-
-/* Specific element styling */
-.main-post-image {
-  margin-bottom: 1em;
-  margin-top: 1em;
-  margin-left: auto;
-  margin-right: auto;
-  width: 100%;
-  max-height: 100%;
-  max-height: 400px;
-  object-fit: cover;
-}
-
-.blog-post {
-  max-width: 50rem;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-h1 {
-  font-size: 3rem;
-  font-weight: 100;
-  font-style: normal;
-}
-
-.blog-post h1 {
-  margin-bottom: 0;
-}
-
-.post-date-author {
-  font-style: italic;
-}
-
-/* Styling for the post container */
-.post {
-  display: flex;
-  align-items: flex-start;
-  margin-bottom: 4em;
-}
-
-/* Styling for the image */
-.post-image {
-  width: 11em;
   height: auto;
-  margin-right: 1em;
-}
-
-/* Styling for the content beside the image */
-.post-content h2 {
-  margin: 0;
-}
-
-.post-content p {
-  margin: 0.25em 0;
-}
-
-/* Center the Layout */
-.policy-page-intro {
-  max-width: 1300px; /* Adjust the maximum width as needed */
-  margin: 0 auto; /* Center the container */
-}
-
-.policy-table-section {
-  max-width: 1300px;
-  margin: 3em auto; /* Add space above and below the table */
-}
-
-/* Style the table */
-.policy-table {
   width: 100%;
-  border-collapse: collapse;
 }
 
-/* Table header styling */
-.policy-table thead th {
-  padding: 1em; /* Add padding to the table headers */
-  text-align: left; /* Align header text to the left */
-  background-color: #cccccc; /* Light background color for the header */
-  border-bottom: 2px solid #000000; /* Add a bottom border to the header */
-}
-
-/* Table row and cell styling */
-.policy-table tbody tr {
-  border-bottom: 1px solid #ddd; /* Add a bottom border to rows */
-}
-
-.policy-table tbody td {
-  padding: 1em; /* Increase padding between columns */
-  min-width: 125px; /* Set a minimum width for each cell */
-  word-wrap: break-word; /* Allow text to wrap within cells */
-}
-
-/* Increase row spacing */
-.policy-table tbody tr:not(:last-child) {
-  margin-bottom: 0.5em; /* Add margin between rows */
-}
-
-/* Style for alternating row colors (optional) */
-.policy-table tbody tr:nth-child(even) {
-  background-color: #ebebeb; /* Light background color for odd rows */
-}
-
-#event-modal {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 80%;
-  max-width: 600px;
-  max-height: 80vh; /* Ensure the modal doesn’t exceed the viewport height */
-  background-color: white;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  padding: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  overflow-y: auto; /* Enable scrolling if content exceeds the max height */
-  z-index: 1000;
-}
-
-#event-title {
-  font-size: 1.5rem;
-  margin-bottom: 10px;
-}
-
-#event-description {
-  font-size: 1rem;
-  margin-top: 2em;
-  margin-bottom: 20px;
-}
-
-#close-modal {
-  display: inline-block;
-  padding: 10px 20px;
-  background-color: #007acc;
-  color: white;
-  text-align: center;
-  border-radius: 4px;
-  cursor: pointer;
-  margin-top: 10px;
-}
-
-.modal-overlay {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 1000;
-}
-
-.event-modal {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: white;
-  border: 1px solid black;
-  padding: 20px;
-}
-
+/* Style for signup page, can't be put into a style block...*/
 #can_embed_form form {
   display: grid !important;
   place-items: center;
@@ -443,97 +180,20 @@ h1 {
   border-bottom: 0px !important;
 }
 
-#filter {
+#calendar {
   margin-bottom: 1em;
 }
 
 @media (max-width: 768px) {
-  .image-gallery {
-    flex-direction: column;
-    align-items: center;
-  }
-
   .fc .fc-toolbar {
     align-items: center;
     justify-content: space-between;
     display: block;
   }
 
-  #menuToggle {
-    display: block;
-    margin-bottom: 1.25em;
-  }
-
-  #navMenu {
-    display: none;
-    flex-direction: column;
-    position: fixed;
-    top: 0;
-    right: 0;
-    width: 100%;
-    height: 100vh;
-    background-color: white;
-    justify-content: center;
-    gap: 40px;
-    z-index: 999;
-  }
-
-  #navMenu.active {
-    display: flex;
-  }
-
-  .policy-table thead tr {
-    display: none; /* Hide header */
-  }
-
-  .policy-table tr {
-    margin-bottom: 1rem;
-    border: 1px solid black; /* Black border around each box */
-    border-radius: 5px;
-    display: flex;
-    flex-direction: column;
-    position: relative; /* Position relative to allow for the pseudo-element */
-  }
-
-  .policy-table td {
-    display: flex;
-    padding: 10px 0;
-    border: none;
-    border-bottom: 1px solid #ddd;
-  }
-
-  .policy-table td:before {
-    content: attr(data-label);
-    font-weight: bold;
-    width: 100px;
-    flex-shrink: 0;
-    margin-right: 25px;
-  }
-
-  .policy-table tbody tr:not(:last-child) {
-    margin-bottom: 2em; /* Add margin between rows */
-    background-color: white;
-  }
-
-  .policy-table td:last-child {
-    border-bottom: 1px solid #000000; /* Add a bottom border to rows */
-  }
-
-  /* New CSS for a continuous vertical line */
-  .policy-table tr::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 125px; /* Align with the data-label width */
-    bottom: 0;
-    width: 1px;
-    background-color: black; /* The vertical line color */
-  }
-
   /* Ensure calendar fits nicely on mobile */
   #calendar {
     max-width: 100%;
-    margin: 0;
     padding: 0;
   }
 
@@ -552,7 +212,8 @@ h1 {
 }
 
 @media (max-width: 500px) {
-  main {
+  main,
+  footer {
     margin: 0 1em;
   }
   header {

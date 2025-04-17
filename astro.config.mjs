@@ -9,6 +9,7 @@ const {
   PUBLIC_SANITY_STUDIO_DATASET,
   PUBLIC_SANITY_PROJECT_ID,
   PUBLIC_SANITY_DATASET,
+  SANITY_API_TOKEN,
 } = loadEnv(import.meta.env.MODE, process.cwd(), "");
 
 // Different environments use different variables
@@ -22,7 +23,7 @@ import cloudflare from "@astrojs/cloudflare";
 // https://astro.build/config
 export default defineConfig({
   // Hybrid+adapter is required to support embedded Sanity Studio
-  output: "hybrid",
+  output: "static",
   adapter: cloudflare(),
   integrations: [
     sanity({
@@ -31,15 +32,17 @@ export default defineConfig({
       studioBasePath: "/admin",
       useCdn: false, // `false` if you want to ensure fresh data
       apiVersion: "2024-06-25", // Set to date of setup to use the latest API version
+      token: SANITY_API_TOKEN,
     }),
     react(), // Required for Sanity Studio
   ],
   vite: {
-    define: {
-      "process.env.CALENDAR_ID": JSON.stringify(process.env.CALENDAR_ID),
-      "process.env.GOOGLE_CALENDAR_API_KEY": JSON.stringify(
-        process.env.GOOGLE_CALENDAR_API_KEY,
-      ),
+    resolve: {
+      // Use react-dom/server.edge instead of react-dom/server.browser for React 19.
+      // Without this, MessageChannel from node:worker_threads needs to be polyfilled.
+      alias: import.meta.env.PROD && {
+        "react-dom/server": "react-dom/server.edge",
+      },
     },
   },
 });
