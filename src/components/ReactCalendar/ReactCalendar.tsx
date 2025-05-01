@@ -1,15 +1,15 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
-import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
-import timeGridPlugin from "@fullcalendar/timegrid";
 import listPlugin from "@fullcalendar/list";
+import FullCalendar from "@fullcalendar/react";
 import rrulePlugin from "@fullcalendar/rrule";
+import timeGridPlugin from "@fullcalendar/timegrid";
 import { PortableText } from "@portabletext/react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
-import "./ReactCalendar.css";
-import type { TransformedEvent } from "../../types/events";
-import type { EventsPageResult, TagsResult } from "../../../sanity.types";
 import type { PortableTextBlock } from "sanity";
+import type { EventsPageResult, TagsResult } from "../../../sanity.types";
+import type { TransformedEvent } from "../../types/events";
+import "./ReactCalendar.css";
 
 type ModalEvent = {
   title: string;
@@ -137,6 +137,36 @@ export default function ReactCalendar({ events, tags }: Props) {
     checkForEventInURL();
   }, []);
 
+  const initialView = useMemo(() => {
+    if (typeof window !== "undefined") {
+      return window.matchMedia("(max-width: 768px)").matches
+        ? "listMonth"
+        : "dayGridMonth";
+    }
+    return "dayGridMonth"; // Default fallback
+  }, []);
+
+  const headerToolbar = useMemo(() => {
+    if (typeof window !== "undefined") {
+      return window.matchMedia("(max-width: 768px)").matches
+        ? {
+            left: "prev,next today",
+            center: "",
+            right: "",
+          }
+        : {
+            left: "prev,next today",
+            center: "title",
+            right: "dayGridMonth,timeGridWeek,timeGridDay,listMonth",
+          };
+    }
+    return {
+      left: "prev,next today",
+      center: "title",
+      right: "dayGridMonth,timeGridWeek,timeGridDay,listMonth",
+    };
+  }, []);
+
   return (
     <div id="calendar-wrapper">
       {/* Dropdown Filter */}
@@ -167,12 +197,8 @@ export default function ReactCalendar({ events, tags }: Props) {
       <FullCalendar
         ref={calendarRef}
         plugins={[dayGridPlugin, timeGridPlugin, listPlugin, rrulePlugin]}
-        initialView="dayGridMonth"
-        headerToolbar={{
-          left: "prev,next today",
-          center: "title",
-          right: "dayGridMonth,timeGridWeek,timeGridDay,listMonth",
-        }}
+        initialView={initialView}
+        headerToolbar={headerToolbar}
         views={{
           dayGridMonth: { buttonText: "Month" },
           timeGridWeek: { buttonText: "Week" },
