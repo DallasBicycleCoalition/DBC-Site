@@ -1,10 +1,10 @@
 ---
 import ReactCalendar from "../components/ReactCalendar/ReactCalendar";
 import Layout from "../layouts/Layout.astro";
-import { getEventsPage } from "../utils/groqQueries";
+import { getSocialRideEventsPage } from "../utils/groqQueries";
 import { getUniqueTagsFromEvents } from "../utils/utils";
 
-const eventsFromSanity: any = await getEventsPage();
+const eventsFromSanity: any = await getSocialRideEventsPage();
 const eventsArray = Array.isArray(eventsFromSanity)
   ? eventsFromSanity
   : eventsFromSanity && eventsFromSanity.events
@@ -13,6 +13,13 @@ const eventsArray = Array.isArray(eventsFromSanity)
 const sanityTags = getUniqueTagsFromEvents(eventsArray);
 ---
 
-<Layout title="Event Calendar">
-  <ReactCalendar client:load events={eventsArray} tags={sanityTags} />
+<Layout title="Social Rides Calendar">
+  <div>
+    <ReactCalendar client:load events={eventsArray} tags={sanityTags} />
+  </div>
 </Layout>
+<style is:global>
+  #calendar-wrapper {
+    padding-top: 2em;
+  }
+</style>
