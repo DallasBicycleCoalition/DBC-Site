@@ -1,6 +1,7 @@
 import { authorSchema } from "./documents/authorSchema";
 import { eventsSchema } from "./documents/eventSchema";
 import { postSchema } from "./documents/postSchema";
+import { socialRideEventSchema } from "./documents/socialRideEventSchema";
 import { tagSchema } from "./documents/tag";
 
 import { aboutUsSchema } from "./singletons/aboutUsPageSchema";
@@ -13,7 +14,13 @@ import { layoutSchema } from "./singletons/layoutSchema";
 import { policyPageSchema } from "./singletons/policyPageSchema";
 import { weekWithoutDrivingSchema } from "./singletons/weekWithoutDrivingSchema";
 
-const documentSchemas = [authorSchema, eventsSchema, postSchema, tagSchema];
+const documentSchemas = [
+  authorSchema,
+  eventsSchema,
+  postSchema,
+  socialRideEventSchema,
+  tagSchema,
+];
 
 const singletonSchemas = [
   aboutUsSchema,

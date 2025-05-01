@@ -677,6 +677,56 @@ export type Tag = {
   description?: string;
 };
 
+export type SocialRideEvent = {
+  _id: string;
+  _type: "socialRideEvent";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  tags?: Array<{
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    _key: string;
+    [internalGroqTypeReferenceTo]?: "tag";
+  }>;
+  date?: RecurringDates;
+  allDay?: boolean;
+  location?: string;
+  excerpt?: string;
+  description?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+  photo?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+};
+
 export type Post = {
   _id: string;
   _type: "post";
@@ -871,7 +921,7 @@ export type RecurringDates = {
   rrule?: string;
 };
 
-export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | WeekWithoutDriving | PolicyPage | Layout | Homepage | EmailCityCouncil | CityCouncilQuestionnaire | CaptionedImage | AdvocacyPage | AboutUs | Tag | Post | Slug | Events | Author | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata | RecurringDates;
+export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | WeekWithoutDriving | PolicyPage | Layout | Homepage | EmailCityCouncil | CityCouncilQuestionnaire | CaptionedImage | AdvocacyPage | AboutUs | Tag | SocialRideEvent | Post | Slug | Events | Author | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata | RecurringDates;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./src/utils/groqQueries.ts
 // Variable: posts
@@ -1371,6 +1421,46 @@ export type EventsPageResult = Array<{
     } | null;
   } | null;
 }>;
+// Variable: socialRideEventsPage
+// Query: *[_type == "socialRideEvent"]{      _id, _createdAt, title,      "tags": tags[]->{ "id": _id, name, description },      date, allDay, location, excerpt, description,      photo { asset -> { _id, url } }    }
+export type SocialRideEventsPageResult = Array<{
+  _id: string;
+  _createdAt: string;
+  title: string | null;
+  tags: Array<{
+    id: string;
+    name: string | null;
+    description: string | null;
+  }> | null;
+  date: RecurringDates | null;
+  allDay: boolean | null;
+  location: string | null;
+  excerpt: string | null;
+  description: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }> | null;
+  photo: {
+    asset: {
+      _id: string;
+      url: string | null;
+    } | null;
+  } | null;
+}>;
 // Variable: tags
 // Query: *[_type == "tag"]{ "id": _id, name, description }
 export type TagsResult = Array<{
@@ -1513,6 +1603,7 @@ declare module "@sanity/client" {
     "\n    *[_type == \"layout\"][0]{\n      _id, _createdAt,\n      \"logo\": { \"asset\": logo.asset->url, \"altText\": logo.altText },\n      \"landingPageLink\": landingPageLink,\n      \"footerBackground\": { \"asset\": footerBackground.asset->url, \"altText\": footerBackground.altText },\n\n    }\n  ": LayoutResult;
     "\n    *[_type == \"aboutUs\"]{\n      _id, _createdAt, title,\n      \"mission\": { \"heading\": mission.heading, \"content\": mission.content, \"highlightedContent\": mission.highlightedContent, \"photo\": { \"asset\": mission.photo.asset->url, \"altText\": mission.photo.altText } },\n      \"vision\": { \"heading\": vision.heading, \"content\": vision.content, \"highlightedContent\": vision.highlightedContent, \"photo\": { \"asset\": vision.photo.asset->url, \"altText\": vision.photo.altText } },\n      \"team\": { \"heading\": team.heading, \"members\": team.members[]{ \"name\": name }, \"photo\": { \"asset\": team.photo.asset->url, \"altText\": team.photo.altText } },\n    }[0]\n  ": AboutUsPageResult;
     "\n    *[_type == \"events\"]{\n      _id, _createdAt, title,\n      \"tags\": tags[]->{ \"id\": _id, name, description },\n      date, allDay, location, excerpt, description,\n      photo { asset -> { _id, url } }\n    }\n  ": EventsPageResult;
+    "\n    *[_type == \"socialRideEvent\"]{\n      _id, _createdAt, title,\n      \"tags\": tags[]->{ \"id\": _id, name, description },\n      date, allDay, location, excerpt, description,\n      photo { asset -> { _id, url } }\n    }\n  ": SocialRideEventsPageResult;
     "\n    *[_type == \"tag\"]{ \"id\": _id, name, description }\n  ": TagsResult;
     "\n    *[_type == \"weekWithoutDriving\"]{\n      _id, _createdAt, title,\n      \"introBlock\": { \"heading\": introBlock.heading, \"content\": introBlock.content }\n    }[0]\n  ": WeekWithoutDrivingPageResult;
     "\n    *[_type == \"emailCityCouncil\"]{\n      _id, _createdAt, title,\n      \"links\": links[]{ \"title\": title, \"url\": url }\n    }[0]\n  ": EmailCityCouncilResult;

@@ -7,7 +7,6 @@ import { PortableText } from "@portabletext/react";
 import { useEffect, useMemo, useRef, useState } from "react";
 
 import type { PortableTextBlock } from "sanity";
-import type { EventsPageResult, TagsResult } from "../../../sanity.types";
 import type { TransformedEvent } from "../../types/events";
 import "./ReactCalendar.css";
 
@@ -20,12 +19,18 @@ type ModalEvent = {
   location?: string;
 };
 
-type Props = {
-  events: EventsPageResult;
-  tags: TagsResult;
+type Tag = {
+  id: string;
+  name?: string | null;
+  description?: string | null;
 };
 
-export default function ReactCalendar({ events, tags }: Props) {
+type Props<TEvents = any[], TTags = Tag[]> = {
+  events: TEvents;
+  tags: TTags;
+};
+
+export default function ReactCalendar({ events, tags }: Props<any[], Tag[]>) {
   const calendarRef = useRef<FullCalendar | null>(null);
   const [modalEvent, setModalEvent] = useState<ModalEvent | null>(null);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
@@ -36,7 +41,7 @@ export default function ReactCalendar({ events, tags }: Props) {
   const filteredEvents = useMemo(() => {
     if (selectedTags.length === 0) return events;
     return events.filter((event) =>
-      event.tags?.some((tag) => selectedTags.includes(tag.id))
+      event.tags?.some((tag: { id: string }) => selectedTags.includes(tag.id))
     );
   }, [events, selectedTags]);
 
@@ -170,29 +175,31 @@ export default function ReactCalendar({ events, tags }: Props) {
   return (
     <div id="calendar-wrapper">
       {/* Dropdown Filter */}
-      <div className="filter-wrapper" ref={dropdownRef}>
-        <button
-          className="filter-toggle"
-          onClick={() => setIsDropdownOpen((prev) => !prev)}
-        >
-          Event Type {isDropdownOpen ? "▲" : "▼"}
-        </button>
+      {tags && tags.length > 0 && (
+        <div className="filter-wrapper" ref={dropdownRef}>
+          <button
+            className="filter-toggle"
+            onClick={() => setIsDropdownOpen((prev) => !prev)}
+          >
+            Event Type {isDropdownOpen ? "▲" : "▼"}
+          </button>
 
-        {isDropdownOpen && (
-          <div className="checkbox-dropdown">
-            {tags.map((tag) => (
-              <label key={tag.id} className="checkbox-option">
-                <input
-                  type="checkbox"
-                  checked={selectedTags.includes(tag.id)}
-                  onChange={() => toggleTag(tag.id)}
-                />
-                {tag.name}
-              </label>
-            ))}
-          </div>
-        )}
-      </div>
+          {isDropdownOpen && (
+            <div className="checkbox-dropdown">
+              {tags.map((tag) => (
+                <label key={tag.id} className="checkbox-option">
+                  <input
+                    type="checkbox"
+                    checked={selectedTags.includes(tag.id)}
+                    onChange={() => toggleTag(tag.id)}
+                  />
+                  {tag.name}
+                </label>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
 
       <FullCalendar
         ref={calendarRef}

@@ -10,6 +10,7 @@ import type {
   PolicyPageResult,
   PostResult,
   PostsResult,
+  SocialRideEventsPageResult,
   TagsResult,
   WeekWithoutDrivingPageResult,
 } from "../../sanity.types";
@@ -117,6 +118,20 @@ export async function getEventsPage(): Promise<EventsPageResult> {
   `;
 
   return fetchSanityData(eventsPage);
+}
+
+// Duplicate for social ride events
+export async function getSocialRideEventsPage(): Promise<SocialRideEventsPageResult> {
+  const socialRideEventsPage = groq`
+    *[_type == "socialRideEvent"]{
+      _id, _createdAt, title,
+      "tags": tags[]->{ "id": _id, name, description },
+      date, allDay, location, excerpt, description,
+      photo { asset -> { _id, url } }
+    }
+  `;
+
+  return fetchSanityData(socialRideEventsPage);
 }
 
 export async function getTags(): Promise<TagsResult> {
