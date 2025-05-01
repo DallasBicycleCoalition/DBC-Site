@@ -1,0 +1,175 @@
+---
+import { PortableText } from "@portabletext/react";
+import Layout from "../layouts/Layout.astro";
+import { getAdvocacyPage } from "../utils/groqQueries";
+import { urlFor } from "../utils/utils";
+
+const advocacyPage = await getAdvocacyPage();
+---
+
+<Layout title={advocacyPage?.title || "Advocacy"}>
+  <section id="intro-section" class="single-col">
+    <div class="content">
+      <div class="normal-copy">
+        {
+          advocacyPage?.introText && (
+            <PortableText value={advocacyPage.introText} />
+          )
+        }
+      </div>
+    </div>
+  </section>
+
+  <section id="links-section" class="two-cols">
+    <a
+      class="link-button"
+      href={advocacyPage?.linkButton1?.url}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <p class="button-text-size">{advocacyPage?.linkButton1?.title}</p>
+    </a>
+    <a
+      class="link-button"
+      href={advocacyPage?.linkButton2?.url}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <p class="button-text-size">{advocacyPage?.linkButton2?.title}</p>
+    </a>
+  </section>
+
+  <section id="additional-text-section" class="single-col">
+    <div class="content">
+      <div class="normal-copy">
+        {advocacyPage?.letter && <PortableText value={advocacyPage.letter} />}
+      </div>
+    </div>
+  </section>
+
+  <section id="images-section" class="image-gallery">
+    {
+      advocacyPage?.images?.map((image) => (
+        <div class="image-item">
+          {image.image && (
+            <img
+              src={urlFor(image.image).url()}
+              alt={image.altText || "Image"}
+            />
+          )}
+        </div>
+      ))
+    }
+  </section>
+
+  <style>
+    #intro-section,
+    #additional-text-section {
+      padding: 3em;
+    }
+    #additional-text-section .content {
+      max-width: 55em; /* Set a maximum width */
+      margin: 0 auto; /* Center the section horizontally */
+    }
+    #intro-section h2,
+    #additional-text-section h2 {
+      font-weight: bold;
+      color: #cd011c;
+      font-size: 1.25em;
+      letter-spacing: 0.2em;
+    }
+    .two-cols {
+      display: flex;
+      justify-content: center; /* Align buttons closer together */
+      gap: 10em; /* Add a small gap between buttons */
+      padding: 3em;
+    }
+    .link-button {
+      text-align: center;
+      padding: 1em;
+      border: none;
+      border-radius: 50px; /* Makes the buttons more oval */
+      max-width: 25em;
+      background-color: #cd011c; /* Red background */
+      color: white; /* White text */
+      text-decoration: none;
+    }
+    .link-button h3 {
+      font-size: 1.5em;
+      margin-bottom: 0.5em;
+    }
+    .link-button a {
+      color: white; /* Ensure link text is white */
+      font-weight: bold;
+    }
+    .link-button a:hover {
+      text-decoration: underline;
+    }
+    .image-gallery {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1em;
+      padding: clamp(2em, 5vw, 6em);
+    }
+
+    .image-gallery img {
+      object-fit: cover;
+      border-radius: 1em;
+    }
+
+    .image-gallery > * {
+      flex: 1 1 clamp(15em, 30%, 25em);
+    }
+
+    .image-gallery div {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25em;
+      align-items: center;
+    }
+
+    .image-gallery p {
+      width: 90%;
+      text-align: center;
+      font-size: larger;
+    }
+
+    .image-gallery p:first-of-type {
+      font-size: clamp(1.5em, 4vw, 2.5em);
+      color: #cd011c;
+      font-weight: bold;
+    }
+    .normal-copy {
+      font-size: 1.15em;
+      line-height: 1.5;
+    }
+
+    .button-text-size {
+      font-size: 2em;
+      font-weight: bold;
+    }
+
+    #intro-section {
+      text-align: center;
+      margin: 0 auto;
+      max-width: 80em;
+    }
+
+    @media screen and (max-width: 750px) {
+      #intro-section,
+      #additional-text-section,
+      .two-cols {
+        padding: 1.5em;
+      }
+      .link-button {
+        max-width: 100%;
+      }
+      .normal-copy {
+        font-size: 1em;
+      }
+      .two-cols {
+        gap: 2em;
+      }
+    }
+  </style>
+</Layout>

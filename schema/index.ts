@@ -4,7 +4,9 @@ import { postSchema } from "./documents/postSchema";
 import { tagSchema } from "./documents/tag";
 
 import { aboutUsSchema } from "./singletons/aboutUsPageSchema";
+import { advocacyPageSchema } from "./singletons/advocacyPageSchema";
 import { captionedImageSchema } from "./singletons/captionedImageSchema";
+import { cityCouncilQuestionnaireSchema } from "./singletons/cityCouncilQuestionnaireSchema";
 import { emailCityCouncilSchema } from "./singletons/emailCityCouncilSchema";
 import { homePageSchema } from "./singletons/homePageSchema";
 import { layoutSchema } from "./singletons/layoutSchema";
@@ -15,7 +17,9 @@ const documentSchemas = [authorSchema, eventsSchema, postSchema, tagSchema];
 
 const singletonSchemas = [
   aboutUsSchema,
+  advocacyPageSchema,
   captionedImageSchema,
+  cityCouncilQuestionnaireSchema,
   emailCityCouncilSchema,
   homePageSchema,
   layoutSchema,

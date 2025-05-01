@@ -1,6 +1,8 @@
 import groq from "groq";
 import type {
   AboutUsPageResult,
+  AdvocacyPageResult,
+  CityCouncilQuestionnaireResult,
   EmailCityCouncilResult,
   EventsPageResult,
   HomePageResult,
@@ -145,4 +147,32 @@ export async function getEmailCityCouncil(): Promise<EmailCityCouncilResult> {
   `;
 
   return fetchSanityData(emailCityCouncil);
+}
+
+export async function getCityCouncilQuestionnaire(): Promise<CityCouncilQuestionnaireResult> {
+  const cityCouncilQuestionnaire = groq`
+    *[_type == "cityCouncilQuestionnaire"]{
+      _id, _createdAt, title,
+      "mainImage": { "asset": mainImage.asset->url, "altText": mainImage.altText },
+      body
+    }[0]
+  `;
+
+  return fetchSanityData(cityCouncilQuestionnaire);
+}
+
+export async function getAdvocacyPage(): Promise<AdvocacyPageResult> {
+  const advocacyPage = groq`
+    *[_type == "advocacyPage"]{
+      _id, _createdAt,
+      title,
+      "introText": introText,
+      "linkButton1": { "title": linkButton1.title, "url": linkButton1.url },
+      "linkButton2": { "title": linkButton2.title, "url": linkButton2.url },
+      "letter": letter,
+      "images": images[]{"image": asset->url,"altText": altText}
+    }[0]
+  `;
+
+  return fetchSanityData(advocacyPage);
 }
