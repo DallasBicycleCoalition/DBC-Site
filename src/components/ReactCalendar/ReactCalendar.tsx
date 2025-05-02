@@ -10,6 +10,22 @@ import type { PortableTextBlock } from "sanity";
 import type { TransformedEvent } from "../../types/events";
 import "./ReactCalendar.css";
 
+type CalendarEvent = {
+  _id: string;
+  tags: { id: string }[];
+  date?: {
+    startDate: string;
+    endDate: string;
+    rrule?: string;
+  };
+  allDay: boolean;
+  event: string;
+  title: string;
+  description: string;
+  location: string;
+  rrule?: string;
+};
+
 type ModalEvent = {
   title: string;
   start: Date;
@@ -25,12 +41,12 @@ type Tag = {
   description?: string | null;
 };
 
-type Props<TEvents = any[], TTags = Tag[]> = {
-  events: TEvents;
-  tags: TTags;
+type Props = {
+  events: CalendarEvent[];
+  tags: Tag[];
 };
 
-export default function ReactCalendar({ events, tags }: Props<any[], Tag[]>) {
+export default function ReactCalendar({ events, tags }: Props) {
   const calendarRef = useRef<FullCalendar | null>(null);
   const [modalEvent, setModalEvent] = useState<ModalEvent | null>(null);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
@@ -41,7 +57,7 @@ export default function ReactCalendar({ events, tags }: Props<any[], Tag[]>) {
   const filteredEvents = useMemo(() => {
     if (selectedTags.length === 0) return events;
     return events.filter((event) =>
-      event.tags?.some((tag: { id: string }) => selectedTags.includes(tag.id))
+      event.tags?.some((tag) => selectedTags.includes(tag.id))
     );
   }, [events, selectedTags]);
 
@@ -89,7 +105,7 @@ export default function ReactCalendar({ events, tags }: Props<any[], Tag[]>) {
 
     if (eventId) {
       const eventData = transformEvents.find(
-        (e: any) => e.id === eventId || e._id === eventId
+        (e) => e.id === eventId || e._id === eventId
       );
 
       if (eventData) {
@@ -263,7 +279,7 @@ function formatDateForDTSTART(date: Date): string {
   return `${date.getFullYear()}${pad(date.getMonth() + 1)}${pad(date.getDate())}T${pad(date.getHours())}${pad(date.getMinutes())}${pad(date.getSeconds())}`;
 }
 
-function transformEvent(event: any): TransformedEvent {
+function transformEvent(event: CalendarEvent): TransformedEvent {
   if (!event.date) {
     console.error("Event date is null or undefined", event);
     throw new Error("Event date is null or undefined");
@@ -299,7 +315,7 @@ function transformEvent(event: any): TransformedEvent {
   return transformedEvent;
 }
 
-function formatDateText(event: any): string {
+function formatDateText(event: ModalEvent): string {
   const startDate = event.start ? new Date(event.start) : null;
   const endDate = event.end ? new Date(event.end) : null;
   const allDay = event.allDay;
