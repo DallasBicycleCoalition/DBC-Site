@@ -104,6 +104,7 @@ export type SocialRidesPage = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
+  title?: string;
   infoText?: Array<{
     children?: Array<{
       marks?: Array<string>;
