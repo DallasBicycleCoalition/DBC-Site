@@ -12,6 +12,7 @@ import { emailCityCouncilSchema } from "./singletons/emailCityCouncilSchema";
 import { homePageSchema } from "./singletons/homePageSchema";
 import { layoutSchema } from "./singletons/layoutSchema";
 import { policyPageSchema } from "./singletons/policyPageSchema";
+import { socialRidesPageSchema } from "./singletons/socialRidesPageSchema";
 import { weekWithoutDrivingSchema } from "./singletons/weekWithoutDrivingSchema";
 
 const documentSchemas = [
@@ -31,6 +32,7 @@ const singletonSchemas = [
   homePageSchema,
   layoutSchema,
   policyPageSchema,
+  socialRidesPageSchema,
   weekWithoutDrivingSchema,
 ];
 

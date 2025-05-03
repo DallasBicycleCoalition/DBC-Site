@@ -98,6 +98,32 @@ export type WeekWithoutDriving = {
   };
 };
 
+export type SocialRidesPage = {
+  _id: string;
+  _type: "socialRidesPage";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  infoText?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+};
+
 export type PolicyPage = {
   _id: string;
   _type: "policyPage";
@@ -921,7 +947,7 @@ export type RecurringDates = {
   rrule?: string;
 };
 
-export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | WeekWithoutDriving | PolicyPage | Layout | Homepage | EmailCityCouncil | CityCouncilQuestionnaire | CaptionedImage | AdvocacyPage | AboutUs | Tag | SocialRideEvent | Post | Slug | Events | Author | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata | RecurringDates;
+export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | WeekWithoutDriving | SocialRidesPage | PolicyPage | Layout | Homepage | EmailCityCouncil | CityCouncilQuestionnaire | CaptionedImage | AdvocacyPage | AboutUs | Tag | SocialRideEvent | Post | Slug | Events | Author | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata | RecurringDates;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./src/utils/groqQueries.ts
 // Variable: posts
@@ -1591,6 +1617,28 @@ export type AdvocacyPageResult = {
     altText: string | null;
   }> | null;
 } | null;
+// Variable: socialRidesPage
+// Query: *[_type == "socialRidesPage"][0]{      infoText    }
+export type SocialRidesPageResult = {
+  infoText: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }> | null;
+} | null;
 
 // Query TypeMap
 import "@sanity/client";
@@ -1609,5 +1657,6 @@ declare module "@sanity/client" {
     "\n    *[_type == \"emailCityCouncil\"]{\n      _id, _createdAt, title,\n      \"links\": links[]{ \"title\": title, \"url\": url }\n    }[0]\n  ": EmailCityCouncilResult;
     "\n    *[_type == \"cityCouncilQuestionnaire\"]{\n      _id, _createdAt, title,\n      \"mainImage\": { \"asset\": mainImage.asset->url, \"altText\": mainImage.altText },\n      body\n    }[0]\n  ": CityCouncilQuestionnaireResult;
     "\n    *[_type == \"advocacyPage\"]{\n      _id, _createdAt,\n      title,\n      \"introText\": introText,\n      \"linkButton1\": { \"title\": linkButton1.title, \"url\": linkButton1.url },\n      \"linkButton2\": { \"title\": linkButton2.title, \"url\": linkButton2.url },\n      \"letter\": letter,\n      \"images\": images[]{\"image\": asset->url,\"altText\": altText}\n    }[0]\n  ": AdvocacyPageResult;
+    "\n    *[_type == \"socialRidesPage\"][0]{\n      infoText\n    }\n  ": SocialRidesPageResult;
   }
 }
