@@ -32,6 +32,12 @@ const data = await getLayout();
         onclick="window.location.href='/calendar'; return false;">Calendar</a
       >
     </div>
+    <div class="nav-item" id="councilQuestionsNavItem">
+      <a
+        href="/city-council-questionnaire"
+        onclick="window.location.href='/city-council-questionnaire'; return false;">Council Questions</a
+      >
+    </div>
     <div class="nav-item" id="signupNavItem">
       <a
         href="/signup"
@@ -79,6 +85,8 @@ const data = await getLayout();
       document.getElementById("blogNavItem").classList.add("active");
     } else if (currentPage === "/calendar") {
       document.getElementById("calendarNavItem").classList.add("active");
+    } else if (currentPage === "/city-council-questionnaire") {
+      document.getElementById("councilQuestionsNavItem").classList.add("active");
     }
   }
 
@@ -148,7 +156,7 @@ const data = await getLayout();
     border-radius: 25px;
   }
 
-  @media (max-width: 1100px) {
+  @media (max-width: 1200px) {
     #menuToggle {
       display: block;
       margin-bottom: 1.25em;
