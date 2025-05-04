@@ -11,6 +11,7 @@ import type {
   PostResult,
   PostsResult,
   SocialRideEventsPageResult,
+  SocialRidesPageResult,
   TagsResult,
   WeekWithoutDrivingPageResult,
 } from "../../sanity.types";
@@ -190,4 +191,13 @@ export async function getAdvocacyPage(): Promise<AdvocacyPageResult> {
   `;
 
   return fetchSanityData(advocacyPage);
+}
+
+export async function getSocialRidesPage(): Promise<SocialRidesPageResult> {
+  const socialRidesPage = groq`
+    *[_type == "socialRidesPage"][0]{
+      infoText
+    }
+  `;
+  return fetchSanityData(socialRidesPage);
 }
