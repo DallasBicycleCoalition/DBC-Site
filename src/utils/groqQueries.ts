@@ -3,6 +3,7 @@ import type {
   AboutUsPageResult,
   AdvocacyPageResult,
   CityCouncilQuestionnaireResult,
+  DonatePageResult,
   EmailCityCouncilResult,
   EventsPageResult,
   HomePageResult,
@@ -200,4 +201,15 @@ export async function getSocialRidesPage(): Promise<SocialRidesPageResult> {
     }
   `;
   return fetchSanityData(socialRidesPage);
+}
+
+export async function getDonatePage(): Promise<DonatePageResult> {
+  const donatePage = groq`
+    *[_type == "donatePage"]{
+      title,
+      infoText,
+      embedLink
+    }[0]
+  `;
+  return fetchSanityData(donatePage);
 }

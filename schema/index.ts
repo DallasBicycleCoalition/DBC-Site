@@ -8,6 +8,7 @@ import { aboutUsSchema } from "./singletons/aboutUsPageSchema";
 import { advocacyPageSchema } from "./singletons/advocacyPageSchema";
 import { captionedImageSchema } from "./singletons/captionedImageSchema";
 import { cityCouncilQuestionnaireSchema } from "./singletons/cityCouncilQuestionnaireSchema";
+import { donatePageSchema } from "./singletons/donatePageSchema";
 import { emailCityCouncilSchema } from "./singletons/emailCityCouncilSchema";
 import { homePageSchema } from "./singletons/homePageSchema";
 import { layoutSchema } from "./singletons/layoutSchema";
@@ -28,6 +29,7 @@ const singletonSchemas = [
   advocacyPageSchema,
   captionedImageSchema,
   cityCouncilQuestionnaireSchema,
+  donatePageSchema,
   emailCityCouncilSchema,
   homePageSchema,
   layoutSchema,
