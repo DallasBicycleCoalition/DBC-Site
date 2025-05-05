@@ -1,0 +1,181 @@
+---
+import { PortableText } from "@portabletext/react";
+import type { MembershipPageResult } from "../../sanity.types";
+import Layout from "../layouts/Layout.astro";
+import { getMembershipPage } from "../utils/groqQueries";
+import { urlFor } from "../utils/utils";
+
+const membershipPage: MembershipPageResult = await getMembershipPage();
+---
+
+<Layout title={membershipPage?.title || "Membership"}>
+  {
+    membershipPage?.headerImage && membershipPage.headerImage.asset && (
+      <img
+        src={urlFor(membershipPage.headerImage.asset)
+          .width(1400)
+          .height(600)
+          .url()}
+        alt={membershipPage.headerImage.altText || "Header image"}
+        class="main-post-image"
+        loading="lazy"
+      />
+    )
+  }
+  <section id="intro-section" class="single-col">
+    <div class="content">
+      <div class="normal-copy">
+        {
+          membershipPage?.infoText && (
+            <PortableText value={membershipPage.infoText} />
+          )
+        }
+      </div>
+    </div>
+  </section>
+
+  <section id="stats-section" class="two-cols">
+    {
+      (
+        [membershipPage?.statA, membershipPage?.statB] as {
+          title?: string;
+          current?: number;
+          max?: number;
+        }[]
+      ).map((stat) => {
+        if (!stat) return null;
+        const percent =
+          stat.max && stat.max > 0
+            ? Math.min(100, Math.round(((stat.current ?? 0) / stat.max) * 100))
+            : 0;
+        return (
+          <div class="stat-block">
+            <h3>{stat.title}</h3>
+            <div class="progress-bar-container">
+              <div class="progress-bar-bg">
+                <div class="progress-bar-fg" style={`width: ${percent}%`} />
+              </div>
+              <div class="progress-bar-label">
+                {stat.current ?? 0} / {stat.max ?? 0}
+              </div>
+            </div>
+          </div>
+        );
+      })
+    }
+  </section>
+
+  <section id="embed-section" class="single-col">
+    <div class="content">
+      {
+        membershipPage?.embedLink && (
+          <iframe
+            src={membershipPage.embedLink}
+            style="width:100%;min-height:500px;border:none;"
+            allowfullscreen
+          />
+        )
+      }
+    </div>
+  </section>
+
+  <style>
+    #embed-section {
+      padding: 3em;
+    }
+    #intro-section {
+      text-align: center;
+      margin: 0 auto;
+      max-width: 80em;
+    }
+    .normal-copy {
+      font-size: 1.15em;
+      line-height: 1.5;
+    }
+    .two-cols {
+      display: flex;
+      justify-content: center;
+      gap: 10em;
+      padding: 3em;
+    }
+    .stat-block {
+      text-align: center;
+      padding: 1em;
+      border-radius: 1em;
+      min-width: 12em;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .stat-block h3 {
+      font-size: 1.5em;
+      color: #cd011c;
+      margin-bottom: 0.5em;
+    }
+    .progress-bar-container {
+      width: 100%;
+      max-width: 16em;
+      margin: 0.5em 0 0.25em 0;
+    }
+    .progress-bar-bg {
+      width: 100%;
+      height: 1.5em;
+      background: #e0e0e0;
+      border-radius: 0.75em;
+      overflow: hidden;
+      position: relative;
+    }
+    .progress-bar-fg {
+      height: 100%;
+      background: #cd011c;
+      border-radius: 0.75em 0 0 0.75em;
+      transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .progress-bar-label {
+      margin-top: 0.25em;
+      font-size: 1.1em;
+      font-weight: bold;
+      color: #333;
+    }
+    .header-image-container {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      margin-bottom: 2em;
+    }
+    .header-image {
+      max-width: 100%;
+      height: auto;
+      border-radius: 1em;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+    .main-post-image {
+      margin: 2em auto 4em;
+      object-fit: cover;
+      border-radius: 10px;
+      display: block;
+      width: 100%;
+      max-width: 1400px;
+      height: 600px;
+    }
+    @media screen and (max-width: 750px) {
+      #intro-section,
+      #embed-section,
+      .two-cols {
+        padding: 1.5em;
+      }
+      .two-cols {
+        gap: 2em;
+        flex-direction: column;
+        align-items: center;
+      }
+      .stat-block {
+        min-width: unset;
+        width: 100%;
+      }
+      .normal-copy {
+        font-size: 1em;
+      }
+    }
+  </style>
+</Layout>

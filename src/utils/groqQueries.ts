@@ -3,10 +3,12 @@ import type {
   AboutUsPageResult,
   AdvocacyPageResult,
   CityCouncilQuestionnaireResult,
+  DonatePageResult,
   EmailCityCouncilResult,
   EventsPageResult,
   HomePageResult,
   LayoutResult,
+  MembershipPageResult,
   PolicyPageResult,
   PostResult,
   PostsResult,
@@ -200,4 +202,29 @@ export async function getSocialRidesPage(): Promise<SocialRidesPageResult> {
     }
   `;
   return fetchSanityData(socialRidesPage);
+}
+
+export async function getDonatePage(): Promise<DonatePageResult> {
+  const donatePage = groq`
+    *[_type == "donatePage"]{
+      title,
+      infoText,
+      embedLink
+    }[0]
+  `;
+  return fetchSanityData(donatePage);
+}
+
+export async function getMembershipPage(): Promise<MembershipPageResult> {
+  const membershipPage = groq`
+    *[_type == "membershipPage"]{
+      title,
+      headerImage { asset->, altText },
+      infoText,
+      embedLink,
+      statA { title, current, max },
+      statB { title, current, max }
+    }[0]
+  `;
+  return fetchSanityData(membershipPage);
 }
