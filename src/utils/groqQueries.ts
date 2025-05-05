@@ -8,6 +8,7 @@ import type {
   EventsPageResult,
   HomePageResult,
   LayoutResult,
+  MembershipPageResult,
   PolicyPageResult,
   PostResult,
   PostsResult,
@@ -212,4 +213,18 @@ export async function getDonatePage(): Promise<DonatePageResult> {
     }[0]
   `;
   return fetchSanityData(donatePage);
+}
+
+export async function getMembershipPage(): Promise<MembershipPageResult> {
+  const membershipPage = groq`
+    *[_type == "membershipPage"]{
+      title,
+      headerImage { asset->, altText },
+      infoText,
+      embedLink,
+      statA { title, current, max },
+      statB { title, current, max }
+    }[0]
+  `;
+  return fetchSanityData(membershipPage);
 }

@@ -1,0 +1,137 @@
+---
+import { PortableText } from "@portabletext/react";
+import Layout from "../layouts/Layout.astro";
+import { getMembershipPage } from "../utils/groqQueries";
+import { urlFor } from "../utils/utils";
+
+const membershipPage = await getMembershipPage();
+---
+
+<Layout title={membershipPage?.title || "Membership"}>
+  {
+    membershipPage?.headerImage && membershipPage.headerImage.asset && (
+      <div class="header-image-container">
+        <img
+          src={urlFor(membershipPage.headerImage.asset).url()}
+          alt={membershipPage.headerImage.altText || "Header image"}
+          class="header-image"
+        />
+      </div>
+    )
+  }
+  <section id="intro-section" class="single-col">
+    <div class="content">
+      <div class="normal-copy">
+        {
+          membershipPage?.infoText && (
+            <PortableText value={membershipPage.infoText} />
+          )
+        }
+      </div>
+    </div>
+  </section>
+
+  <section id="stats-section" class="two-cols">
+    <div class="stat-block">
+      <h3>{membershipPage?.statA?.title}</h3>
+      <p>
+        {membershipPage?.statA?.current ?? 0} / {
+          membershipPage?.statA?.max ?? 0
+        }
+      </p>
+    </div>
+    <div class="stat-block">
+      <h3>{membershipPage?.statB?.title}</h3>
+      <p>
+        {membershipPage?.statB?.current ?? 0} / {
+          membershipPage?.statB?.max ?? 0
+        }
+      </p>
+    </div>
+  </section>
+
+  <section id="embed-section" class="single-col">
+    <div class="content">
+      {
+        membershipPage?.embedLink && (
+          <iframe
+            src={membershipPage.embedLink}
+            style="width:100%;min-height:500px;border:none;"
+            allowfullscreen
+          />
+        )
+      }
+    </div>
+  </section>
+
+  <style>
+    #intro-section,
+    #embed-section {
+      padding: 3em;
+    }
+    #intro-section {
+      text-align: center;
+      margin: 0 auto;
+      max-width: 80em;
+    }
+    .normal-copy {
+      font-size: 1.15em;
+      line-height: 1.5;
+    }
+    .two-cols {
+      display: flex;
+      justify-content: center;
+      gap: 10em;
+      padding: 3em;
+    }
+    .stat-block {
+      text-align: center;
+      padding: 1em;
+      border-radius: 1em;
+      background: #f7f7f7;
+      min-width: 12em;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    }
+    .stat-block h3 {
+      font-size: 1.5em;
+      color: #cd011c;
+      margin-bottom: 0.5em;
+    }
+    .stat-block p {
+      font-size: 2em;
+      font-weight: bold;
+      margin: 0;
+    }
+    .header-image-container {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      margin-bottom: 2em;
+    }
+    .header-image {
+      max-width: 100%;
+      height: auto;
+      border-radius: 1em;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+    @media screen and (max-width: 750px) {
+      #intro-section,
+      #embed-section,
+      .two-cols {
+        padding: 1.5em;
+      }
+      .two-cols {
+        gap: 2em;
+        flex-direction: column;
+        align-items: center;
+      }
+      .stat-block {
+        min-width: unset;
+        width: 100%;
+      }
+      .normal-copy {
+        font-size: 1em;
+      }
+    }
+  </style>
+</Layout>
