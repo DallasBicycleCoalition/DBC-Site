@@ -15,6 +15,19 @@ import "../globals.css";
 
     <title>Dallas Bike Coalition</title>
     <ViewTransitions />
+    <script>
+      (function (g, c) {
+        var l = g.createElement(c);
+        if (l instanceof HTMLScriptElement) {
+          l.async = true;
+          l.src = "https://dallas-bicycle-coalition.givecloud.co/v1/widgets.js";
+          var d = g.getElementsByTagName(c)[0];
+          if (d && d.parentNode) {
+            d.parentNode.insertBefore(l, d);
+          }
+        }
+      })(document, "script");
+    </script>
   </head>
   <body>
     <Header />
