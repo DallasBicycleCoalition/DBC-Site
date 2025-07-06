@@ -15,22 +15,15 @@ import "../globals.css";
 
     <title>Dallas Bike Coalition</title>
     <ViewTransitions />
-    <script>
-      // @ts-nocheck
-      (function (g, c, l, d) {
-        l = g.createElement(c);
-        l.async = 1;
-        l.src = "https://dallas-bicycle-coalition.givecloud.co/v1/widgets.js";
-        d = g.getElementsByTagName(c)[0];
-        d.parentNode.insertBefore(l, d);
-      })(document, "script");
-    </script>
+    <script
+      src="https://dallas-bicycle-coalition.givecloud.co/v1/widgets.js"
+      async></script>;
   </head>
-  <body>
-    <Header />
-    <main>
-      <slot />
-    </main>
-    <Footer />
-  </body>
 </html>
+<body>
+  <Header />
+  <main>
+    <slot />
+  </main>
+  <Footer />
+</body>
