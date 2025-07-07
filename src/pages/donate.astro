@@ -20,20 +20,9 @@ const donatePage = await getDonatePage();
           </div>
         </section>
 
-        {donatePage.embedLink && (
-          <section id="donate-embed-section" class="single-col">
-            <div class="embed-container">
-              <iframe
-                src={donatePage.embedLink}
-                width="100%"
-                height="600"
-                frameborder="0"
-                allowfullscreen
-                style="border:0;"
-              />
-            </div>
-          </section>
-        )}
+        <section id="donate-embed-section" class="single-col">
+          <div data-fundraising-form="8NDR96EK" data-inline />
+        </section>
       </>
     ) : (
       <section id="donate-intro-section" class="single-col">
