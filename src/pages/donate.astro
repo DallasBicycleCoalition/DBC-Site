@@ -20,20 +20,9 @@ const donatePage = await getDonatePage();
           </div>
         </section>
 
-        {donatePage.embedLink && (
-          <section id="donate-embed-section" class="single-col">
-            <div class="embed-container">
-              <iframe
-                src={donatePage.embedLink}
-                width="100%"
-                height="600"
-                frameborder="0"
-                allowfullscreen
-                style="border:0;"
-              />
-            </div>
-          </section>
-        )}
+        <section id="donate-embed-section" class="single-col">
+          <div data-fundraising-form="8NDR96EK" data-inline />
+        </section>
       </>
     ) : (
       <section id="donate-intro-section" class="single-col">
@@ -51,6 +40,7 @@ const donatePage = await getDonatePage();
       text-align: center;
       margin: 0 auto;
       max-width: 55em;
+      padding-bottom: 0;
     }
     #donate-intro-section h2 {
       font-weight: bold;
@@ -63,36 +53,12 @@ const donatePage = await getDonatePage();
       font-size: 1.15em;
       line-height: 1.5;
     }
-    #donate-embed-section {
-      padding: 2em 0;
-      display: flex;
-      justify-content: center;
-    }
-    .embed-container {
-      width: 100%;
-      max-width: 700px;
-      margin: 0 auto;
-      border-radius: 1em;
-      overflow: hidden;
-      box-shadow: 0 2px 16px rgba(0, 0, 0, 0.08);
-      background: #fff;
-    }
-    iframe {
-      display: block;
-      width: 100%;
-      min-height: 400px;
-      border: none;
-    }
     @media screen and (max-width: 750px) {
-      #donate-intro-section,
-      #donate-embed-section {
+      #donate-intro-section {
         padding: 1.5em;
       }
       .normal-copy {
         font-size: 1em;
-      }
-      .embed-container {
-        max-width: 100%;
       }
     }
   </style>
