@@ -68,6 +68,33 @@ export type Geopoint = {
   alt?: number;
 };
 
+export type CalendarPage = {
+  _id: string;
+  _type: "calendarPage";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  infoText?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+};
+
 export type WeekWithoutDriving = {
   _id: string;
   _type: "weekWithoutDriving";
@@ -1027,7 +1054,7 @@ export type RecurringDates = {
   rrule?: string;
 };
 
-export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | WeekWithoutDriving | SocialRidesPage | PolicyPage | MembershipPage | Layout | Homepage | EmailCityCouncil | DonatePage | CityCouncilQuestionnaire | CaptionedImage | AdvocacyPage | AboutUs | Tag | SocialRideEvent | Post | Slug | Events | Author | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata | RecurringDates;
+export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | CalendarPage | WeekWithoutDriving | SocialRidesPage | PolicyPage | MembershipPage | Layout | Homepage | EmailCityCouncil | DonatePage | CityCouncilQuestionnaire | CaptionedImage | AdvocacyPage | AboutUs | Tag | SocialRideEvent | Post | Slug | Events | Author | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata | RecurringDates;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./src/utils/groqQueries.ts
 // Variable: posts
@@ -1802,6 +1829,28 @@ export type MembershipPageResult = {
     max: number | null;
   } | null;
 } | null;
+// Variable: calendarPage
+// Query: *[_type == "calendarPage"][0]{      infoText    }
+export type CalendarPageResult = {
+  infoText: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }> | null;
+} | null;
 
 // Query TypeMap
 import "@sanity/client";
@@ -1823,5 +1872,6 @@ declare module "@sanity/client" {
     "\n    *[_type == \"socialRidesPage\"][0]{\n      infoText\n    }\n  ": SocialRidesPageResult;
     "\n    *[_type == \"donatePage\"]{\n      title,\n      infoText,\n      embedLink\n    }[0]\n  ": DonatePageResult;
     "\n    *[_type == \"membershipPage\"]{\n      title,\n      headerImage { asset->, altText },\n      infoText,\n      embedLink,\n      statA { title, current, max },\n      statB { title, current, max }\n    }[0]\n  ": MembershipPageResult;
+    "\n    *[_type == \"calendarPage\"][0]{\n      infoText\n    }\n  ": CalendarPageResult;
   }
 }

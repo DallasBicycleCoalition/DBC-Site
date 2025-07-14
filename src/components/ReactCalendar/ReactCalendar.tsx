@@ -223,7 +223,7 @@ export default function ReactCalendar({ events, tags }: Props) {
         initialView={initialView}
         headerToolbar={headerToolbar}
         views={{
-          dayGridMonth: { buttonText: "Month" },
+          dayGridMonth: { buttonText: "Month", showNonCurrentDates: false, fixedWeekCount: false },
           timeGridWeek: { buttonText: "Week" },
           timeGridDay: { buttonText: "Day" },
           listMonth: {
