@@ -6,6 +6,7 @@ import { tagSchema } from "./documents/tag";
 
 import { aboutUsSchema } from "./singletons/aboutUsPageSchema";
 import { advocacyPageSchema } from "./singletons/advocacyPageSchema";
+import { calendarPageSchema } from "./singletons/calendarPageSchema";
 import { captionedImageSchema } from "./singletons/captionedImageSchema";
 import { cityCouncilQuestionnaireSchema } from "./singletons/cityCouncilQuestionnaireSchema";
 import { donatePageSchema } from "./singletons/donatePageSchema";
@@ -38,6 +39,7 @@ const singletonSchemas = [
   policyPageSchema,
   socialRidesPageSchema,
   weekWithoutDrivingSchema,
+  calendarPageSchema,
 ];
 
 export const schemaTypes = [...documentSchemas, ...singletonSchemas];

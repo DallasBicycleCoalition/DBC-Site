@@ -2,6 +2,7 @@ import groq from "groq";
 import type {
   AboutUsPageResult,
   AdvocacyPageResult,
+  CalendarPageResult,
   CityCouncilQuestionnaireResult,
   DonatePageResult,
   EmailCityCouncilResult,
@@ -227,4 +228,13 @@ export async function getMembershipPage(): Promise<MembershipPageResult> {
     }[0]
   `;
   return fetchSanityData(membershipPage);
+}
+
+export async function getCalendarPage(): Promise<CalendarPageResult> {
+  const calendarPage = groq`
+    *[_type == "calendarPage"][0]{
+      infoText
+    }
+  `;
+  return fetchSanityData(calendarPage);
 }

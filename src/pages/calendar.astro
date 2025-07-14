@@ -1,7 +1,8 @@
 ---
+import { PortableText } from "@portabletext/react";
 import ReactCalendar from "../components/ReactCalendar/ReactCalendar";
 import Layout from "../layouts/Layout.astro";
-import { getEventsPage } from "../utils/groqQueries";
+import { getCalendarPage, getEventsPage } from "../utils/groqQueries";
 import { getUniqueTagsFromEvents } from "../utils/utils";
 
 const eventsFromSanity: any = await getEventsPage();
@@ -11,8 +12,31 @@ const eventsArray = Array.isArray(eventsFromSanity)
     ? eventsFromSanity.events
     : [];
 const sanityTags = getUniqueTagsFromEvents(eventsArray);
+
+const calendarSingleton = await getCalendarPage();
+const infoText = calendarSingleton?.infoText;
 ---
 
 <Layout title="Event Calendar">
-  <ReactCalendar client:load events={eventsArray} tags={sanityTags} />
+  <section id="intro-section" class="single-col">
+    <div class="content">
+      <div class="normal-copy">
+        {infoText && <PortableText value={infoText} />}
+      </div>
+    </div>
+  </section>
+  <section id="calendar-section" class="single-col">
+    <div class="content">
+      <ReactCalendar client:load events={eventsArray} tags={sanityTags} />
+    </div>
+  </section>
 </Layout>
+
+<style is:global>
+  #calendar-wrapper {
+    padding-top: 2em;
+  }
+  #intro-section {
+    margin-top: 1em;
+  }
+</style>
