@@ -31,6 +31,23 @@ export const layoutSchema = defineType({
       type: "url",
     },
     {
+      name: "callToActionButton",
+      title: "Call to Action Button",
+      type: "object",
+      fields: [
+        {
+          name: "text",
+          type: "text",
+          title: "Text",
+        },
+        {
+          name: "url",
+          type: "url",
+          title: "URL",
+        },
+      ],
+    },
+    {
       name: "footerBackground",
       title: "Footer Background",
       type: "image",

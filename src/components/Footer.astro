@@ -11,17 +11,32 @@ const layout = await getLayout();
   </div>
 
   <!-- Social Media Links -->
-  <div class="footer-socials">
-    <div class="footer-item">
-      <a href="https://facebook.com/dallasbicyclecoalition" target="_blank">
-        <img src="/facebook-logo-Black.png" alt="Facebook Logo" />
-      </a>
+  <div class="footer-links">
+    <div class="footer-socials">
+      <div class="footer-item">
+        <a href="https://facebook.com/dallasbicyclecoalition" target="_blank">
+          <img src="/facebook-logo-Black.png" alt="Facebook Logo" />
+        </a>
+      </div>
+
+      <div class="footer-item">
+        <a href="https://instagram.com/dallasbicyclecoalition" target="_blank">
+          <img src="/Instagram_Glyph_Black.svg" alt="Instagram Logo" />
+        </a>
+      </div>
     </div>
 
-    <div class="footer-item">
-      <a href="https://instagram.com/dallasbicyclecoalition" target="_blank">
-        <img src="/Instagram_Glyph_Black.svg" alt="Instagram Logo" />
-      </a>
+    <div class="footer-sitemap">
+      <a href="/about">About</a>
+      <a href="/advocacy">Advocacy</a>
+      <a href="/calendar">Calendar</a>
+      <a href="/city-council-questionaire">City Council Questionnaire</a>
+      <a href="/?give=8NDR96EK">Donate</a>
+      <a href="/membership">Membership</a>
+      <a href="/policy">Policy</a>
+      <a href="/signup">Email signup</a>
+      <a href="/social-rides">Social Rides</a>
+      <a href="/week-without-driving">Week Without Driving</a>
     </div>
   </div>
 </footer>
@@ -39,6 +54,7 @@ const layout = await getLayout();
 
   .footer-logo {
     margin-right: 2em; /* Space between logo and the links */
+    flex: 1;
   }
 
   .footer-logo img {
@@ -47,15 +63,17 @@ const layout = await getLayout();
     max-height: 10em;
   }
 
+  .footer-links {
+    flex: 1;
+    align-items: flex-end;
+    margin-left: 2em;
+  }
+
   .footer-socials {
     display: flex;
     align-items: center; /* Center items vertically */
-    justify-content: flex-end; /* Align items to the right */
-    flex: 1;
-  }
-
-  .footer-item {
-    margin-left: 2em; /* Adds padding between the items */
+    justify-content: flex-start; /* Align items to the right */
+    gap: 2em;
   }
 
   .footer-item img {
@@ -64,8 +82,17 @@ const layout = await getLayout();
     height: 57px;
   }
 
+  .footer-sitemap {
+    display: flex;
+    flex-wrap: wrap;
+    row-gap: 1rem;
+    column-gap: 2rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+
   footer a {
-    color: #007acc;
+    color: white;
     text-decoration: none;
     font-size: 1.2em; /* Slightly larger font for the links */
   }
