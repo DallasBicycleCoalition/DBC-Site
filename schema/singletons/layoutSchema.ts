@@ -37,7 +37,7 @@ export const layoutSchema = defineType({
       fields: [
         {
           name: "text",
-          type: "text",
+          type: "string",
           title: "Text",
         },
         {
