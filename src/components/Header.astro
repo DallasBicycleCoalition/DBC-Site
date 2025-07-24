@@ -269,15 +269,15 @@ const data = await getLayout();
     /* Hide dropdown toggle and menu, show both links directly on mobile */
     #calendarNavItem .dropdown-toggle,
     #calendarNavItem .dropdown-menu {
-      display: none;
+      display: none !important;
     }
     #calendarNavItem .calendar-mobile-links {
-      display: flex;
+      display: flex !important;
       flex-direction: column;
       gap: 0;
     }
     #calendarNavItem .calendar-mobile-links .dropdown-item {
-      color: #cd011c;
+      color: #cd011c !important;
       background: none;
     }
   }
