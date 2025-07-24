@@ -90,6 +90,7 @@ export async function getLayout(): Promise<LayoutResult> {
       _id, _createdAt,
       "logo": { "asset": logo.asset->url, "altText": logo.altText },
       "landingPageLink": landingPageLink,
+      "callToActionButton": { "text": callToActionButton.text, "url": callToActionButton.url },
       "footerBackground": { "asset": footerBackground.asset->url, "altText": footerBackground.altText },
 
     }
