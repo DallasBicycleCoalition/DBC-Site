@@ -26,11 +26,15 @@ const data = await getLayout();
     <div class="nav-item" id="blogNavItem">
       <a href="/blog/page/1">Blog</a>
     </div>
-    <div class="nav-item" id="calendarNavItem">
-      <a
-        href="/calendar"
-        onclick="window.location.href='/calendar'; return false;">Calendar</a
+    <div class="nav-item dropdown" id="calendarNavItem">
+      <button class="dropdown-toggle" aria-haspopup="true" aria-expanded="false"
+        >Calendar</button
       >
+      <div class="dropdown-menu">
+        <a href="/calendar" class="dropdown-item">Calendar</a>
+        <div class="dropdown-separator"></div>
+        <a href="/social-rides" class="dropdown-item">Social Rides</a>
+      </div>
     </div>
     <div class="nav-item" id="actionNavItem">
       <a
@@ -52,9 +56,34 @@ const data = await getLayout();
       : "&#9776;";
   }
 
+  function toggleDropdown(dropdown) {
+    dropdown.classList.toggle("open");
+    const toggle = dropdown.querySelector(".dropdown-toggle");
+    const expanded = dropdown.classList.contains("open");
+    if (toggle) toggle.setAttribute("aria-expanded", expanded);
+  }
+
   function init() {
     const menuToggle = document.getElementById("menuToggle");
     const navMenu = document.getElementById("navMenu");
+
+    // Dropdown logic
+    const calendarNavItem = document.getElementById("calendarNavItem");
+    if (calendarNavItem) {
+      const toggle = calendarNavItem.querySelector(".dropdown-toggle");
+      if (toggle) {
+        toggle.addEventListener("click", (e) => {
+          e.stopPropagation();
+          toggleDropdown(calendarNavItem);
+        });
+        document.addEventListener("click", (e) => {
+          if (!calendarNavItem.contains(e.target)) {
+            calendarNavItem.classList.remove("open");
+            toggle.setAttribute("aria-expanded", "false");
+          }
+        });
+      }
+    }
 
     if (menuToggle && navMenu) {
       const handleClick = () => toggleMenu(menuToggle, navMenu);
@@ -69,16 +98,6 @@ const data = await getLayout();
       );
     } else {
       console.error("Menu toggle button or navigation menu is missing.");
-    }
-
-    // Highlight the current page
-    const currentPage = window.location.pathname;
-    if (currentPage === "/about-us") {
-      document.getElementById("aboutUsNavItem").classList.add("active");
-    } else if (currentPage === "/blog/page/1") {
-      document.getElementById("blogNavItem").classList.add("active");
-    } else if (currentPage === "/calendar") {
-      document.getElementById("calendarNavItem").classList.add("active");
     }
   }
 
@@ -133,8 +152,60 @@ const data = await getLayout();
     white-space: nowrap;
   }
 
-  header nav .nav-item.active a {
-    color: #002c7d;
+  .dropdown {
+    position: relative;
+  }
+  .dropdown-toggle {
+    background: none;
+    border: none;
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1em;
+    padding: 0;
+    margin-top: clamp(1em, 2vw, 1em);
+  }
+  .dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: #cd011c;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    min-width: 160px;
+    z-index: 1001;
+    flex-direction: column;
+    gap: 0;
+    align-items: center;
+  }
+  .dropdown.open .dropdown-menu {
+    display: flex;
+  }
+  .dropdown-item {
+    padding: 0.75em 1.5em;
+    color: #fff;
+    text-decoration: none;
+    white-space: nowrap;
+    background: none;
+    border: none;
+    text-align: center;
+    width: 100%;
+    display: block;
+  }
+  .dropdown-separator {
+    height: 2px;
+    background: #fff;
+    width: 90%;
+    margin: 0.25em 0;
+    border-radius: 1px;
+    opacity: 0.8;
+    align-self: center;
+  }
+
+  .dropdown-item:hover {
+    background: #b80016;
+    color: #fff;
   }
 
   body > header:nth-child(1) {
@@ -175,6 +246,17 @@ const data = await getLayout();
     }
 
     #navMenu.active {
+      display: flex;
+    }
+
+    .dropdown-menu {
+      position: static;
+      min-width: 0;
+      box-shadow: none;
+      width: 100%;
+    }
+
+    .dropdown.open .dropdown-menu {
       display: flex;
     }
 
