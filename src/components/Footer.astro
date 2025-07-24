@@ -26,17 +26,8 @@ const layout = await getLayout();
       </div>
     </div>
 
-    <div class="footer-sitemap">
-      <a href="/about">About</a>
-      <a href="/advocacy">Advocacy</a>
-      <a href="/calendar">Calendar</a>
-      <a href="/city-council-questionaire">City Council Questionnaire</a>
-      <a href="/?give=8NDR96EK">Donate</a>
-      <a href="/signup">Email signup</a>
-      <a href="/membership">Membership</a>
-      <a href="/policy">Policy</a>
-      <a href="/social-rides">Social Rides</a>
-      <a href="/week-without-driving">Week Without Driving</a>
+    <div class="email-join">
+      <a href="/signup">Join our Email List</a>
     </div>
   </div>
 </footer>
@@ -63,12 +54,6 @@ const layout = await getLayout();
     max-height: 10em;
   }
 
-  .footer-links {
-    flex: 1;
-    align-items: flex-end;
-    margin-left: 2em;
-  }
-
   .footer-socials {
     display: flex;
     align-items: center; /* Center items vertically */
@@ -82,7 +67,7 @@ const layout = await getLayout();
     height: 57px;
   }
 
-  .footer-sitemap {
+  .email-join {
     display: flex;
     flex-wrap: wrap;
     row-gap: 1rem;
