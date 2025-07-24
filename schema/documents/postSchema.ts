@@ -17,6 +17,7 @@ export const postSchema = defineType({
       options: {
         source: "title",
         maxLength: 96,
+        slugify: (input: string) => input.trim() // Remove leading/trailing spaces
       },
     },
     {

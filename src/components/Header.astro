@@ -32,12 +32,12 @@ const data = await getLayout();
         onclick="window.location.href='/calendar'; return false;">Calendar</a
       >
     </div>
-    <div class="nav-item" id="signupNavItem">
+    <div class="nav-item" id="actionNavItem">
       <a
-        href="/signup"
-        class="email-list-link"
-        onclick="window.location.href='/signup'; return false;"
-        >Join our Email List</a
+        href={data?.callToActionButton.url || "/?give=8NDR96EK"}
+        class="call-to-action-button"
+        onclick="window.location.href=data?.callToActionButton.url || '/?give=8NDR96EK'; return false;"
+        >{data?.callToActionButton.text || "Donate"}</a
       >
     </div>
   </nav>
@@ -141,7 +141,7 @@ const data = await getLayout();
     padding-bottom: 1.25em;
   }
 
-  .email-list-link {
+  .call-to-action-button {
     color: white;
     background-color: #cd011c;
     padding: 0.5em 1em;
