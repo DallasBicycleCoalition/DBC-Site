@@ -35,6 +35,10 @@ const data = await getLayout();
         <div class="dropdown-separator"></div>
         <a href="/social-rides" class="dropdown-item">Social Rides</a>
       </div>
+      <div class="calendar-mobile-links" style="display: none;">
+        <a href="/calendar" class="dropdown-item">Calendar</a>
+        <a href="/social-rides" class="dropdown-item">Social Rides</a>
+      </div>
     </div>
     <div class="nav-item" id="actionNavItem">
       <a
@@ -164,12 +168,13 @@ const data = await getLayout();
     font-weight: bold;
     font-size: 1em;
     padding: 0;
-    margin-top: clamp(1em, 2vw, 1em);
+    margin-top: -1.75em;
+    margin-bottom: 0em;
   }
   .dropdown-menu {
     display: none;
     position: absolute;
-    top: 100%;
+    top: calc(100% + 1.25em);
     left: 0;
     background: #cd011c;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
@@ -181,6 +186,9 @@ const data = await getLayout();
   }
   .dropdown.open .dropdown-menu {
     display: flex;
+  }
+  .calendar-mobile-links {
+    display: none;
   }
   .dropdown-item {
     padding: 0.75em 1.5em;
@@ -249,17 +257,6 @@ const data = await getLayout();
       display: flex;
     }
 
-    .dropdown-menu {
-      position: static;
-      min-width: 0;
-      box-shadow: none;
-      width: 100%;
-    }
-
-    .dropdown.open .dropdown-menu {
-      display: flex;
-    }
-
     .logo-container[data-astro-cid-3ef6ksr2] {
       padding-left: 1.25em;
       padding-top: 2em;
@@ -267,6 +264,21 @@ const data = await getLayout();
     }
     header nav {
       padding: 0em;
+    }
+
+    /* Hide dropdown toggle and menu, show both links directly on mobile */
+    #calendarNavItem .dropdown-toggle,
+    #calendarNavItem .dropdown-menu {
+      display: none;
+    }
+    #calendarNavItem .calendar-mobile-links {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    #calendarNavItem .calendar-mobile-links .dropdown-item {
+      color: #cd011c;
+      background: none;
     }
   }
 </style>
