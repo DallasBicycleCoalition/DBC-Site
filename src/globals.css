@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Antonio:wght@100..700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;900&display=swap");
 
 /* Thanks: https://piccalil.li/blog/a-more-modern-css-reset/ */
 
@@ -27,7 +27,7 @@ html {
 body {
   min-height: 100vh;
   line-height: 1.5;
-  font-family: "Antonio", sans-serif;
+  font-family: "Montserrat", sans-serif;
   font-size: clamp(1em, 1.1vw, 1.1em);
 }
 
