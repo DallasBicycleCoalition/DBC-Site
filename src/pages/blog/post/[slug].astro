@@ -1,7 +1,7 @@
 ---
 // @ts-nocheck
-import { PortableText } from "@portabletext/react";
 import type { PostsResult } from "../../../../sanity.types";
+import PostBody from "../../../components/PostBody";
 import Layout from "../../../layouts/Layout.astro";
 import { getPost, getPosts } from "../../../utils/groqQueries";
 import { urlFor } from "../../../utils/utils";
@@ -53,7 +53,7 @@ if (!post) {
       POSTED BY {post.author?.name.toUpperCase()}
     </p>
     <div class="normal-copy" id="post-content">
-      {post.body && <PortableText value={post.body} />}
+      {post.body && <PostBody body={post.body} client:only="react" />}
     </div>
   </article>
 
@@ -106,9 +106,11 @@ if (!post) {
     }
 
     .post-image {
-      width: 11em;
+      width: 100%;
+      max-width: 600px;
       height: auto;
-      margin-right: 1em;
+      margin: 0 auto 0.5em auto;
+      display: block;
     }
 
     .post-content h2 {
@@ -117,6 +119,20 @@ if (!post) {
 
     .post-content p {
       margin: 0.25em 0;
+    }
+
+    /* Captioned image styling */
+    .captioned-image {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 2em 0;
+    }
+    .captioned-image figcaption {
+      font-size: 1em;
+      color: #555;
+      margin-top: 0.5em;
+      text-align: center;
     }
   </style>
 </Layout>
