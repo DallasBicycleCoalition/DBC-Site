@@ -6,528 +6,175 @@ import { getMembershipPage } from "../utils/groqQueries";
 import { urlFor } from "../utils/utils";
 
 const membershipPage: MembershipPageResult = await getMembershipPage();
-
-const fallbackTiers = [
-  {
-    title: "Supporter",
-    priceLabel: "$5 / month",
-    description:
-      "Join at an accessible level and help us keep safe cycling advocacy moving forward across Dallas.",
-    benefits: [
-      "Monthly supporter updates",
-      "Invitations to member opportunities",
-      "Helps sustain year-round advocacy",
-    ],
-    buttonLabel: "Join the Coalition",
-  },
-  {
-    title: "Advocate",
-    priceLabel: "$10-$50 / month",
-    description:
-      "Back stronger advocacy work and community programming with a monthly gift at a flexible level.",
-    benefits: [
-      "Everything in Supporter",
-      "Directly supports campaign growth",
-      "Strengthens local organizing efforts",
-    ],
-    buttonLabel: "Join the Coalition",
-  },
-  {
-    title: "Pathmaker",
-    priceLabel: "$50+ / month",
-    description:
-      "Make a larger monthly investment in safer streets, policy wins, and a more bike-friendly Dallas.",
-    benefits: [
-      "Everything in Advocate",
-      "Helps fund high-impact initiatives",
-      "Accelerates coalition momentum",
-    ],
-    buttonLabel: "Join the Coalition",
-  },
-] as const;
-
-const tiers = Array.from({ length: 3 }, (_, index) => ({
-  ...fallbackTiers[index],
-  ...(membershipPage?.membershipTiers?.[index] ?? {}),
-}));
-const thermometer = membershipPage?.thermometer;
-const currentAmount = thermometer?.currentAmount ?? 0;
-const goalAmount = thermometer?.goalAmount ?? 0;
-const thermometerPercent =
-  goalAmount > 0
-    ? Math.min(100, Math.round((currentAmount / goalAmount) * 100))
-    : 0;
-
-const currencyFormatter = new Intl.NumberFormat("en-US", {
-  style: "currency",
-  currency: "USD",
-  maximumFractionDigits: 0,
-});
 ---
 
 <Layout title={membershipPage?.title || "Membership"}>
-  <section class="membership-hero">
-    {
-      membershipPage?.heroMedia?.asset ? (
-        <img
-          src={urlFor(membershipPage.heroMedia.asset)
-            .width(1600)
-            .height(760)
-            .url()}
-          alt={membershipPage.heroMedia.altText || "Membership hero image"}
-          class="hero-media"
-          loading="lazy"
-        />
-      ) : (
-        <div class="hero-media hero-media-placeholder" aria-hidden="true" />
-      )
-    }
+  {
+    membershipPage?.headerImage && membershipPage.headerImage.asset && (
+      <img
+        src={urlFor(membershipPage.headerImage.asset)
+          .width(1400)
+          .height(600)
+          .url()}
+        alt={membershipPage.headerImage.altText || "Header image"}
+        class="main-post-image"
+        loading="lazy"
+      />
+    )
+  }
+  <section id="intro-section" class="single-col">
+    <div class="content">
+      <div class="normal-copy">
+        {
+          membershipPage?.infoText && (
+            <PortableText value={membershipPage.infoText} />
+          )
+        }
+      </div>
+    </div>
+  </section>
 
-    <div class="hero-copy">
-      {
-        membershipPage?.heroHeadlineAccent && (
-          <h1 class="hero-title hero-title-accent">
-            {membershipPage.heroHeadlineAccent}
-          </h1>
-        )
-      }
-      {
-        membershipPage?.heroHeadline && (
-          <p class="hero-title hero-title-main">
-            {membershipPage.heroHeadline}
-          </p>
-        )
-      }
-      {
-        membershipPage?.heroBody && (
-          <div class="hero-body normal-copy">
-            <PortableText value={membershipPage.heroBody} />
+  <section id="stats-section" class="two-cols">
+    {
+      (
+        [membershipPage?.statA, membershipPage?.statB] as {
+          title?: string;
+          current?: number;
+          max?: number;
+        }[]
+      ).map((stat) => {
+        if (!stat) return null;
+        const percent =
+          stat.max && stat.max > 0
+            ? Math.min(100, Math.round(((stat.current ?? 0) / stat.max) * 100))
+            : 0;
+        return (
+          <div class="stat-block">
+            <h3>{stat.title}</h3>
+            <div class="progress-bar-container">
+              <div class="progress-bar-bg">
+                <div class="progress-bar-fg" style={`width: ${percent}%`} />
+              </div>
+              <div class="progress-bar-label">
+                {stat.current ?? 0} / {stat.max ?? 0}
+              </div>
+            </div>
           </div>
+        );
+      })
+    }
+  </section>
+
+  <section id="embed-section" class="single-col">
+    <div class="content">
+      {
+        membershipPage?.embedLink && (
+          <iframe
+            src={membershipPage.embedLink}
+            style="width:100%;min-height:500px;border:none;"
+            allowfullscreen
+          />
         )
       }
     </div>
   </section>
 
-  <section class="membership-tiers" aria-label="Membership tiers">
-    {
-      tiers.map((tier) => (
-        <article class="tier-card">
-          <div class="tier-card-body">
-            {tier?.title && <h2>{tier.title}</h2>}
-            {tier?.priceLabel && <p class="tier-price">{tier.priceLabel}</p>}
-            {tier?.description && (
-              <p class="tier-description">{tier.description}</p>
-            )}
-
-            {tier?.benefits && tier.benefits.length > 0 && (
-              <ul class="tier-benefits" role="list">
-                {tier.benefits.map((benefit) => (
-                  <li>{benefit}</li>
-                ))}
-              </ul>
-            )}
-          </div>
-
-          <div class="tier-card-footer">
-            {tier?.embedCode ? (
-              <div class="tier-embed" set:html={tier.embedCode} />
-            ) : (
-              <div class="tier-fallback-embed" aria-hidden="true">
-                <span>{tier?.buttonLabel || "Join the Coalition"}</span>
-              </div>
-            )}
-          </div>
-        </article>
-      ))
-    }
-  </section>
-
-  {
-    thermometer && (
-      <section class="thermometer-section">
-        {thermometer.title && <h2>{thermometer.title}</h2>}
-        {thermometer.progressLabel && (
-          <p class="thermometer-label">{thermometer.progressLabel}</p>
-        )}
-
-        <div
-          class="thermometer-bar"
-          role="progressbar"
-          aria-valuemin="0"
-          aria-valuemax={goalAmount}
-          aria-valuenow={currentAmount}
-          aria-label={thermometer.title || "Campaign progress"}
-        >
-          <div
-            class="thermometer-fill"
-            style={`width: ${thermometerPercent}%;`}
-          />
-          <p class="thermometer-bar-label">
-            {currencyFormatter.format(currentAmount)} of{" "}
-            {currencyFormatter.format(goalAmount)}
-          </p>
-        </div>
-
-        {thermometer.supportingText && (
-          <div class="thermometer-copy normal-copy">
-            <PortableText value={thermometer.supportingText} />
-          </div>
-        )}
-      </section>
-    )
-  }
-
-  {
-    membershipPage?.faqItems && membershipPage.faqItems.length > 0 && (
-      <section class="faq-section">
-        <div class="faq-heading-wrap">
-          <h2>{membershipPage.faqHeading || "Frequently Asked Questions"}</h2>
-        </div>
-
-        <div class="faq-list">
-          {membershipPage.faqItems.map((item) => (
-            <details class="faq-item">
-              <summary>{item?.question}</summary>
-              {item?.answer && (
-                <div class="faq-answer normal-copy">
-                  <PortableText value={item.answer} />
-                </div>
-              )}
-            </details>
-          ))}
-        </div>
-      </section>
-    )
-  }
-
   <style>
-    .membership-hero,
-    .membership-tiers,
-    .thermometer-section,
-    .faq-section {
-      margin: 0 auto;
-      max-width: 1400px;
+    #embed-section {
+      padding: 3em;
     }
-
-    .membership-hero {
-      padding: 2.25rem 0 0;
-    }
-
-    .hero-media {
-      width: 100%;
-      min-height: 22rem;
-      max-height: 42rem;
-      object-fit: cover;
-      border-radius: 1rem;
-      background: #394551;
-      box-shadow: 0 20px 60px rgba(19, 26, 34, 0.12);
-    }
-
-    .hero-media-placeholder {
-      min-height: 30rem;
-    }
-
-    .hero-copy {
-      max-width: 58rem;
-      margin: 3rem auto 0;
+    #intro-section {
       text-align: center;
+      margin: 0 auto;
+      max-width: 80em;
     }
-
-    .hero-title {
-      font-size: clamp(2.4rem, 4.8vw, 4.9rem);
-      font-weight: 900;
-      letter-spacing: -0.04em;
-      margin: 0;
+    .normal-copy {
+      font-size: 1.15em;
+      line-height: 1.5;
     }
-
-    .hero-title + .hero-title {
-      margin-top: 0.2rem;
+    .two-cols {
+      display: flex;
+      justify-content: center;
+      gap: 10em;
+      padding: 3em;
     }
-
-    .hero-title-accent {
-      color: #cd011c;
-    }
-
-    .hero-title-main {
-      color: #111318;
-    }
-
-    .hero-body {
-      max-width: 44rem;
-      margin: 1.5rem auto 0;
-      color: #32363d;
-      font-size: 1.05rem;
-    }
-
-    .membership-tiers {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 1rem;
-      padding: 4rem 0;
-    }
-
-    .tier-card {
+    .stat-block {
+      text-align: center;
+      padding: 1em;
+      border-radius: 1em;
+      min-width: 12em;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
-      min-height: 34rem;
-      padding: 1.6rem;
-      border-radius: 1rem;
-      background: #ffffff;
-      box-shadow: 0 8px 30px rgba(17, 19, 24, 0.08);
+      align-items: center;
     }
-
-    .tier-card-body h2 {
-      margin: 0;
-      color: #111318;
-      font-size: clamp(2rem, 3vw, 3rem);
-      font-weight: 900;
-      letter-spacing: -0.04em;
-    }
-
-    .tier-price {
-      margin-top: 0.5rem;
+    .stat-block h3 {
+      font-size: 1.5em;
       color: #cd011c;
-      font-size: 1.2rem;
-      font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
+      margin-bottom: 0.5em;
     }
-
-    .tier-description {
-      margin-top: 1.4rem;
-      color: #22262d;
-      font-size: 1rem;
-      font-weight: 700;
-      line-height: 1.45;
-      white-space: pre-line;
-    }
-
-    .tier-benefits {
-      margin: 2rem 0 0;
-      padding: 0;
-    }
-
-    .tier-benefits li {
-      list-style: none;
-      padding: 0.65rem 0;
-      border-top: 1px solid #cfd3d8;
-      color: #353941;
-      font-size: 1rem;
-    }
-
-    .tier-benefits li:last-child {
-      border-bottom: 1px solid #cfd3d8;
-    }
-
-    .tier-card-footer {
-      margin-top: 2rem;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 5rem;
-    }
-
-    .tier-embed {
+    .progress-bar-container {
       width: 100%;
+      max-width: 16em;
+      margin: 0.5em 0 0.25em 0;
     }
-
-    .tier-fallback-embed {
+    .progress-bar-bg {
       width: 100%;
-      min-height: 4.5rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0.75rem;
-      border-radius: 1.25rem;
-      background: linear-gradient(180deg, #fff3f5 0%, #ffe3e8 100%);
-      border: 1px solid #f4bcc5;
-    }
-
-    .tier-fallback-embed span {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 999px;
-      background: #cd011c;
-      color: #ffffff;
-      font-size: 1rem;
-      font-weight: 900;
-      padding: 0.95rem 2rem;
-      min-width: 14rem;
-    }
-
-    .thermometer-section {
-      padding: 0 0 4rem;
-      text-align: center;
-    }
-
-    .thermometer-section h2 {
-      margin: 0;
-      color: #111318;
-      font-size: clamp(2rem, 4vw, 3.3rem);
-      font-weight: 900;
-      letter-spacing: -0.03em;
-    }
-
-    .thermometer-label {
-      margin-top: 0.9rem;
-      color: #5b616c;
-      font-size: 0.98rem;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-    }
-
-    .thermometer-bar {
-      width: min(100%, 58rem);
-      min-height: 3.5rem;
-      margin: 1.4rem auto 0;
-      border-radius: 999px;
-      background: #e6e8eb;
+      height: 1.5em;
+      background: #e0e0e0;
+      border-radius: 0.75em;
       overflow: hidden;
-      box-shadow: inset 0 2px 5px rgba(17, 19, 24, 0.08);
       position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
     }
-
-    .thermometer-fill {
-      position: absolute;
-      top: 0;
-      left: 0;
+    .progress-bar-fg {
       height: 100%;
-      border-radius: 999px;
-      background: linear-gradient(90deg, #cd011c 0%, #ee2740 100%);
-      transition: width 300ms ease;
-      z-index: 0;
+      background: #cd011c;
+      border-radius: 0.75em 0 0 0.75em;
+      transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     }
-
-    .thermometer-bar-label {
-      position: relative;
-      z-index: 1;
-      margin: 0;
-      color: #111318;
-      font-weight: 700;
-      font-size: clamp(1rem, 1.8vw, 1.55rem);
-      line-height: 1.1;
-      text-align: center;
-      padding: 0.75rem 1.5rem;
-      text-shadow:
-        0 1px 0 rgba(255, 255, 255, 0.35),
-        0 0 10px rgba(255, 255, 255, 0.2);
+    .progress-bar-label {
+      margin-top: 0.25em;
+      font-size: 1.1em;
+      font-weight: bold;
+      color: #333;
     }
-
-    .thermometer-copy {
-      max-width: 44rem;
-      margin: 1.25rem auto 0;
-      color: #444a54;
+    .header-image-container {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      margin-bottom: 2em;
     }
-
-    .faq-section {
-      padding: 0 0 5rem;
+    .header-image {
+      max-width: 100%;
+      height: auto;
+      border-radius: 1em;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
     }
-
-    .faq-heading-wrap {
-      text-align: center;
+    .main-post-image {
+      margin: 2em auto 4em;
+      object-fit: cover;
+      border-radius: 10px;
+      display: block;
+      width: 100%;
+      max-width: 1400px;
+      height: 600px;
     }
-
-    .faq-heading-wrap h2 {
-      margin: 0;
-      color: #111318;
-      font-size: clamp(2rem, 4vw, 3.3rem);
-      font-weight: 900;
-      letter-spacing: -0.03em;
-    }
-
-    .faq-list {
-      max-width: 60rem;
-      margin: 2rem auto 0;
-    }
-
-    .faq-item {
-      border-top: 1px solid #d9dde2;
-    }
-
-    .faq-item:last-child {
-      border-bottom: 1px solid #d9dde2;
-    }
-
-    .faq-item summary {
-      list-style: none;
-      cursor: pointer;
-      padding: 1.2rem 3rem 1.2rem 0;
-      position: relative;
-      color: #111318;
-      font-size: 1.1rem;
-      font-weight: 900;
-    }
-
-    .faq-item summary::-webkit-details-marker {
-      display: none;
-    }
-
-    .faq-item summary::after {
-      content: "+";
-      position: absolute;
-      right: 0;
-      top: 50%;
-      transform: translateY(-50%);
-      color: #cd011c;
-      font-size: 1.7rem;
-      font-weight: 700;
-    }
-
-    .faq-item[open] summary::after {
-      content: "\2212";
-    }
-
-    .faq-answer {
-      padding: 0 0 1.25rem;
-      color: #434850;
-      max-width: 52rem;
-    }
-
-    @media screen and (max-width: 1100px) {
-      .membership-tiers {
-        grid-template-columns: 1fr;
-      }
-
-      .tier-card {
-        min-height: unset;
-      }
-    }
-
     @media screen and (max-width: 750px) {
-      .membership-hero {
-        padding-top: 1.5rem;
+      #intro-section,
+      #embed-section,
+      .two-cols {
+        padding: 1.5em;
       }
-
-      .hero-media,
-      .hero-media-placeholder {
-        min-height: 15rem;
+      .two-cols {
+        gap: 2em;
+        flex-direction: column;
+        align-items: center;
       }
-
-      .hero-copy {
-        margin-top: 2rem;
+      .stat-block {
+        min-width: unset;
+        width: 100%;
       }
-
-      .membership-tiers {
-        padding: 2.5rem 0;
-      }
-
-      .tier-card {
-        padding: 1.3rem;
-      }
-
-      .thermometer-section,
-      .faq-section {
-        padding-bottom: 3rem;
-      }
-
-      .faq-item summary {
-        padding-right: 2rem;
+      .normal-copy {
+        font-size: 1em;
       }
     }
   </style>
