@@ -231,7 +231,6 @@ export async function getMembershipPage(): Promise<MembershipPageResult> {
         description,
         benefits,
         embedCode,
-        giveId,
         buttonLabel
       },
       thermometer {
@@ -241,8 +240,6 @@ export async function getMembershipPage(): Promise<MembershipPageResult> {
         progressLabel,
         supportingText
       },
-      supportSectionHeading,
-      supportSectionBody,
       faqHeading,
       faqItems[] {
         question,

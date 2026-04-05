@@ -24,9 +24,6 @@ import cloudflare from "@astrojs/cloudflare";
 export default defineConfig({
   // Hybrid+adapter is required to support embedded Sanity Studio
   output: "static",
-  redirects: {
-    "/week-without-driving": "https://dallasweekwithoutdriving.org/",
-  },
   adapter: cloudflare(),
   integrations: [
     sanity({
