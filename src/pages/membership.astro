@@ -53,6 +53,33 @@ const tiers = Array.from({ length: 3 }, (_, index) => ({
 const thermometer = membershipPage?.thermometer;
 const currentAmount = thermometer?.currentAmount ?? 0;
 const goalAmount = thermometer?.goalAmount ?? 0;
+const supportSectionHeading =
+  membershipPage?.supportSectionHeading ||
+  "Become a member to support our work";
+const supportSectionBody = membershipPage?.supportSectionBody;
+type SupportSectionBody = NonNullable<
+  NonNullable<MembershipPageResult>["supportSectionBody"]
+>;
+
+const fallbackSupportBody: SupportSectionBody = [
+  {
+    _type: "block",
+    _key: "support-section-fallback",
+    style: "normal",
+    children: [
+      {
+        _type: "span",
+        _key: "support-section-fallback-span",
+        text: "Your membership helps power safer streets advocacy, community organizing, and year-round programs across Dallas. Joining as a member is the most reliable way to sustain this work and strengthen the coalition behind it.",
+        marks: [],
+      },
+    ],
+    markDefs: [],
+  },
+];
+const supportCopy = supportSectionBody?.length
+  ? supportSectionBody
+  : fallbackSupportBody;
 const thermometerPercent =
   goalAmount > 0
     ? Math.min(100, Math.round((currentAmount / goalAmount) * 100))
@@ -110,35 +137,35 @@ const currencyFormatter = new Intl.NumberFormat("en-US", {
 
   <section class="membership-tiers" aria-label="Membership tiers">
     {
-      tiers.map((tier) => (
-        <article class="tier-card">
-          <div class="tier-card-body">
-            {tier?.title && <h2>{tier.title}</h2>}
-            {tier?.priceLabel && <p class="tier-price">{tier.priceLabel}</p>}
-            {tier?.description && (
-              <p class="tier-description">{tier.description}</p>
-            )}
+      tiers.map((tier, index) => {
+        const tierGiveId = tier.giveId;
 
-            {tier?.benefits && tier.benefits.length > 0 && (
-              <ul class="tier-benefits" role="list">
-                {tier.benefits.map((benefit) => (
-                  <li>{benefit}</li>
-                ))}
-              </ul>
-            )}
-          </div>
+        return (
+          <article class="tier-card">
+            <div class="tier-card-body">
+              {tier?.title && <h2>{tier.title}</h2>}
+              {tier?.priceLabel && <p class="tier-price">{tier.priceLabel}</p>}
+              {tier?.description && (
+                <p class="tier-description">{tier.description}</p>
+              )}
 
-          <div class="tier-card-footer">
-            {tier?.embedCode ? (
-              <div class="tier-embed" set:html={tier.embedCode} />
-            ) : (
-              <div class="tier-fallback-embed" aria-hidden="true">
-                <span>{tier?.buttonLabel || "Join the Coalition"}</span>
-              </div>
-            )}
-          </div>
-        </article>
-      ))
+              {tier?.benefits && tier.benefits.length > 0 && (
+                <ul class="tier-benefits" role="list">
+                  {tier.benefits.map((benefit) => (
+                    <li>{benefit}</li>
+                  ))}
+                </ul>
+              )}
+            </div>
+
+            <div class="tier-card-footer">
+              <a href={`/?give=${tierGiveId}`} class="tier-action-link">
+                {tier?.buttonLabel || "Join the Coalition"}
+              </a>
+            </div>
+          </article>
+        );
+      })
     }
   </section>
 
@@ -163,8 +190,7 @@ const currencyFormatter = new Intl.NumberFormat("en-US", {
             style={`width: ${thermometerPercent}%;`}
           />
           <p class="thermometer-bar-label">
-            {currencyFormatter.format(currentAmount)} of{" "}
-            {currencyFormatter.format(goalAmount)}
+            {currentAmount} / {goalAmount}
           </p>
         </div>
 
@@ -178,23 +204,42 @@ const currencyFormatter = new Intl.NumberFormat("en-US", {
   }
 
   {
-    membershipPage?.faqItems && membershipPage.faqItems.length > 0 && (
+    (supportSectionHeading ||
+      (supportSectionBody && supportSectionBody.length > 0) ||
+      (membershipPage?.faqItems && membershipPage.faqItems.length > 0)) && (
       <section class="faq-section">
-        <div class="faq-heading-wrap">
-          <h2>{membershipPage.faqHeading || "Frequently Asked Questions"}</h2>
-        </div>
+        <div class="faq-layout">
+          <div class="support-section">
+            {supportSectionHeading && <h2>{supportSectionHeading}</h2>}
+            {supportCopy && supportCopy.length > 0 && (
+              <div class="support-copy normal-copy">
+                <PortableText value={supportCopy} />
+              </div>
+            )}
+          </div>
 
-        <div class="faq-list">
-          {membershipPage.faqItems.map((item) => (
-            <details class="faq-item">
-              <summary>{item?.question}</summary>
-              {item?.answer && (
-                <div class="faq-answer normal-copy">
-                  <PortableText value={item.answer} />
-                </div>
-              )}
-            </details>
-          ))}
+          {membershipPage?.faqItems && membershipPage.faqItems.length > 0 && (
+            <div class="faq-content">
+              <div class="faq-heading-wrap">
+                <h2>
+                  {membershipPage.faqHeading || "Frequently Asked Questions"}
+                </h2>
+              </div>
+
+              <div class="faq-list">
+                {membershipPage.faqItems.map((item) => (
+                  <details class="faq-item">
+                    <summary>{item?.question}</summary>
+                    {item?.answer && (
+                      <div class="faq-answer normal-copy">
+                        <PortableText value={item.answer} />
+                      </div>
+                    )}
+                  </details>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </section>
     )
@@ -216,7 +261,7 @@ const currencyFormatter = new Intl.NumberFormat("en-US", {
     .hero-media {
       width: 100%;
       min-height: 22rem;
-      max-height: 42rem;
+      max-height: 30rem;
       object-fit: cover;
       border-radius: 1rem;
       background: #394551;
@@ -234,7 +279,7 @@ const currencyFormatter = new Intl.NumberFormat("en-US", {
     }
 
     .hero-title {
-      font-size: clamp(2.4rem, 4.8vw, 4.9rem);
+      font-size: clamp(2rem, 4.8vw, 4.9rem);
       font-weight: 900;
       letter-spacing: -0.04em;
       margin: 0;
@@ -328,33 +373,32 @@ const currencyFormatter = new Intl.NumberFormat("en-US", {
       min-height: 5rem;
     }
 
-    .tier-embed {
-      width: 100%;
-    }
-
-    .tier-fallback-embed {
+    .tier-action-link {
       width: 100%;
       min-height: 4.5rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0.75rem;
-      border-radius: 1.25rem;
-      background: linear-gradient(180deg, #fff3f5 0%, #ffe3e8 100%);
-      border: 1px solid #f4bcc5;
-    }
-
-    .tier-fallback-embed span {
       display: inline-flex;
       align-items: center;
       justify-content: center;
+      padding: 0.95rem 2rem;
       border-radius: 999px;
       background: #cd011c;
       color: #ffffff;
       font-size: 1rem;
       font-weight: 900;
-      padding: 0.95rem 2rem;
-      min-width: 14rem;
+      text-decoration: none;
+      text-align: center;
+      transition:
+        transform 180ms ease,
+        box-shadow 180ms ease,
+        background-color 180ms ease;
+      box-shadow: 0 10px 30px rgba(205, 1, 28, 0.24);
+    }
+
+    .tier-action-link:hover,
+    .tier-action-link:focus-visible {
+      background: #aa0017;
+      transform: translateY(-1px);
+      box-shadow: 0 14px 34px rgba(205, 1, 28, 0.28);
     }
 
     .thermometer-section {
@@ -429,21 +473,52 @@ const currencyFormatter = new Intl.NumberFormat("en-US", {
       padding: 0 0 5rem;
     }
 
+    .faq-layout {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .support-section {
+      padding-top: 0.25rem;
+    }
+
+    .support-section h2 {
+      margin: 0;
+      color: #111318;
+      font-size: clamp(1.8rem, 2.6vw, 2.8rem);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      text-wrap: unset;
+    }
+
+    .support-copy {
+      margin-top: 1rem;
+      color: #434850;
+      font-size: 1.02rem;
+      line-height: 1.65;
+    }
+
+    .faq-content {
+      min-width: 0;
+    }
+
     .faq-heading-wrap {
-      text-align: center;
+      text-align: left;
     }
 
     .faq-heading-wrap h2 {
       margin: 0;
       color: #111318;
-      font-size: clamp(2rem, 4vw, 3.3rem);
+      font-size: clamp(2rem, 3.2vw, 3rem);
       font-weight: 900;
       letter-spacing: -0.03em;
     }
 
     .faq-list {
-      max-width: 60rem;
-      margin: 2rem auto 0;
+      margin: 2rem 0 0;
     }
 
     .faq-item {
@@ -496,6 +571,15 @@ const currencyFormatter = new Intl.NumberFormat("en-US", {
 
       .tier-card {
         min-height: unset;
+      }
+
+      .faq-layout {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .support-section {
+        padding-right: 0;
       }
     }
 
