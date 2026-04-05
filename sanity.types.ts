@@ -12,6 +12,8 @@
  * ---------------------------------------------------------------------------------
  */
 
+export declare const internalGroqTypeReferenceTo: unique symbol;
+
 // Source: schema.json
 export type CalendarPage = {
   _id: string;
@@ -205,6 +207,13 @@ export type PolicyPage = {
   };
 };
 
+export type SanityImageAssetReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+};
+
 export type MembershipPage = {
   _id: string;
   _type: "membershipPage";
@@ -212,20 +221,17 @@ export type MembershipPage = {
   _updatedAt: string;
   _rev: string;
   title?: string;
-  headerImage?: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
+  heroMedia?: {
+    asset?: SanityImageAssetReference;
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     altText?: string;
     _type: "image";
   };
-  infoText?: Array<{
+  heroHeadlineAccent?: string;
+  heroHeadline?: string;
+  heroBody?: Array<{
     children?: Array<{
       marks?: Array<string>;
       text?: string;
@@ -243,17 +249,98 @@ export type MembershipPage = {
     _type: "block";
     _key: string;
   }>;
-  embedLink?: string;
-  statA?: {
+  membershipTiers?: Array<{
     title?: string;
-    current?: number;
-    max?: number;
-  };
-  statB?: {
+    priceLabel?: string;
+    description?: string;
+    benefits?: Array<string>;
+    embedCode?: string;
+    giveId?: string;
+    buttonLabel?: string;
+    _key: string;
+  }>;
+  thermometer?: {
     title?: string;
-    current?: number;
-    max?: number;
+    currentAmount?: number;
+    goalAmount?: number;
+    progressLabel?: string;
+    supportingText?: Array<{
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }>;
+      style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+      listItem?: "bullet" | "number";
+      markDefs?: Array<{
+        href?: string;
+        _type: "link";
+        _key: string;
+      }>;
+      level?: number;
+      _type: "block";
+      _key: string;
+    }>;
   };
+  faqHeading?: string;
+  supportSectionHeading?: string;
+  supportSectionBody?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+  faqItems?: Array<{
+    question?: string;
+    answer?: Array<{
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }>;
+      style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+      listItem?: "bullet" | "number";
+      markDefs?: Array<{
+        href?: string;
+        _type: "link";
+        _key: string;
+      }>;
+      level?: number;
+      _type: "block";
+      _key: string;
+    }>;
+    _key: string;
+  }>;
+};
+
+export type SanityImageCrop = {
+  _type: "sanity.imageCrop";
+  top?: number;
+  bottom?: number;
+  left?: number;
+  right?: number;
+};
+
+export type SanityImageHotspot = {
+  _type: "sanity.imageHotspot";
+  x?: number;
+  y?: number;
+  height?: number;
+  width?: number;
 };
 
 export type Layout = {
@@ -264,12 +351,7 @@ export type Layout = {
   _rev: string;
   title?: string;
   logo?: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
+    asset?: SanityImageAssetReference;
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
@@ -282,12 +364,7 @@ export type Layout = {
     url?: string;
   };
   footerBackground?: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
+    asset?: SanityImageAssetReference;
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
@@ -304,12 +381,7 @@ export type Homepage = {
   _rev: string;
   title?: string;
   homePageHeroImage?: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
+    asset?: SanityImageAssetReference;
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
@@ -321,12 +393,7 @@ export type Homepage = {
   whoWeAre?: {
     heading?: string;
     photo?: {
-      asset?: {
-        _ref: string;
-        _type: "reference";
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-      };
+      asset?: SanityImageAssetReference;
       media?: unknown;
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
@@ -372,9 +439,11 @@ export type Homepage = {
   };
   whatWeDo?: {
     heading?: string;
-    whatWeDoPics?: Array<{
-      _key: string;
-    } & CaptionedImage>;
+    whatWeDoPics?: Array<
+      {
+        _key: string;
+      } & CaptionedImage
+    >;
   };
   bikePlan?: {
     heading?: string;
@@ -415,12 +484,7 @@ export type Homepage = {
       _key: string;
     }>;
     photo?: {
-      asset?: {
-        _ref: string;
-        _type: "reference";
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-      };
+      asset?: SanityImageAssetReference;
       media?: unknown;
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
@@ -428,6 +492,12 @@ export type Homepage = {
       _type: "image";
     };
   };
+};
+
+export type Slug = {
+  _type: "slug";
+  current?: string;
+  source?: string;
 };
 
 export type EmailCityCouncil = {
@@ -481,12 +551,7 @@ export type CityCouncilQuestionnaire = {
   _rev: string;
   title?: string;
   mainImage?: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
+    asset?: SanityImageAssetReference;
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
@@ -516,12 +581,7 @@ export type CityCouncilQuestionnaire = {
 export type CaptionedImage = {
   _type: "captionedImage";
   image?: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
+    asset?: SanityImageAssetReference;
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
@@ -584,12 +644,7 @@ export type AdvocacyPage = {
     _key: string;
   }>;
   images?: Array<{
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
+    asset?: SanityImageAssetReference;
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
@@ -645,12 +700,7 @@ export type AboutUs = {
       _key: string;
     }>;
     photo?: {
-      asset?: {
-        _ref: string;
-        _type: "reference";
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-      };
+      asset?: SanityImageAssetReference;
       media?: unknown;
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
@@ -697,12 +747,7 @@ export type AboutUs = {
       _key: string;
     }>;
     photo?: {
-      asset?: {
-        _ref: string;
-        _type: "reference";
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-      };
+      asset?: SanityImageAssetReference;
       media?: unknown;
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
@@ -720,7 +765,15 @@ export type AboutUs = {
           _type: "span";
           _key: string;
         }>;
-        style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+        style?:
+          | "normal"
+          | "h1"
+          | "h2"
+          | "h3"
+          | "h4"
+          | "h5"
+          | "h6"
+          | "blockquote";
         listItem?: "bullet" | "number";
         markDefs?: Array<{
           href?: string;
@@ -734,12 +787,7 @@ export type AboutUs = {
       _key: string;
     }>;
     photo?: {
-      asset?: {
-        _ref: string;
-        _type: "reference";
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-      };
+      asset?: SanityImageAssetReference;
       media?: unknown;
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
@@ -759,6 +807,13 @@ export type Tag = {
   description?: string;
 };
 
+export type TagReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "tag";
+};
+
 export type SocialRideEvent = {
   _id: string;
   _type: "socialRideEvent";
@@ -766,13 +821,11 @@ export type SocialRideEvent = {
   _updatedAt: string;
   _rev: string;
   title?: string;
-  tags?: Array<{
-    _ref: string;
-    _type: "reference";
-    _weak?: boolean;
-    _key: string;
-    [internalGroqTypeReferenceTo]?: "tag";
-  }>;
+  tags?: Array<
+    {
+      _key: string;
+    } & TagReference
+  >;
   date?: RecurringDates;
   allDay?: boolean;
   location?: string;
@@ -796,17 +849,27 @@ export type SocialRideEvent = {
     _key: string;
   }>;
   photo?: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
+    asset?: SanityImageAssetReference;
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     _type: "image";
   };
+};
+
+export type RecurringDates = {
+  _type: "recurringDates";
+  startDate?: string;
+  endDate?: string;
+  recurs?: boolean;
+  rrule?: string;
+};
+
+export type AuthorReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "author";
 };
 
 export type Post = {
@@ -817,20 +880,10 @@ export type Post = {
   _rev: string;
   title?: string;
   slug?: Slug;
-  author?: {
-    _ref: string;
-    _type: "reference";
-    _weak?: boolean;
-    [internalGroqTypeReferenceTo]?: "author";
-  };
+  author?: AuthorReference;
   publishedAt?: string;
   mainImage?: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
+    asset?: SanityImageAssetReference;
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
@@ -838,26 +891,37 @@ export type Post = {
     _type: "image";
   };
   excerpt?: string;
-  body?: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
-      _key: string;
-    }>;
-    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
-    listItem?: "bullet" | "number";
-    markDefs?: Array<{
-      href?: string;
-      _type: "link";
-      _key: string;
-    }>;
-    level?: number;
-    _type: "block";
-    _key: string;
-  } | {
-    _key: string;
-  } & CaptionedImage>;
+  body?: Array<
+    | {
+        children?: Array<{
+          marks?: Array<string>;
+          text?: string;
+          _type: "span";
+          _key: string;
+        }>;
+        style?:
+          | "normal"
+          | "h1"
+          | "h2"
+          | "h3"
+          | "h4"
+          | "h5"
+          | "h6"
+          | "blockquote";
+        listItem?: "bullet" | "number";
+        markDefs?: Array<{
+          href?: string;
+          _type: "link";
+          _key: string;
+        }>;
+        level?: number;
+        _type: "block";
+        _key: string;
+      }
+    | ({
+        _key: string;
+      } & CaptionedImage)
+  >;
 };
 
 export type Events = {
@@ -867,13 +931,11 @@ export type Events = {
   _updatedAt: string;
   _rev: string;
   title?: string;
-  tags?: Array<{
-    _ref: string;
-    _type: "reference";
-    _weak?: boolean;
-    _key: string;
-    [internalGroqTypeReferenceTo]?: "tag";
-  }>;
+  tags?: Array<
+    {
+      _key: string;
+    } & TagReference
+  >;
   date?: RecurringDates;
   allDay?: boolean;
   location?: string;
@@ -897,12 +959,7 @@ export type Events = {
     _key: string;
   }>;
   photo?: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
+    asset?: SanityImageAssetReference;
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
@@ -919,25 +976,12 @@ export type Author = {
   name?: string;
   bio?: string;
   image?: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
+    asset?: SanityImageAssetReference;
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     _type: "image";
   };
-};
-
-export type RecurringDates = {
-  _type: "recurringDates";
-  startDate?: string;
-  endDate?: string;
-  recurs?: boolean;
-  rrule?: string;
 };
 
 export type SanityImagePaletteSwatch = {
@@ -966,20 +1010,16 @@ export type SanityImageDimensions = {
   aspectRatio?: number;
 };
 
-export type SanityImageHotspot = {
-  _type: "sanity.imageHotspot";
-  x?: number;
-  y?: number;
-  height?: number;
-  width?: number;
-};
-
-export type SanityImageCrop = {
-  _type: "sanity.imageCrop";
-  top?: number;
-  bottom?: number;
-  left?: number;
-  right?: number;
+export type SanityImageMetadata = {
+  _type: "sanity.imageMetadata";
+  location?: Geopoint;
+  dimensions?: SanityImageDimensions;
+  palette?: SanityImagePalette;
+  lqip?: string;
+  blurHash?: string;
+  thumbHash?: string;
+  hasAlpha?: boolean;
+  isOpaque?: boolean;
 };
 
 export type SanityFileAsset = {
@@ -1002,6 +1042,13 @@ export type SanityFileAsset = {
   path?: string;
   url?: string;
   source?: SanityAssetSourceData;
+};
+
+export type SanityAssetSourceData = {
+  _type: "sanity.assetSourceData";
+  name?: string;
+  id?: string;
+  url?: string;
 };
 
 export type SanityImageAsset = {
@@ -1027,17 +1074,6 @@ export type SanityImageAsset = {
   source?: SanityAssetSourceData;
 };
 
-export type SanityImageMetadata = {
-  _type: "sanity.imageMetadata";
-  location?: Geopoint;
-  dimensions?: SanityImageDimensions;
-  palette?: SanityImagePalette;
-  lqip?: string;
-  blurHash?: string;
-  hasAlpha?: boolean;
-  isOpaque?: boolean;
-};
-
 export type Geopoint = {
   _type: "geopoint";
   lat?: number;
@@ -1045,22 +1081,42 @@ export type Geopoint = {
   alt?: number;
 };
 
-export type Slug = {
-  _type: "slug";
-  current?: string;
-  source?: string;
-};
+export type AllSanitySchemaTypes =
+  | CalendarPage
+  | WeekWithoutDriving
+  | SocialRidesPage
+  | PolicyPage
+  | SanityImageAssetReference
+  | MembershipPage
+  | SanityImageCrop
+  | SanityImageHotspot
+  | Layout
+  | Homepage
+  | Slug
+  | EmailCityCouncil
+  | DonatePage
+  | CityCouncilQuestionnaire
+  | CaptionedImage
+  | AdvocacyPage
+  | AboutUs
+  | Tag
+  | TagReference
+  | SocialRideEvent
+  | RecurringDates
+  | AuthorReference
+  | Post
+  | Events
+  | Author
+  | SanityImagePaletteSwatch
+  | SanityImagePalette
+  | SanityImageDimensions
+  | SanityImageMetadata
+  | SanityFileAsset
+  | SanityAssetSourceData
+  | SanityImageAsset
+  | Geopoint;
 
-export type SanityAssetSourceData = {
-  _type: "sanity.assetSourceData";
-  name?: string;
-  id?: string;
-  url?: string;
-};
-
-export type AllSanitySchemaTypes = CalendarPage | WeekWithoutDriving | SocialRidesPage | PolicyPage | MembershipPage | Layout | Homepage | EmailCityCouncil | DonatePage | CityCouncilQuestionnaire | CaptionedImage | AdvocacyPage | AboutUs | Tag | SocialRideEvent | Post | Events | Author | RecurringDates | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | Slug | SanityAssetSourceData;
-export declare const internalGroqTypeReferenceTo: unique symbol;
-// Source: ./src/utils/groqQueries.ts
+// Source: src/utils/groqQueries.ts
 // Variable: posts
 // Query: *[_type == "post" && defined(slug.current)] | order(_createdAt desc) [$start...$end]
 export type PostsResult = Array<{
@@ -1071,20 +1127,10 @@ export type PostsResult = Array<{
   _rev: string;
   title?: string;
   slug?: Slug;
-  author?: {
-    _ref: string;
-    _type: "reference";
-    _weak?: boolean;
-    [internalGroqTypeReferenceTo]?: "author";
-  };
+  author?: AuthorReference;
   publishedAt?: string;
   mainImage?: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
+    asset?: SanityImageAssetReference;
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
@@ -1092,27 +1138,40 @@ export type PostsResult = Array<{
     _type: "image";
   };
   excerpt?: string;
-  body?: Array<{
-    _key: string;
-  } & CaptionedImage | {
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
-      _key: string;
-    }>;
-    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
-    listItem?: "bullet" | "number";
-    markDefs?: Array<{
-      href?: string;
-      _type: "link";
-      _key: string;
-    }>;
-    level?: number;
-    _type: "block";
-    _key: string;
-  }>;
+  body?: Array<
+    | ({
+        _key: string;
+      } & CaptionedImage)
+    | {
+        children?: Array<{
+          marks?: Array<string>;
+          text?: string;
+          _type: "span";
+          _key: string;
+        }>;
+        style?:
+          | "blockquote"
+          | "h1"
+          | "h2"
+          | "h3"
+          | "h4"
+          | "h5"
+          | "h6"
+          | "normal";
+        listItem?: "bullet" | "number";
+        markDefs?: Array<{
+          href?: string;
+          _type: "link";
+          _key: string;
+        }>;
+        level?: number;
+        _type: "block";
+        _key: string;
+      }
+  >;
 }>;
+
+// Source: src/utils/groqQueries.ts
 // Variable: post
 // Query: *[_type == "post" && slug.current == $slug][0]{ ..., author->{ name } }
 export type PostResult = {
@@ -1128,12 +1187,7 @@ export type PostResult = {
   } | null;
   publishedAt?: string;
   mainImage?: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
+    asset?: SanityImageAssetReference;
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
@@ -1141,27 +1195,40 @@ export type PostResult = {
     _type: "image";
   };
   excerpt?: string;
-  body?: Array<{
-    _key: string;
-  } & CaptionedImage | {
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
-      _key: string;
-    }>;
-    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
-    listItem?: "bullet" | "number";
-    markDefs?: Array<{
-      href?: string;
-      _type: "link";
-      _key: string;
-    }>;
-    level?: number;
-    _type: "block";
-    _key: string;
-  }>;
+  body?: Array<
+    | ({
+        _key: string;
+      } & CaptionedImage)
+    | {
+        children?: Array<{
+          marks?: Array<string>;
+          text?: string;
+          _type: "span";
+          _key: string;
+        }>;
+        style?:
+          | "blockquote"
+          | "h1"
+          | "h2"
+          | "h3"
+          | "h4"
+          | "h5"
+          | "h6"
+          | "normal";
+        listItem?: "bullet" | "number";
+        markDefs?: Array<{
+          href?: string;
+          _type: "link";
+          _key: string;
+        }>;
+        level?: number;
+        _type: "block";
+        _key: string;
+      }
+  >;
 } | null;
+
+// Source: src/utils/groqQueries.ts
 // Variable: homePage
 // Query: *[_type == "homepage"]{      _id, _createdAt, title, "slug": slug.current, content,      "homePageHeroImage": { "asset": homePageHeroImage.asset->url, "altText": homePageHeroImage.altText },      "whoWeAre": {        "heading": whoWeAre.heading,        "photo": { "asset": whoWeAre.photo.asset->url, "altText": whoWeAre.photo.altText },        "highlightedContent": whoWeAre.highlightedContent,        "content": whoWeAre.content      },      "whatWeDo": {        "heading": whatWeDo.heading,        "whatWeDoPics": whatWeDo.whatWeDoPics[] { "image": image.asset->url, "altText": altText, "highlightedCaption": highlightedCaption, "caption": caption }      },      "bikePlan": {        "heading": bikePlan.heading,        "highlightedContent": bikePlan.highlightedContent,        "content": bikePlan.content,        "photo": { "asset": bikePlan.photo.asset->url, "altText": bikePlan.photo.altText }      },      "dallasBikeRide": {        "heading": dallasBikeRide.heading,        "photo": { "asset": dallasBikeRide.photo.asset->url, "altText": dallasBikeRide.photo.altText },        "content": dallasBikeRide.content      }    }[0]
 export type HomePageResult = {
@@ -1278,6 +1345,8 @@ export type HomePageResult = {
     content: null;
   };
 } | null;
+
+// Source: src/utils/groqQueries.ts
 // Variable: policyPage
 // Query: *[_type == "policyPage"]{      _id, _createdAt, title,      "introBlock": { "heading": introBlock.heading, "content": introBlock.content },      "policyRows": policyRows[] { "policy": policy, "summary": summary, "moreInfo": moreInfo },      "legislativeDemands": { "heading": legislativeDemands.heading, "content": legislativeDemands.content }    }[0]
 export type PolicyPageResult = {
@@ -1383,6 +1452,8 @@ export type PolicyPageResult = {
     }> | null;
   };
 } | null;
+
+// Source: src/utils/groqQueries.ts
 // Variable: layout
 // Query: *[_type == "layout"][0]{      _id, _createdAt,      "logo": { "asset": logo.asset->url, "altText": logo.altText },      "landingPageLink": landingPageLink,      "callToActionButton": { "text": callToActionButton.text, "url": callToActionButton.url },      "footerBackground": { "asset": footerBackground.asset->url, "altText": footerBackground.altText },    }
 export type LayoutResult = {
@@ -1402,6 +1473,8 @@ export type LayoutResult = {
     altText: string | null;
   };
 } | null;
+
+// Source: src/utils/groqQueries.ts
 // Variable: aboutUsPage
 // Query: *[_type == "aboutUs"]{      _id, _createdAt, title,      "mission": { "heading": mission.heading, "content": mission.content, "highlightedContent": mission.highlightedContent, "photo": { "asset": mission.photo.asset->url, "altText": mission.photo.altText } },      "vision": { "heading": vision.heading, "content": vision.content, "highlightedContent": vision.highlightedContent, "photo": { "asset": vision.photo.asset->url, "altText": vision.photo.altText } },      "team": { "heading": team.heading, "members": team.members[]{ "name": name }, "photo": { "asset": team.photo.asset->url, "altText": team.photo.altText } },    }[0]
 export type AboutUsPageResult = {
@@ -1504,7 +1577,15 @@ export type AboutUsPageResult = {
           _type: "span";
           _key: string;
         }>;
-        style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+        style?:
+          | "blockquote"
+          | "h1"
+          | "h2"
+          | "h3"
+          | "h4"
+          | "h5"
+          | "h6"
+          | "normal";
         listItem?: "bullet" | "number";
         markDefs?: Array<{
           href?: string;
@@ -1522,6 +1603,8 @@ export type AboutUsPageResult = {
     };
   };
 } | null;
+
+// Source: src/utils/groqQueries.ts
 // Variable: eventsPage
 // Query: *[_type == "events"]{      _id, _createdAt, title,      "tags": tags[]->{ "id": _id, name, description },      date, allDay, location, excerpt, description,      photo { asset -> { _id, url } }    }
 export type EventsPageResult = Array<{
@@ -1562,6 +1645,8 @@ export type EventsPageResult = Array<{
     } | null;
   } | null;
 }>;
+
+// Source: src/utils/groqQueries.ts
 // Variable: socialRideEventsPage
 // Query: *[_type == "socialRideEvent"]{      _id, _createdAt, title,      "tags": tags[]->{ "id": _id, name, description },      date, allDay, location, excerpt, description,      photo { asset -> { _id, url } }    }
 export type SocialRideEventsPageResult = Array<{
@@ -1602,6 +1687,8 @@ export type SocialRideEventsPageResult = Array<{
     } | null;
   } | null;
 }>;
+
+// Source: src/utils/groqQueries.ts
 // Variable: tags
 // Query: *[_type == "tag"]{ "id": _id, name, description }
 export type TagsResult = Array<{
@@ -1609,6 +1696,8 @@ export type TagsResult = Array<{
   name: string | null;
   description: string | null;
 }>;
+
+// Source: src/utils/groqQueries.ts
 // Variable: weekWithoutDrivingPage
 // Query: *[_type == "weekWithoutDriving"]{      _id, _createdAt, title,      "introBlock": { "heading": introBlock.heading, "content": introBlock.content }    }[0]
 export type WeekWithoutDrivingPageResult = {
@@ -1637,6 +1726,8 @@ export type WeekWithoutDrivingPageResult = {
     }> | null;
   };
 } | null;
+
+// Source: src/utils/groqQueries.ts
 // Variable: emailCityCouncil
 // Query: *[_type == "emailCityCouncil"]{      _id, _createdAt, title,      "links": links[]{ "title": title, "url": url }    }[0]
 export type EmailCityCouncilResult = {
@@ -1648,6 +1739,8 @@ export type EmailCityCouncilResult = {
     url: string | null;
   }> | null;
 } | null;
+
+// Source: src/utils/groqQueries.ts
 // Variable: cityCouncilQuestionnaire
 // Query: *[_type == "cityCouncilQuestionnaire"]{      _id, _createdAt, title,      "mainImage": { "asset": mainImage.asset->url, "altText": mainImage.altText },      body    }[0]
 export type CityCouncilQuestionnaireResult = {
@@ -1677,6 +1770,8 @@ export type CityCouncilQuestionnaireResult = {
     _key: string;
   }> | null;
 } | null;
+
+// Source: src/utils/groqQueries.ts
 // Variable: advocacyPage
 // Query: *[_type == "advocacyPage"]{      _id, _createdAt,      title,      "introText": introText,      "linkButton1": { "title": linkButton1.title, "url": linkButton1.url },      "linkButton2": { "title": linkButton2.title, "url": linkButton2.url },      "letter": letter,      "images": images[]{"image": asset->url,"altText": altText}    }[0]
 export type AdvocacyPageResult = {
@@ -1732,6 +1827,8 @@ export type AdvocacyPageResult = {
     altText: string | null;
   }> | null;
 } | null;
+
+// Source: src/utils/groqQueries.ts
 // Variable: socialRidesPage
 // Query: *[_type == "socialRidesPage"][0]{      infoText    }
 export type SocialRidesPageResult = {
@@ -1754,6 +1851,8 @@ export type SocialRidesPageResult = {
     _key: string;
   }> | null;
 } | null;
+
+// Source: src/utils/groqQueries.ts
 // Variable: donatePage
 // Query: *[_type == "donatePage"]{      title,      infoText,      embedLink    }[0]
 export type DonatePageResult = {
@@ -1778,11 +1877,13 @@ export type DonatePageResult = {
   }> | null;
   embedLink: string | null;
 } | null;
+
+// Source: src/utils/groqQueries.ts
 // Variable: membershipPage
-// Query: *[_type == "membershipPage"]{      title,      headerImage { asset->, altText },      infoText,      embedLink,      statA { title, current, max },      statB { title, current, max }    }[0]
+// Query: *[_type == "membershipPage"]{      title,      heroMedia { asset->, altText },      heroHeadlineAccent,      heroHeadline,      heroBody,      membershipTiers[] {        title,        priceLabel,        description,        benefits,        embedCode,        giveId,        buttonLabel      },      thermometer {        title,        currentAmount,        goalAmount,        progressLabel,        supportingText      },      supportSectionHeading,      supportSectionBody,      faqHeading,      faqItems[] {        question,        answer      }    }[0]
 export type MembershipPageResult = {
   title: string | null;
-  headerImage: {
+  heroMedia: {
     asset: {
       _id: string;
       _type: "sanity.imageAsset";
@@ -1807,7 +1908,9 @@ export type MembershipPageResult = {
     } | null;
     altText: string | null;
   } | null;
-  infoText: Array<{
+  heroHeadlineAccent: string | null;
+  heroHeadline: string | null;
+  heroBody: Array<{
     children?: Array<{
       marks?: Array<string>;
       text?: string;
@@ -1825,18 +1928,83 @@ export type MembershipPageResult = {
     _type: "block";
     _key: string;
   }> | null;
-  embedLink: string | null;
-  statA: {
+  membershipTiers: Array<{
     title: string | null;
-    current: number | null;
-    max: number | null;
-  } | null;
-  statB: {
+    priceLabel: string | null;
+    description: string | null;
+    benefits: Array<string> | null;
+    embedCode: string | null;
+    giveId: string | null;
+    buttonLabel: string | null;
+  }> | null;
+  thermometer: {
     title: string | null;
-    current: number | null;
-    max: number | null;
+    currentAmount: number | null;
+    goalAmount: number | null;
+    progressLabel: string | null;
+    supportingText: Array<{
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }>;
+      style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+      listItem?: "bullet" | "number";
+      markDefs?: Array<{
+        href?: string;
+        _type: "link";
+        _key: string;
+      }>;
+      level?: number;
+      _type: "block";
+      _key: string;
+    }> | null;
   } | null;
+  supportSectionHeading: string | null;
+  supportSectionBody: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }> | null;
+  faqHeading: string | null;
+  faqItems: Array<{
+    question: string | null;
+    answer: Array<{
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }>;
+      style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+      listItem?: "bullet" | "number";
+      markDefs?: Array<{
+        href?: string;
+        _type: "link";
+        _key: string;
+      }>;
+      level?: number;
+      _type: "block";
+      _key: string;
+    }> | null;
+  }> | null;
 } | null;
+
+// Source: src/utils/groqQueries.ts
 // Variable: calendarPage
 // Query: *[_type == "calendarPage"][0]{      infoText    }
 export type CalendarPageResult = {
@@ -1864,22 +2032,22 @@ export type CalendarPageResult = {
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    "\n    *[_type == \"post\" && defined(slug.current)] | order(_createdAt desc) [$start...$end]\n  ": PostsResult;
-    "\n    *[_type == \"post\" && slug.current == $slug][0]{ ..., author->{ name } }\n  ": PostResult;
-    "\n    *[_type == \"homepage\"]{\n      _id, _createdAt, title, \"slug\": slug.current, content,\n      \"homePageHeroImage\": { \"asset\": homePageHeroImage.asset->url, \"altText\": homePageHeroImage.altText },\n      \"whoWeAre\": {\n        \"heading\": whoWeAre.heading,\n        \"photo\": { \"asset\": whoWeAre.photo.asset->url, \"altText\": whoWeAre.photo.altText },\n        \"highlightedContent\": whoWeAre.highlightedContent,\n        \"content\": whoWeAre.content\n      },\n      \"whatWeDo\": {\n        \"heading\": whatWeDo.heading,\n        \"whatWeDoPics\": whatWeDo.whatWeDoPics[] { \"image\": image.asset->url, \"altText\": altText, \"highlightedCaption\": highlightedCaption, \"caption\": caption }\n      },\n      \"bikePlan\": {\n        \"heading\": bikePlan.heading,\n        \"highlightedContent\": bikePlan.highlightedContent,\n        \"content\": bikePlan.content,\n        \"photo\": { \"asset\": bikePlan.photo.asset->url, \"altText\": bikePlan.photo.altText }\n      },\n      \"dallasBikeRide\": {\n        \"heading\": dallasBikeRide.heading,\n        \"photo\": { \"asset\": dallasBikeRide.photo.asset->url, \"altText\": dallasBikeRide.photo.altText },\n        \"content\": dallasBikeRide.content\n      }\n    }[0]\n  ": HomePageResult;
-    "\n    *[_type == \"policyPage\"]{\n      _id, _createdAt, title,\n      \"introBlock\": { \"heading\": introBlock.heading, \"content\": introBlock.content },\n      \"policyRows\": policyRows[] { \"policy\": policy, \"summary\": summary, \"moreInfo\": moreInfo },\n      \"legislativeDemands\": { \"heading\": legislativeDemands.heading, \"content\": legislativeDemands.content }\n    }[0]\n  ": PolicyPageResult;
-    "\n    *[_type == \"layout\"][0]{\n      _id, _createdAt,\n      \"logo\": { \"asset\": logo.asset->url, \"altText\": logo.altText },\n      \"landingPageLink\": landingPageLink,\n      \"callToActionButton\": { \"text\": callToActionButton.text, \"url\": callToActionButton.url },\n      \"footerBackground\": { \"asset\": footerBackground.asset->url, \"altText\": footerBackground.altText },\n\n    }\n  ": LayoutResult;
-    "\n    *[_type == \"aboutUs\"]{\n      _id, _createdAt, title,\n      \"mission\": { \"heading\": mission.heading, \"content\": mission.content, \"highlightedContent\": mission.highlightedContent, \"photo\": { \"asset\": mission.photo.asset->url, \"altText\": mission.photo.altText } },\n      \"vision\": { \"heading\": vision.heading, \"content\": vision.content, \"highlightedContent\": vision.highlightedContent, \"photo\": { \"asset\": vision.photo.asset->url, \"altText\": vision.photo.altText } },\n      \"team\": { \"heading\": team.heading, \"members\": team.members[]{ \"name\": name }, \"photo\": { \"asset\": team.photo.asset->url, \"altText\": team.photo.altText } },\n    }[0]\n  ": AboutUsPageResult;
-    "\n    *[_type == \"events\"]{\n      _id, _createdAt, title,\n      \"tags\": tags[]->{ \"id\": _id, name, description },\n      date, allDay, location, excerpt, description,\n      photo { asset -> { _id, url } }\n    }\n  ": EventsPageResult;
-    "\n    *[_type == \"socialRideEvent\"]{\n      _id, _createdAt, title,\n      \"tags\": tags[]->{ \"id\": _id, name, description },\n      date, allDay, location, excerpt, description,\n      photo { asset -> { _id, url } }\n    }\n  ": SocialRideEventsPageResult;
-    "\n    *[_type == \"tag\"]{ \"id\": _id, name, description }\n  ": TagsResult;
-    "\n    *[_type == \"weekWithoutDriving\"]{\n      _id, _createdAt, title,\n      \"introBlock\": { \"heading\": introBlock.heading, \"content\": introBlock.content }\n    }[0]\n  ": WeekWithoutDrivingPageResult;
-    "\n    *[_type == \"emailCityCouncil\"]{\n      _id, _createdAt, title,\n      \"links\": links[]{ \"title\": title, \"url\": url }\n    }[0]\n  ": EmailCityCouncilResult;
-    "\n    *[_type == \"cityCouncilQuestionnaire\"]{\n      _id, _createdAt, title,\n      \"mainImage\": { \"asset\": mainImage.asset->url, \"altText\": mainImage.altText },\n      body\n    }[0]\n  ": CityCouncilQuestionnaireResult;
-    "\n    *[_type == \"advocacyPage\"]{\n      _id, _createdAt,\n      title,\n      \"introText\": introText,\n      \"linkButton1\": { \"title\": linkButton1.title, \"url\": linkButton1.url },\n      \"linkButton2\": { \"title\": linkButton2.title, \"url\": linkButton2.url },\n      \"letter\": letter,\n      \"images\": images[]{\"image\": asset->url,\"altText\": altText}\n    }[0]\n  ": AdvocacyPageResult;
-    "\n    *[_type == \"socialRidesPage\"][0]{\n      infoText\n    }\n  ": SocialRidesPageResult;
-    "\n    *[_type == \"donatePage\"]{\n      title,\n      infoText,\n      embedLink\n    }[0]\n  ": DonatePageResult;
-    "\n    *[_type == \"membershipPage\"]{\n      title,\n      headerImage { asset->, altText },\n      infoText,\n      embedLink,\n      statA { title, current, max },\n      statB { title, current, max }\n    }[0]\n  ": MembershipPageResult;
-    "\n    *[_type == \"calendarPage\"][0]{\n      infoText\n    }\n  ": CalendarPageResult;
+    '\n    *[_type == "post" && defined(slug.current)] | order(_createdAt desc) [$start...$end]\n  ': PostsResult;
+    '\n    *[_type == "post" && slug.current == $slug][0]{ ..., author->{ name } }\n  ': PostResult;
+    '\n    *[_type == "homepage"]{\n      _id, _createdAt, title, "slug": slug.current, content,\n      "homePageHeroImage": { "asset": homePageHeroImage.asset->url, "altText": homePageHeroImage.altText },\n      "whoWeAre": {\n        "heading": whoWeAre.heading,\n        "photo": { "asset": whoWeAre.photo.asset->url, "altText": whoWeAre.photo.altText },\n        "highlightedContent": whoWeAre.highlightedContent,\n        "content": whoWeAre.content\n      },\n      "whatWeDo": {\n        "heading": whatWeDo.heading,\n        "whatWeDoPics": whatWeDo.whatWeDoPics[] { "image": image.asset->url, "altText": altText, "highlightedCaption": highlightedCaption, "caption": caption }\n      },\n      "bikePlan": {\n        "heading": bikePlan.heading,\n        "highlightedContent": bikePlan.highlightedContent,\n        "content": bikePlan.content,\n        "photo": { "asset": bikePlan.photo.asset->url, "altText": bikePlan.photo.altText }\n      },\n      "dallasBikeRide": {\n        "heading": dallasBikeRide.heading,\n        "photo": { "asset": dallasBikeRide.photo.asset->url, "altText": dallasBikeRide.photo.altText },\n        "content": dallasBikeRide.content\n      }\n    }[0]\n  ': HomePageResult;
+    '\n    *[_type == "policyPage"]{\n      _id, _createdAt, title,\n      "introBlock": { "heading": introBlock.heading, "content": introBlock.content },\n      "policyRows": policyRows[] { "policy": policy, "summary": summary, "moreInfo": moreInfo },\n      "legislativeDemands": { "heading": legislativeDemands.heading, "content": legislativeDemands.content }\n    }[0]\n  ': PolicyPageResult;
+    '\n    *[_type == "layout"][0]{\n      _id, _createdAt,\n      "logo": { "asset": logo.asset->url, "altText": logo.altText },\n      "landingPageLink": landingPageLink,\n      "callToActionButton": { "text": callToActionButton.text, "url": callToActionButton.url },\n      "footerBackground": { "asset": footerBackground.asset->url, "altText": footerBackground.altText },\n\n    }\n  ': LayoutResult;
+    '\n    *[_type == "aboutUs"]{\n      _id, _createdAt, title,\n      "mission": { "heading": mission.heading, "content": mission.content, "highlightedContent": mission.highlightedContent, "photo": { "asset": mission.photo.asset->url, "altText": mission.photo.altText } },\n      "vision": { "heading": vision.heading, "content": vision.content, "highlightedContent": vision.highlightedContent, "photo": { "asset": vision.photo.asset->url, "altText": vision.photo.altText } },\n      "team": { "heading": team.heading, "members": team.members[]{ "name": name }, "photo": { "asset": team.photo.asset->url, "altText": team.photo.altText } },\n    }[0]\n  ': AboutUsPageResult;
+    '\n    *[_type == "events"]{\n      _id, _createdAt, title,\n      "tags": tags[]->{ "id": _id, name, description },\n      date, allDay, location, excerpt, description,\n      photo { asset -> { _id, url } }\n    }\n  ': EventsPageResult;
+    '\n    *[_type == "socialRideEvent"]{\n      _id, _createdAt, title,\n      "tags": tags[]->{ "id": _id, name, description },\n      date, allDay, location, excerpt, description,\n      photo { asset -> { _id, url } }\n    }\n  ': SocialRideEventsPageResult;
+    '\n    *[_type == "tag"]{ "id": _id, name, description }\n  ': TagsResult;
+    '\n    *[_type == "weekWithoutDriving"]{\n      _id, _createdAt, title,\n      "introBlock": { "heading": introBlock.heading, "content": introBlock.content }\n    }[0]\n  ': WeekWithoutDrivingPageResult;
+    '\n    *[_type == "emailCityCouncil"]{\n      _id, _createdAt, title,\n      "links": links[]{ "title": title, "url": url }\n    }[0]\n  ': EmailCityCouncilResult;
+    '\n    *[_type == "cityCouncilQuestionnaire"]{\n      _id, _createdAt, title,\n      "mainImage": { "asset": mainImage.asset->url, "altText": mainImage.altText },\n      body\n    }[0]\n  ': CityCouncilQuestionnaireResult;
+    '\n    *[_type == "advocacyPage"]{\n      _id, _createdAt,\n      title,\n      "introText": introText,\n      "linkButton1": { "title": linkButton1.title, "url": linkButton1.url },\n      "linkButton2": { "title": linkButton2.title, "url": linkButton2.url },\n      "letter": letter,\n      "images": images[]{"image": asset->url,"altText": altText}\n    }[0]\n  ': AdvocacyPageResult;
+    '\n    *[_type == "socialRidesPage"][0]{\n      infoText\n    }\n  ': SocialRidesPageResult;
+    '\n    *[_type == "donatePage"]{\n      title,\n      infoText,\n      embedLink\n    }[0]\n  ': DonatePageResult;
+    '\n    *[_type == "membershipPage"]{\n      title,\n      heroMedia { asset->, altText },\n      heroHeadlineAccent,\n      heroHeadline,\n      heroBody,\n      membershipTiers[] {\n        title,\n        priceLabel,\n        description,\n        benefits,\n        embedCode,\n        giveId,\n        buttonLabel\n      },\n      thermometer {\n        title,\n        currentAmount,\n        goalAmount,\n        progressLabel,\n        supportingText\n      },\n      supportSectionHeading,\n      supportSectionBody,\n      faqHeading,\n      faqItems[] {\n        question,\n        answer\n      }\n    }[0]\n  ': MembershipPageResult;
+    '\n    *[_type == "calendarPage"][0]{\n      infoText\n    }\n  ': CalendarPageResult;
   }
 }
