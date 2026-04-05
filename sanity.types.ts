@@ -256,6 +256,22 @@ export type MembershipPage = {
   };
 };
 
+export type SanityImageCrop = {
+  _type: "sanity.imageCrop";
+  top?: number;
+  bottom?: number;
+  left?: number;
+  right?: number;
+};
+
+export type SanityImageHotspot = {
+  _type: "sanity.imageHotspot";
+  x?: number;
+  y?: number;
+  height?: number;
+  width?: number;
+};
+
 export type Layout = {
   _id: string;
   _type: "layout";
@@ -428,6 +444,12 @@ export type Homepage = {
       _type: "image";
     };
   };
+};
+
+export type Slug = {
+  _type: "slug";
+  current?: string;
+  source?: string;
 };
 
 export type EmailCityCouncil = {
@@ -809,6 +831,14 @@ export type SocialRideEvent = {
   };
 };
 
+export type RecurringDates = {
+  _type: "recurringDates";
+  startDate?: string;
+  endDate?: string;
+  recurs?: boolean;
+  rrule?: string;
+};
+
 export type Post = {
   _id: string;
   _type: "post";
@@ -932,14 +962,6 @@ export type Author = {
   };
 };
 
-export type RecurringDates = {
-  _type: "recurringDates";
-  startDate?: string;
-  endDate?: string;
-  recurs?: boolean;
-  rrule?: string;
-};
-
 export type SanityImagePaletteSwatch = {
   _type: "sanity.imagePaletteSwatch";
   background?: string;
@@ -966,20 +988,15 @@ export type SanityImageDimensions = {
   aspectRatio?: number;
 };
 
-export type SanityImageHotspot = {
-  _type: "sanity.imageHotspot";
-  x?: number;
-  y?: number;
-  height?: number;
-  width?: number;
-};
-
-export type SanityImageCrop = {
-  _type: "sanity.imageCrop";
-  top?: number;
-  bottom?: number;
-  left?: number;
-  right?: number;
+export type SanityImageMetadata = {
+  _type: "sanity.imageMetadata";
+  location?: Geopoint;
+  dimensions?: SanityImageDimensions;
+  palette?: SanityImagePalette;
+  lqip?: string;
+  blurHash?: string;
+  hasAlpha?: boolean;
+  isOpaque?: boolean;
 };
 
 export type SanityFileAsset = {
@@ -1002,6 +1019,13 @@ export type SanityFileAsset = {
   path?: string;
   url?: string;
   source?: SanityAssetSourceData;
+};
+
+export type SanityAssetSourceData = {
+  _type: "sanity.assetSourceData";
+  name?: string;
+  id?: string;
+  url?: string;
 };
 
 export type SanityImageAsset = {
@@ -1027,17 +1051,6 @@ export type SanityImageAsset = {
   source?: SanityAssetSourceData;
 };
 
-export type SanityImageMetadata = {
-  _type: "sanity.imageMetadata";
-  location?: Geopoint;
-  dimensions?: SanityImageDimensions;
-  palette?: SanityImagePalette;
-  lqip?: string;
-  blurHash?: string;
-  hasAlpha?: boolean;
-  isOpaque?: boolean;
-};
-
 export type Geopoint = {
   _type: "geopoint";
   lat?: number;
@@ -1045,20 +1058,7 @@ export type Geopoint = {
   alt?: number;
 };
 
-export type Slug = {
-  _type: "slug";
-  current?: string;
-  source?: string;
-};
-
-export type SanityAssetSourceData = {
-  _type: "sanity.assetSourceData";
-  name?: string;
-  id?: string;
-  url?: string;
-};
-
-export type AllSanitySchemaTypes = CalendarPage | WeekWithoutDriving | SocialRidesPage | PolicyPage | MembershipPage | Layout | Homepage | EmailCityCouncil | DonatePage | CityCouncilQuestionnaire | CaptionedImage | AdvocacyPage | AboutUs | Tag | SocialRideEvent | Post | Events | Author | RecurringDates | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | Slug | SanityAssetSourceData;
+export type AllSanitySchemaTypes = CalendarPage | WeekWithoutDriving | SocialRidesPage | PolicyPage | MembershipPage | SanityImageCrop | SanityImageHotspot | Layout | Homepage | Slug | EmailCityCouncil | DonatePage | CityCouncilQuestionnaire | CaptionedImage | AdvocacyPage | AboutUs | Tag | SocialRideEvent | RecurringDates | Post | Events | Author | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageMetadata | SanityFileAsset | SanityAssetSourceData | SanityImageAsset | Geopoint;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./src/utils/groqQueries.ts
 // Variable: posts
