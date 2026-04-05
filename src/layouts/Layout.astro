@@ -1,5 +1,5 @@
 ---
-import { ViewTransitions } from "astro:transitions";
+import { ClientRouter } from "astro:transitions";
 import Footer from "../components/Footer.astro";
 import Header from "../components/Header.astro";
 import "../globals.css";
@@ -14,8 +14,9 @@ import "../globals.css";
     <meta name="generator" content={Astro.generator} />
 
     <title>Dallas Bike Coalition</title>
-    <ViewTransitions />
+    <ClientRouter />
     <script
+      is:inline
       src="https://dallas-bicycle-coalition.givecloud.co/v1/widgets.js"
       async></script>
   </head>

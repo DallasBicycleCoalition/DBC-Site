@@ -7,7 +7,6 @@
     "jsx": "preserve",
     "lib": ["dom", "dom.iterable", "esnext"],
     "module": "esnext",
-    "moduleResolution": "node",
     "noEmit": true,
     "resolveJsonModule": true,
     "skipLibCheck": true,
@@ -16,5 +15,12 @@
   },
   "extends": "astro/tsconfigs/strict",
   "exclude": ["node_modules", "dist", "*.mjs", "*.cjs"],
-  "includes": ["**/*.ts", "**/*.tsx"]
+  "include": [
+    ".astro/types.d.ts",
+    "src/env.d.ts",
+    "src/**/*",
+    "schema/**/*",
+    "types/**/*.d.ts",
+    "sanity.config.ts"
+  ]
 }
