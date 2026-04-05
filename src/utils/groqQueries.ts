@@ -221,11 +221,33 @@ export async function getMembershipPage(): Promise<MembershipPageResult> {
   const membershipPage = groq`
     *[_type == "membershipPage"]{
       title,
-      headerImage { asset->, altText },
-      infoText,
-      embedLink,
-      statA { title, current, max },
-      statB { title, current, max }
+      heroMedia { asset->, altText },
+      heroHeadlineAccent,
+      heroHeadline,
+      heroBody,
+      membershipTiers[] {
+        title,
+        priceLabel,
+        description,
+        benefits,
+        embedCode,
+        giveId,
+        buttonLabel
+      },
+      thermometer {
+        title,
+        currentAmount,
+        goalAmount,
+        progressLabel,
+        supportingText
+      },
+      supportSectionHeading,
+      supportSectionBody,
+      faqHeading,
+      faqItems[] {
+        question,
+        answer
+      }
     }[0]
   `;
   return fetchSanityData(membershipPage);
