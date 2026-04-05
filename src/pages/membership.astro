@@ -137,7 +137,7 @@ const currencyFormatter = new Intl.NumberFormat("en-US", {
 
   <section class="membership-tiers" aria-label="Membership tiers">
     {
-      tiers.map((tier, index) => {
+      tiers.map((tier) => {
         const tierGiveId = tier.giveId;
 
         return (
@@ -190,7 +190,8 @@ const currencyFormatter = new Intl.NumberFormat("en-US", {
             style={`width: ${thermometerPercent}%;`}
           />
           <p class="thermometer-bar-label">
-            {currentAmount} / {goalAmount}
+            {currencyFormatter.format(currentAmount)} of{" "}
+            {currencyFormatter.format(goalAmount)}
           </p>
         </div>
 

@@ -15,5 +15,12 @@
   },
   "extends": "astro/tsconfigs/strict",
   "exclude": ["node_modules", "dist", "*.mjs", "*.cjs"],
-  "include": ["**/*.ts", "**/*.tsx"]
+  "include": [
+    ".astro/types.d.ts",
+    "src/env.d.ts",
+    "src/**/*",
+    "schema/**/*",
+    "types/**/*.d.ts",
+    "sanity.config.ts"
+  ]
 }
