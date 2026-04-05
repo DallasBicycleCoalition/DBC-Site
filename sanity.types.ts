@@ -255,6 +255,7 @@ export type MembershipPage = {
     description?: string;
     benefits?: Array<string>;
     embedCode?: string;
+    giveId?: string;
     buttonLabel?: string;
     _key: string;
   }>;
@@ -283,6 +284,25 @@ export type MembershipPage = {
     }>;
   };
   faqHeading?: string;
+  supportSectionHeading?: string;
+  supportSectionBody?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
   faqItems?: Array<{
     question?: string;
     answer?: Array<{
@@ -1860,7 +1880,7 @@ export type DonatePageResult = {
 
 // Source: src/utils/groqQueries.ts
 // Variable: membershipPage
-// Query: *[_type == "membershipPage"]{      title,      heroMedia { asset->, altText },      heroHeadlineAccent,      heroHeadline,      heroBody,      membershipTiers[] {        title,        priceLabel,        description,        benefits,        embedCode,        buttonLabel      },      thermometer {        title,        currentAmount,        goalAmount,        progressLabel,        supportingText      },      faqHeading,      faqItems[] {        question,        answer      }    }[0]
+// Query: *[_type == "membershipPage"]{      title,      heroMedia { asset->, altText },      heroHeadlineAccent,      heroHeadline,      heroBody,      membershipTiers[] {        title,        priceLabel,        description,        benefits,        embedCode,        giveId,        buttonLabel      },      thermometer {        title,        currentAmount,        goalAmount,        progressLabel,        supportingText      },      supportSectionHeading,      supportSectionBody,      faqHeading,      faqItems[] {        question,        answer      }    }[0]
 export type MembershipPageResult = {
   title: string | null;
   heroMedia: {
@@ -1914,6 +1934,7 @@ export type MembershipPageResult = {
     description: string | null;
     benefits: Array<string> | null;
     embedCode: string | null;
+    giveId: string | null;
     buttonLabel: string | null;
   }> | null;
   thermometer: {
@@ -1940,6 +1961,25 @@ export type MembershipPageResult = {
       _key: string;
     }> | null;
   } | null;
+  supportSectionHeading: string | null;
+  supportSectionBody: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }> | null;
   faqHeading: string | null;
   faqItems: Array<{
     question: string | null;
@@ -2007,7 +2047,7 @@ declare module "@sanity/client" {
     '\n    *[_type == "advocacyPage"]{\n      _id, _createdAt,\n      title,\n      "introText": introText,\n      "linkButton1": { "title": linkButton1.title, "url": linkButton1.url },\n      "linkButton2": { "title": linkButton2.title, "url": linkButton2.url },\n      "letter": letter,\n      "images": images[]{"image": asset->url,"altText": altText}\n    }[0]\n  ': AdvocacyPageResult;
     '\n    *[_type == "socialRidesPage"][0]{\n      infoText\n    }\n  ': SocialRidesPageResult;
     '\n    *[_type == "donatePage"]{\n      title,\n      infoText,\n      embedLink\n    }[0]\n  ': DonatePageResult;
-    '\n    *[_type == "membershipPage"]{\n      title,\n      heroMedia { asset->, altText },\n      heroHeadlineAccent,\n      heroHeadline,\n      heroBody,\n      membershipTiers[] {\n        title,\n        priceLabel,\n        description,\n        benefits,\n        embedCode,\n        buttonLabel\n      },\n      thermometer {\n        title,\n        currentAmount,\n        goalAmount,\n        progressLabel,\n        supportingText\n      },\n      faqHeading,\n      faqItems[] {\n        question,\n        answer\n      }\n    }[0]\n  ': MembershipPageResult;
+    '\n    *[_type == "membershipPage"]{\n      title,\n      heroMedia { asset->, altText },\n      heroHeadlineAccent,\n      heroHeadline,\n      heroBody,\n      membershipTiers[] {\n        title,\n        priceLabel,\n        description,\n        benefits,\n        embedCode,\n        giveId,\n        buttonLabel\n      },\n      thermometer {\n        title,\n        currentAmount,\n        goalAmount,\n        progressLabel,\n        supportingText\n      },\n      supportSectionHeading,\n      supportSectionBody,\n      faqHeading,\n      faqItems[] {\n        question,\n        answer\n      }\n    }[0]\n  ': MembershipPageResult;
     '\n    *[_type == "calendarPage"][0]{\n      infoText\n    }\n  ': CalendarPageResult;
   }
 }
