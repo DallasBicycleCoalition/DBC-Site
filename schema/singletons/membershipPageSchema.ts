@@ -83,13 +83,6 @@ export const membershipPageSchema = defineType({
                 "Optional HTML embed snippet for this membership tier.",
             },
             {
-              name: "giveId",
-              title: "Give ID",
-              type: "string",
-              description:
-                "Optional Givecloud form ID used to open this tier's donation flow.",
-            },
-            {
               name: "buttonLabel",
               title: "Fallback Button Label",
               type: "string",
@@ -151,22 +144,6 @@ export const membershipPageSchema = defineType({
       title: "FAQ Heading",
       type: "string",
       initialValue: "Frequently Asked Questions",
-    },
-    {
-      name: "supportSectionHeading",
-      title: "Support Section Heading",
-      type: "string",
-      initialValue: "Becoming a member is the best way to support the work",
-      description:
-        "Heading shown alongside the FAQ section near the bottom of the page.",
-    },
-    {
-      name: "supportSectionBody",
-      title: "Support Section Body",
-      type: "array",
-      of: [{ type: "block" }],
-      description:
-        "Supporting copy shown beneath the support section heading.",
     },
     {
       name: "faqItems",
