@@ -32,19 +32,6 @@ export const membershipPageSchema = defineType({
       description: "The red highlighted line in the main headline.",
     },
     {
-      name: "heroHeadline",
-      title: "Hero Headline",
-      type: "string",
-      description: "The darker second line in the main headline.",
-    },
-    {
-      name: "heroBody",
-      title: "Hero Body",
-      type: "array",
-      of: [{ type: "block" }],
-      description: "Optional supporting copy shown below the headline.",
-    },
-    {
       name: "membershipTiers",
       title: "Membership Tiers",
       type: "array",
@@ -75,27 +62,19 @@ export const membershipPageSchema = defineType({
               of: [{ type: "string" }],
             },
             {
-              name: "embedCode",
-              title: "Embed Code",
-              type: "text",
-              rows: 6,
-              description:
-                "Optional HTML embed snippet for this membership tier.",
-            },
-            {
               name: "giveId",
               title: "Give ID",
               type: "string",
               description:
-                "Optional Givecloud form ID used to open this tier's donation flow.",
+                "Givecloud form ID used to open this tier's donation flow.",
             },
             {
               name: "buttonLabel",
-              title: "Fallback Button Label",
+              title: "Button Label",
               type: "string",
               initialValue: "Join the Coalition",
               description:
-                "Used when no embed code is provided for the tier yet.",
+                "What the donation button will say",
             },
           ],
           preview: {
@@ -128,12 +107,6 @@ export const membershipPageSchema = defineType({
           name: "goalAmount",
           title: "Goal Amount",
           type: "number",
-        },
-        {
-          name: "progressLabel",
-          title: "Progress Label",
-          type: "string",
-          description: "Optional short label shown above the amount totals.",
         },
         {
           name: "supportingText",
