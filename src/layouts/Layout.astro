@@ -3,6 +3,16 @@ import { ClientRouter } from "astro:transitions";
 import Footer from "../components/Footer.astro";
 import Header from "../components/Header.astro";
 import "../globals.css";
+
+const {
+  title = "Dallas Bike Coalition",
+  description = "Dallas Bike Coalition advocates for safe, connected, and accessible bicycling in Dallas.",
+} = Astro.props;
+
+const pageTitle =
+  title === "Dallas Bike Coalition"
+    ? title
+    : `${title} | Dallas Bike Coalition`;
 ---
 
 <!doctype html>
@@ -12,19 +22,21 @@ import "../globals.css";
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
     <meta name="generator" content={Astro.generator} />
+    <meta name="description" content={description} />
 
-    <title>Dallas Bike Coalition</title>
+    <title>{pageTitle}</title>
     <ClientRouter />
     <script
       is:inline
       src="https://dallas-bicycle-coalition.givecloud.co/v1/widgets.js"
       async></script>
   </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+    <Header />
+    <main id="main-content">
+      <slot />
+    </main>
+    <Footer />
+  </body>
 </html>
-<body>
-  <Header />
-  <main>
-    <slot />
-  </main>
-  <Footer />
-</body>

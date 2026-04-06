@@ -1,5 +1,24 @@
-<script>
-  if (typeof window !== "undefined") {
-    window.location.replace("/?give=8NDR96EK");
-  }
-</script>
+---
+const donateUrl = "/?give=8NDR96EK";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Redirecting to Donate | Dallas Bike Coalition</title>
+    <meta http-equiv="refresh" content={`0;url=${donateUrl}`} />
+    <link rel="canonical" href={donateUrl} />
+  </head>
+  <body>
+    <p>
+      Redirecting to the donation page.
+      <a href={donateUrl}>Continue if you are not redirected automatically.</a>
+    </p>
+    <script>
+      if (typeof window !== "undefined") {
+        window.location.replace("/?give=8NDR96EK");
+      }
+    </script>
+  </body>
+</html>

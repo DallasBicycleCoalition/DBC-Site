@@ -29,6 +29,7 @@ body {
   line-height: 1.5;
   font-family: "Montserrat", sans-serif;
   font-size: clamp(1em, 1.1vw, 1.1em);
+  margin: 0;
 }
 
 /* Remove default margin in favour of better control in authored CSS */
@@ -79,6 +80,11 @@ a:not([class]) {
   color: currentColor;
 }
 
+:focus-visible {
+  outline: 3px solid #002c7d;
+  outline-offset: 3px;
+}
+
 /* Make images easier to work with */
 img,
 picture {
@@ -110,6 +116,23 @@ textarea:not([rows]) {
 /* Main content area should expand to fill available space */
 main {
   flex: 1;
+}
+
+.skip-link {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  z-index: 2000;
+  padding: 0.75rem 1rem;
+  background: #ffffff;
+  color: #002c7d;
+  border: 2px solid #002c7d;
+  text-decoration: none;
+  transform: translateY(-200%);
+}
+
+.skip-link:focus {
+  transform: translateY(0);
 }
 
 /* Page container width adjustments */

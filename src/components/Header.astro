@@ -18,7 +18,13 @@ const data = await getLayout();
       }
     </a>
   </div>
-  <button id="menuToggle" aria-label="Toggle navigation">&#9776;</button>
+  <button
+    id="menuToggle"
+    type="button"
+    aria-label="Toggle navigation"
+    aria-controls="navMenu"
+    aria-expanded="false">&#9776;</button
+  >
   <nav id="navMenu">
     <div class="nav-item" id="aboutUsNavItem">
       <a href="/about-us">About Us</a>
@@ -44,10 +50,7 @@ const data = await getLayout();
       </div>
     </div>
     <div class="nav-item" id="actionNavItem">
-      <a
-        href={data?.callToActionButton.url || "/?give=8NDR96EK"}
-        class="call-to-action-button"
-        onclick="window.location.href=data?.callToActionButton.url || '/?give=8NDR96EK'; return false;"
+      <a href="?give=8NDR96EK" class="call-to-action-button"
         >{data?.callToActionButton.text || "Donate"}</a
       >
     </div>
@@ -58,6 +61,10 @@ const data = await getLayout();
   function toggleMenu(menuToggle, navMenu) {
     navMenu.classList.toggle("active");
     menuToggle.classList.toggle("active");
+    menuToggle.setAttribute(
+      "aria-expanded",
+      navMenu.classList.contains("active") ? "true" : "false",
+    );
     menuToggle.innerHTML = navMenu.classList.contains("active")
       ? "&#10005;"
       : "&#9776;";
@@ -73,35 +80,57 @@ const data = await getLayout();
   function init() {
     const menuToggle = document.getElementById("menuToggle");
     const navMenu = document.getElementById("navMenu");
+    const cleanupController = new AbortController();
+    const { signal } = cleanupController;
 
     // Dropdown logic
     const calendarNavItem = document.getElementById("calendarNavItem");
     if (calendarNavItem) {
       const toggle = calendarNavItem.querySelector(".dropdown-toggle");
       if (toggle) {
-        toggle.addEventListener("click", (e) => {
-          e.stopPropagation();
-          toggleDropdown(calendarNavItem);
-        });
-        document.addEventListener("click", (e) => {
-          if (!calendarNavItem.contains(e.target)) {
-            calendarNavItem.classList.remove("open");
-            toggle.setAttribute("aria-expanded", "false");
-          }
-        });
+        toggle.addEventListener(
+          "click",
+          (e) => {
+            e.stopPropagation();
+            toggleDropdown(calendarNavItem);
+          },
+          { signal },
+        );
+        document.addEventListener(
+          "click",
+          (e) => {
+            if (!calendarNavItem.contains(e.target)) {
+              calendarNavItem.classList.remove("open");
+              toggle.setAttribute("aria-expanded", "false");
+            }
+          },
+          { signal },
+        );
       }
     }
 
     if (menuToggle && navMenu) {
       const handleClick = () => toggleMenu(menuToggle, navMenu);
-      menuToggle.addEventListener("click", handleClick);
+      const navLinks = navMenu.querySelectorAll("a");
+      menuToggle.addEventListener("click", handleClick, { signal });
+      navLinks.forEach((link) => {
+        link.addEventListener(
+          "click",
+          () => {
+            if (navMenu.classList.contains("active")) {
+              toggleMenu(menuToggle, navMenu);
+            }
+          },
+          { signal },
+        );
+      });
 
       document.addEventListener(
         "astro:before-swap",
         () => {
-          menuToggle.removeEventListener("click", handleClick);
+          cleanupController.abort();
         },
-        { once: true }
+        { once: true, signal },
       );
     } else {
       console.error("Menu toggle button or navigation menu is missing.");
