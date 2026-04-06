@@ -20,11 +20,11 @@ import "../globals.css";
       src="https://dallas-bicycle-coalition.givecloud.co/v1/widgets.js"
       async></script>
   </head>
+  <body>
+    <Header />
+    <main>
+      <slot />
+    </main>
+    <Footer />
+  </body>
 </html>
-<body>
-  <Header />
-  <main>
-    <slot />
-  </main>
-  <Footer />
-</body>
