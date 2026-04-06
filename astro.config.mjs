@@ -24,18 +24,7 @@ import cloudflare from "@astrojs/cloudflare";
 export default defineConfig({
   // Hybrid+adapter is required to support embedded Sanity Studio
   output: "static",
-  build: {
-    client: "./",
-    server: "./_worker.js",
-  },
-  redirects: {
-    "/week-without-driving": "https://dallasweekwithoutdriving.org/",
-  },
-  adapter: cloudflare({
-    imageService: "compile",
-    inspectorPort: false,
-    prerenderEnvironment: "node",
-  }),
+  adapter: cloudflare(),
   integrations: [
     sanity({
       projectId,
