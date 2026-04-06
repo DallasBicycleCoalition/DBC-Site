@@ -230,11 +230,31 @@ export type MembershipPage = {
     _type: "image";
   };
   heroHeadlineAccent?: string;
+  heroHeadline?: string;
+  heroBody?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
   membershipTiers?: Array<{
     title?: string;
     priceLabel?: string;
     description?: string;
     benefits?: Array<string>;
+    embedCode?: string;
     giveId?: string;
     buttonLabel?: string;
     _key: string;
@@ -243,6 +263,7 @@ export type MembershipPage = {
     title?: string;
     currentAmount?: number;
     goalAmount?: number;
+    progressLabel?: string;
     supportingText?: Array<{
       children?: Array<{
         marks?: Array<string>;
@@ -1888,14 +1909,31 @@ export type MembershipPageResult = {
     altText: string | null;
   } | null;
   heroHeadlineAccent: string | null;
-  heroHeadline: null;
-  heroBody: null;
+  heroHeadline: string | null;
+  heroBody: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }> | null;
   membershipTiers: Array<{
     title: string | null;
     priceLabel: string | null;
     description: string | null;
     benefits: Array<string> | null;
-    embedCode: null;
+    embedCode: string | null;
     giveId: string | null;
     buttonLabel: string | null;
   }> | null;
@@ -1903,7 +1941,7 @@ export type MembershipPageResult = {
     title: string | null;
     currentAmount: number | null;
     goalAmount: number | null;
-    progressLabel: null;
+    progressLabel: string | null;
     supportingText: Array<{
       children?: Array<{
         marks?: Array<string>;
