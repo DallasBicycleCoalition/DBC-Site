@@ -12,9 +12,12 @@ const {
   SANITY_API_TOKEN,
 } = loadEnv(import.meta.env.MODE, process.cwd(), "");
 
-// Different environments use different variables
-const projectId = PUBLIC_SANITY_STUDIO_PROJECT_ID || PUBLIC_SANITY_PROJECT_ID;
-const dataset = PUBLIC_SANITY_STUDIO_DATASET || PUBLIC_SANITY_DATASET;
+// Fall back to the production Studio values so static builds still work
+// when hosting doesn't inject the Sanity env vars.
+const projectId =
+  PUBLIC_SANITY_STUDIO_PROJECT_ID || PUBLIC_SANITY_PROJECT_ID || "wfdg37xd";
+const dataset =
+  PUBLIC_SANITY_STUDIO_DATASET || PUBLIC_SANITY_DATASET || "production";
 
 // Change this depending on your hosting provider (Vercel, Netlify etc)
 // https://docs.astro.build/en/guides/server-side-rendering/#adding-an-adapter
