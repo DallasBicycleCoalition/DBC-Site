@@ -159,10 +159,7 @@ const currencyFormatter = new Intl.NumberFormat("en-US", {
             </div>
 
             <div class="tier-card-footer">
-              <a
-                href={`/membership/?give=${tierGiveId}`}
-                class="tier-action-link"
-              >
+              <a href={`/?give=${tierGiveId}`} class="tier-action-link">
                 {tier?.buttonLabel || "Join the Coalition"}
               </a>
             </div>
@@ -211,8 +208,8 @@ const currencyFormatter = new Intl.NumberFormat("en-US", {
     (supportSectionHeading ||
       (supportSectionBody && supportSectionBody.length > 0) ||
       (membershipPage?.faqItems && membershipPage.faqItems.length > 0)) && (
-      <section class="cta-and-questions-section">
-        <div class="cta-and-questions-layout">
+      <section class="faq-section">
+        <div class="faq-layout">
           <div class="support-section">
             {supportSectionHeading && <h2>{supportSectionHeading}</h2>}
             {supportCopy && supportCopy.length > 0 && (
@@ -577,7 +574,7 @@ const currencyFormatter = new Intl.NumberFormat("en-US", {
         min-height: unset;
       }
 
-      .cta-and-questions-layout {
+      .faq-layout {
         grid-template-columns: 1fr;
         gap: 2rem;
       }
@@ -610,7 +607,7 @@ const currencyFormatter = new Intl.NumberFormat("en-US", {
       }
 
       .thermometer-section,
-      .cta-and-questions-section {
+      .faq-section {
         padding-bottom: 3rem;
       }
 
