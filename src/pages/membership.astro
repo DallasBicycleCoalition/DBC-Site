@@ -193,8 +193,7 @@ const currencyFormatter = new Intl.NumberFormat("en-US", {
             style={`width: ${thermometerPercent}%;`}
           />
           <p class="thermometer-bar-label">
-            {currencyFormatter.format(currentAmount)} of{" "}
-            {currencyFormatter.format(goalAmount)}
+            {currentAmount} of {goalAmount}
           </p>
         </div>
 
