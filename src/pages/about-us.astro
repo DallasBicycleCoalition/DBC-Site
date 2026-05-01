@@ -2,9 +2,27 @@
 import { PortableText } from "@portabletext/react";
 import Layout from "../layouts/Layout.astro";
 import { getAboutUsPage } from "../utils/groqQueries";
-import { urlFor } from "../utils/utils";
+import { resolveImageUrl } from "../utils/utils";
 
 const aboutUsPage = await getAboutUsPage();
+const missionImageUrl = await resolveImageUrl(
+  aboutUsPage?.mission.photo?.asset,
+  {
+    width: 720,
+    height: 520,
+    fixtureSeed: "about-us-mission",
+  },
+);
+const visionImageUrl = await resolveImageUrl(aboutUsPage?.vision.photo?.asset, {
+  width: 720,
+  height: 520,
+  fixtureSeed: "about-us-vision",
+});
+const teamImageUrl = await resolveImageUrl(aboutUsPage?.team.photo?.asset, {
+  width: 720,
+  height: 520,
+  fixtureSeed: "about-us-team",
+});
 ---
 
 <Layout title={aboutUsPage?.title || "About Us"}>
@@ -27,10 +45,10 @@ const aboutUsPage = await getAboutUsPage();
       </div>
     </div>
     {
-      aboutUsPage?.mission.photo?.asset && (
+      missionImageUrl && (
         <img
-          src={urlFor(aboutUsPage.mission.photo.asset).url()}
-          alt={aboutUsPage.mission.photo.altText || "Mission Image"}
+          src={missionImageUrl}
+          alt={aboutUsPage?.mission.photo.altText || "Mission Image"}
         />
       )
     }
@@ -38,10 +56,10 @@ const aboutUsPage = await getAboutUsPage();
 
   <section id="vision-section" class="two-cols">
     {
-      aboutUsPage?.vision.photo?.asset && (
+      visionImageUrl && (
         <img
-          src={urlFor(aboutUsPage.vision.photo.asset).url()}
-          alt={aboutUsPage.vision.photo.altText || "Vision Image"}
+          src={visionImageUrl}
+          alt={aboutUsPage?.vision.photo.altText || "Vision Image"}
         />
       )
     }
@@ -78,10 +96,10 @@ const aboutUsPage = await getAboutUsPage();
       </div>
     </div>
     {
-      aboutUsPage?.team?.photo?.asset && (
+      teamImageUrl && (
         <img
-          src={urlFor(aboutUsPage.team.photo.asset).url()}
-          alt={aboutUsPage.team.photo.altText || "Team Image"}
+          src={teamImageUrl}
+          alt={aboutUsPage?.team.photo.altText || "Team Image"}
         />
       )
     }
