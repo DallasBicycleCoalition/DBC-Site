@@ -27,4 +27,7 @@ pnpm-debug.log*
 
 # Local settings
 .vscode/
+
+# Developer-owned local fixture media
+public/local-fixtures/
 .codex

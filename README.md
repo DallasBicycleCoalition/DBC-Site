@@ -41,6 +41,45 @@ PUBLIC_SANITY_PROJECT_ID="wfdg37xd"
 PUBLIC_SANITY_DATASET="production"
 ```
 
+### Sanity image fixture mode
+
+Developers can preview CMS image slots with already-published public Sanity
+assets instead of sourcing their own local images. Add this to `.env`:
+
+```
+PUBLIC_USE_LOCAL_SANITY_FIXTURES=true
+```
+
+Then run the site and visit `/about-us`. The page still uses the normal About
+Us text content from Sanity, but its main content images are resolved through
+the fixture image flow.
+
+Use `resolveImageUrl(sourceImage, { width, height, fixtureSeed })` for new CMS
+image slots. In normal mode it formats the real CMS image. In fixture mode it
+selects a stable public Sanity image using `fixtureSeed`, crops it to the
+requested size, and falls back to hardcoded fixture paths if the asset lookup
+fails.
+
+`fixtureSeed` is a stable selector, not true randomness. For example,
+`about-us-mission`, `about-us-vision`, and `about-us-team` are converted into
+numbers so each image slot can consistently pick a different public Sanity asset
+between builds.
+
+You can optionally provide a local fallback image:
+
+```
+await resolveImageUrl(aboutUsPage?.mission.photo?.asset, {
+  width: 720,
+  height: 520,
+  fixtureSeed: "about-us-mission",
+  fallbackImagePath: "/local-fixtures/about-mission.jpg",
+});
+```
+
+Local fallback files should live in `public/local-fixtures/`, which is ignored by
+git. These files are only used if the resolver cannot use the real CMS image or
+find a public Sanity fixture image.
+
 For creating an simple example page with text, the about-us website page is a great example. General steps would be:
 
 - Create a schema under `/schema`. This defines content shape on Sanity for content creators to use. The about-us page is aboutUsPageSchema.ts
