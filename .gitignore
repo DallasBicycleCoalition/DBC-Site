@@ -30,3 +30,4 @@ pnpm-debug.log*
 
 # Developer-owned local fixture media
 public/local-fixtures/
+.codex
