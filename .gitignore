@@ -27,3 +27,4 @@ pnpm-debug.log*
 
 # Local settings
 .vscode/
+.codex

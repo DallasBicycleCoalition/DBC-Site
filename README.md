@@ -1,6 +1,6 @@
-# WebsiteFrontEnd
+# DBC Site
 
-This is the repository for all code related to the DBC website
+This repository contains the Astro frontend and Sanity CMS admin for the Dallas Bicycle Coalition website.
 
 Template used as reference: https://github.com/sanity-io/sanity-template-astro-clean
 
@@ -32,9 +32,11 @@ Template used as reference: https://github.com/sanity-io/sanity-template-astro-c
 
 ## Development (in progress)
 
-For any local development you'll want to pull the repo down and setup a .env file with
+For any local development you'll want to pull the repo down and set up a `.env` file. You can copy `.env.example` and fill in the values:
 
 ```
+cp .env.example .env
+
 PUBLIC_SANITY_PROJECT_ID="wfdg37xd"
 PUBLIC_SANITY_DATASET="production"
 ```
