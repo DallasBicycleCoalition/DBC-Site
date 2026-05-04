@@ -1,9 +1,6 @@
 import type { ClientPerspective, QueryParams } from "@sanity/client";
 import { sanityClient } from "sanity:client";
 
-const token =
-  import.meta.env.SANITY_API_READ_TOKEN ?? import.meta.env.SANITY_API_TOKEN;
-
 function parsePerspective(raw: string | undefined): ClientPerspective | undefined {
   if (!raw) {
     return undefined;
@@ -26,10 +23,12 @@ export async function loadQuery<QueryResponse>({
   query,
   params,
   perspectiveCookie,
+  token,
 }: {
   query: string;
   params?: QueryParams;
   perspectiveCookie?: string;
+  token?: string;
 }) {
   const draftMode = Boolean(perspectiveCookie);
 

@@ -2,12 +2,12 @@ import { validatePreviewUrl } from "@sanity/preview-url-secret";
 import { perspectiveCookieName } from "@sanity/preview-url-secret/constants";
 import type { APIRoute } from "astro";
 import { sanityClient } from "sanity:client";
+import { getSanityReadToken } from "../../../utils/sanityToken";
 
 export const prerender = false;
 
-export const GET: APIRoute = async ({ request, cookies, redirect }) => {
-  const token =
-    import.meta.env.SANITY_API_READ_TOKEN ?? import.meta.env.SANITY_API_TOKEN;
+export const GET: APIRoute = async ({ request, cookies, redirect, locals }) => {
+  const token = getSanityReadToken(locals);
 
   if (!token) {
     return new Response(
