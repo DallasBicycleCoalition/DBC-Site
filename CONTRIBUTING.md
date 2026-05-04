@@ -58,6 +58,13 @@ The Astro site runs locally from the URL printed in the terminal. The embedded
 Sanity Studio is configured at `/admin`, but writing content there requires CMS
 access.
 
+Sanity Studio includes a Preview flow for blog posts. Content managers can open
+`/admin`, edit a post in Structure, and use the post's Preview action to view
+`/blog/post/{slug}` with draft content and Visual Editing overlays. Structure is
+the default Studio tool, with Preview available as the second tool. Draft preview
+requires `SANITY_API_TOKEN` to be configured with a Sanity Viewer token in each
+deployed Cloudflare environment that should support CMS preview.
+
 ## Useful Commands
 
 ```sh
@@ -112,6 +119,12 @@ Content usually flows through the project like this:
    `drafts` perspective, while production uses `published`.
 6. An Astro page imports the query function, awaits the data in frontmatter, and
    renders the result.
+
+Blog post preview routes are mapped for Sanity Studio in
+`lib/presentation/resolve.ts`, then registered by `sanity.config.ts`.
+Preview mode is enabled through `/api/draft-mode/enable`, which validates
+Sanity's preview secret, sets the preview perspective cookie, and allows the
+server-rendered blog post route to fetch draft content with stega/source maps.
 
 For example, `src/pages/about-us.astro` calls `getAboutUsPage()`, which is
 defined in `src/utils/groqQueries.ts`. That query reads content shaped by

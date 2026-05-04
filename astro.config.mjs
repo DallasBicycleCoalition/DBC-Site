@@ -33,10 +33,23 @@ export default defineConfig({
       useCdn: false, // `false` if you want to ensure fresh data
       apiVersion: "2024-06-25", // Set to date of setup to use the latest API version
       token: SANITY_API_TOKEN,
+      stega: {
+        studioUrl: "/admin",
+      },
     }),
     react(), // Required for Sanity Studio
   ],
   vite: {
+    optimizeDeps: {
+      include: [
+        "react/compiler-runtime",
+        "lodash/isObject.js",
+        "lodash/groupBy.js",
+        "lodash/keyBy.js",
+        "lodash/partition.js",
+        "lodash/sortedIndex.js",
+      ],
+    },
     resolve: {
       // Use react-dom/server.edge instead of react-dom/server.browser for React 19.
       // Without this, MessageChannel from node:worker_threads needs to be polyfilled.

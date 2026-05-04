@@ -8,8 +8,8 @@
     "build": "astro check && tsc --noEmit && astro build",
     "preview": "astro preview",
     "prettify": "prettier -c --write . --ignore-path .prettierignore",
-    "typegen": "npx sanity schema extract && sanity typegen generate",
-    "devt": "npx sanity schema extract && sanity typegen generate && astro dev",
+    "typegen": "SANITY_SCHEMA_EXTRACT=true npx sanity schema extract && sanity typegen generate",
+    "devt": "SANITY_SCHEMA_EXTRACT=true npx sanity schema extract && sanity typegen generate && astro dev",
     "astro": "astro"
   },
   "dependencies": {
@@ -26,6 +26,8 @@
     "@portabletext/to-html": "^5.0.2",
     "@sanity/astro": "^3.3.1",
     "@sanity/image-url": "^2.1.1",
+    "@sanity/preview-url-secret": "4.0.4",
+    "@sanity/visual-editing": "5.3.3",
     "@sanity/vision": "5.19.0",
     "@types/fullcalendar": "^3.8.0",
     "@types/react": "19.2.14",
@@ -53,5 +55,9 @@
   },
   "engines": {
     "node": ">= 20.18"
+  },
+  "overrides": {
+    "@asamuzakjp/css-color": "4.1.2",
+    "@asamuzakjp/dom-selector": "6.8.1"
   }
 }

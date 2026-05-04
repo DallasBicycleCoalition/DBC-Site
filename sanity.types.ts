@@ -230,31 +230,11 @@ export type MembershipPage = {
     _type: "image";
   };
   heroHeadlineAccent?: string;
-  heroHeadline?: string;
-  heroBody?: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
-      _key: string;
-    }>;
-    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
-    listItem?: "bullet" | "number";
-    markDefs?: Array<{
-      href?: string;
-      _type: "link";
-      _key: string;
-    }>;
-    level?: number;
-    _type: "block";
-    _key: string;
-  }>;
   membershipTiers?: Array<{
     title?: string;
     priceLabel?: string;
     description?: string;
     benefits?: Array<string>;
-    embedCode?: string;
     giveId?: string;
     buttonLabel?: string;
     _key: string;
@@ -263,7 +243,6 @@ export type MembershipPage = {
     title?: string;
     currentAmount?: number;
     goalAmount?: number;
-    progressLabel?: string;
     supportingText?: Array<{
       children?: Array<{
         marks?: Array<string>;
@@ -1116,6 +1095,63 @@ export type AllSanitySchemaTypes =
   | SanityImageAsset
   | Geopoint;
 
+// Source: src/pages/blog/post/[slug].astro
+// Variable: postQuery
+// Query: *[_type == "post" && slug.current == $slug][0]{ ..., author->{ name } }
+export type PostQueryResult = {
+  _id: string;
+  _type: "post";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  slug?: Slug;
+  author: {
+    name: string | null;
+  } | null;
+  publishedAt?: string;
+  mainImage?: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    altText?: string;
+    _type: "image";
+  };
+  excerpt?: string;
+  body?: Array<
+    | ({
+        _key: string;
+      } & CaptionedImage)
+    | {
+        children?: Array<{
+          marks?: Array<string>;
+          text?: string;
+          _type: "span";
+          _key: string;
+        }>;
+        style?:
+          | "blockquote"
+          | "h1"
+          | "h2"
+          | "h3"
+          | "h4"
+          | "h5"
+          | "h6"
+          | "normal";
+        listItem?: "bullet" | "number";
+        markDefs?: Array<{
+          href?: string;
+          _type: "link";
+          _key: string;
+        }>;
+        level?: number;
+        _type: "block";
+        _key: string;
+      }
+  >;
+} | null;
+
 // Source: src/utils/groqQueries.ts
 // Variable: posts
 // Query: *[_type == "post" && defined(slug.current)] | order(_createdAt desc) [$start...$end]
@@ -1909,31 +1945,14 @@ export type MembershipPageResult = {
     altText: string | null;
   } | null;
   heroHeadlineAccent: string | null;
-  heroHeadline: string | null;
-  heroBody: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
-      _key: string;
-    }>;
-    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
-    listItem?: "bullet" | "number";
-    markDefs?: Array<{
-      href?: string;
-      _type: "link";
-      _key: string;
-    }>;
-    level?: number;
-    _type: "block";
-    _key: string;
-  }> | null;
+  heroHeadline: null;
+  heroBody: null;
   membershipTiers: Array<{
     title: string | null;
     priceLabel: string | null;
     description: string | null;
     benefits: Array<string> | null;
-    embedCode: string | null;
+    embedCode: null;
     giveId: string | null;
     buttonLabel: string | null;
   }> | null;
@@ -1941,7 +1960,7 @@ export type MembershipPageResult = {
     title: string | null;
     currentAmount: number | null;
     goalAmount: number | null;
-    progressLabel: string | null;
+    progressLabel: null;
     supportingText: Array<{
       children?: Array<{
         marks?: Array<string>;
@@ -2032,6 +2051,7 @@ export type CalendarPageResult = {
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
+    '\n  *[_type == "post" && slug.current == $slug][0]{ ..., author->{ name } }\n': PostQueryResult;
     '\n    *[_type == "post" && defined(slug.current)] | order(_createdAt desc) [$start...$end]\n  ': PostsResult;
     '\n    *[_type == "post" && slug.current == $slug][0]{ ..., author->{ name } }\n  ': PostResult;
     '\n    *[_type == "homepage"]{\n      _id, _createdAt, title, "slug": slug.current, content,\n      "homePageHeroImage": { "asset": homePageHeroImage.asset->url, "altText": homePageHeroImage.altText },\n      "whoWeAre": {\n        "heading": whoWeAre.heading,\n        "photo": { "asset": whoWeAre.photo.asset->url, "altText": whoWeAre.photo.altText },\n        "highlightedContent": whoWeAre.highlightedContent,\n        "content": whoWeAre.content\n      },\n      "whatWeDo": {\n        "heading": whatWeDo.heading,\n        "whatWeDoPics": whatWeDo.whatWeDoPics[] { "image": image.asset->url, "altText": altText, "highlightedCaption": highlightedCaption, "caption": caption }\n      },\n      "bikePlan": {\n        "heading": bikePlan.heading,\n        "highlightedContent": bikePlan.highlightedContent,\n        "content": bikePlan.content,\n        "photo": { "asset": bikePlan.photo.asset->url, "altText": bikePlan.photo.altText }\n      },\n      "dallasBikeRide": {\n        "heading": dallasBikeRide.heading,\n        "photo": { "asset": dallasBikeRide.photo.asset->url, "altText": dallasBikeRide.photo.altText },\n        "content": dallasBikeRide.content\n      }\n    }[0]\n  ': HomePageResult;
