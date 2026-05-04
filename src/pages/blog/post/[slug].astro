@@ -6,6 +6,7 @@ import PostBody from "../../../components/PostBody";
 import Layout from "../../../layouts/Layout.astro";
 import { getDraftModeProps, isDraftMode } from "../../../utils/draftMode";
 import { loadQuery } from "../../../utils/loadQuery";
+import { getSanityReadToken } from "../../../utils/sanityToken";
 import groq from "groq";
 import { urlFor } from "../../../utils/utils";
 
@@ -20,6 +21,7 @@ const { data: post } = await loadQuery<PostResult>({
   query: postQuery,
   params: { slug },
   ...getDraftModeProps(Astro.cookies),
+  token: getSanityReadToken(Astro.locals),
 });
 const draftMode = isDraftMode(Astro.cookies);
 
