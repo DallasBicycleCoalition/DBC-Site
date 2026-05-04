@@ -1,35 +1,45 @@
 ---
 // @ts-nocheck
-import type { PostsResult } from "../../../../sanity.types";
+import { stegaClean } from "@sanity/client/stega";
+import type { PostResult } from "../../../../sanity.types";
 import PostBody from "../../../components/PostBody";
 import Layout from "../../../layouts/Layout.astro";
-import { getPost, getPosts } from "../../../utils/groqQueries";
+import { getDraftModeProps, isDraftMode } from "../../../utils/draftMode";
+import { loadQuery } from "../../../utils/loadQuery";
+import groq from "groq";
 import { urlFor } from "../../../utils/utils";
 
-export async function getStaticPaths() {
-  const posts = await getPosts();
+export const prerender = false;
 
-  return posts
-    .filter(
-      (post): post is PostsResult & { slug: { current: string } } =>
-        post?.slug !== undefined
-    )
-    .map((post) => ({
-      params: { slug: post.slug.current },
-    }));
-}
+const postQuery = groq`
+  *[_type == "post" && slug.current == $slug][0]{ ..., author->{ name } }
+`;
 
 const { slug } = Astro.params;
-const post: PostsResult = await getPost(slug);
+const { data: post } = await loadQuery<PostResult>({
+  query: postQuery,
+  params: { slug },
+  ...getDraftModeProps(Astro.cookies),
+});
+const draftMode = isDraftMode(Astro.cookies);
 
 if (!post) {
-  throw new Error(`Post with slug '${slug}' not found`);
+  Astro.response.status = 404;
 }
+
+const title = stegaClean(post?.title || "Post not found");
 ---
 
-<Layout title={post.title}>
+<Layout title={title} draftMode={draftMode}>
   {
-    post.mainImage && post.mainImage.asset && (
+    !post && (
+      <article class="blog-post">
+        <h1 id="post-title">Post not found</h1>
+      </article>
+    )
+  }
+  {
+    post?.mainImage && post.mainImage.asset && (
       <img
         src={urlFor(post.mainImage).width(1400).height(600).url()}
         alt={post.mainImage.altText || "Image"}
@@ -38,24 +48,24 @@ if (!post) {
       />
     )
   }
-  <article class="blog-post">
-    <p id="post-date">
-      {
-        new Date(post._createdAt).toLocaleDateString("en-US", {
-          month: "long",
-          day: "numeric",
-          year: "numeric",
-        })
-      }
-    </p>
-    <h1 id="post-title">{post.title}</h1>
-    <p class="post-author">
-      POSTED BY {post.author?.name.toUpperCase()}
-    </p>
-    <div class="normal-copy" id="post-content">
-      {post.body && <PostBody body={post.body} client:only="react" />}
-    </div>
-  </article>
+  {
+    post && (
+      <article class="blog-post">
+        <p id="post-date">
+          {new Date(post._createdAt).toLocaleDateString("en-US", {
+            month: "long",
+            day: "numeric",
+            year: "numeric",
+          })}
+        </p>
+        <h1 id="post-title">{post.title}</h1>
+        <p class="post-author">POSTED BY {post.author?.name.toUpperCase()}</p>
+        <div class="normal-copy" id="post-content">
+          {post.body && <PostBody body={post.body} client:only="react" />}
+        </div>
+      </article>
+    )
+  }
 
   <style>
     /* General layout styling */

@@ -1,12 +1,15 @@
 ---
 import { ClientRouter } from "astro:transitions";
+import DisableDraftMode from "../components/DisableDraftMode";
 import Footer from "../components/Footer.astro";
 import Header from "../components/Header.astro";
+import SanityVisualEditing from "../components/SanityVisualEditing";
 import "../globals.css";
 
 const {
   title = "Dallas Bike Coalition",
   description = "Dallas Bike Coalition advocates for safe, connected, and accessible bicycling in Dallas.",
+  draftMode = false,
 } = Astro.props;
 
 const pageTitle =
@@ -38,5 +41,13 @@ const pageTitle =
       <slot />
     </main>
     <Footer />
+    {
+      draftMode && (
+        <>
+          <SanityVisualEditing client:only="react" />
+          <DisableDraftMode client:only="react" />
+        </>
+      )
+    }
   </body>
 </html>

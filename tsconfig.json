@@ -19,6 +19,7 @@
     ".astro/types.d.ts",
     "src/env.d.ts",
     "src/**/*",
+    "lib/**/*",
     "schema/**/*",
     "types/**/*.d.ts",
     "sanity.config.ts"
