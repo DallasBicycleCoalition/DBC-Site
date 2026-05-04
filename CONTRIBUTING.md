@@ -62,8 +62,8 @@ Sanity Studio includes a Preview flow for blog posts. Content managers can open
 `/admin`, edit a post in Structure, and use the post's Preview action to view
 `/blog/post/{slug}` with draft content and Visual Editing overlays. Structure is
 the default Studio tool, with Preview available as the second tool. Draft preview
-requires `SANITY_API_TOKEN` to be configured with a Sanity Viewer token in each
-deployed Cloudflare environment that should support CMS preview.
+requires `SANITY_API_READ_TOKEN` to be configured with a Sanity Viewer token in
+each deployed Cloudflare environment that should support CMS preview.
 
 ## Useful Commands
 

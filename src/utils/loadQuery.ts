@@ -1,7 +1,8 @@
 import type { ClientPerspective, QueryParams } from "@sanity/client";
 import { sanityClient } from "sanity:client";
 
-const token = import.meta.env.SANITY_API_TOKEN;
+const token =
+  import.meta.env.SANITY_API_READ_TOKEN ?? import.meta.env.SANITY_API_TOKEN;
 
 function parsePerspective(raw: string | undefined): ClientPerspective | undefined {
   if (!raw) {
@@ -34,7 +35,7 @@ export async function loadQuery<QueryResponse>({
 
   if (draftMode && !token) {
     throw new Error(
-      "The `SANITY_API_TOKEN` environment variable is required during Visual Editing."
+      "The `SANITY_API_READ_TOKEN` environment variable is required during Visual Editing."
     );
   }
 

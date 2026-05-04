@@ -10,11 +10,13 @@ const {
   PUBLIC_SANITY_PROJECT_ID,
   PUBLIC_SANITY_DATASET,
   SANITY_API_TOKEN,
+  SANITY_API_READ_TOKEN,
 } = loadEnv(import.meta.env.MODE, process.cwd(), "");
 
 // Different environments use different variables
 const projectId = PUBLIC_SANITY_STUDIO_PROJECT_ID || PUBLIC_SANITY_PROJECT_ID;
 const dataset = PUBLIC_SANITY_STUDIO_DATASET || PUBLIC_SANITY_DATASET;
+const sanityApiToken = SANITY_API_READ_TOKEN || SANITY_API_TOKEN;
 
 // Change this depending on your hosting provider (Vercel, Netlify etc)
 // https://docs.astro.build/en/guides/server-side-rendering/#adding-an-adapter
@@ -32,7 +34,7 @@ export default defineConfig({
       studioBasePath: "/admin",
       useCdn: false, // `false` if you want to ensure fresh data
       apiVersion: "2024-06-25", // Set to date of setup to use the latest API version
-      token: SANITY_API_TOKEN,
+      token: sanityApiToken,
       stega: {
         studioUrl: "/admin",
       },
