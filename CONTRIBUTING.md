@@ -125,6 +125,9 @@ The default perspective can be overridden with `SANITY_CONTENT_PERSPECTIVE`.
 Set it to `drafts` for staging environments that should show draft-first CMS
 content, and keep production unset or set to `published`. Deployed draft reads
 require `SANITY_API_READ_TOKEN` or `SANITY_API_TOKEN` with Sanity Viewer access.
+In Cloudflare, paste the raw token value as the secret value without surrounding
+quotes. The app trims accidental whitespace and one matching pair of quotes, but
+Sanity will reject expired, session-based, or wrong-project tokens.
 
 Blog post preview routes are mapped for Sanity Studio in
 `lib/presentation/resolve.ts`, then registered by `sanity.config.ts`.
