@@ -5,6 +5,9 @@ dist/
 .astro/
 .vercel
 
+# local Cloudflare/Wrangler state
+.wrangler/
+
 # dependencies
 node_modules/
 
