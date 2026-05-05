@@ -9,6 +9,26 @@ import { schemaTypes } from "./schema/index";
 
 const projectId = "wfdg37xd";
 const dataset = "production";
+const pageDocumentTitles: Record<string, string> = {
+  aboutUs: "About Us",
+  advocacyPage: "Advocacy",
+  calendarPage: "Calendar Main",
+  cityCouncilQuestionnaire: "City Council Questionnaire",
+  donatePage: "Donate",
+  emailCityCouncil: "Email City Council",
+  homepage: "Home",
+  membershipPage: "Membership",
+  policyPage: "Policy",
+  socialRidesPage: "Calendar Social Rides",
+  weekWithoutDriving: "Week Without Driving",
+};
+const collectionDocumentTitles: Record<string, string> = {
+  author: "Authors",
+  events: "Calendar Main Events",
+  post: "Blog Posts",
+  socialRideEvent: "Calendar Social Ride Events",
+  tag: "Tags",
+};
 const isSchemaExtract =
   typeof process !== "undefined" &&
   process.env?.SANITY_SCHEMA_EXTRACT === "true";
@@ -33,14 +53,32 @@ export default defineConfig({
   dataset,
   plugins: [
     structureTool({
-      structure: (S) =>
-        S.list()
+      structure: (S) => {
+        const documentTypeItems = S.documentTypeListItems();
+        const itemForType = (type: string, title: string) =>
+          documentTypeItems.find((item) => item.getId() === type)?.title(title);
+        const itemsForTypes = (titlesByType: Record<string, string>) =>
+          Object.entries(titlesByType)
+            .flatMap(([type, title]) => {
+              const item = itemForType(type, title);
+
+              return item ? [item] : [];
+            })
+            .sort((a, b) =>
+              (a.getTitle() ?? "").localeCompare(b.getTitle() ?? "")
+            );
+
+        return S.list()
           .title("Content")
           .items([
-            ...S.documentTypeListItems().sort((a, b) =>
-              (a.getTitle() ?? "").localeCompare(b.getTitle() ?? "")
-            ),
-          ]),
+            S.divider().title("Pages"),
+            ...itemsForTypes(pageDocumentTitles),
+            S.divider().title("Collections"),
+            ...itemsForTypes(collectionDocumentTitles),
+            S.divider().title("Settings"),
+            ...itemsForTypes({ layout: "Layout" }),
+          ]);
+      },
     }),
     ...(presentationPlugin ? [presentationPlugin] : []),
     visionTool(),
