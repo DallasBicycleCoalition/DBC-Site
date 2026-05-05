@@ -21,7 +21,7 @@ const { data: post } = await loadQuery<PostResult>({
   query: postQuery,
   params: { slug },
   ...getDraftModeProps(Astro.cookies),
-  token: getSanityReadToken(Astro.locals),
+  token: getSanityReadToken(),
 });
 const draftMode = isDraftMode(Astro.cookies);
 
