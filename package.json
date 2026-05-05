@@ -16,8 +16,8 @@
   },
   "dependencies": {
     "@astrojs/check": "^0.9.9",
-    "@astrojs/cloudflare": "^13.3.1",
-    "@astrojs/react": "^5.0.4",
+    "@astrojs/cloudflare": "^12.6.13",
+    "@astrojs/react": "^4.4.2",
     "@fullcalendar/core": "^6.1.20",
     "@fullcalendar/daygrid": "^6.1.20",
     "@fullcalendar/list": "^6.1.20",
@@ -32,7 +32,7 @@
     "@sanity/visual-editing": "5.3.4",
     "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3",
-    "astro": "^6.2.2",
+    "astro": "^5.18.1",
     "autoprefixer": "10.5.0",
     "groq": "5.23.0",
     "prettier-plugin-astro": "0.14.1",
@@ -43,11 +43,11 @@
     "sanity-plugin-recurring-dates": "^2.0.2"
   },
   "devDependencies": {
-    "@eslint/js": "^10.0.1",
-    "eslint": "^10.3.0",
+    "@eslint/js": "^9.39.4",
+    "eslint": "^9.39.4",
     "prettier": "3.8.3",
-    "typescript": "^6.0.3",
-    "vite": "^7.3.2"
+    "typescript": "^5.9.3",
+    "vite": "^8.0.10"
   },
   "engines": {
     "node": ">= 20.18"

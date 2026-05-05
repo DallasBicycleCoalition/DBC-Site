@@ -1,11 +1,13 @@
-import { env } from 'cloudflare:workers';
+type RuntimeLocals = {
+  runtime?: {
+    env?: Record<string, string | undefined>;
+  };
+};
 
-const workerEnv = env as Record<string, string | undefined>;
-
-export function getSanityReadToken() {
+export function getSanityReadToken(locals?: RuntimeLocals) {
   return (
-    workerEnv.SANITY_API_READ_TOKEN ??
-    workerEnv.SANITY_API_TOKEN ??
+    locals?.runtime?.env?.SANITY_API_READ_TOKEN ??
+    locals?.runtime?.env?.SANITY_API_TOKEN ??
     import.meta.env.SANITY_API_READ_TOKEN ??
     import.meta.env.SANITY_API_TOKEN
   );

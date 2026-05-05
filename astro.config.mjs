@@ -24,9 +24,6 @@ export default defineConfig({
   // Hybrid+adapter is required to support embedded Sanity Studio
   output: 'static',
   adapter: cloudflare(),
-  redirects: {
-    '/week-without-driving': 'https://dallasweekwithoutdriving.org/',
-  },
   integrations: [
     sanity({
       projectId,

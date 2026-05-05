@@ -6,8 +6,8 @@ import { getSanityReadToken } from '../../../utils/sanityToken';
 
 export const prerender = false;
 
-export const GET: APIRoute = async ({ request, cookies, redirect }) => {
-  const token = getSanityReadToken();
+export const GET: APIRoute = async ({ request, cookies, redirect, locals }) => {
+  const token = getSanityReadToken(locals);
 
   if (!token) {
     return new Response('Server misconfigured: missing Sanity API read token', {
