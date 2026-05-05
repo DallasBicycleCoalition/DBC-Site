@@ -116,9 +116,15 @@ Content usually flows through the project like this:
    page needs.
 4. The query function calls `fetchSanityData` from `src/utils/utils.ts`.
 5. `fetchSanityData` uses the Sanity Astro client. Development uses the
-   `drafts` perspective, while production uses `published`.
+   `drafts` perspective, the Cloudflare `staging` branch uses `drafts`, and
+   production uses `published`.
 6. An Astro page imports the query function, awaits the data in frontmatter, and
    renders the result.
+
+The default perspective can be overridden with `SANITY_CONTENT_PERSPECTIVE`.
+Set it to `drafts` for staging environments that should show draft-first CMS
+content, and keep production unset or set to `published`. Deployed draft reads
+require `SANITY_API_READ_TOKEN` or `SANITY_API_TOKEN` with Sanity Viewer access.
 
 Blog post preview routes are mapped for Sanity Studio in
 `lib/presentation/resolve.ts`, then registered by `sanity.config.ts`.
@@ -163,9 +169,10 @@ Without CMS write access, you can still:
   Studio.
 - Update GROQ queries and generated types with `npm run typegen`.
 - Add fallback rendering for missing text, links, images, or arrays.
-- Use local fixture images for CMS image slots.
+- Use local fixture images for missing CMS image slots.
 
-To preview CMS image slots without sourcing local media, add this to `.env`:
+To preview missing CMS image slots without sourcing local media, add this to
+`.env`:
 
 ```sh
 PUBLIC_USE_LOCAL_SANITY_FIXTURES=true
@@ -179,6 +186,8 @@ resolveImageUrl(sourceImage, { width, height, fixtureSeed });
 
 The `fixtureSeed` should be stable and descriptive, such as `about-us-mission`,
 so the same slot receives a consistent fixture image across builds.
+Uploaded CMS images are always used before fixture images. The fixture path only
+fills slots where Sanity does not have a usable image yet.
 
 If a page needs a local fallback image, place it in `public/local-fixtures/`.
 That directory is ignored by git, so do not rely on those files in production.
@@ -199,6 +208,19 @@ Check out `src/pages/about-us.astro` for an example of this method in use.
 When a pull request is opened, Cloudflare attempts to build a preview site from
 the branch and the Sanity content. After merge, Cloudflare builds and deploys
 the production site from the main deployment branch.
+
+For larger page or schema changes, the intended content review flow is:
+
+1. An open source contributor builds the code, schema, or UI change without
+   needing Sanity upload access.
+2. The change is merged or deployed to staging, which reads draft-first content
+   from the shared Sanity production dataset.
+3. A maintainer shares the staging URL with content managers.
+4. Content managers add or adjust draft text and media in Sanity. Staging shows
+   drafts when present, published content when no draft exists, and fixture
+   images only for missing image slots.
+5. Once code and content are approved, staging can be promoted through the
+   normal production pull request flow.
 
 Sanity content changes follow a separate path: when content is published,
 Sanity notifies Cloudflare so the site can rebuild with the latest published

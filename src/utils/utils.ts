@@ -1,5 +1,7 @@
+import type { ClientPerspective } from "@sanity/client";
 import { createImageUrlBuilder, type SanityImageSource } from "@sanity/image-url";
 import { sanityClient } from "sanity:client";
+import { getSanityReadToken } from "./sanityToken";
 
 const builder = createImageUrlBuilder(sanityClient);
 const defaultFallbackImage = "/DallasBicycleCoalition_Badge_only.png";
@@ -57,6 +59,27 @@ const publicAssetCache = new Map<string, Promise<PublicSanityImageAsset[]>>();
 
 function shouldUseFixtureImages() {
   return import.meta.env.PUBLIC_USE_LOCAL_SANITY_FIXTURES === "true";
+}
+
+function getConfiguredSanityPerspective(): ClientPerspective {
+  const configuredPerspective = import.meta.env.SANITY_CONTENT_PERSPECTIVE;
+
+  if (configuredPerspective) {
+    return configuredPerspective as ClientPerspective;
+  }
+
+  if (
+    import.meta.env.MODE === "development" ||
+    import.meta.env.CF_PAGES_BRANCH === "staging"
+  ) {
+    return "drafts";
+  }
+
+  return "published";
+}
+
+function shouldRequireReadToken(perspective: ClientPerspective) {
+  return import.meta.env.MODE !== "development" && perspective !== "published";
 }
 
 function addImageParams(source: string, params: URLSearchParams) {
@@ -138,19 +161,17 @@ export async function resolveImageUrl(
   source: SanityImageSource | string | null | undefined,
   options: ResolveImageOptions
 ) {
-  if (shouldUseFixtureImages()) {
-    return getFixtureImageUrl(options);
+  if (source) {
+    return urlFor(source)
+      .width(options.width)
+      .height(options.height)
+      .fit("crop")
+      .url();
   }
 
-  if (!source) {
-    return options.fallbackImagePath || defaultFallbackImage;
-  }
-
-  return urlFor(source)
-    .width(options.width)
-    .height(options.height)
-    .fit("crop")
-    .url();
+  return shouldUseFixtureImages()
+    ? getFixtureImageUrl(options)
+    : options.fallbackImagePath || defaultFallbackImage;
 }
 
 /**
@@ -187,15 +208,23 @@ export function getUniqueTagsFromEvents<
 
 /**
  * Fetch data from Sanity with an optional perspective.
- * Defaults to "published" in production and "raw" in development.
+ * Defaults to "published" in production and "drafts" in development/staging.
  */
 export async function fetchSanityData<T>(
   query: string,
   params: Record<string, any> = {}
 ): Promise<T> {
-  const isDev = import.meta.env.MODE === "development";
+  const perspective = getConfiguredSanityPerspective();
+  const token = getSanityReadToken();
+
+  if (shouldRequireReadToken(perspective) && !token) {
+    throw new Error(
+      '`SANITY_API_READ_TOKEN` or `SANITY_API_TOKEN` is required when Sanity content perspective is not "published".'
+    );
+  }
 
   return sanityClient.fetch(query, params, {
-    perspective: isDev ? "drafts" : "published",
+    perspective,
+    ...(token ? { token } : {}),
   });
 }
