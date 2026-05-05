@@ -223,27 +223,8 @@ export async function fetchSanityData<T>(
     );
   }
 
-  const client = sanityClient.withConfig({
+  return sanityClient.fetch(query, params, {
     perspective,
-    ...(token ? { token, useCdn: false } : {}),
+    ...(token ? { token } : {}),
   });
-
-  try {
-    return await client.fetch(query, params);
-  } catch (error) {
-    if (
-      perspective !== "published" &&
-      typeof error === "object" &&
-      error !== null &&
-      "statusCode" in error &&
-      error.statusCode === 401
-    ) {
-      throw new Error(
-        "Sanity rejected the configured read token while fetching draft content. Check that `SANITY_API_READ_TOKEN` is a raw Sanity API token for project `wfdg37xd` with Viewer access in this Cloudflare environment.",
-        { cause: error }
-      );
-    }
-
-    throw error;
-  }
 }
