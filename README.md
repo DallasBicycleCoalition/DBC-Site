@@ -8,7 +8,7 @@ Template used as reference: https://github.com/sanity-io/sanity-template-astro-c
 
 - Astro
 - Sanity CMS
-- Github
+- GitHub
 - Cloudflare
 
 ## Development

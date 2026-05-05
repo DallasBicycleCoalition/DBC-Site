@@ -17,7 +17,7 @@ export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: schema.json
 export type CalendarPage = {
   _id: string;
-  _type: "calendarPage";
+  _type: 'calendarPage';
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -26,25 +26,25 @@ export type CalendarPage = {
     children?: Array<{
       marks?: Array<string>;
       text?: string;
-      _type: "span";
+      _type: 'span';
       _key: string;
     }>;
-    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
-    listItem?: "bullet" | "number";
+    style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote';
+    listItem?: 'bullet' | 'number';
     markDefs?: Array<{
       href?: string;
-      _type: "link";
+      _type: 'link';
       _key: string;
     }>;
     level?: number;
-    _type: "block";
+    _type: 'block';
     _key: string;
   }>;
 };
 
 export type WeekWithoutDriving = {
   _id: string;
-  _type: "weekWithoutDriving";
+  _type: 'weekWithoutDriving';
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -55,18 +55,18 @@ export type WeekWithoutDriving = {
       children?: Array<{
         marks?: Array<string>;
         text?: string;
-        _type: "span";
+        _type: 'span';
         _key: string;
       }>;
-      style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
-      listItem?: "bullet" | "number";
+      style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote';
+      listItem?: 'bullet' | 'number';
       markDefs?: Array<{
         href?: string;
-        _type: "link";
+        _type: 'link';
         _key: string;
       }>;
       level?: number;
-      _type: "block";
+      _type: 'block';
       _key: string;
     }>;
   };
@@ -74,7 +74,7 @@ export type WeekWithoutDriving = {
 
 export type SocialRidesPage = {
   _id: string;
-  _type: "socialRidesPage";
+  _type: 'socialRidesPage';
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -83,25 +83,25 @@ export type SocialRidesPage = {
     children?: Array<{
       marks?: Array<string>;
       text?: string;
-      _type: "span";
+      _type: 'span';
       _key: string;
     }>;
-    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
-    listItem?: "bullet" | "number";
+    style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote';
+    listItem?: 'bullet' | 'number';
     markDefs?: Array<{
       href?: string;
-      _type: "link";
+      _type: 'link';
       _key: string;
     }>;
     level?: number;
-    _type: "block";
+    _type: 'block';
     _key: string;
   }>;
 };
 
 export type PolicyPage = {
   _id: string;
-  _type: "policyPage";
+  _type: 'policyPage';
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -112,18 +112,18 @@ export type PolicyPage = {
       children?: Array<{
         marks?: Array<string>;
         text?: string;
-        _type: "span";
+        _type: 'span';
         _key: string;
       }>;
-      style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
-      listItem?: "bullet" | "number";
+      style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote';
+      listItem?: 'bullet' | 'number';
       markDefs?: Array<{
         href?: string;
-        _type: "link";
+        _type: 'link';
         _key: string;
       }>;
       level?: number;
-      _type: "block";
+      _type: 'block';
       _key: string;
     }>;
   };
@@ -132,54 +132,54 @@ export type PolicyPage = {
       children?: Array<{
         marks?: Array<string>;
         text?: string;
-        _type: "span";
+        _type: 'span';
         _key: string;
       }>;
-      style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
-      listItem?: "bullet" | "number";
+      style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote';
+      listItem?: 'bullet' | 'number';
       markDefs?: Array<{
         href?: string;
-        _type: "link";
+        _type: 'link';
         _key: string;
       }>;
       level?: number;
-      _type: "block";
+      _type: 'block';
       _key: string;
     }>;
     summary?: Array<{
       children?: Array<{
         marks?: Array<string>;
         text?: string;
-        _type: "span";
+        _type: 'span';
         _key: string;
       }>;
-      style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
-      listItem?: "bullet" | "number";
+      style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote';
+      listItem?: 'bullet' | 'number';
       markDefs?: Array<{
         href?: string;
-        _type: "link";
+        _type: 'link';
         _key: string;
       }>;
       level?: number;
-      _type: "block";
+      _type: 'block';
       _key: string;
     }>;
     moreInfo?: Array<{
       children?: Array<{
         marks?: Array<string>;
         text?: string;
-        _type: "span";
+        _type: 'span';
         _key: string;
       }>;
-      style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
-      listItem?: "bullet" | "number";
+      style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote';
+      listItem?: 'bullet' | 'number';
       markDefs?: Array<{
         href?: string;
-        _type: "link";
+        _type: 'link';
         _key: string;
       }>;
       level?: number;
-      _type: "block";
+      _type: 'block';
       _key: string;
     }>;
     _key: string;
@@ -190,18 +190,18 @@ export type PolicyPage = {
       children?: Array<{
         marks?: Array<string>;
         text?: string;
-        _type: "span";
+        _type: 'span';
         _key: string;
       }>;
-      style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
-      listItem?: "bullet" | "number";
+      style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote';
+      listItem?: 'bullet' | 'number';
       markDefs?: Array<{
         href?: string;
-        _type: "link";
+        _type: 'link';
         _key: string;
       }>;
       level?: number;
-      _type: "block";
+      _type: 'block';
       _key: string;
     }>;
   };
@@ -209,14 +209,14 @@ export type PolicyPage = {
 
 export type SanityImageAssetReference = {
   _ref: string;
-  _type: "reference";
+  _type: 'reference';
   _weak?: boolean;
-  [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+  [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
 };
 
 export type MembershipPage = {
   _id: string;
-  _type: "membershipPage";
+  _type: 'membershipPage';
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -227,7 +227,7 @@ export type MembershipPage = {
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     altText?: string;
-    _type: "image";
+    _type: 'image';
   };
   heroHeadlineAccent?: string;
   membershipTiers?: Array<{
@@ -247,18 +247,18 @@ export type MembershipPage = {
       children?: Array<{
         marks?: Array<string>;
         text?: string;
-        _type: "span";
+        _type: 'span';
         _key: string;
       }>;
-      style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
-      listItem?: "bullet" | "number";
+      style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote';
+      listItem?: 'bullet' | 'number';
       markDefs?: Array<{
         href?: string;
-        _type: "link";
+        _type: 'link';
         _key: string;
       }>;
       level?: number;
-      _type: "block";
+      _type: 'block';
       _key: string;
     }>;
   };
@@ -268,18 +268,18 @@ export type MembershipPage = {
     children?: Array<{
       marks?: Array<string>;
       text?: string;
-      _type: "span";
+      _type: 'span';
       _key: string;
     }>;
-    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
-    listItem?: "bullet" | "number";
+    style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote';
+    listItem?: 'bullet' | 'number';
     markDefs?: Array<{
       href?: string;
-      _type: "link";
+      _type: 'link';
       _key: string;
     }>;
     level?: number;
-    _type: "block";
+    _type: 'block';
     _key: string;
   }>;
   faqItems?: Array<{
@@ -288,18 +288,18 @@ export type MembershipPage = {
       children?: Array<{
         marks?: Array<string>;
         text?: string;
-        _type: "span";
+        _type: 'span';
         _key: string;
       }>;
-      style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
-      listItem?: "bullet" | "number";
+      style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote';
+      listItem?: 'bullet' | 'number';
       markDefs?: Array<{
         href?: string;
-        _type: "link";
+        _type: 'link';
         _key: string;
       }>;
       level?: number;
-      _type: "block";
+      _type: 'block';
       _key: string;
     }>;
     _key: string;
@@ -307,7 +307,7 @@ export type MembershipPage = {
 };
 
 export type SanityImageCrop = {
-  _type: "sanity.imageCrop";
+  _type: 'sanity.imageCrop';
   top?: number;
   bottom?: number;
   left?: number;
@@ -315,7 +315,7 @@ export type SanityImageCrop = {
 };
 
 export type SanityImageHotspot = {
-  _type: "sanity.imageHotspot";
+  _type: 'sanity.imageHotspot';
   x?: number;
   y?: number;
   height?: number;
@@ -324,7 +324,7 @@ export type SanityImageHotspot = {
 
 export type Layout = {
   _id: string;
-  _type: "layout";
+  _type: 'layout';
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -335,7 +335,7 @@ export type Layout = {
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     altText?: string;
-    _type: "image";
+    _type: 'image';
   };
   landingPageLink?: string;
   callToActionButton?: {
@@ -348,13 +348,13 @@ export type Layout = {
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     altText?: string;
-    _type: "image";
+    _type: 'image';
   };
 };
 
 export type Homepage = {
   _id: string;
-  _type: "homepage";
+  _type: 'homepage';
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -365,7 +365,7 @@ export type Homepage = {
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     altText?: string;
-    _type: "image";
+    _type: 'image';
   };
   slug?: Slug;
   content?: string;
@@ -377,42 +377,42 @@ export type Homepage = {
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
       altText?: string;
-      _type: "image";
+      _type: 'image';
     };
     highlightedContent?: Array<{
       children?: Array<{
         marks?: Array<string>;
         text?: string;
-        _type: "span";
+        _type: 'span';
         _key: string;
       }>;
-      style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
-      listItem?: "bullet" | "number";
+      style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote';
+      listItem?: 'bullet' | 'number';
       markDefs?: Array<{
         href?: string;
-        _type: "link";
+        _type: 'link';
         _key: string;
       }>;
       level?: number;
-      _type: "block";
+      _type: 'block';
       _key: string;
     }>;
     content?: Array<{
       children?: Array<{
         marks?: Array<string>;
         text?: string;
-        _type: "span";
+        _type: 'span';
         _key: string;
       }>;
-      style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
-      listItem?: "bullet" | "number";
+      style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote';
+      listItem?: 'bullet' | 'number';
       markDefs?: Array<{
         href?: string;
-        _type: "link";
+        _type: 'link';
         _key: string;
       }>;
       level?: number;
-      _type: "block";
+      _type: 'block';
       _key: string;
     }>;
   };
@@ -430,36 +430,36 @@ export type Homepage = {
       children?: Array<{
         marks?: Array<string>;
         text?: string;
-        _type: "span";
+        _type: 'span';
         _key: string;
       }>;
-      style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
-      listItem?: "bullet" | "number";
+      style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote';
+      listItem?: 'bullet' | 'number';
       markDefs?: Array<{
         href?: string;
-        _type: "link";
+        _type: 'link';
         _key: string;
       }>;
       level?: number;
-      _type: "block";
+      _type: 'block';
       _key: string;
     }>;
     content?: Array<{
       children?: Array<{
         marks?: Array<string>;
         text?: string;
-        _type: "span";
+        _type: 'span';
         _key: string;
       }>;
-      style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
-      listItem?: "bullet" | "number";
+      style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote';
+      listItem?: 'bullet' | 'number';
       markDefs?: Array<{
         href?: string;
-        _type: "link";
+        _type: 'link';
         _key: string;
       }>;
       level?: number;
-      _type: "block";
+      _type: 'block';
       _key: string;
     }>;
     photo?: {
@@ -468,20 +468,20 @@ export type Homepage = {
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
       altText?: string;
-      _type: "image";
+      _type: 'image';
     };
   };
 };
 
 export type Slug = {
-  _type: "slug";
+  _type: 'slug';
   current?: string;
   source?: string;
 };
 
 export type EmailCityCouncil = {
   _id: string;
-  _type: "emailCityCouncil";
+  _type: 'emailCityCouncil';
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -489,14 +489,14 @@ export type EmailCityCouncil = {
   links?: Array<{
     title?: string;
     url?: string;
-    _type: "link";
+    _type: 'link';
     _key: string;
   }>;
 };
 
 export type DonatePage = {
   _id: string;
-  _type: "donatePage";
+  _type: 'donatePage';
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -505,18 +505,18 @@ export type DonatePage = {
     children?: Array<{
       marks?: Array<string>;
       text?: string;
-      _type: "span";
+      _type: 'span';
       _key: string;
     }>;
-    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
-    listItem?: "bullet" | "number";
+    style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote';
+    listItem?: 'bullet' | 'number';
     markDefs?: Array<{
       href?: string;
-      _type: "link";
+      _type: 'link';
       _key: string;
     }>;
     level?: number;
-    _type: "block";
+    _type: 'block';
     _key: string;
   }>;
   embedLink?: string;
@@ -524,7 +524,7 @@ export type DonatePage = {
 
 export type CityCouncilQuestionnaire = {
   _id: string;
-  _type: "cityCouncilQuestionnaire";
+  _type: 'cityCouncilQuestionnaire';
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -535,36 +535,36 @@ export type CityCouncilQuestionnaire = {
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     altText?: string;
-    _type: "image";
+    _type: 'image';
   };
   body?: Array<{
     children?: Array<{
       marks?: Array<string>;
       text?: string;
-      _type: "span";
+      _type: 'span';
       _key: string;
     }>;
-    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
-    listItem?: "bullet" | "number";
+    style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote';
+    listItem?: 'bullet' | 'number';
     markDefs?: Array<{
       href?: string;
-      _type: "link";
+      _type: 'link';
       _key: string;
     }>;
     level?: number;
-    _type: "block";
+    _type: 'block';
     _key: string;
   }>;
 };
 
 export type CaptionedImage = {
-  _type: "captionedImage";
+  _type: 'captionedImage';
   image?: {
     asset?: SanityImageAssetReference;
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
-    _type: "image";
+    _type: 'image';
   };
   altText?: string;
   highlightedCaption?: string;
@@ -573,7 +573,7 @@ export type CaptionedImage = {
 
 export type AdvocacyPage = {
   _id: string;
-  _type: "advocacyPage";
+  _type: 'advocacyPage';
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -582,18 +582,18 @@ export type AdvocacyPage = {
     children?: Array<{
       marks?: Array<string>;
       text?: string;
-      _type: "span";
+      _type: 'span';
       _key: string;
     }>;
-    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
-    listItem?: "bullet" | "number";
+    style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote';
+    listItem?: 'bullet' | 'number';
     markDefs?: Array<{
       href?: string;
-      _type: "link";
+      _type: 'link';
       _key: string;
     }>;
     level?: number;
-    _type: "block";
+    _type: 'block';
     _key: string;
   }>;
   linkButton1?: {
@@ -608,18 +608,18 @@ export type AdvocacyPage = {
     children?: Array<{
       marks?: Array<string>;
       text?: string;
-      _type: "span";
+      _type: 'span';
       _key: string;
     }>;
-    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
-    listItem?: "bullet" | "number";
+    style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote';
+    listItem?: 'bullet' | 'number';
     markDefs?: Array<{
       href?: string;
-      _type: "link";
+      _type: 'link';
       _key: string;
     }>;
     level?: number;
-    _type: "block";
+    _type: 'block';
     _key: string;
   }>;
   images?: Array<{
@@ -628,14 +628,14 @@ export type AdvocacyPage = {
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     altText?: string;
-    _type: "image";
+    _type: 'image';
     _key: string;
   }>;
 };
 
 export type AboutUs = {
   _id: string;
-  _type: "aboutUs";
+  _type: 'aboutUs';
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -646,36 +646,36 @@ export type AboutUs = {
       children?: Array<{
         marks?: Array<string>;
         text?: string;
-        _type: "span";
+        _type: 'span';
         _key: string;
       }>;
-      style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
-      listItem?: "bullet" | "number";
+      style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote';
+      listItem?: 'bullet' | 'number';
       markDefs?: Array<{
         href?: string;
-        _type: "link";
+        _type: 'link';
         _key: string;
       }>;
       level?: number;
-      _type: "block";
+      _type: 'block';
       _key: string;
     }>;
     content?: Array<{
       children?: Array<{
         marks?: Array<string>;
         text?: string;
-        _type: "span";
+        _type: 'span';
         _key: string;
       }>;
-      style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
-      listItem?: "bullet" | "number";
+      style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote';
+      listItem?: 'bullet' | 'number';
       markDefs?: Array<{
         href?: string;
-        _type: "link";
+        _type: 'link';
         _key: string;
       }>;
       level?: number;
-      _type: "block";
+      _type: 'block';
       _key: string;
     }>;
     photo?: {
@@ -684,7 +684,7 @@ export type AboutUs = {
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
       altText?: string;
-      _type: "image";
+      _type: 'image';
     };
   };
   mission?: {
@@ -693,36 +693,36 @@ export type AboutUs = {
       children?: Array<{
         marks?: Array<string>;
         text?: string;
-        _type: "span";
+        _type: 'span';
         _key: string;
       }>;
-      style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
-      listItem?: "bullet" | "number";
+      style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote';
+      listItem?: 'bullet' | 'number';
       markDefs?: Array<{
         href?: string;
-        _type: "link";
+        _type: 'link';
         _key: string;
       }>;
       level?: number;
-      _type: "block";
+      _type: 'block';
       _key: string;
     }>;
     content?: Array<{
       children?: Array<{
         marks?: Array<string>;
         text?: string;
-        _type: "span";
+        _type: 'span';
         _key: string;
       }>;
-      style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
-      listItem?: "bullet" | "number";
+      style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote';
+      listItem?: 'bullet' | 'number';
       markDefs?: Array<{
         href?: string;
-        _type: "link";
+        _type: 'link';
         _key: string;
       }>;
       level?: number;
-      _type: "block";
+      _type: 'block';
       _key: string;
     }>;
     photo?: {
@@ -731,7 +731,7 @@ export type AboutUs = {
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
       altText?: string;
-      _type: "image";
+      _type: 'image';
     };
   };
   team?: {
@@ -741,26 +741,18 @@ export type AboutUs = {
         children?: Array<{
           marks?: Array<string>;
           text?: string;
-          _type: "span";
+          _type: 'span';
           _key: string;
         }>;
-        style?:
-          | "normal"
-          | "h1"
-          | "h2"
-          | "h3"
-          | "h4"
-          | "h5"
-          | "h6"
-          | "blockquote";
-        listItem?: "bullet" | "number";
+        style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote';
+        listItem?: 'bullet' | 'number';
         markDefs?: Array<{
           href?: string;
-          _type: "link";
+          _type: 'link';
           _key: string;
         }>;
         level?: number;
-        _type: "block";
+        _type: 'block';
         _key: string;
       }>;
       _key: string;
@@ -771,14 +763,14 @@ export type AboutUs = {
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
       altText?: string;
-      _type: "image";
+      _type: 'image';
     };
   };
 };
 
 export type Tag = {
   _id: string;
-  _type: "tag";
+  _type: 'tag';
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -788,14 +780,14 @@ export type Tag = {
 
 export type TagReference = {
   _ref: string;
-  _type: "reference";
+  _type: 'reference';
   _weak?: boolean;
-  [internalGroqTypeReferenceTo]?: "tag";
+  [internalGroqTypeReferenceTo]?: 'tag';
 };
 
 export type SocialRideEvent = {
   _id: string;
-  _type: "socialRideEvent";
+  _type: 'socialRideEvent';
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -813,18 +805,18 @@ export type SocialRideEvent = {
     children?: Array<{
       marks?: Array<string>;
       text?: string;
-      _type: "span";
+      _type: 'span';
       _key: string;
     }>;
-    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
-    listItem?: "bullet" | "number";
+    style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote';
+    listItem?: 'bullet' | 'number';
     markDefs?: Array<{
       href?: string;
-      _type: "link";
+      _type: 'link';
       _key: string;
     }>;
     level?: number;
-    _type: "block";
+    _type: 'block';
     _key: string;
   }>;
   photo?: {
@@ -832,12 +824,12 @@ export type SocialRideEvent = {
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
-    _type: "image";
+    _type: 'image';
   };
 };
 
 export type RecurringDates = {
-  _type: "recurringDates";
+  _type: 'recurringDates';
   startDate?: string;
   endDate?: string;
   recurs?: boolean;
@@ -846,14 +838,14 @@ export type RecurringDates = {
 
 export type AuthorReference = {
   _ref: string;
-  _type: "reference";
+  _type: 'reference';
   _weak?: boolean;
-  [internalGroqTypeReferenceTo]?: "author";
+  [internalGroqTypeReferenceTo]?: 'author';
 };
 
 export type Post = {
   _id: string;
-  _type: "post";
+  _type: 'post';
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -867,7 +859,7 @@ export type Post = {
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     altText?: string;
-    _type: "image";
+    _type: 'image';
   };
   excerpt?: string;
   body?: Array<
@@ -875,26 +867,18 @@ export type Post = {
         children?: Array<{
           marks?: Array<string>;
           text?: string;
-          _type: "span";
+          _type: 'span';
           _key: string;
         }>;
-        style?:
-          | "normal"
-          | "h1"
-          | "h2"
-          | "h3"
-          | "h4"
-          | "h5"
-          | "h6"
-          | "blockquote";
-        listItem?: "bullet" | "number";
+        style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote';
+        listItem?: 'bullet' | 'number';
         markDefs?: Array<{
           href?: string;
-          _type: "link";
+          _type: 'link';
           _key: string;
         }>;
         level?: number;
-        _type: "block";
+        _type: 'block';
         _key: string;
       }
     | ({
@@ -905,7 +889,7 @@ export type Post = {
 
 export type Events = {
   _id: string;
-  _type: "events";
+  _type: 'events';
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -923,18 +907,18 @@ export type Events = {
     children?: Array<{
       marks?: Array<string>;
       text?: string;
-      _type: "span";
+      _type: 'span';
       _key: string;
     }>;
-    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
-    listItem?: "bullet" | "number";
+    style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote';
+    listItem?: 'bullet' | 'number';
     markDefs?: Array<{
       href?: string;
-      _type: "link";
+      _type: 'link';
       _key: string;
     }>;
     level?: number;
-    _type: "block";
+    _type: 'block';
     _key: string;
   }>;
   photo?: {
@@ -942,13 +926,13 @@ export type Events = {
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
-    _type: "image";
+    _type: 'image';
   };
 };
 
 export type Author = {
   _id: string;
-  _type: "author";
+  _type: 'author';
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -959,12 +943,12 @@ export type Author = {
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
-    _type: "image";
+    _type: 'image';
   };
 };
 
 export type SanityImagePaletteSwatch = {
-  _type: "sanity.imagePaletteSwatch";
+  _type: 'sanity.imagePaletteSwatch';
   background?: string;
   foreground?: string;
   population?: number;
@@ -972,7 +956,7 @@ export type SanityImagePaletteSwatch = {
 };
 
 export type SanityImagePalette = {
-  _type: "sanity.imagePalette";
+  _type: 'sanity.imagePalette';
   darkMuted?: SanityImagePaletteSwatch;
   lightVibrant?: SanityImagePaletteSwatch;
   darkVibrant?: SanityImagePaletteSwatch;
@@ -983,14 +967,14 @@ export type SanityImagePalette = {
 };
 
 export type SanityImageDimensions = {
-  _type: "sanity.imageDimensions";
+  _type: 'sanity.imageDimensions';
   height?: number;
   width?: number;
   aspectRatio?: number;
 };
 
 export type SanityImageMetadata = {
-  _type: "sanity.imageMetadata";
+  _type: 'sanity.imageMetadata';
   location?: Geopoint;
   dimensions?: SanityImageDimensions;
   palette?: SanityImagePalette;
@@ -1003,7 +987,7 @@ export type SanityImageMetadata = {
 
 export type SanityFileAsset = {
   _id: string;
-  _type: "sanity.fileAsset";
+  _type: 'sanity.fileAsset';
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -1024,7 +1008,7 @@ export type SanityFileAsset = {
 };
 
 export type SanityAssetSourceData = {
-  _type: "sanity.assetSourceData";
+  _type: 'sanity.assetSourceData';
   name?: string;
   id?: string;
   url?: string;
@@ -1032,7 +1016,7 @@ export type SanityAssetSourceData = {
 
 export type SanityImageAsset = {
   _id: string;
-  _type: "sanity.imageAsset";
+  _type: 'sanity.imageAsset';
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -1054,7 +1038,7 @@ export type SanityImageAsset = {
 };
 
 export type Geopoint = {
-  _type: "geopoint";
+  _type: 'geopoint';
   lat?: number;
   lng?: number;
   alt?: number;
@@ -1100,7 +1084,7 @@ export type AllSanitySchemaTypes =
 // Query: *[_type == "post" && slug.current == $slug][0]{ ..., author->{ name } }
 export type PostQueryResult = {
   _id: string;
-  _type: "post";
+  _type: 'post';
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -1116,7 +1100,7 @@ export type PostQueryResult = {
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     altText?: string;
-    _type: "image";
+    _type: 'image';
   };
   excerpt?: string;
   body?: Array<
@@ -1127,26 +1111,18 @@ export type PostQueryResult = {
         children?: Array<{
           marks?: Array<string>;
           text?: string;
-          _type: "span";
+          _type: 'span';
           _key: string;
         }>;
-        style?:
-          | "blockquote"
-          | "h1"
-          | "h2"
-          | "h3"
-          | "h4"
-          | "h5"
-          | "h6"
-          | "normal";
-        listItem?: "bullet" | "number";
+        style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal';
+        listItem?: 'bullet' | 'number';
         markDefs?: Array<{
           href?: string;
-          _type: "link";
+          _type: 'link';
           _key: string;
         }>;
         level?: number;
-        _type: "block";
+        _type: 'block';
         _key: string;
       }
   >;
@@ -1157,7 +1133,7 @@ export type PostQueryResult = {
 // Query: *[_type == "post" && defined(slug.current)] | order(_createdAt desc) [$start...$end]
 export type PostsResult = Array<{
   _id: string;
-  _type: "post";
+  _type: 'post';
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -1171,7 +1147,7 @@ export type PostsResult = Array<{
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     altText?: string;
-    _type: "image";
+    _type: 'image';
   };
   excerpt?: string;
   body?: Array<
@@ -1182,87 +1158,22 @@ export type PostsResult = Array<{
         children?: Array<{
           marks?: Array<string>;
           text?: string;
-          _type: "span";
+          _type: 'span';
           _key: string;
         }>;
-        style?:
-          | "blockquote"
-          | "h1"
-          | "h2"
-          | "h3"
-          | "h4"
-          | "h5"
-          | "h6"
-          | "normal";
-        listItem?: "bullet" | "number";
+        style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal';
+        listItem?: 'bullet' | 'number';
         markDefs?: Array<{
           href?: string;
-          _type: "link";
+          _type: 'link';
           _key: string;
         }>;
         level?: number;
-        _type: "block";
+        _type: 'block';
         _key: string;
       }
   >;
 }>;
-
-// Source: src/utils/groqQueries.ts
-// Variable: post
-// Query: *[_type == "post" && slug.current == $slug][0]{ ..., author->{ name } }
-export type PostResult = {
-  _id: string;
-  _type: "post";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  title?: string;
-  slug?: Slug;
-  author: {
-    name: string | null;
-  } | null;
-  publishedAt?: string;
-  mainImage?: {
-    asset?: SanityImageAssetReference;
-    media?: unknown;
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    altText?: string;
-    _type: "image";
-  };
-  excerpt?: string;
-  body?: Array<
-    | ({
-        _key: string;
-      } & CaptionedImage)
-    | {
-        children?: Array<{
-          marks?: Array<string>;
-          text?: string;
-          _type: "span";
-          _key: string;
-        }>;
-        style?:
-          | "blockquote"
-          | "h1"
-          | "h2"
-          | "h3"
-          | "h4"
-          | "h5"
-          | "h6"
-          | "normal";
-        listItem?: "bullet" | "number";
-        markDefs?: Array<{
-          href?: string;
-          _type: "link";
-          _key: string;
-        }>;
-        level?: number;
-        _type: "block";
-        _key: string;
-      }
-  >;
-} | null;
 
 // Source: src/utils/groqQueries.ts
 // Variable: homePage
@@ -1287,36 +1198,36 @@ export type HomePageResult = {
       children?: Array<{
         marks?: Array<string>;
         text?: string;
-        _type: "span";
+        _type: 'span';
         _key: string;
       }>;
-      style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
-      listItem?: "bullet" | "number";
+      style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal';
+      listItem?: 'bullet' | 'number';
       markDefs?: Array<{
         href?: string;
-        _type: "link";
+        _type: 'link';
         _key: string;
       }>;
       level?: number;
-      _type: "block";
+      _type: 'block';
       _key: string;
     }> | null;
     content: Array<{
       children?: Array<{
         marks?: Array<string>;
         text?: string;
-        _type: "span";
+        _type: 'span';
         _key: string;
       }>;
-      style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
-      listItem?: "bullet" | "number";
+      style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal';
+      listItem?: 'bullet' | 'number';
       markDefs?: Array<{
         href?: string;
-        _type: "link";
+        _type: 'link';
         _key: string;
       }>;
       level?: number;
-      _type: "block";
+      _type: 'block';
       _key: string;
     }> | null;
   };
@@ -1335,36 +1246,36 @@ export type HomePageResult = {
       children?: Array<{
         marks?: Array<string>;
         text?: string;
-        _type: "span";
+        _type: 'span';
         _key: string;
       }>;
-      style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
-      listItem?: "bullet" | "number";
+      style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal';
+      listItem?: 'bullet' | 'number';
       markDefs?: Array<{
         href?: string;
-        _type: "link";
+        _type: 'link';
         _key: string;
       }>;
       level?: number;
-      _type: "block";
+      _type: 'block';
       _key: string;
     }> | null;
     content: Array<{
       children?: Array<{
         marks?: Array<string>;
         text?: string;
-        _type: "span";
+        _type: 'span';
         _key: string;
       }>;
-      style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
-      listItem?: "bullet" | "number";
+      style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal';
+      listItem?: 'bullet' | 'number';
       markDefs?: Array<{
         href?: string;
-        _type: "link";
+        _type: 'link';
         _key: string;
       }>;
       level?: number;
-      _type: "block";
+      _type: 'block';
       _key: string;
     }> | null;
     photo: {
@@ -1395,18 +1306,18 @@ export type PolicyPageResult = {
       children?: Array<{
         marks?: Array<string>;
         text?: string;
-        _type: "span";
+        _type: 'span';
         _key: string;
       }>;
-      style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
-      listItem?: "bullet" | "number";
+      style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal';
+      listItem?: 'bullet' | 'number';
       markDefs?: Array<{
         href?: string;
-        _type: "link";
+        _type: 'link';
         _key: string;
       }>;
       level?: number;
-      _type: "block";
+      _type: 'block';
       _key: string;
     }> | null;
   };
@@ -1415,54 +1326,54 @@ export type PolicyPageResult = {
       children?: Array<{
         marks?: Array<string>;
         text?: string;
-        _type: "span";
+        _type: 'span';
         _key: string;
       }>;
-      style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
-      listItem?: "bullet" | "number";
+      style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal';
+      listItem?: 'bullet' | 'number';
       markDefs?: Array<{
         href?: string;
-        _type: "link";
+        _type: 'link';
         _key: string;
       }>;
       level?: number;
-      _type: "block";
+      _type: 'block';
       _key: string;
     }> | null;
     summary: Array<{
       children?: Array<{
         marks?: Array<string>;
         text?: string;
-        _type: "span";
+        _type: 'span';
         _key: string;
       }>;
-      style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
-      listItem?: "bullet" | "number";
+      style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal';
+      listItem?: 'bullet' | 'number';
       markDefs?: Array<{
         href?: string;
-        _type: "link";
+        _type: 'link';
         _key: string;
       }>;
       level?: number;
-      _type: "block";
+      _type: 'block';
       _key: string;
     }> | null;
     moreInfo: Array<{
       children?: Array<{
         marks?: Array<string>;
         text?: string;
-        _type: "span";
+        _type: 'span';
         _key: string;
       }>;
-      style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
-      listItem?: "bullet" | "number";
+      style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal';
+      listItem?: 'bullet' | 'number';
       markDefs?: Array<{
         href?: string;
-        _type: "link";
+        _type: 'link';
         _key: string;
       }>;
       level?: number;
-      _type: "block";
+      _type: 'block';
       _key: string;
     }> | null;
   }> | null;
@@ -1472,18 +1383,18 @@ export type PolicyPageResult = {
       children?: Array<{
         marks?: Array<string>;
         text?: string;
-        _type: "span";
+        _type: 'span';
         _key: string;
       }>;
-      style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
-      listItem?: "bullet" | "number";
+      style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal';
+      listItem?: 'bullet' | 'number';
       markDefs?: Array<{
         href?: string;
-        _type: "link";
+        _type: 'link';
         _key: string;
       }>;
       level?: number;
-      _type: "block";
+      _type: 'block';
       _key: string;
     }> | null;
   };
@@ -1523,36 +1434,36 @@ export type AboutUsPageResult = {
       children?: Array<{
         marks?: Array<string>;
         text?: string;
-        _type: "span";
+        _type: 'span';
         _key: string;
       }>;
-      style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
-      listItem?: "bullet" | "number";
+      style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal';
+      listItem?: 'bullet' | 'number';
       markDefs?: Array<{
         href?: string;
-        _type: "link";
+        _type: 'link';
         _key: string;
       }>;
       level?: number;
-      _type: "block";
+      _type: 'block';
       _key: string;
     }> | null;
     highlightedContent: Array<{
       children?: Array<{
         marks?: Array<string>;
         text?: string;
-        _type: "span";
+        _type: 'span';
         _key: string;
       }>;
-      style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
-      listItem?: "bullet" | "number";
+      style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal';
+      listItem?: 'bullet' | 'number';
       markDefs?: Array<{
         href?: string;
-        _type: "link";
+        _type: 'link';
         _key: string;
       }>;
       level?: number;
-      _type: "block";
+      _type: 'block';
       _key: string;
     }> | null;
     photo: {
@@ -1566,36 +1477,36 @@ export type AboutUsPageResult = {
       children?: Array<{
         marks?: Array<string>;
         text?: string;
-        _type: "span";
+        _type: 'span';
         _key: string;
       }>;
-      style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
-      listItem?: "bullet" | "number";
+      style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal';
+      listItem?: 'bullet' | 'number';
       markDefs?: Array<{
         href?: string;
-        _type: "link";
+        _type: 'link';
         _key: string;
       }>;
       level?: number;
-      _type: "block";
+      _type: 'block';
       _key: string;
     }> | null;
     highlightedContent: Array<{
       children?: Array<{
         marks?: Array<string>;
         text?: string;
-        _type: "span";
+        _type: 'span';
         _key: string;
       }>;
-      style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
-      listItem?: "bullet" | "number";
+      style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal';
+      listItem?: 'bullet' | 'number';
       markDefs?: Array<{
         href?: string;
-        _type: "link";
+        _type: 'link';
         _key: string;
       }>;
       level?: number;
-      _type: "block";
+      _type: 'block';
       _key: string;
     }> | null;
     photo: {
@@ -1610,26 +1521,18 @@ export type AboutUsPageResult = {
         children?: Array<{
           marks?: Array<string>;
           text?: string;
-          _type: "span";
+          _type: 'span';
           _key: string;
         }>;
-        style?:
-          | "blockquote"
-          | "h1"
-          | "h2"
-          | "h3"
-          | "h4"
-          | "h5"
-          | "h6"
-          | "normal";
-        listItem?: "bullet" | "number";
+        style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal';
+        listItem?: 'bullet' | 'number';
         markDefs?: Array<{
           href?: string;
-          _type: "link";
+          _type: 'link';
           _key: string;
         }>;
         level?: number;
-        _type: "block";
+        _type: 'block';
         _key: string;
       }> | null;
     }> | null;
@@ -1660,18 +1563,18 @@ export type EventsPageResult = Array<{
     children?: Array<{
       marks?: Array<string>;
       text?: string;
-      _type: "span";
+      _type: 'span';
       _key: string;
     }>;
-    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
-    listItem?: "bullet" | "number";
+    style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal';
+    listItem?: 'bullet' | 'number';
     markDefs?: Array<{
       href?: string;
-      _type: "link";
+      _type: 'link';
       _key: string;
     }>;
     level?: number;
-    _type: "block";
+    _type: 'block';
     _key: string;
   }> | null;
   photo: {
@@ -1702,18 +1605,18 @@ export type SocialRideEventsPageResult = Array<{
     children?: Array<{
       marks?: Array<string>;
       text?: string;
-      _type: "span";
+      _type: 'span';
       _key: string;
     }>;
-    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
-    listItem?: "bullet" | "number";
+    style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal';
+    listItem?: 'bullet' | 'number';
     markDefs?: Array<{
       href?: string;
-      _type: "link";
+      _type: 'link';
       _key: string;
     }>;
     level?: number;
-    _type: "block";
+    _type: 'block';
     _key: string;
   }> | null;
   photo: {
@@ -1723,45 +1626,6 @@ export type SocialRideEventsPageResult = Array<{
     } | null;
   } | null;
 }>;
-
-// Source: src/utils/groqQueries.ts
-// Variable: tags
-// Query: *[_type == "tag"]{ "id": _id, name, description }
-export type TagsResult = Array<{
-  id: string;
-  name: string | null;
-  description: string | null;
-}>;
-
-// Source: src/utils/groqQueries.ts
-// Variable: weekWithoutDrivingPage
-// Query: *[_type == "weekWithoutDriving"]{      _id, _createdAt, title,      "introBlock": { "heading": introBlock.heading, "content": introBlock.content }    }[0]
-export type WeekWithoutDrivingPageResult = {
-  _id: string;
-  _createdAt: string;
-  title: string | null;
-  introBlock: {
-    heading: string | null;
-    content: Array<{
-      children?: Array<{
-        marks?: Array<string>;
-        text?: string;
-        _type: "span";
-        _key: string;
-      }>;
-      style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
-      listItem?: "bullet" | "number";
-      markDefs?: Array<{
-        href?: string;
-        _type: "link";
-        _key: string;
-      }>;
-      level?: number;
-      _type: "block";
-      _key: string;
-    }> | null;
-  };
-} | null;
 
 // Source: src/utils/groqQueries.ts
 // Variable: emailCityCouncil
@@ -1791,18 +1655,18 @@ export type CityCouncilQuestionnaireResult = {
     children?: Array<{
       marks?: Array<string>;
       text?: string;
-      _type: "span";
+      _type: 'span';
       _key: string;
     }>;
-    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
-    listItem?: "bullet" | "number";
+    style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal';
+    listItem?: 'bullet' | 'number';
     markDefs?: Array<{
       href?: string;
-      _type: "link";
+      _type: 'link';
       _key: string;
     }>;
     level?: number;
-    _type: "block";
+    _type: 'block';
     _key: string;
   }> | null;
 } | null;
@@ -1818,18 +1682,18 @@ export type AdvocacyPageResult = {
     children?: Array<{
       marks?: Array<string>;
       text?: string;
-      _type: "span";
+      _type: 'span';
       _key: string;
     }>;
-    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
-    listItem?: "bullet" | "number";
+    style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal';
+    listItem?: 'bullet' | 'number';
     markDefs?: Array<{
       href?: string;
-      _type: "link";
+      _type: 'link';
       _key: string;
     }>;
     level?: number;
-    _type: "block";
+    _type: 'block';
     _key: string;
   }> | null;
   linkButton1: {
@@ -1844,18 +1708,18 @@ export type AdvocacyPageResult = {
     children?: Array<{
       marks?: Array<string>;
       text?: string;
-      _type: "span";
+      _type: 'span';
       _key: string;
     }>;
-    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
-    listItem?: "bullet" | "number";
+    style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal';
+    listItem?: 'bullet' | 'number';
     markDefs?: Array<{
       href?: string;
-      _type: "link";
+      _type: 'link';
       _key: string;
     }>;
     level?: number;
-    _type: "block";
+    _type: 'block';
     _key: string;
   }> | null;
   images: Array<{
@@ -1872,18 +1736,18 @@ export type SocialRidesPageResult = {
     children?: Array<{
       marks?: Array<string>;
       text?: string;
-      _type: "span";
+      _type: 'span';
       _key: string;
     }>;
-    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
-    listItem?: "bullet" | "number";
+    style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal';
+    listItem?: 'bullet' | 'number';
     markDefs?: Array<{
       href?: string;
-      _type: "link";
+      _type: 'link';
       _key: string;
     }>;
     level?: number;
-    _type: "block";
+    _type: 'block';
     _key: string;
   }> | null;
 } | null;
@@ -1897,18 +1761,18 @@ export type DonatePageResult = {
     children?: Array<{
       marks?: Array<string>;
       text?: string;
-      _type: "span";
+      _type: 'span';
       _key: string;
     }>;
-    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
-    listItem?: "bullet" | "number";
+    style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal';
+    listItem?: 'bullet' | 'number';
     markDefs?: Array<{
       href?: string;
-      _type: "link";
+      _type: 'link';
       _key: string;
     }>;
     level?: number;
-    _type: "block";
+    _type: 'block';
     _key: string;
   }> | null;
   embedLink: string | null;
@@ -1922,7 +1786,7 @@ export type MembershipPageResult = {
   heroMedia: {
     asset: {
       _id: string;
-      _type: "sanity.imageAsset";
+      _type: 'sanity.imageAsset';
       _createdAt: string;
       _updatedAt: string;
       _rev: string;
@@ -1965,18 +1829,18 @@ export type MembershipPageResult = {
       children?: Array<{
         marks?: Array<string>;
         text?: string;
-        _type: "span";
+        _type: 'span';
         _key: string;
       }>;
-      style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
-      listItem?: "bullet" | "number";
+      style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal';
+      listItem?: 'bullet' | 'number';
       markDefs?: Array<{
         href?: string;
-        _type: "link";
+        _type: 'link';
         _key: string;
       }>;
       level?: number;
-      _type: "block";
+      _type: 'block';
       _key: string;
     }> | null;
   } | null;
@@ -1985,18 +1849,18 @@ export type MembershipPageResult = {
     children?: Array<{
       marks?: Array<string>;
       text?: string;
-      _type: "span";
+      _type: 'span';
       _key: string;
     }>;
-    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
-    listItem?: "bullet" | "number";
+    style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal';
+    listItem?: 'bullet' | 'number';
     markDefs?: Array<{
       href?: string;
-      _type: "link";
+      _type: 'link';
       _key: string;
     }>;
     level?: number;
-    _type: "block";
+    _type: 'block';
     _key: string;
   }> | null;
   faqHeading: string | null;
@@ -2006,18 +1870,18 @@ export type MembershipPageResult = {
       children?: Array<{
         marks?: Array<string>;
         text?: string;
-        _type: "span";
+        _type: 'span';
         _key: string;
       }>;
-      style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
-      listItem?: "bullet" | "number";
+      style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal';
+      listItem?: 'bullet' | 'number';
       markDefs?: Array<{
         href?: string;
-        _type: "link";
+        _type: 'link';
         _key: string;
       }>;
       level?: number;
-      _type: "block";
+      _type: 'block';
       _key: string;
     }> | null;
   }> | null;
@@ -2031,37 +1895,34 @@ export type CalendarPageResult = {
     children?: Array<{
       marks?: Array<string>;
       text?: string;
-      _type: "span";
+      _type: 'span';
       _key: string;
     }>;
-    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
-    listItem?: "bullet" | "number";
+    style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal';
+    listItem?: 'bullet' | 'number';
     markDefs?: Array<{
       href?: string;
-      _type: "link";
+      _type: 'link';
       _key: string;
     }>;
     level?: number;
-    _type: "block";
+    _type: 'block';
     _key: string;
   }> | null;
 } | null;
 
 // Query TypeMap
-import "@sanity/client";
-declare module "@sanity/client" {
+import '@sanity/client';
+declare module '@sanity/client' {
   interface SanityQueries {
     '\n  *[_type == "post" && slug.current == $slug][0]{ ..., author->{ name } }\n': PostQueryResult;
     '\n    *[_type == "post" && defined(slug.current)] | order(_createdAt desc) [$start...$end]\n  ': PostsResult;
-    '\n    *[_type == "post" && slug.current == $slug][0]{ ..., author->{ name } }\n  ': PostResult;
     '\n    *[_type == "homepage"]{\n      _id, _createdAt, title, "slug": slug.current, content,\n      "homePageHeroImage": { "asset": homePageHeroImage.asset->url, "altText": homePageHeroImage.altText },\n      "whoWeAre": {\n        "heading": whoWeAre.heading,\n        "photo": { "asset": whoWeAre.photo.asset->url, "altText": whoWeAre.photo.altText },\n        "highlightedContent": whoWeAre.highlightedContent,\n        "content": whoWeAre.content\n      },\n      "whatWeDo": {\n        "heading": whatWeDo.heading,\n        "whatWeDoPics": whatWeDo.whatWeDoPics[] { "image": image.asset->url, "altText": altText, "highlightedCaption": highlightedCaption, "caption": caption }\n      },\n      "bikePlan": {\n        "heading": bikePlan.heading,\n        "highlightedContent": bikePlan.highlightedContent,\n        "content": bikePlan.content,\n        "photo": { "asset": bikePlan.photo.asset->url, "altText": bikePlan.photo.altText }\n      },\n      "dallasBikeRide": {\n        "heading": dallasBikeRide.heading,\n        "photo": { "asset": dallasBikeRide.photo.asset->url, "altText": dallasBikeRide.photo.altText },\n        "content": dallasBikeRide.content\n      }\n    }[0]\n  ': HomePageResult;
     '\n    *[_type == "policyPage"]{\n      _id, _createdAt, title,\n      "introBlock": { "heading": introBlock.heading, "content": introBlock.content },\n      "policyRows": policyRows[] { "policy": policy, "summary": summary, "moreInfo": moreInfo },\n      "legislativeDemands": { "heading": legislativeDemands.heading, "content": legislativeDemands.content }\n    }[0]\n  ': PolicyPageResult;
     '\n    *[_type == "layout"][0]{\n      _id, _createdAt,\n      "logo": { "asset": logo.asset->url, "altText": logo.altText },\n      "landingPageLink": landingPageLink,\n      "callToActionButton": { "text": callToActionButton.text, "url": callToActionButton.url },\n      "footerBackground": { "asset": footerBackground.asset->url, "altText": footerBackground.altText },\n\n    }\n  ': LayoutResult;
     '\n    *[_type == "aboutUs"]{\n      _id, _createdAt, title,\n      "mission": { "heading": mission.heading, "content": mission.content, "highlightedContent": mission.highlightedContent, "photo": { "asset": mission.photo.asset->url, "altText": mission.photo.altText } },\n      "vision": { "heading": vision.heading, "content": vision.content, "highlightedContent": vision.highlightedContent, "photo": { "asset": vision.photo.asset->url, "altText": vision.photo.altText } },\n      "team": { "heading": team.heading, "members": team.members[]{ "name": name }, "photo": { "asset": team.photo.asset->url, "altText": team.photo.altText } },\n    }[0]\n  ': AboutUsPageResult;
     '\n    *[_type == "events"]{\n      _id, _createdAt, title,\n      "tags": tags[]->{ "id": _id, name, description },\n      date, allDay, location, excerpt, description,\n      photo { asset -> { _id, url } }\n    }\n  ': EventsPageResult;
     '\n    *[_type == "socialRideEvent"]{\n      _id, _createdAt, title,\n      "tags": tags[]->{ "id": _id, name, description },\n      date, allDay, location, excerpt, description,\n      photo { asset -> { _id, url } }\n    }\n  ': SocialRideEventsPageResult;
-    '\n    *[_type == "tag"]{ "id": _id, name, description }\n  ': TagsResult;
-    '\n    *[_type == "weekWithoutDriving"]{\n      _id, _createdAt, title,\n      "introBlock": { "heading": introBlock.heading, "content": introBlock.content }\n    }[0]\n  ': WeekWithoutDrivingPageResult;
     '\n    *[_type == "emailCityCouncil"]{\n      _id, _createdAt, title,\n      "links": links[]{ "title": title, "url": url }\n    }[0]\n  ': EmailCityCouncilResult;
     '\n    *[_type == "cityCouncilQuestionnaire"]{\n      _id, _createdAt, title,\n      "mainImage": { "asset": mainImage.asset->url, "altText": mainImage.altText },\n      body\n    }[0]\n  ': CityCouncilQuestionnaireResult;
     '\n    *[_type == "advocacyPage"]{\n      _id, _createdAt,\n      title,\n      "introText": introText,\n      "linkButton1": { "title": linkButton1.title, "url": linkButton1.url },\n      "linkButton2": { "title": linkButton2.title, "url": linkButton2.url },\n      "letter": letter,\n      "images": images[]{"image": asset->url,"altText": altText}\n    }[0]\n  ': AdvocacyPageResult;

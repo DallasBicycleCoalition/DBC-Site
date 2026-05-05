@@ -1,62 +1,60 @@
-import { visionTool } from "@sanity/vision";
-import { defineConfig } from "sanity";
-import { presentationTool } from "sanity/presentation";
-import { recurringDates } from "sanity-plugin-recurring-dates";
-import { structureTool } from "sanity/structure";
-import { openPostPreviewAction } from "./lib/actions/openPostPreview";
-import { resolve } from "./lib/presentation/resolve";
-import { schemaTypes } from "./schema/index";
+import { visionTool } from '@sanity/vision';
+import { defineConfig } from 'sanity';
+import { presentationTool } from 'sanity/presentation';
+import { recurringDates } from 'sanity-plugin-recurring-dates';
+import { structureTool } from 'sanity/structure';
+import { openPostPreviewAction } from './lib/actions/openPostPreview';
+import { resolve } from './lib/presentation/resolve';
+import { schemaTypes } from './schema/index';
 
-const projectId = "wfdg37xd";
-const dataset = "production";
+const projectId = 'wfdg37xd';
+const dataset = 'production';
 const pageDocumentTitles: Record<string, string> = {
-  aboutUs: "About Us",
-  advocacyPage: "Advocacy",
-  calendarPage: "Calendar Main",
-  cityCouncilQuestionnaire: "City Council Questionnaire",
-  donatePage: "Donate",
-  emailCityCouncil: "Email City Council",
-  homepage: "Home",
-  membershipPage: "Membership",
-  policyPage: "Policy",
-  socialRidesPage: "Calendar Social Rides",
-  weekWithoutDriving: "Week Without Driving",
+  aboutUs: 'About Us',
+  advocacyPage: 'Advocacy',
+  calendarPage: 'Calendar Main',
+  cityCouncilQuestionnaire: 'City Council Questionnaire',
+  donatePage: 'Donate',
+  emailCityCouncil: 'Email City Council',
+  homepage: 'Home',
+  membershipPage: 'Membership',
+  policyPage: 'Policy',
+  socialRidesPage: 'Calendar Social Rides',
+  weekWithoutDriving: 'Week Without Driving',
 };
 const collectionDocumentTitles: Record<string, string> = {
-  author: "Authors",
-  events: "Calendar Main Events",
-  post: "Blog Posts",
-  socialRideEvent: "Calendar Social Ride Events",
-  tag: "Tags",
+  author: 'Authors',
+  events: 'Calendar Main Events',
+  post: 'Blog Posts',
+  socialRideEvent: 'Calendar Social Ride Events',
+  tag: 'Tags',
 };
-const isSchemaExtract =
-  typeof process !== "undefined" &&
-  process.env?.SANITY_SCHEMA_EXTRACT === "true";
+const isSchemaExtract = typeof process !== 'undefined' && process.env?.SANITY_SCHEMA_EXTRACT === 'true';
 const presentationPlugin = isSchemaExtract
   ? null
   : presentationTool({
-      title: "Preview",
+      title: 'Preview',
       resolve,
       previewUrl: {
         initial: ({ origin }: { origin: string }) => origin,
         previewMode: {
-          enable: "/api/draft-mode/enable",
+          enable: '/api/draft-mode/enable',
         },
       },
-      allowOrigins: ["http://localhost:*"],
+      allowOrigins: ['http://localhost:*'],
     });
 
 export default defineConfig({
-  name: "dallas-bicycle-coalition",
-  title: "Dallas Bicycle Coalition",
+  name: 'dallas-bicycle-coalition',
+  title: 'Dallas Bicycle Coalition',
   projectId,
   dataset,
   plugins: [
     structureTool({
-      structure: (S) => {
+      structure: S => {
         const documentTypeItems = S.documentTypeListItems();
         const itemForType = (type: string, title: string) =>
-          documentTypeItems.find((item) => item.getId() === type)?.title(title);
+          documentTypeItems.find(item => item.getId() === type)?.title(title);
         const itemsForTypes = (titlesByType: Record<string, string>) =>
           Object.entries(titlesByType)
             .flatMap(([type, title]) => {
@@ -64,19 +62,17 @@ export default defineConfig({
 
               return item ? [item] : [];
             })
-            .sort((a, b) =>
-              (a.getTitle() ?? "").localeCompare(b.getTitle() ?? "")
-            );
+            .sort((a, b) => (a.getTitle() ?? '').localeCompare(b.getTitle() ?? ''));
 
         return S.list()
-          .title("Content")
+          .title('Content')
           .items([
-            S.divider().title("Pages"),
+            S.divider().title('Pages'),
             ...itemsForTypes(pageDocumentTitles),
-            S.divider().title("Collections"),
+            S.divider().title('Collections'),
             ...itemsForTypes(collectionDocumentTitles),
-            S.divider().title("Settings"),
-            ...itemsForTypes({ layout: "Layout" }),
+            S.divider().title('Settings'),
+            ...itemsForTypes({ layout: 'Layout' }),
           ]);
       },
     }),
@@ -86,14 +82,12 @@ export default defineConfig({
   ],
   document: {
     actions: (prev, context) => {
-      if (context.schemaType !== "post") {
+      if (context.schemaType !== 'post') {
         return prev;
       }
 
       const [primaryAction, ...restActions] = prev;
-      return primaryAction
-        ? [primaryAction, openPostPreviewAction, ...restActions]
-        : [openPostPreviewAction];
+      return primaryAction ? [primaryAction, openPostPreviewAction, ...restActions] : [openPostPreviewAction];
     },
   },
   schema: { types: schemaTypes },

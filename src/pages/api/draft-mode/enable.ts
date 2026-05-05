@@ -1,8 +1,8 @@
-import { validatePreviewUrl } from "@sanity/preview-url-secret";
-import { perspectiveCookieName } from "@sanity/preview-url-secret/constants";
-import type { APIRoute } from "astro";
-import { sanityClient } from "sanity:client";
-import { getSanityReadToken } from "../../../utils/sanityToken";
+import { validatePreviewUrl } from '@sanity/preview-url-secret';
+import { perspectiveCookieName } from '@sanity/preview-url-secret/constants';
+import type { APIRoute } from 'astro';
+import { sanityClient } from 'sanity:client';
+import { getSanityReadToken } from '../../../utils/sanityToken';
 
 export const prerender = false;
 
@@ -10,26 +10,26 @@ export const GET: APIRoute = async ({ request, cookies, redirect, locals }) => {
   const token = getSanityReadToken(locals);
 
   if (!token) {
-    return new Response(
-      "Server misconfigured: missing Sanity API read token",
-      {
-        status: 500,
-      }
-    );
+    return new Response('Server misconfigured: missing Sanity API read token', {
+      status: 500,
+    });
   }
 
-  const { isValid, redirectTo = "/", studioPreviewPerspective } =
-    await validatePreviewUrl(sanityClient.withConfig({ token }), request.url);
+  const {
+    isValid,
+    redirectTo = '/',
+    studioPreviewPerspective,
+  } = await validatePreviewUrl(sanityClient.withConfig({ token }), request.url);
 
   if (!isValid) {
-    return new Response("Invalid preview secret", { status: 401 });
+    return new Response('Invalid preview secret', { status: 401 });
   }
 
-  cookies.set(perspectiveCookieName, studioPreviewPerspective ?? "drafts", {
+  cookies.set(perspectiveCookieName, studioPreviewPerspective ?? 'drafts', {
     httpOnly: false,
-    sameSite: "none",
+    sameSite: 'none',
     secure: true,
-    path: "/",
+    path: '/',
   });
 
   return redirect(redirectTo, 307);

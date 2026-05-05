@@ -1,22 +1,14 @@
-import type { ClientPerspective } from "@sanity/client";
-import { perspectiveCookieName } from "@sanity/preview-url-secret/constants";
-import {
-  VisualEditing,
-  type HistoryAdapter,
-  type HistoryUpdate,
-} from "@sanity/visual-editing/react";
-import { useEffect, useMemo, useRef } from "react";
+import type { ClientPerspective } from '@sanity/client';
+import { perspectiveCookieName } from '@sanity/preview-url-secret/constants';
+import { VisualEditing, type HistoryAdapter, type HistoryUpdate } from '@sanity/visual-editing/react';
+import { useEffect, useMemo, useRef } from 'react';
 
 function serializePerspective(perspective: ClientPerspective): string {
-  return typeof perspective === "string"
-    ? perspective
-    : JSON.stringify(perspective);
+  return typeof perspective === 'string' ? perspective : JSON.stringify(perspective);
 }
 
 function getCookie(name: string): string | undefined {
-  const match = document.cookie.match(
-    new RegExp(`(?:^|; )${name}=([^;]*)`)
-  );
+  const match = document.cookie.match(new RegExp(`(?:^|; )${name}=([^;]*)`));
 
   return match ? decodeURIComponent(match[1]) : undefined;
 }
@@ -29,9 +21,7 @@ function setPerspectiveCookie(perspective: ClientPerspective): boolean {
     return false;
   }
 
-  document.cookie = `${perspectiveCookieName}=${encodeURIComponent(
-    next
-  )}; path=/; SameSite=None; Secure`;
+  document.cookie = `${perspectiveCookieName}=${encodeURIComponent(next)}; path=/; SameSite=None; Secure`;
   return true;
 }
 
@@ -39,29 +29,26 @@ function currentUrl() {
   return `${window.location.pathname}${window.location.search}${window.location.hash}`;
 }
 
-function applyHistoryUpdate(
-  update: Pick<HistoryUpdate, "type" | "url">,
-  currentHref: string
-) {
-  if (update.type === "push" && currentHref !== update.url) {
+function applyHistoryUpdate(update: Pick<HistoryUpdate, 'type' | 'url'>, currentHref: string) {
+  if (update.type === 'push' && currentHref !== update.url) {
     window.location.assign(update.url);
     return;
   }
 
-  if (update.type === "replace" && currentHref !== update.url) {
+  if (update.type === 'replace' && currentHref !== update.url) {
     window.location.replace(update.url);
     return;
   }
 
-  if (update.type === "pop") {
+  if (update.type === 'pop') {
     window.history.back();
   }
 }
 
 export default function SanityVisualEditing() {
-  type Navigate = Parameters<HistoryAdapter["subscribe"]>[0];
+  type Navigate = Parameters<HistoryAdapter['subscribe']>[0];
   const navigateRef = useRef<Navigate | undefined>(undefined);
-  const lastUrlRef = useRef("");
+  const lastUrlRef = useRef('');
 
   useEffect(() => {
     const sync = () => {
@@ -69,13 +56,13 @@ export default function SanityVisualEditing() {
 
       if (url !== lastUrlRef.current) {
         lastUrlRef.current = url;
-        navigateRef.current?.({ type: "push", title: document.title, url });
+        navigateRef.current?.({ type: 'push', title: document.title, url });
       }
     };
 
     sync();
-    window.addEventListener("popstate", sync);
-    window.addEventListener("hashchange", sync);
+    window.addEventListener('popstate', sync);
+    window.addEventListener('hashchange', sync);
 
     const originalPush = window.history.pushState;
     const originalReplace = window.history.replaceState;
@@ -91,8 +78,8 @@ export default function SanityVisualEditing() {
     };
 
     return () => {
-      window.removeEventListener("popstate", sync);
-      window.removeEventListener("hashchange", sync);
+      window.removeEventListener('popstate', sync);
+      window.removeEventListener('hashchange', sync);
       window.history.pushState = originalPush;
       window.history.replaceState = originalReplace;
     };
@@ -100,11 +87,11 @@ export default function SanityVisualEditing() {
 
   const history = useMemo<HistoryAdapter>(
     () => ({
-      subscribe: (navigate) => {
+      subscribe: navigate => {
         navigateRef.current = navigate;
         const url = currentUrl();
         lastUrlRef.current = url;
-        navigate({ type: "push", title: document.title, url });
+        navigate({ type: 'push', title: document.title, url });
 
         return () => {
           if (navigateRef.current === navigate) {
@@ -112,24 +99,24 @@ export default function SanityVisualEditing() {
           }
         };
       },
-      update: (update) => {
+      update: update => {
         applyHistoryUpdate(update, window.location.href);
       },
     }),
-    []
+    [],
   );
 
   return (
     <VisualEditing
       history={history}
       portal={true}
-      onPerspectiveChange={(perspective) => {
+      onPerspectiveChange={perspective => {
         if (setPerspectiveCookie(perspective)) {
           window.location.reload();
         }
       }}
       refresh={() => {
-        return new Promise<void>((resolve) => {
+        return new Promise<void>(resolve => {
           window.location.reload();
           resolve();
         });

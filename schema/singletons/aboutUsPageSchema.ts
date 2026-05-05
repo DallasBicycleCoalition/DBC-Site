@@ -1,46 +1,46 @@
-import { defineType } from "sanity";
+import { defineType } from 'sanity';
 
 export const aboutUsSchema = defineType({
-  name: "aboutUs",
-  title: "About Us",
-  type: "document",
+  name: 'aboutUs',
+  title: 'About Us',
+  type: 'document',
   fields: [
     {
-      name: "title",
-      title: "Title",
-      type: "string",
+      name: 'title',
+      title: 'Title',
+      type: 'string',
     },
     {
-      name: "vision",
-      title: "Vision",
-      type: "object",
+      name: 'vision',
+      title: 'Vision',
+      type: 'object',
       fields: [
         {
-          name: "heading",
-          title: "Heading",
-          type: "string",
+          name: 'heading',
+          title: 'Heading',
+          type: 'string',
         },
         {
-          name: "highlightedContent",
-          title: "Highlighted Content",
-          type: "array",
-          of: [{ type: "block" }],
+          name: 'highlightedContent',
+          title: 'Highlighted Content',
+          type: 'array',
+          of: [{ type: 'block' }],
         },
         {
-          name: "content",
-          title: "Content",
-          type: "array",
-          of: [{ type: "block" }],
+          name: 'content',
+          title: 'Content',
+          type: 'array',
+          of: [{ type: 'block' }],
         },
         {
-          name: "photo",
-          title: "Vision Photo",
-          type: "image",
+          name: 'photo',
+          title: 'Vision Photo',
+          type: 'image',
           fields: [
             {
-              name: "altText",
-              type: "string",
-              title: "Alternative text",
+              name: 'altText',
+              type: 'string',
+              title: 'Alternative text',
             },
           ],
           options: {
@@ -50,36 +50,36 @@ export const aboutUsSchema = defineType({
       ],
     },
     {
-      name: "mission",
-      title: "Mission",
-      type: "object",
+      name: 'mission',
+      title: 'Mission',
+      type: 'object',
       fields: [
         {
-          name: "heading",
-          title: "Heading",
-          type: "string",
+          name: 'heading',
+          title: 'Heading',
+          type: 'string',
         },
         {
-          name: "highlightedContent",
-          title: "Highlighted Content",
-          type: "array",
-          of: [{ type: "block" }],
+          name: 'highlightedContent',
+          title: 'Highlighted Content',
+          type: 'array',
+          of: [{ type: 'block' }],
         },
         {
-          name: "content",
-          title: "Content",
-          type: "array",
-          of: [{ type: "block" }],
+          name: 'content',
+          title: 'Content',
+          type: 'array',
+          of: [{ type: 'block' }],
         },
         {
-          name: "photo",
-          title: "Mission Photo",
-          type: "image",
+          name: 'photo',
+          title: 'Mission Photo',
+          type: 'image',
           fields: [
             {
-              name: "altText",
-              type: "string",
-              title: "Alternative text",
+              name: 'altText',
+              type: 'string',
+              title: 'Alternative text',
             },
           ],
           options: {
@@ -89,43 +89,43 @@ export const aboutUsSchema = defineType({
       ],
     },
     {
-      name: "team",
-      title: "Team",
-      type: "object",
+      name: 'team',
+      title: 'Team',
+      type: 'object',
       fields: [
         {
-          name: "heading",
-          title: "Heading",
-          type: "string",
+          name: 'heading',
+          title: 'Heading',
+          type: 'string',
         },
         {
-          name: "members",
-          title: "Members",
-          type: "array",
+          name: 'members',
+          title: 'Members',
+          type: 'array',
           of: [
             {
-              type: "object",
-              title: "Team Member",
+              type: 'object',
+              title: 'Team Member',
               fields: [
                 {
-                  name: "name",
-                  title: "Name",
-                  type: "array",
-                  of: [{ type: "block" }],
+                  name: 'name',
+                  title: 'Name',
+                  type: 'array',
+                  of: [{ type: 'block' }],
                 },
               ],
             },
           ],
         },
         {
-          name: "photo",
-          title: "Team Photo",
-          type: "image",
+          name: 'photo',
+          title: 'Team Photo',
+          type: 'image',
           fields: [
             {
-              name: "altText",
-              type: "string",
-              title: "Alternative text",
+              name: 'altText',
+              type: 'string',
+              title: 'Alternative text',
             },
           ],
           options: {

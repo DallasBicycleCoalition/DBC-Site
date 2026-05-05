@@ -85,11 +85,6 @@ const thermometerPercent =
     ? Math.min(100, Math.round((currentAmount / goalAmount) * 100))
     : 0;
 
-const currencyFormatter = new Intl.NumberFormat("en-US", {
-  style: "currency",
-  currency: "USD",
-  maximumFractionDigits: 0,
-});
 ---
 
 <Layout title={membershipPage?.title || "Membership"}>

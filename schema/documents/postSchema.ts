@@ -1,66 +1,66 @@
-import { defineType } from "sanity";
+import { defineType } from 'sanity';
 
 export const postSchema = defineType({
-  name: "post",
-  title: "Post",
-  type: "document",
+  name: 'post',
+  title: 'Post',
+  type: 'document',
   fields: [
     {
-      name: "title",
-      title: "Title",
-      type: "string",
+      name: 'title',
+      title: 'Title',
+      type: 'string',
     },
     {
-      name: "slug",
-      title: "Slug",
-      type: "slug",
+      name: 'slug',
+      title: 'Slug',
+      type: 'slug',
       options: {
-        source: "title",
+        source: 'title',
         maxLength: 96,
-        slugify: (input: string) => input.trim() // Remove leading/trailing spaces
+        slugify: (input: string) => input.trim(), // Remove leading/trailing spaces
       },
     },
     {
-      name: "author",
-      title: "Author",
-      type: "reference",
-      to: [{ type: "author" }],
+      name: 'author',
+      title: 'Author',
+      type: 'reference',
+      to: [{ type: 'author' }],
     },
     {
-      name: "publishedAt",
-      title: "Published at",
-      type: "datetime",
+      name: 'publishedAt',
+      title: 'Published at',
+      type: 'datetime',
     },
     {
-      name: "mainImage",
-      title: "Main image",
-      type: "image",
+      name: 'mainImage',
+      title: 'Main image',
+      type: 'image',
       options: {
         hotspot: true,
       },
       fields: [
         {
-          name: "altText",
-          type: "string",
-          title: "Alternative text",
+          name: 'altText',
+          type: 'string',
+          title: 'Alternative text',
         },
       ],
     },
     {
-      name: "excerpt",
-      title: "Excerpt",
-      type: "text",
+      name: 'excerpt',
+      title: 'Excerpt',
+      type: 'text',
     },
     {
-      name: "body",
-      title: "Body",
-      type: "array",
+      name: 'body',
+      title: 'Body',
+      type: 'array',
       of: [
         {
-          type: "block",
+          type: 'block',
         },
         {
-          type: "captionedImage",
+          type: 'captionedImage',
         },
       ],
     },

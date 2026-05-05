@@ -1,8 +1,8 @@
-import { createImageUrlBuilder, type SanityImageSource } from "@sanity/image-url";
-import { sanityClient } from "sanity:client";
+import { createImageUrlBuilder, type SanityImageSource } from '@sanity/image-url';
+import { sanityClient } from 'sanity:client';
 
 const builder = createImageUrlBuilder(sanityClient);
-const defaultFallbackImage = "/DallasBicycleCoalition_Badge_only.png";
+const defaultFallbackImage = '/DallasBicycleCoalition_Badge_only.png';
 
 type LocalImageUrlBuilder = {
   width: (width: number) => LocalImageUrlBuilder;
@@ -16,15 +16,15 @@ function localImageUrl(source: string): LocalImageUrlBuilder {
 
   return {
     width(width: number) {
-      params.set("w", width.toString());
+      params.set('w', width.toString());
       return this;
     },
     height(height: number) {
-      params.set("h", height.toString());
+      params.set('h', height.toString());
       return this;
     },
     fit(fit: string) {
-      params.set("fit", fit);
+      params.set('fit', fit);
       return this;
     },
     url() {
@@ -34,7 +34,7 @@ function localImageUrl(source: string): LocalImageUrlBuilder {
 }
 
 export function urlFor(source: SanityImageSource | string) {
-  if (typeof source === "string") {
+  if (typeof source === 'string') {
     return localImageUrl(source);
   }
 
@@ -56,7 +56,7 @@ type ResolveImageOptions = {
 const publicAssetCache = new Map<string, Promise<PublicSanityImageAsset[]>>();
 
 function shouldUseFixtureImages() {
-  return import.meta.env.PUBLIC_USE_LOCAL_SANITY_FIXTURES === "true";
+  return import.meta.env.PUBLIC_USE_LOCAL_SANITY_FIXTURES === 'true';
 }
 
 function addImageParams(source: string, params: URLSearchParams) {
@@ -65,7 +65,7 @@ function addImageParams(source: string, params: URLSearchParams) {
   }
 
   const isAbsoluteUrl = /^https?:\/\//.test(source);
-  const url = new URL(source, "https://local.invalid");
+  const url = new URL(source, 'https://local.invalid');
 
   params.forEach((value, key) => {
     url.searchParams.set(key, value);
@@ -79,10 +79,7 @@ function addImageParams(source: string, params: URLSearchParams) {
 }
 
 function hashSeed(seed: string) {
-  return Array.from(seed).reduce(
-    (hash, character) => (hash * 31 + character.charCodeAt(0)) >>> 0,
-    0
-  );
+  return Array.from(seed).reduce((hash, character) => (hash * 31 + character.charCodeAt(0)) >>> 0, 0);
 }
 
 async function fetchPublicSanityImageAssets(width: number, height: number) {
@@ -102,7 +99,7 @@ async function fetchPublicSanityImageAssets(width: number, height: number) {
       _id,
       url
     }`,
-    { width, height }
+    { width, height },
   );
 
   publicAssetCache.set(cacheKey, assetFetch);
@@ -113,10 +110,7 @@ async function getFixtureImageUrl(options: ResolveImageOptions) {
   const fallbackImage = options.fallbackImagePath || defaultFallbackImage;
 
   try {
-    const assets = await fetchPublicSanityImageAssets(
-      options.width,
-      options.height
-    );
+    const assets = await fetchPublicSanityImageAssets(options.width, options.height);
 
     if (!assets.length) {
       return fallbackImage;
@@ -124,11 +118,7 @@ async function getFixtureImageUrl(options: ResolveImageOptions) {
 
     const selectedAsset = assets[hashSeed(options.fixtureSeed) % assets.length];
 
-    return urlFor(selectedAsset.url)
-      .width(options.width)
-      .height(options.height)
-      .fit("crop")
-      .url();
+    return urlFor(selectedAsset.url).width(options.width).height(options.height).fit('crop').url();
   } catch {
     return fallbackImage;
   }
@@ -136,7 +126,7 @@ async function getFixtureImageUrl(options: ResolveImageOptions) {
 
 export async function resolveImageUrl(
   source: SanityImageSource | string | null | undefined,
-  options: ResolveImageOptions
+  options: ResolveImageOptions,
 ) {
   if (shouldUseFixtureImages()) {
     return getFixtureImageUrl(options);
@@ -146,11 +136,7 @@ export async function resolveImageUrl(
     return options.fallbackImagePath || defaultFallbackImage;
   }
 
-  return urlFor(source)
-    .width(options.width)
-    .height(options.height)
-    .fit("crop")
-    .url();
+  return urlFor(source).width(options.width).height(options.height).fit('crop').url();
 }
 
 /**
@@ -166,13 +152,10 @@ export function getUniqueTagsFromEvents<
     }> | null;
   },
 >(events: T[]) {
-  const tagMap = new Map<
-    string,
-    { id: string; name: string | null; description: string | null }
-  >();
-  events.forEach((event) => {
+  const tagMap = new Map<string, { id: string; name: string | null; description: string | null }>();
+  events.forEach(event => {
     const tags = event.tags;
-    tags?.forEach((tag) => {
+    tags?.forEach(tag => {
       if (tag && tag.id && !tagMap.has(tag.id)) {
         tagMap.set(tag.id, {
           id: tag.id,
@@ -189,13 +172,10 @@ export function getUniqueTagsFromEvents<
  * Fetch data from Sanity with an optional perspective.
  * Defaults to "published" in production and "raw" in development.
  */
-export async function fetchSanityData<T>(
-  query: string,
-  params: Record<string, any> = {}
-): Promise<T> {
-  const isDev = import.meta.env.MODE === "development";
+export async function fetchSanityData<T>(query: string, params: Record<string, any> = {}): Promise<T> {
+  const isDev = import.meta.env.MODE === 'development';
 
   return sanityClient.fetch(query, params, {
-    perspective: isDev ? "drafts" : "published",
+    perspective: isDev ? 'drafts' : 'published',
   });
 }

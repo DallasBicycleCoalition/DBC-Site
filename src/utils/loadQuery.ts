@@ -1,5 +1,5 @@
-import type { ClientPerspective, QueryParams } from "@sanity/client";
-import { sanityClient } from "sanity:client";
+import type { ClientPerspective, QueryParams } from '@sanity/client';
+import { sanityClient } from 'sanity:client';
 
 function parsePerspective(raw: string | undefined): ClientPerspective | undefined {
   if (!raw) {
@@ -8,7 +8,7 @@ function parsePerspective(raw: string | undefined): ClientPerspective | undefine
 
   const decoded = decodeURIComponent(raw);
 
-  if (decoded.startsWith("[")) {
+  if (decoded.startsWith('[')) {
     try {
       return JSON.parse(decoded) as ClientPerspective;
     } catch {
@@ -33,26 +33,18 @@ export async function loadQuery<QueryResponse>({
   const draftMode = Boolean(perspectiveCookie);
 
   if (draftMode && !token) {
-    throw new Error(
-      "The `SANITY_API_READ_TOKEN` environment variable is required during Visual Editing."
-    );
+    throw new Error('The `SANITY_API_READ_TOKEN` environment variable is required during Visual Editing.');
   }
 
-  const perspective: ClientPerspective = draftMode
-    ? (parsePerspective(perspectiveCookie) ?? "drafts")
-    : "published";
+  const perspective: ClientPerspective = draftMode ? (parsePerspective(perspectiveCookie) ?? 'drafts') : 'published';
 
-  const { result, resultSourceMap } = await sanityClient.fetch<QueryResponse>(
-    query,
-    params ?? {},
-    {
-      filterResponse: false,
-      perspective,
-      resultSourceMap: draftMode ? "withKeyArraySelector" : false,
-      stega: draftMode,
-      ...(draftMode ? { token } : {}),
-    }
-  );
+  const { result, resultSourceMap } = await sanityClient.fetch<QueryResponse>(query, params ?? {}, {
+    filterResponse: false,
+    perspective,
+    resultSourceMap: draftMode ? 'withKeyArraySelector' : false,
+    stega: draftMode,
+    ...(draftMode ? { token } : {}),
+  });
 
   return {
     data: result,

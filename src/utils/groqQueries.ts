@@ -1,4 +1,4 @@
-import groq from "groq";
+import groq from 'groq';
 import type {
   AboutUsPageResult,
   AdvocacyPageResult,
@@ -11,32 +11,18 @@ import type {
   LayoutResult,
   MembershipPageResult,
   PolicyPageResult,
-  PostResult,
   PostsResult,
   SocialRideEventsPageResult,
   SocialRidesPageResult,
-  TagsResult,
-  WeekWithoutDrivingPageResult,
-} from "../../sanity.types";
-import { fetchSanityData } from "./utils";
+} from '../../sanity.types';
+import { fetchSanityData } from './utils';
 
-export async function getPosts(
-  start: number = 0,
-  limit: number = 10
-): Promise<PostsResult[]> {
+export async function getPosts(start: number = 0, limit: number = 10): Promise<PostsResult[]> {
   const posts = groq`
     *[_type == "post" && defined(slug.current)] | order(_createdAt desc) [$start...$end]
   `;
 
   return fetchSanityData(posts, { start, end: start + limit });
-}
-
-export async function getPost(slug: string): Promise<PostResult> {
-  const post = groq`
-    *[_type == "post" && slug.current == $slug][0]{ ..., author->{ name } }
-  `;
-
-  return fetchSanityData(post, { slug });
 }
 
 export async function getHomePage(): Promise<HomePageResult> {
@@ -137,25 +123,6 @@ export async function getSocialRideEventsPage(): Promise<SocialRideEventsPageRes
   `;
 
   return fetchSanityData(socialRideEventsPage);
-}
-
-export async function getTags(): Promise<TagsResult> {
-  const tags = groq`
-    *[_type == "tag"]{ "id": _id, name, description }
-  `;
-
-  return fetchSanityData(tags);
-}
-
-export async function getWeekWithoutDrivingPage(): Promise<WeekWithoutDrivingPageResult> {
-  const weekWithoutDrivingPage = groq`
-    *[_type == "weekWithoutDriving"]{
-      _id, _createdAt, title,
-      "introBlock": { "heading": introBlock.heading, "content": introBlock.content }
-    }[0]
-  `;
-
-  return fetchSanityData(weekWithoutDrivingPage);
 }
 
 export async function getEmailCityCouncil(): Promise<EmailCityCouncilResult> {
