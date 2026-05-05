@@ -10,7 +10,7 @@ type PresentationResolve = {
       resolve: (doc: Record<string, string | undefined> | null) => {
         locations?: Array<{ title: string; href: string }>;
         message?: string;
-        tone?: "positive" | "caution" | "critical";
+        tone?: 'positive' | 'caution' | 'critical';
       };
     }
   >;
@@ -19,33 +19,33 @@ type PresentationResolve = {
 export const resolve = {
   mainDocuments: [
     {
-      route: "/blog/post/:slug",
+      route: '/blog/post/:slug',
       filter: `_type == "post" && slug.current == $slug`,
     },
   ],
   locations: {
     post: {
       select: {
-        title: "title",
-        slug: "slug.current",
+        title: 'title',
+        slug: 'slug.current',
       },
-      resolve: (doc) => {
+      resolve: doc => {
         if (!doc?.slug) {
           return {
-            message: "Add a slug to preview this post.",
-            tone: "caution",
+            message: 'Add a slug to preview this post.',
+            tone: 'caution',
           };
         }
 
         return {
           locations: [
             {
-              title: doc.title || "Untitled post",
+              title: doc.title || 'Untitled post',
               href: `/blog/post/${doc.slug}`,
             },
             {
-              title: "Blog index",
-              href: "/blog/page/1",
+              title: 'Blog index',
+              href: '/blog/page/1',
             },
           ],
         };

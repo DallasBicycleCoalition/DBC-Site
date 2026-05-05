@@ -1,5 +1,5 @@
-import { PortableText } from "@portabletext/react";
-import CaptionedImage from "../components/CaptionedImage";
+import { PortableText } from '@portabletext/react';
+import CaptionedImage from '../components/CaptionedImage';
 
 interface PostBodyProps {
   body: any;
@@ -12,7 +12,7 @@ export default function PostBody({ body }: PostBodyProps) {
       value={body}
       components={{
         types: {
-          captionedImage: (props) => <CaptionedImage {...props} />,
+          captionedImage: props => <CaptionedImage {...props} />,
         },
       }}
     />

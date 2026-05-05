@@ -1,4 +1,4 @@
-import { getPublishedId, type DocumentActionComponent } from "sanity";
+import { getPublishedId, type DocumentActionComponent } from 'sanity';
 
 type PostDocument = {
   slug?: {
@@ -6,23 +6,21 @@ type PostDocument = {
   };
 };
 
-export const openPostPreviewAction: DocumentActionComponent = (props) => {
-  if (props.type !== "post") {
+export const openPostPreviewAction: DocumentActionComponent = props => {
+  if (props.type !== 'post') {
     return null;
   }
 
-  const document = (props.draft ?? props.version ?? props.published) as
-    | PostDocument
-    | null;
+  const document = (props.draft ?? props.version ?? props.published) as PostDocument | null;
   const slug = document?.slug?.current;
 
   return {
-    label: "Preview",
-    title: slug ? "Open preview" : "Add a slug to preview this post",
+    label: 'Preview',
+    title: slug ? 'Open preview' : 'Add a slug to preview this post',
     disabled: !slug,
-    group: ["paneActions"],
+    group: ['paneActions'],
     onHandle: () => {
-      if (!slug || typeof window === "undefined") {
+      if (!slug || typeof window === 'undefined') {
         return;
       }
 
@@ -31,9 +29,8 @@ export const openPostPreviewAction: DocumentActionComponent = (props) => {
       const documentId = encodeURIComponent(getPublishedId(props.id));
 
       window.location.assign(`/admin/presentation/post/${documentId}?${params}`);
-      props.onComplete();
     },
   };
 };
 
-openPostPreviewAction.displayName = "OpenPostPreviewAction";
+openPostPreviewAction.displayName = 'OpenPostPreviewAction';

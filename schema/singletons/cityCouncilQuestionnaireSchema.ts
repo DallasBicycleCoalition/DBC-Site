@@ -1,37 +1,37 @@
-import { defineType } from "sanity";
+import { defineType } from 'sanity';
 
 export const cityCouncilQuestionnaireSchema = defineType({
-  name: "cityCouncilQuestionnaire",
-  title: "City Council Questionnaire",
-  type: "document",
+  name: 'cityCouncilQuestionnaire',
+  title: 'City Council Questionnaire',
+  type: 'document',
   fields: [
     {
-      name: "title",
-      title: "Title",
-      type: "string",
+      name: 'title',
+      title: 'Title',
+      type: 'string',
     },
     {
-      name: "mainImage",
-      title: "Main image",
-      type: "image",
+      name: 'mainImage',
+      title: 'Main image',
+      type: 'image',
       options: {
         hotspot: true,
       },
       fields: [
         {
-          name: "altText",
-          type: "string",
-          title: "Alternative text",
+          name: 'altText',
+          type: 'string',
+          title: 'Alternative text',
         },
       ],
     },
     {
-      name: "body",
-      title: "Body",
-      type: "array",
+      name: 'body',
+      title: 'Body',
+      type: 'array',
       of: [
         {
-          type: "block",
+          type: 'block',
         },
       ],
     },

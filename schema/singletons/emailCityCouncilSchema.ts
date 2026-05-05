@@ -1,34 +1,34 @@
-import { defineType } from "sanity";
+import { defineType } from 'sanity';
 
 export const emailCityCouncilSchema = defineType({
-  name: "emailCityCouncil",
-  title: "Email City Council",
-  type: "document",
+  name: 'emailCityCouncil',
+  title: 'Email City Council',
+  type: 'document',
   fields: [
     {
-      name: "title",
-      title: "Title",
-      type: "string",
+      name: 'title',
+      title: 'Title',
+      type: 'string',
     },
     {
-      name: "links",
-      title: "Links",
-      type: "array",
+      name: 'links',
+      title: 'Links',
+      type: 'array',
       of: [
         {
-          type: "object",
-          name: "link",
-          title: "Link",
+          type: 'object',
+          name: 'link',
+          title: 'Link',
           fields: [
             {
-              name: "title",
-              title: "Title",
-              type: "string",
+              name: 'title',
+              title: 'Title',
+              type: 'string',
             },
             {
-              name: "url",
-              title: "URL",
-              type: "url",
+              name: 'url',
+              title: 'URL',
+              type: 'url',
             },
           ],
         },

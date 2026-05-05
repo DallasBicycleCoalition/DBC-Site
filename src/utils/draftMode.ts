@@ -1,5 +1,5 @@
-import { perspectiveCookieName } from "@sanity/preview-url-secret/constants";
-import type { AstroCookies } from "astro";
+import { perspectiveCookieName } from '@sanity/preview-url-secret/constants';
+import type { AstroCookies } from 'astro';
 
 export function getDraftModeProps(cookies: AstroCookies) {
   return {

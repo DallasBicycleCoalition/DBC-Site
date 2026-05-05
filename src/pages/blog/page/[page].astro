@@ -39,7 +39,7 @@ function hasValidSlug(
 // Check if there's a next page
 const totalPosts = await getPosts(0, Number.MAX_SAFE_INTEGER);
 const totalPages = Math.ceil(totalPosts.length / limit);
-const hasNextPage = posts.length === limit;
+const hasNextPage = currentPage < totalPages;
 
 // Generate pagination numbers
 const paginationNumbers = Array.from({ length: Math.min(3, totalPages) }, (_, i) => {
