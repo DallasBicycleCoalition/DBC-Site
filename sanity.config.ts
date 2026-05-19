@@ -52,7 +52,7 @@ export default defineConfig({
   plugins: [
     structureTool({
       structure: (S, context) => {
-        const client = context.getClient({ apiVersion: '2025-02-19' });
+        const client = context.getClient({ apiVersion: '2026-04-01' });
         const documentTypeItems = S.documentTypeListItems();
         const itemForType = (type: string, title: string) =>
           documentTypeItems.find(item => item.getId() === type)?.title(title);
