@@ -51,7 +51,8 @@ export default defineConfig({
   dataset,
   plugins: [
     structureTool({
-      structure: S => {
+      structure: (S, context) => {
+        const client = context.getClient({ apiVersion: '2025-02-19' });
         const documentTypeItems = S.documentTypeListItems();
         const itemForType = (type: string, title: string) =>
           documentTypeItems.find(item => item.getId() === type)?.title(title);
@@ -63,16 +64,39 @@ export default defineConfig({
               return item ? [item] : [];
             })
             .sort((a, b) => (a.getTitle() ?? '').localeCompare(b.getTitle() ?? ''));
+        const singletonItemsForTypes = (titlesByType: Record<string, string>) =>
+          Object.entries(titlesByType)
+            .map(([type, title]) =>
+              S.listItem()
+                .id(type)
+                .title(title)
+                .schemaType(type)
+                .child(async () => {
+                  const documentId =
+                    (await client.fetch<string | null>(
+                      `*[_type == $type && !(_id in path("versions.**"))][0]._id`,
+                      { type },
+                    )) ?? type;
+                  const publishedDocumentId = documentId.replace(/^drafts\./, '');
+
+                  return S.document()
+                    .id(type)
+                    .title(title)
+                    .schemaType(type)
+                    .documentId(publishedDocumentId);
+                }),
+            )
+            .sort((a, b) => (a.getTitle() ?? '').localeCompare(b.getTitle() ?? ''));
 
         return S.list()
           .title('Content')
           .items([
             S.divider().title('Pages'),
-            ...itemsForTypes(pageDocumentTitles),
+            ...singletonItemsForTypes(pageDocumentTitles),
             S.divider().title('Collections'),
             ...itemsForTypes(collectionDocumentTitles),
             S.divider().title('Settings'),
-            ...itemsForTypes({ layout: 'Layout' }),
+            ...singletonItemsForTypes({ layout: 'Layout' }),
           ]);
       },
     }),
