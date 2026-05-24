@@ -3,6 +3,22 @@ import { getLayout } from "../utils/groqQueries";
 import { urlFor } from "../utils/utils";
 
 const data = await getLayout();
+const fallbackCallToActionUrl = "/?give=8NDR96EK";
+const callToActionUrl =
+  data?.callToActionButton?.url || fallbackCallToActionUrl;
+const callToActionText = data?.callToActionButton?.text || "Donate";
+let callToActionGiveId: string | undefined;
+
+try {
+  const parsedCallToActionUrl = new URL(
+    callToActionUrl,
+    "https://dallasbicyclecoalition.local",
+  );
+  callToActionGiveId =
+    parsedCallToActionUrl.searchParams.get("give") || undefined;
+} catch {
+  callToActionGiveId = undefined;
+}
 ---
 
 <header>
@@ -51,9 +67,9 @@ const data = await getLayout();
     </div>
     <div class="nav-item" id="actionNavItem">
       <a
-        href="?give=8NDR96EK"
+        href={callToActionUrl}
         class="call-to-action-button"
-        data-give-id="8NDR96EK">{data?.callToActionButton.text || "Donate"}</a
+        data-give-id={callToActionGiveId}>{callToActionText}</a
       >
     </div>
   </nav>

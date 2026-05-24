@@ -73,17 +73,12 @@ export default defineConfig({
                 .schemaType(type)
                 .child(async () => {
                   const documentId =
-                    (await client.fetch<string | null>(
-                      `*[_type == $type && !(_id in path("versions.**"))][0]._id`,
-                      { type },
-                    )) ?? type;
+                    (await client.fetch<string | null>(`*[_type == $type && !(_id in path("versions.**"))][0]._id`, {
+                      type,
+                    })) ?? type;
                   const publishedDocumentId = documentId.replace(/^drafts\./, '');
 
-                  return S.document()
-                    .id(type)
-                    .title(title)
-                    .schemaType(type)
-                    .documentId(publishedDocumentId);
+                  return S.document().id(type).title(title).schemaType(type).documentId(publishedDocumentId);
                 }),
             )
             .sort((a, b) => (a.getTitle() ?? '').localeCompare(b.getTitle() ?? ''));

@@ -1,13 +1,23 @@
-type RuntimeLocals = {
-  runtime?: {
-    env?: Record<string, string | undefined>;
-  };
-};
+function getRuntimeEnv(locals?: unknown) {
+  if (!locals || typeof locals !== 'object' || !('runtime' in locals)) {
+    return undefined;
+  }
 
-export function getSanityReadToken(locals?: RuntimeLocals) {
+  const { runtime } = locals as {
+    runtime?: {
+      env?: Record<string, string | undefined>;
+    };
+  };
+
+  return runtime?.env;
+}
+
+export function getSanityReadToken(locals?: unknown) {
+  const runtimeEnv = getRuntimeEnv(locals);
+
   return (
-    locals?.runtime?.env?.SANITY_API_READ_TOKEN ??
-    locals?.runtime?.env?.SANITY_API_TOKEN ??
+    runtimeEnv?.SANITY_API_READ_TOKEN ??
+    runtimeEnv?.SANITY_API_TOKEN ??
     import.meta.env.SANITY_API_READ_TOKEN ??
     import.meta.env.SANITY_API_TOKEN
   );
