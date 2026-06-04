@@ -1,48 +1,33 @@
 ---
-import { PortableText } from "@portabletext/react";
-import type { MembershipPageResult } from "../../sanity.types";
-import Layout from "../layouts/Layout.astro";
-import { getMembershipPage } from "../utils/groqQueries";
-import { urlFor } from "../utils/utils";
+import { PortableText } from '@portabletext/react';
+import type { MembershipPageResult } from '../../sanity.types';
+import Layout from '../layouts/Layout.astro';
+import { getMembershipPage } from '../utils/groqQueries';
+import { urlFor } from '../utils/utils';
 
 const membershipPage: MembershipPageResult = await getMembershipPage();
 
 const fallbackTiers = [
   {
-    title: "Supporter",
-    priceLabel: "$5 / month",
-    description:
-      "Join at an accessible level and help us keep safe cycling advocacy moving forward across Dallas.",
-    benefits: [
-      "Monthly supporter updates",
-      "Invitations to member opportunities",
-      "Helps sustain year-round advocacy",
-    ],
-    buttonLabel: "Join the Coalition",
+    title: 'Supporter',
+    priceLabel: '$5 / month',
+    description: 'Join at an accessible level and help us keep safe cycling advocacy moving forward across Dallas.',
+    benefits: ['Monthly supporter updates', 'Invitations to member opportunities', 'Helps sustain year-round advocacy'],
+    buttonLabel: 'Join the Coalition',
   },
   {
-    title: "Advocate",
-    priceLabel: "$10-$50 / month",
-    description:
-      "Back stronger advocacy work and community programming with a monthly gift at a flexible level.",
-    benefits: [
-      "Everything in Supporter",
-      "Directly supports campaign growth",
-      "Strengthens local organizing efforts",
-    ],
-    buttonLabel: "Join the Coalition",
+    title: 'Advocate',
+    priceLabel: '$10-$50 / month',
+    description: 'Back stronger advocacy work and community programming with a monthly gift at a flexible level.',
+    benefits: ['Everything in Supporter', 'Directly supports campaign growth', 'Strengthens local organizing efforts'],
+    buttonLabel: 'Join the Coalition',
   },
   {
-    title: "Pathmaker",
-    priceLabel: "$50+ / month",
-    description:
-      "Make a larger monthly investment in safer streets, policy wins, and a more bike-friendly Dallas.",
-    benefits: [
-      "Everything in Advocate",
-      "Helps fund high-impact initiatives",
-      "Accelerates coalition momentum",
-    ],
-    buttonLabel: "Join the Coalition",
+    title: 'Pathmaker',
+    priceLabel: '$50+ / month',
+    description: 'Make a larger monthly investment in safer streets, policy wins, and a more bike-friendly Dallas.',
+    benefits: ['Everything in Advocate', 'Helps fund high-impact initiatives', 'Accelerates coalition momentum'],
+    buttonLabel: 'Join the Coalition',
   },
 ] as const;
 
@@ -53,50 +38,37 @@ const tiers = Array.from({ length: 3 }, (_, index) => ({
 const thermometer = membershipPage?.thermometer;
 const currentAmount = thermometer?.currentAmount ?? 0;
 const goalAmount = thermometer?.goalAmount ?? 0;
-const supportSectionHeading =
-  membershipPage?.supportSectionHeading ||
-  "Become a member to support our work";
+const supportSectionHeading = membershipPage?.supportSectionHeading || 'Become a member to support our work';
 const supportSectionBody = membershipPage?.supportSectionBody;
-type SupportSectionBody = NonNullable<
-  NonNullable<MembershipPageResult>["supportSectionBody"]
->;
+type SupportSectionBody = NonNullable<NonNullable<MembershipPageResult>['supportSectionBody']>;
 
 const fallbackSupportBody: SupportSectionBody = [
   {
-    _type: "block",
-    _key: "support-section-fallback",
-    style: "normal",
+    _type: 'block',
+    _key: 'support-section-fallback',
+    style: 'normal',
     children: [
       {
-        _type: "span",
-        _key: "support-section-fallback-span",
-        text: "Your membership helps power safer streets advocacy, community organizing, and year-round programs across Dallas. Joining as a member is the most reliable way to sustain this work and strengthen the coalition behind it.",
+        _type: 'span',
+        _key: 'support-section-fallback-span',
+        text: 'Your membership helps power safer streets advocacy, community organizing, and year-round programs across Dallas. Joining as a member is the most reliable way to sustain this work and strengthen the coalition behind it.',
         marks: [],
       },
     ],
     markDefs: [],
   },
 ];
-const supportCopy = supportSectionBody?.length
-  ? supportSectionBody
-  : fallbackSupportBody;
-const thermometerPercent =
-  goalAmount > 0
-    ? Math.min(100, Math.round((currentAmount / goalAmount) * 100))
-    : 0;
-
+const supportCopy = supportSectionBody?.length ? supportSectionBody : fallbackSupportBody;
+const thermometerPercent = goalAmount > 0 ? Math.min(100, Math.round((currentAmount / goalAmount) * 100)) : 0;
 ---
 
-<Layout title={membershipPage?.title || "Membership"}>
+<Layout title={membershipPage?.title || 'Membership'}>
   <section class="membership-hero">
     {
       membershipPage?.heroMedia?.asset ? (
         <img
-          src={urlFor(membershipPage.heroMedia.asset)
-            .width(1600)
-            .height(760)
-            .url()}
-          alt={membershipPage.heroMedia.altText || "Membership hero image"}
+          src={urlFor(membershipPage.heroMedia.asset).width(1600).height(760).url()}
+          alt={membershipPage.heroMedia.altText || 'Membership hero image'}
           class="hero-media"
           loading="lazy"
         />
@@ -108,18 +80,10 @@ const thermometerPercent =
     <div class="hero-copy">
       {
         membershipPage?.heroHeadlineAccent && (
-          <h1 class="hero-title hero-title-accent">
-            {membershipPage.heroHeadlineAccent}
-          </h1>
+          <h1 class="hero-title hero-title-accent">{membershipPage.heroHeadlineAccent}</h1>
         )
       }
-      {
-        membershipPage?.heroHeadline && (
-          <p class="hero-title hero-title-main">
-            {membershipPage.heroHeadline}
-          </p>
-        )
-      }
+      {membershipPage?.heroHeadline && <p class="hero-title hero-title-main">{membershipPage.heroHeadline}</p>}
       {
         membershipPage?.heroBody && (
           <div class="hero-body normal-copy">
@@ -132,7 +96,7 @@ const thermometerPercent =
 
   <section class="membership-tiers" aria-label="Membership tiers">
     {
-      tiers.map((tier) => {
+      tiers.map(tier => {
         const tierGiveId = tier.giveId;
 
         return (
@@ -140,13 +104,11 @@ const thermometerPercent =
             <div class="tier-card-body">
               {tier?.title && <h2>{tier.title}</h2>}
               {tier?.priceLabel && <p class="tier-price">{tier.priceLabel}</p>}
-              {tier?.description && (
-                <p class="tier-description">{tier.description}</p>
-              )}
+              {tier?.description && <p class="tier-description">{tier.description}</p>}
 
               {tier?.benefits && tier.benefits.length > 0 && (
                 <ul class="tier-benefits" role="list">
-                  {tier.benefits.map((benefit) => (
+                  {tier.benefits.map(benefit => (
                     <li>{benefit}</li>
                   ))}
                 </ul>
@@ -154,11 +116,8 @@ const thermometerPercent =
             </div>
 
             <div class="tier-card-footer">
-              <a
-                href={`/membership/?give=${tierGiveId}`}
-                class="tier-action-link"
-              >
-                {tier?.buttonLabel || "Join the Coalition"}
+              <a href={`/membership/?give=${tierGiveId}`} class="tier-action-link">
+                {tier?.buttonLabel || 'Join the Coalition'}
               </a>
             </div>
           </article>
@@ -171,9 +130,7 @@ const thermometerPercent =
     thermometer && (
       <section class="thermometer-section">
         {thermometer.title && <h2>{thermometer.title}</h2>}
-        {thermometer.progressLabel && (
-          <p class="thermometer-label">{thermometer.progressLabel}</p>
-        )}
+        {thermometer.progressLabel && <p class="thermometer-label">{thermometer.progressLabel}</p>}
 
         <div
           class="thermometer-bar"
@@ -181,12 +138,9 @@ const thermometerPercent =
           aria-valuemin="0"
           aria-valuemax={goalAmount}
           aria-valuenow={currentAmount}
-          aria-label={thermometer.title || "Campaign progress"}
+          aria-label={thermometer.title || 'Campaign progress'}
         >
-          <div
-            class="thermometer-fill"
-            style={`width: ${thermometerPercent}%;`}
-          />
+          <div class="thermometer-fill" style={`width: ${thermometerPercent}%;`} />
           <p class="thermometer-bar-label">
             {currentAmount} of {goalAmount}
           </p>
@@ -219,13 +173,11 @@ const thermometerPercent =
           {membershipPage?.faqItems && membershipPage.faqItems.length > 0 && (
             <div class="faq-content">
               <div class="faq-heading-wrap">
-                <h2>
-                  {membershipPage.faqHeading || "Frequently Asked Questions"}
-                </h2>
+                <h2>{membershipPage.faqHeading || 'Frequently Asked Questions'}</h2>
               </div>
 
               <div class="faq-list">
-                {membershipPage.faqItems.map((item) => (
+                {membershipPage.faqItems.map(item => (
                   <details class="faq-item">
                     <summary>{item?.question}</summary>
                     {item?.answer && (
@@ -542,7 +494,7 @@ const thermometerPercent =
     }
 
     .faq-item summary::after {
-      content: "+";
+      content: '+';
       position: absolute;
       right: 0;
       top: 50%;
@@ -553,7 +505,7 @@ const thermometerPercent =
     }
 
     .faq-item[open] summary::after {
-      content: "\2212";
+      content: '\2212';
     }
 
     .faq-answer {

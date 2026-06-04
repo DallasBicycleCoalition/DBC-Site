@@ -1,21 +1,18 @@
 ---
-import { ClientRouter } from "astro:transitions";
-import DisableDraftMode from "../components/DisableDraftMode";
-import Footer from "../components/Footer.astro";
-import Header from "../components/Header.astro";
-import SanityVisualEditing from "../components/SanityVisualEditing";
-import "../globals.css";
+import { ClientRouter } from 'astro:transitions';
+import DisableDraftMode from '../components/DisableDraftMode';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import SanityVisualEditing from '../components/SanityVisualEditing';
+import '../globals.css';
 
 const {
-  title = "Dallas Bike Coalition",
-  description = "Dallas Bike Coalition advocates for safe, connected, and accessible bicycling in Dallas.",
+  title = 'Dallas Bike Coalition',
+  description = 'Dallas Bike Coalition advocates for safe, connected, and accessible bicycling in Dallas.',
   draftMode = false,
 } = Astro.props;
 
-const pageTitle =
-  title === "Dallas Bike Coalition"
-    ? title
-    : `${title} | Dallas Bike Coalition`;
+const pageTitle = title === 'Dallas Bike Coalition' ? title : `${title} | Dallas Bike Coalition`;
 ---
 
 <!doctype html>
@@ -29,10 +26,7 @@ const pageTitle =
 
     <title>{pageTitle}</title>
     <ClientRouter />
-    <script
-      is:inline
-      src="https://dallas-bicycle-coalition.givecloud.co/v1/widgets.js"
-      async></script>
+    <script is:inline src="https://dallas-bicycle-coalition.givecloud.co/v1/widgets.js" async></script>
   </head>
   <body>
     <a class="skip-link" href="#main-content">Skip to main content</a>

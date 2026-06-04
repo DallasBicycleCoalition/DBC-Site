@@ -1,40 +1,26 @@
 ---
-import { PortableText } from "@portabletext/react";
-import Layout from "../layouts/Layout.astro";
-import { getAdvocacyPage } from "../utils/groqQueries";
-import { urlFor } from "../utils/utils";
+import { PortableText } from '@portabletext/react';
+import Layout from '../layouts/Layout.astro';
+import { getAdvocacyPage } from '../utils/groqQueries';
+import { urlFor } from '../utils/utils';
 
 const advocacyPage = await getAdvocacyPage();
 ---
 
-<Layout title={advocacyPage?.title || "Advocacy"}>
+<Layout title={advocacyPage?.title || 'Advocacy'}>
   <section id="intro-section" class="single-col">
     <div class="content">
       <div class="normal-copy">
-        {
-          advocacyPage?.introText && (
-            <PortableText value={advocacyPage.introText} />
-          )
-        }
+        {advocacyPage?.introText && <PortableText value={advocacyPage.introText} />}
       </div>
     </div>
   </section>
 
   <section id="links-section" class="two-cols">
-    <a
-      class="link-button"
-      href={advocacyPage?.linkButton1?.url}
-      target="_blank"
-      rel="noopener noreferrer"
-    >
+    <a class="link-button" href={advocacyPage?.linkButton1?.url} target="_blank" rel="noopener noreferrer">
       <p class="button-text-size">{advocacyPage?.linkButton1?.title}</p>
     </a>
-    <a
-      class="link-button"
-      href={advocacyPage?.linkButton2?.url}
-      target="_blank"
-      rel="noopener noreferrer"
-    >
+    <a class="link-button" href={advocacyPage?.linkButton2?.url} target="_blank" rel="noopener noreferrer">
       <p class="button-text-size">{advocacyPage?.linkButton2?.title}</p>
     </a>
   </section>
@@ -49,14 +35,9 @@ const advocacyPage = await getAdvocacyPage();
 
   <section id="images-section" class="image-gallery">
     {
-      advocacyPage?.images?.map((image) => (
+      advocacyPage?.images?.map(image => (
         <div class="image-item">
-          {image.image && (
-            <img
-              src={urlFor(image.image).url()}
-              alt={image.altText || "Image"}
-            />
-          )}
+          {image.image && <img src={urlFor(image.image).url()} alt={image.altText || 'Image'} />}
         </div>
       ))
     }

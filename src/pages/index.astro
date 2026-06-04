@@ -1,20 +1,20 @@
 ---
-import { PortableText } from "@portabletext/react";
-import Layout from "../layouts/Layout.astro";
-import { getHomePage } from "../utils/groqQueries";
-import { urlFor } from "../utils/utils";
+import { PortableText } from '@portabletext/react';
+import Layout from '../layouts/Layout.astro';
+import { getHomePage } from '../utils/groqQueries';
+import { urlFor } from '../utils/utils';
 
 const homePage = await getHomePage();
 ---
 
-<Layout title={homePage?.title || "Default Title"}>
+<Layout title={homePage?.title || 'Default Title'}>
   <section class="hero">
     <h1 class="visually-hidden">{homePage?.title}</h1>
     {
       homePage?.homePageHeroImage?.asset && (
         <img
           src={urlFor(homePage.homePageHeroImage.asset).url()}
-          alt={homePage.homePageHeroImage.altText || "Hero image"}
+          alt={homePage.homePageHeroImage.altText || 'Hero image'}
         />
       )
     }
@@ -25,7 +25,7 @@ const homePage = await getHomePage();
       homePage?.whoWeAre.photo.asset && (
         <img
           src={urlFor(homePage.whoWeAre.photo.asset).url()}
-          alt={homePage.whoWeAre.photo.altText || "Who we are image"}
+          alt={homePage.whoWeAre.photo.altText || 'Who we are image'}
           class="who-we-are-img"
         />
       )
@@ -33,18 +33,10 @@ const homePage = await getHomePage();
     <div class="content">
       <h2>{homePage?.whoWeAre?.heading}</h2>
       <div class="highlighted-copy">
-        {
-          homePage?.whoWeAre.highlightedContent && (
-            <PortableText value={homePage.whoWeAre.highlightedContent} />
-          )
-        }
+        {homePage?.whoWeAre.highlightedContent && <PortableText value={homePage.whoWeAre.highlightedContent} />}
       </div>
       <div class="normal-copy">
-        {
-          homePage?.whoWeAre.content && (
-            <PortableText value={homePage.whoWeAre.content} />
-          )
-        }
+        {homePage?.whoWeAre.content && <PortableText value={homePage.whoWeAre.content} />}
       </div>
     </div>
   </section>
@@ -52,11 +44,9 @@ const homePage = await getHomePage();
   <section id="what-we-do">
     <div class="image-gallery">
       {
-        homePage?.whatWeDo?.whatWeDoPics?.map((pic) => (
+        homePage?.whatWeDo?.whatWeDoPics?.map(pic => (
           <div class="image-item">
-            {pic.image && (
-              <img src={urlFor(pic.image).url()} alt={pic.altText || "Image"} />
-            )}
+            {pic.image && <img src={urlFor(pic.image).url()} alt={pic.altText || 'Image'} />}
             <p>{pic.highlightedCaption}</p>
             <p>{pic.caption}</p>
           </div>
@@ -70,7 +60,7 @@ const homePage = await getHomePage();
       homePage?.bikePlan.photo?.asset && (
         <img
           src={urlFor(homePage.bikePlan.photo.asset).url()}
-          alt={homePage.bikePlan.photo.altText || "Bike plan image"}
+          alt={homePage.bikePlan.photo.altText || 'Bike plan image'}
           class="bike-plan-img"
         />
       )
@@ -78,18 +68,10 @@ const homePage = await getHomePage();
     <div class="content">
       <h2>{homePage?.bikePlan?.heading}</h2>
       <div class="highlighted-copy">
-        {
-          homePage?.bikePlan.highlightedContent && (
-            <PortableText value={homePage.bikePlan.highlightedContent} />
-          )
-        }
+        {homePage?.bikePlan.highlightedContent && <PortableText value={homePage.bikePlan.highlightedContent} />}
       </div>
       <div class="normal-copy">
-        {
-          homePage?.bikePlan.content && (
-            <PortableText value={homePage.bikePlan.content} />
-          )
-        }
+        {homePage?.bikePlan.content && <PortableText value={homePage.bikePlan.content} />}
       </div>
     </div>
   </section>

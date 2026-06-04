@@ -1,6 +1,6 @@
 ---
-const donateUrl = "/?give=8NDR96EK";
-const giveId = "8NDR96EK";
+const donateUrl = '/?give=8NDR96EK';
+const giveId = '8NDR96EK';
 ---
 
 <!doctype html>
@@ -17,22 +17,19 @@ const giveId = "8NDR96EK";
       <a href={donateUrl}>Continue if you are not redirected automatically.</a>
     </p>
     <script is:inline define:vars={{ giveId }}>
-      if (typeof window !== "undefined") {
-        let targetUrl = new URL("/", window.location.origin);
+      if (typeof window !== 'undefined') {
+        let targetUrl = new URL('/', window.location.origin);
 
         if (document.referrer) {
           const referrerUrl = new URL(document.referrer);
-          const donateUrl = new URL("/donate", window.location.origin);
+          const donateUrl = new URL('/donate', window.location.origin);
 
-          if (
-            referrerUrl.origin === window.location.origin &&
-            referrerUrl.pathname !== donateUrl.pathname
-          ) {
+          if (referrerUrl.origin === window.location.origin && referrerUrl.pathname !== donateUrl.pathname) {
             targetUrl = referrerUrl;
           }
         }
 
-        targetUrl.searchParams.set("give", giveId);
+        targetUrl.searchParams.set('give', giveId);
         window.location.replace(targetUrl.toString());
       }
     </script>

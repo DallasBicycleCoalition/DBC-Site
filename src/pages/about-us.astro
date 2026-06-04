@@ -1,108 +1,66 @@
 ---
-import { PortableText } from "@portabletext/react";
-import Layout from "../layouts/Layout.astro";
-import { getAboutUsPage } from "../utils/groqQueries";
-import { resolveImageUrl } from "../utils/utils";
+import { PortableText } from '@portabletext/react';
+import Layout from '../layouts/Layout.astro';
+import { getAboutUsPage } from '../utils/groqQueries';
+import { resolveImageUrl } from '../utils/utils';
 
 const aboutUsPage = await getAboutUsPage();
-const missionImageUrl = await resolveImageUrl(
-  aboutUsPage?.mission.photo?.asset,
-  {
-    width: 720,
-    height: 520,
-    fixtureSeed: "about-us-mission",
-  },
-);
+const missionImageUrl = await resolveImageUrl(aboutUsPage?.mission.photo?.asset, {
+  width: 720,
+  height: 520,
+  fixtureSeed: 'about-us-mission',
+});
 const visionImageUrl = await resolveImageUrl(aboutUsPage?.vision.photo?.asset, {
   width: 720,
   height: 520,
-  fixtureSeed: "about-us-vision",
+  fixtureSeed: 'about-us-vision',
 });
 const teamImageUrl = await resolveImageUrl(aboutUsPage?.team.photo?.asset, {
   width: 720,
   height: 520,
-  fixtureSeed: "about-us-team",
+  fixtureSeed: 'about-us-team',
 });
 ---
 
-<Layout title={aboutUsPage?.title || "About Us"}>
+<Layout title={aboutUsPage?.title || 'About Us'}>
   <section id="mission-section" class="two-cols">
     <div class="content">
       <h2>{aboutUsPage?.mission.heading}</h2>
       <div class="highlighted-copy">
-        {
-          aboutUsPage?.mission.highlightedContent && (
-            <PortableText value={aboutUsPage.mission.highlightedContent} />
-          )
-        }
+        {aboutUsPage?.mission.highlightedContent && <PortableText value={aboutUsPage.mission.highlightedContent} />}
       </div>
       <div class="normal-copy">
-        {
-          aboutUsPage?.mission.content && (
-            <PortableText value={aboutUsPage.mission.content} />
-          )
-        }
+        {aboutUsPage?.mission.content && <PortableText value={aboutUsPage.mission.content} />}
       </div>
     </div>
-    {
-      missionImageUrl && (
-        <img
-          src={missionImageUrl}
-          alt={aboutUsPage?.mission.photo.altText || "Mission Image"}
-        />
-      )
-    }
+    {missionImageUrl && <img src={missionImageUrl} alt={aboutUsPage?.mission.photo.altText || 'Mission Image'} />}
   </section>
 
   <section id="vision-section" class="two-cols">
-    {
-      visionImageUrl && (
-        <img
-          src={visionImageUrl}
-          alt={aboutUsPage?.vision.photo.altText || "Vision Image"}
-        />
-      )
-    }
+    {visionImageUrl && <img src={visionImageUrl} alt={aboutUsPage?.vision.photo.altText || 'Vision Image'} />}
     <div class="content">
       <h2>{aboutUsPage?.vision.heading}</h2>
       <div class="highlighted-copy">
-        {
-          aboutUsPage?.vision.highlightedContent && (
-            <PortableText value={aboutUsPage.vision.highlightedContent} />
-          )
-        }
+        {aboutUsPage?.vision.highlightedContent && <PortableText value={aboutUsPage.vision.highlightedContent} />}
       </div>
       <div class="normal-copy">
-        {
-          aboutUsPage?.vision.content && (
-            <PortableText value={aboutUsPage.vision.content} />
-          )
-        }
+        {aboutUsPage?.vision.content && <PortableText value={aboutUsPage.vision.content} />}
       </div>
     </div>
   </section>
 
   <section id="team-section" class="two-cols">
     <div class="content">
-      <h2>{aboutUsPage?.team?.heading || "Meet Our Team"}</h2>
+      <h2>{aboutUsPage?.team?.heading || 'Meet Our Team'}</h2>
       <div class="team-members">
         {
-          aboutUsPage?.team?.members?.map((member) => (
-            <div class="team-member">
-              {member?.name && <PortableText value={member.name} />}
-            </div>
+          aboutUsPage?.team?.members?.map(member => (
+            <div class="team-member">{member?.name && <PortableText value={member.name} />}</div>
           ))
         }
       </div>
     </div>
-    {
-      teamImageUrl && (
-        <img
-          src={teamImageUrl}
-          alt={aboutUsPage?.team.photo.altText || "Team Image"}
-        />
-      )
-    }
+    {teamImageUrl && <img src={teamImageUrl} alt={aboutUsPage?.team.photo.altText || 'Team Image'} />}
   </section>
   <style>
     #mission-section h2 {
