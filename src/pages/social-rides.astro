@@ -1,12 +1,9 @@
 ---
-import { PortableText } from "@portabletext/react";
-import ReactCalendar from "../components/ReactCalendar/ReactCalendar";
-import Layout from "../layouts/Layout.astro";
-import {
-  getSocialRideEventsPage,
-  getSocialRidesPage,
-} from "../utils/groqQueries";
-import { getUniqueTagsFromEvents } from "../utils/utils";
+import { PortableText } from '@portabletext/react';
+import ReactCalendar from '../components/ReactCalendar/ReactCalendar';
+import Layout from '../layouts/Layout.astro';
+import { getSocialRideEventsPage, getSocialRidesPage } from '../utils/groqQueries';
+import { getUniqueTagsFromEvents } from '../utils/utils';
 
 const eventsFromSanity: any = await getSocialRideEventsPage();
 const eventsArray = Array.isArray(eventsFromSanity)

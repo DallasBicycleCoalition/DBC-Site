@@ -1,21 +1,16 @@
 ---
-import { getLayout } from "../utils/groqQueries";
-import { urlFor } from "../utils/utils";
+import { getLayout } from '../utils/groqQueries';
+import { urlFor } from '../utils/utils';
 
 const data = await getLayout();
-const fallbackCallToActionUrl = "/?give=8NDR96EK";
-const callToActionUrl =
-  data?.callToActionButton?.url || fallbackCallToActionUrl;
-const callToActionText = data?.callToActionButton?.text || "Donate";
+const fallbackCallToActionUrl = '/?give=8NDR96EK';
+const callToActionUrl = data?.callToActionButton?.url || fallbackCallToActionUrl;
+const callToActionText = data?.callToActionButton?.text || 'Donate';
 let callToActionGiveId: string | undefined;
 
 try {
-  const parsedCallToActionUrl = new URL(
-    callToActionUrl,
-    "https://dallasbicyclecoalition.local",
-  );
-  callToActionGiveId =
-    parsedCallToActionUrl.searchParams.get("give") || undefined;
+  const parsedCallToActionUrl = new URL(callToActionUrl, 'https://dallasbicyclecoalition.local');
+  callToActionGiveId = parsedCallToActionUrl.searchParams.get('give') || undefined;
 } catch {
   callToActionGiveId = undefined;
 }
@@ -23,23 +18,12 @@ try {
 
 <header>
   <div class="logo-container">
-    <a href={data?.landingPageLink || "/"}>
-      {
-        data?.logo && data.logo.asset && (
-          <img
-            src={urlFor(data.logo.asset).url()}
-            alt={data.logo.altText || "Logo"}
-          />
-        )
-      }
+    <a href={data?.landingPageLink || '/'}>
+      {data?.logo && data.logo.asset && <img src={urlFor(data.logo.asset).url()} alt={data.logo.altText || 'Logo'} />}
     </a>
   </div>
-  <button
-    id="menuToggle"
-    type="button"
-    aria-label="Toggle navigation"
-    aria-controls="navMenu"
-    aria-expanded="false">&#9776;</button
+  <button id="menuToggle" type="button" aria-label="Toggle navigation" aria-controls="navMenu" aria-expanded="false"
+    >&#9776;</button
   >
   <nav id="navMenu">
     <div class="nav-item" id="aboutUsNavItem">
@@ -52,9 +36,7 @@ try {
       <a href="/advocacy">Advocacy</a>
     </div>
     <div class="nav-item dropdown" id="calendarNavItem">
-      <button class="dropdown-toggle" aria-haspopup="true" aria-expanded="false"
-        >Calendar</button
-      >
+      <button class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">Calendar</button>
       <div class="dropdown-menu">
         <a href="/calendar" class="dropdown-item">Calendar</a>
         <div class="dropdown-separator"></div>
@@ -66,52 +48,43 @@ try {
       </div>
     </div>
     <div class="nav-item" id="actionNavItem">
-      <a
-        href={callToActionUrl}
-        class="call-to-action-button"
-        data-give-id={callToActionGiveId}>{callToActionText}</a
-      >
+      <a href={callToActionUrl} class="call-to-action-button" data-give-id={callToActionGiveId}>{callToActionText}</a>
     </div>
   </nav>
 </header>
 
 <script is:inline type="module">
   function toggleMenu(menuToggle, navMenu) {
-    navMenu.classList.toggle("active");
-    menuToggle.classList.toggle("active");
-    menuToggle.setAttribute(
-      "aria-expanded",
-      navMenu.classList.contains("active") ? "true" : "false",
-    );
-    menuToggle.innerHTML = navMenu.classList.contains("active")
-      ? "&#10005;"
-      : "&#9776;";
+    navMenu.classList.toggle('active');
+    menuToggle.classList.toggle('active');
+    menuToggle.setAttribute('aria-expanded', navMenu.classList.contains('active') ? 'true' : 'false');
+    menuToggle.innerHTML = navMenu.classList.contains('active') ? '&#10005;' : '&#9776;';
   }
 
   function toggleDropdown(dropdown) {
-    dropdown.classList.toggle("open");
-    const toggle = dropdown.querySelector(".dropdown-toggle");
-    const expanded = dropdown.classList.contains("open");
-    if (toggle) toggle.setAttribute("aria-expanded", expanded);
+    dropdown.classList.toggle('open');
+    const toggle = dropdown.querySelector('.dropdown-toggle');
+    const expanded = dropdown.classList.contains('open');
+    if (toggle) toggle.setAttribute('aria-expanded', expanded);
   }
 
   function init() {
-    const menuToggle = document.getElementById("menuToggle");
-    const navMenu = document.getElementById("navMenu");
+    const menuToggle = document.getElementById('menuToggle');
+    const navMenu = document.getElementById('navMenu');
     const cleanupController = new AbortController();
     const { signal } = cleanupController;
-    const donateLink = document.querySelector("[data-give-id]");
+    const donateLink = document.querySelector('[data-give-id]');
 
     if (donateLink) {
       donateLink.addEventListener(
-        "click",
-        (e) => {
-          const giveId = donateLink.getAttribute("data-give-id");
+        'click',
+        e => {
+          const giveId = donateLink.getAttribute('data-give-id');
           if (!giveId) return;
 
           e.preventDefault();
           const currentUrl = new URL(window.location.href);
-          currentUrl.searchParams.set("give", giveId);
+          currentUrl.searchParams.set('give', giveId);
           window.location.assign(currentUrl.toString());
         },
         { signal },
@@ -119,24 +92,24 @@ try {
     }
 
     // Dropdown logic
-    const calendarNavItem = document.getElementById("calendarNavItem");
+    const calendarNavItem = document.getElementById('calendarNavItem');
     if (calendarNavItem) {
-      const toggle = calendarNavItem.querySelector(".dropdown-toggle");
+      const toggle = calendarNavItem.querySelector('.dropdown-toggle');
       if (toggle) {
         toggle.addEventListener(
-          "click",
-          (e) => {
+          'click',
+          e => {
             e.stopPropagation();
             toggleDropdown(calendarNavItem);
           },
           { signal },
         );
         document.addEventListener(
-          "click",
-          (e) => {
+          'click',
+          e => {
             if (!calendarNavItem.contains(e.target)) {
-              calendarNavItem.classList.remove("open");
-              toggle.setAttribute("aria-expanded", "false");
+              calendarNavItem.classList.remove('open');
+              toggle.setAttribute('aria-expanded', 'false');
             }
           },
           { signal },
@@ -146,13 +119,13 @@ try {
 
     if (menuToggle && navMenu) {
       const handleClick = () => toggleMenu(menuToggle, navMenu);
-      const navLinks = navMenu.querySelectorAll("a");
-      menuToggle.addEventListener("click", handleClick, { signal });
-      navLinks.forEach((link) => {
+      const navLinks = navMenu.querySelectorAll('a');
+      menuToggle.addEventListener('click', handleClick, { signal });
+      navLinks.forEach(link => {
         link.addEventListener(
-          "click",
+          'click',
           () => {
-            if (navMenu.classList.contains("active")) {
+            if (navMenu.classList.contains('active')) {
               toggleMenu(menuToggle, navMenu);
             }
           },
@@ -161,14 +134,14 @@ try {
       });
 
       document.addEventListener(
-        "astro:before-swap",
+        'astro:before-swap',
         () => {
           cleanupController.abort();
         },
         { once: true, signal },
       );
     } else {
-      console.error("Menu toggle button or navigation menu is missing.");
+      console.error('Menu toggle button or navigation menu is missing.');
     }
   }
 
@@ -176,7 +149,7 @@ try {
   init();
 
   // Re-initialize after swapping pages
-  document.addEventListener("astro:after-swap", () => {
+  document.addEventListener('astro:after-swap', () => {
     init();
   });
 </script>

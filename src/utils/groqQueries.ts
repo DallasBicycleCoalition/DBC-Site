@@ -19,7 +19,7 @@ import { fetchSanityData } from './utils';
 
 export async function getPosts(start: number = 0, limit: number = 10): Promise<PostsResult[]> {
   const posts = groq`
-    *[_type == "post" && defined(slug.current)] | order(_createdAt desc) [$start...$end]
+    *[_type == "post" && defined(slug.current)] | order(coalesce(publishedAt, _createdAt) desc) [$start...$end]
   `;
 
   return fetchSanityData(posts, { start, end: start + limit });

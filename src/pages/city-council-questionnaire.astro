@@ -1,21 +1,18 @@
 ---
-import { PortableText } from "@portabletext/react";
-import Layout from "../layouts/Layout.astro";
-import { getCityCouncilQuestionnaire } from "../utils/groqQueries";
+import { PortableText } from '@portabletext/react';
+import Layout from '../layouts/Layout.astro';
+import { getCityCouncilQuestionnaire } from '../utils/groqQueries';
 
 const cityCouncilQuestionnaire = await getCityCouncilQuestionnaire();
 ---
 
-<Layout title={cityCouncilQuestionnaire?.title || "City Council Questionnaire"}>
+<Layout title={cityCouncilQuestionnaire?.title || 'City Council Questionnaire'}>
   <section class="hero">
     {
       cityCouncilQuestionnaire?.mainImage?.asset && (
         <img
           src={cityCouncilQuestionnaire.mainImage.asset}
-          alt={
-            cityCouncilQuestionnaire.mainImage.altText ||
-            "City Council Questionnaire"
-          }
+          alt={cityCouncilQuestionnaire.mainImage.altText || 'City Council Questionnaire'}
           class="main-image"
           loading="lazy"
         />
@@ -25,11 +22,7 @@ const cityCouncilQuestionnaire = await getCityCouncilQuestionnaire();
 
   <section id="content-block">
     <div class="normal-copy">
-      {
-        cityCouncilQuestionnaire?.body && (
-          <PortableText value={cityCouncilQuestionnaire.body} />
-        )
-      }
+      {cityCouncilQuestionnaire?.body && <PortableText value={cityCouncilQuestionnaire.body} />}
     </div>
   </section>
 
