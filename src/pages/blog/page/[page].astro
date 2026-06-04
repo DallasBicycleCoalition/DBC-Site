@@ -1,9 +1,9 @@
 ---
 // @ts-nocheck
-import type { PostsResult } from "../../../../sanity.types";
-import Layout from "../../../layouts/Layout.astro";
-import { getPosts } from "../../../utils/groqQueries";
-import { urlFor } from "../../../utils/utils";
+import type { PostsResult } from '../../../../sanity.types';
+import Layout from '../../../layouts/Layout.astro';
+import { getPosts } from '../../../utils/groqQueries';
+import { urlFor } from '../../../utils/utils';
 
 const limit = 2;
 
@@ -30,10 +30,16 @@ const start = (currentPage - 1) * limit;
 const posts = await getPosts(start, limit);
 
 // Utility to check if a post has a valid slug
-function hasValidSlug(
-  post: PostsResult
-): post is PostsResult & { slug: { current: string } } {
+function hasValidSlug(post: PostsResult): post is PostsResult & { slug: { current: string } } {
   return post?.slug !== undefined && post?.slug.current !== undefined;
+}
+
+function formatPostDate(date: string) {
+  return new Date(date).toLocaleDateString('en-US', {
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric',
+  });
 }
 
 // Check if there's a next page
@@ -50,53 +56,58 @@ const paginationNumbers = Array.from({ length: Math.min(3, totalPages) }, (_, i)
 });
 ---
 
-<Layout title={"Blog Posts"}>
+<Layout title={'Blog Posts'}>
   <div class="blog-posts">
     {
-      posts.filter(hasValidSlug).map((post) => (
-        <div class="post">
-          <div class="post-image-container">
-            <img
-              class="post-image"
-              src={
-                post.mainImage?.asset
-                  ? urlFor(post.mainImage.asset).url()
-                  : "/DallasBicycleCoalition_Badge_only.png"
-              }
-              alt={post.mainImage?.altText || "Default image"}
-            />
+      posts.filter(hasValidSlug).map(post => (
+        <>
+          <div class="post">
+            <div class="post-image-container">
+              <img
+                class="post-image"
+                src={
+                  post.mainImage?.asset ? urlFor(post.mainImage.asset).url() : '/DallasBicycleCoalition_Badge_only.png'
+                }
+                alt={post.mainImage?.altText || 'Default image'}
+              />
+            </div>
+            <div>
+              <p id="post-date">{formatPostDate(post.publishedAt ?? post._createdAt)}</p>
+              <h2>
+                <a id="post-title" href={`/blog/post/${post?.slug?.current}`}>
+                  {post?.title}
+                </a>
+              </h2>
+              <p id="post-content">{post.excerpt}</p>
+            </div>
           </div>
-          <div>
-            <p id="post-date">{new Date(post._createdAt).toLocaleDateString('en-US', {
-              month: 'long', day: 'numeric', year: 'numeric'
-            })}</p>
-            <h2>
-              <a id="post-title" href={`/blog/post/${post?.slug?.current}`}>{post?.title}</a>
-            </h2>
-            <p id="post-content">{post.excerpt}</p>
-          </div>
-        </div>
-        <hr class="post-separator" />
+          <hr class="post-separator" />
+        </>
       ))
     }
   </div>
   <div class="pagination">
-    {currentPage > 1 && (
-      <a href={`/blog/page/${currentPage - 1}`} class="pagination-arrow">&laquo;</a>
-    )}
     {
-      paginationNumbers.map((pageNumber) => (
-        <a
-          href={`/blog/page/${pageNumber}`}
-          class={`pagination-number ${pageNumber === currentPage ? "active" : ""}`}
-        >
+      currentPage > 1 && (
+        <a href={`/blog/page/${currentPage - 1}`} class="pagination-arrow">
+          &laquo;
+        </a>
+      )
+    }
+    {
+      paginationNumbers.map(pageNumber => (
+        <a href={`/blog/page/${pageNumber}`} class={`pagination-number ${pageNumber === currentPage ? 'active' : ''}`}>
           {pageNumber}
         </a>
       ))
     }
-    {hasNextPage && (
-      <a href={`/blog/page/${currentPage + 1}`} class="pagination-arrow">&raquo;</a>
-    )}
+    {
+      hasNextPage && (
+        <a href={`/blog/page/${currentPage + 1}`} class="pagination-arrow">
+          &raquo;
+        </a>
+      )
+    }
   </div>
 </Layout>
 
