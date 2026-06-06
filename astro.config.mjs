@@ -94,9 +94,12 @@ export default defineConfig({
       ],
     },
     resolve: {
-      // Use react-dom/server.edge instead of react-dom/server.browser for React 19.
-      // Without this, MessageChannel from node:worker_threads needs to be polyfilled.
-      alias: import.meta.env.PROD && {
+      // React 19: use the edge build of react-dom/server, not the browser build that
+      // workerd's resolve conditions ("browser") would otherwise pick. Required in dev AND
+      // build, because with @astrojs/cloudflare v13 the dev server also renders SSR in
+      // workerd — and the browser build leaves React's hook dispatcher null there, which
+      // breaks server-rendered React components like @portabletext/react's <PortableText>.
+      alias: {
         'react-dom/server': 'react-dom/server.edge',
       },
     },
