@@ -74,6 +74,7 @@ export default defineConfig({
       projectId,
       dataset,
       studioBasePath: '/admin',
+      studioRouterHistory: 'browser',
       useCdn: false, // `false` if you want to ensure fresh data
       apiVersion: '2024-06-25', // Set to date of setup to use the latest API version
       stega: {
