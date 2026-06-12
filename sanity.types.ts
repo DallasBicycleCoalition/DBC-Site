@@ -836,6 +836,17 @@ export type RecurringDates = {
   rrule?: string;
 };
 
+export type ShortLink = {
+  _id: string;
+  _type: 'shortLink';
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  slug?: Slug;
+  destination?: string;
+};
+
 export type AuthorReference = {
   _ref: string;
   _type: 'reference';
@@ -1066,6 +1077,7 @@ export type AllSanitySchemaTypes =
   | TagReference
   | SocialRideEvent
   | RecurringDates
+  | ShortLink
   | AuthorReference
   | Post
   | Events
@@ -1126,6 +1138,13 @@ export type PostQueryResult = {
         _key: string;
       }
   >;
+} | null;
+
+// Source: src/pages/go/[slug].ts
+// Variable: shortLinkQuery
+// Query: *[_type == "shortLink" && slug.current == $slug][0]{ destination }
+export type ShortLinkQueryResult = {
+  destination: string | null;
 } | null;
 
 // Source: src/utils/groqQueries.ts
@@ -1916,6 +1935,7 @@ import '@sanity/client';
 declare module '@sanity/client' {
   interface SanityQueries {
     '\n  *[_type == "post" && slug.current == $slug][0]{ ..., author->{ name } }\n': PostQueryResult;
+    '\n  *[_type == "shortLink" && slug.current == $slug][0]{ destination }\n': ShortLinkQueryResult;
     '\n    *[_type == "post" && defined(slug.current)] | order(coalesce(publishedAt, _createdAt) desc) [$start...$end]\n  ': PostsResult;
     '\n    *[_type == "homepage"]{\n      _id, _createdAt, title, "slug": slug.current, content,\n      "homePageHeroImage": { "asset": homePageHeroImage.asset->url, "altText": homePageHeroImage.altText },\n      "whoWeAre": {\n        "heading": whoWeAre.heading,\n        "photo": { "asset": whoWeAre.photo.asset->url, "altText": whoWeAre.photo.altText },\n        "highlightedContent": whoWeAre.highlightedContent,\n        "content": whoWeAre.content\n      },\n      "whatWeDo": {\n        "heading": whatWeDo.heading,\n        "whatWeDoPics": whatWeDo.whatWeDoPics[] { "image": image.asset->url, "altText": altText, "highlightedCaption": highlightedCaption, "caption": caption }\n      },\n      "bikePlan": {\n        "heading": bikePlan.heading,\n        "highlightedContent": bikePlan.highlightedContent,\n        "content": bikePlan.content,\n        "photo": { "asset": bikePlan.photo.asset->url, "altText": bikePlan.photo.altText }\n      },\n      "dallasBikeRide": {\n        "heading": dallasBikeRide.heading,\n        "photo": { "asset": dallasBikeRide.photo.asset->url, "altText": dallasBikeRide.photo.altText },\n        "content": dallasBikeRide.content\n      }\n    }[0]\n  ': HomePageResult;
     '\n    *[_type == "policyPage"]{\n      _id, _createdAt, title,\n      "introBlock": { "heading": introBlock.heading, "content": introBlock.content },\n      "policyRows": policyRows[] { "policy": policy, "summary": summary, "moreInfo": moreInfo },\n      "legislativeDemands": { "heading": legislativeDemands.heading, "content": legislativeDemands.content }\n    }[0]\n  ': PolicyPageResult;

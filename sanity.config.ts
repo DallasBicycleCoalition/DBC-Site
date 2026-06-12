@@ -26,6 +26,7 @@ const collectionDocumentTitles: Record<string, string> = {
   author: 'Authors',
   events: 'Calendar Main Events',
   post: 'Blog Posts',
+  shortLink: 'Short Links',
   socialRideEvent: 'Calendar Social Ride Events',
   tag: 'Tags',
 };
