@@ -3,13 +3,18 @@ function getRuntimeEnv(locals?: unknown) {
     return undefined;
   }
 
-  const { runtime } = locals as {
-    runtime?: {
-      env?: Record<string, string | undefined>;
+  // In Astro v6 + @astrojs/cloudflare v13, runtime.env was removed and the
+  // getter throws. Catch it and fall through to import.meta.env below.
+  try {
+    const { runtime } = locals as {
+      runtime?: {
+        env?: Record<string, string | undefined>;
+      };
     };
-  };
-
-  return runtime?.env;
+    return runtime?.env;
+  } catch {
+    return undefined;
+  }
 }
 
 export function getSanityReadToken(locals?: unknown) {
