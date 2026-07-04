@@ -1,9 +1,11 @@
-import { CalendarIcon } from '@sanity/icons';
+import { Icon } from '@sanity/icons';
 import { defineField, type SchemaTypeDefinition } from 'sanity';
 
 import { RecurringDatesInput } from '../components/RecurringDatesInput';
 import { RecurringDatesPreview } from '../components/RecurringDatesPreview';
 import type { PluginConfig, WithRequiredProperty } from '../types';
+
+const CalendarIcon = () => <Icon symbol="calendar" />;
 
 export function recurringDateSchema(
   config: WithRequiredProperty<PluginConfig, 'defaultRecurrences'>,
