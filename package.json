@@ -27,8 +27,10 @@
     "@fullcalendar/timegrid": "^6.1.21",
     "@portabletext/react": "^6.2.0",
     "@sanity/astro": "^3.4.2",
+    "@sanity/icons": "^3.8.0",
     "@sanity/image-url": "^2.1.1",
     "@sanity/preview-url-secret": "^4.0.8",
+    "@sanity/ui": "^3.3.1",
     "@sanity/util": "^4.22.0",
     "@sanity/vision": "^5.31.1",
     "@sanity/visual-editing": "^5.4.5",
@@ -41,8 +43,7 @@
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
     "rrule": "^2.8.1",
-    "sanity": "^5.31.1",
-    "sanity-plugin-recurring-dates": "^2.0.2"
+    "sanity": "^5.31.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.4",
