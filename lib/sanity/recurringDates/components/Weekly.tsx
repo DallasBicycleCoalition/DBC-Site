@@ -35,9 +35,9 @@ export function Weekly({ byweekday, setByweekday }: WeeklyProps): React.JSX.Elem
   );
 
   return (
-    <Stack space={3}>
+    <Stack gap={3}>
       <Text style={{ whiteSpace: 'nowrap' }}>Repeats on</Text>
-      <Grid columns={DAYS.length} gap={1}>
+      <Grid gridTemplateColumns={DAYS.length} gap={1}>
         {DAYS.map((day, i) => {
           const weekday = new Weekday(i);
           const active = currentWeekdays.includes(i);

@@ -98,8 +98,8 @@ export function RecurringDatesInput(props: RecurringDatesInputProps): React.JSX.
   }
 
   return (
-    <Stack space={3}>
-      <Grid columns={hideEndDate ? 1 : 2} gap={3}>
+    <Stack gap={3}>
+      <Grid gridTemplateColumns={hideEndDate ? 1 : 2} gap={3}>
         {currentValue?.endDate && hideEndDate && <RemoveEndDate title={title} onChange={onChange} />}
         <Flex align="flex-end" gap={2}>
           <Box flex={1}>{startDateMember && <ObjectInputMember member={startDateMember} {...renderProps} />}</Box>

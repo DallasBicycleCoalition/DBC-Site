@@ -25,7 +25,7 @@ export function RemoveEndDate({
             <Icon symbol="warning-outline" />
           </Text>
         </Box>
-        <Stack space={3} flex={1} marginLeft={3}>
+        <Stack gap={3} flex={1} marginLeft={3}>
           <Text size={1} weight="semibold">
             The {title ? upperFirst(title) : 'current'} field has an end date
           </Text>

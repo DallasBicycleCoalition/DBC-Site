@@ -1,6 +1,7 @@
 import { Box, Flex, Select, Text } from '@sanity/ui';
 import { useCallback } from 'react';
 import type React from 'react';
+import type { ChangeEvent } from 'react';
 import { Weekday } from 'rrule';
 
 import { DAYS } from '../constants';
@@ -18,7 +19,7 @@ export function Monthly({ byweekday, setByweekday }: MonthlyProps): React.JSX.El
   const weekNo = weekday?.n ?? null;
 
   const handleChange = useCallback(
-    (event: React.FormEvent<HTMLSelectElement>) => {
+    (event: ChangeEvent<HTMLSelectElement>) => {
       const { value, name } = event.currentTarget;
 
       if (name === 'week') {

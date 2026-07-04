@@ -1,6 +1,7 @@
 import { Box, Button, Dialog, Flex, Radio, Select, Stack, Text, TextInput } from '@sanity/ui';
 import { useCallback, useMemo, useState } from 'react';
 import type React from 'react';
+import type { ChangeEvent } from 'react';
 import { type Options, RRule, type Weekday } from 'rrule';
 import { type ObjectInputProps, set } from 'sanity';
 
@@ -57,7 +58,7 @@ export function CustomRuleDialog({
     return fromDate;
   }, [frequency, startDate]);
 
-  const handleChange = useCallback((event: React.FormEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleChange = useCallback((event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = event.currentTarget;
 
     if (name === 'freq') {
@@ -88,7 +89,7 @@ export function CustomRuleDialog({
   );
 
   const handleEndChange = useCallback(
-    (event: React.FormEvent<HTMLInputElement>) => {
+    (event: ChangeEvent<HTMLInputElement>) => {
       const { value } = event.currentTarget;
 
       if (!value) {
@@ -139,7 +140,7 @@ export function CustomRuleDialog({
     <Dialog header="Custom recurrence" id="recurring-date-custom-rule" onClose={onClose} zOffset={1000} width={1}>
       <Flex direction="column">
         <Box flex={1} overflow="auto" padding={4}>
-          <Stack space={4}>
+          <Stack gap={4}>
             <Flex gap={2} align="center">
               <Text style={{ whiteSpace: 'nowrap' }}>Repeat every</Text>
               <Box style={{ width: '75px' }}>
@@ -158,7 +159,7 @@ export function CustomRuleDialog({
             {frequency === RRule.MONTHLY && <Monthly byweekday={byweekday} setByweekday={setByweekday} />}
             {frequency === RRule.WEEKLY && <Weekly byweekday={byweekday} setByweekday={setByweekday} />}
 
-            <Stack space={2}>
+            <Stack gap={2}>
               <Text>Ends</Text>
               <Flex gap={2} paddingY={2} align="center">
                 <Radio checked={!count && !until} name="ends" onChange={handleEndChange} value="" id="ends-never" />
