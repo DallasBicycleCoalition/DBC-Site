@@ -21,18 +21,9 @@ const dataset = PUBLIC_SANITY_STUDIO_DATASET || PUBLIC_SANITY_DATASET;
 // https://docs.astro.build/en/guides/server-side-rendering/#adding-an-adapter
 import cloudflare from '@astrojs/cloudflare';
 
-// @sanity/astro force-adds `styled-components` to optimizeDeps so Sanity Studio (browser)
-// can use it. The Cloudflare workerd `ssr` environment inherits that and fails, because
-// styled-components is only a peer dep (for Svelte/Next.js visual editing) and isn't installed
-// — and even if it were, its browser-only code never runs server-side. We stub it out, but
-// ONLY in the `ssr` environment, so the browser Studio still gets the real package.
+// Sanity's browser Studio uses styled-components, but its browser-oriented bundle should not
+// be loaded while workerd renders SSR. Stub it only in the `ssr` environment.
 const styledComponentsStub = fileURLToPath(new URL('./src/stubs/styled-components.js', import.meta.url));
-const stubStyledComponentsInSsr = {
-  name: 'stub-styled-components-ssr',
-  setup(build) {
-    build.onResolve({ filter: /^styled-components$/ }, () => ({ path: styledComponentsStub }));
-  },
-};
 
 // @astrojs/cloudflare v13 auto-adds a SESSION KV binding to the generated wrangler.json
 // even when sessions are not used. Without an `id`, wrangler deploy throws
@@ -44,7 +35,7 @@ const stripUnusedCloudflareBindings = {
       const wranglerPath = new URL('./dist/server/wrangler.json', import.meta.url);
       try {
         const config = JSON.parse(readFileSync(wranglerPath, 'utf-8'));
-        const strip = (arr) => (arr || []).filter((kv) => kv.id !== undefined || kv.binding !== 'SESSION');
+        const strip = arr => (arr || []).filter(kv => kv.id !== undefined || kv.binding !== 'SESSION');
         config.kv_namespaces = strip(config.kv_namespaces);
         if (config.previews?.kv_namespaces) config.previews.kv_namespaces = strip(config.previews.kv_namespaces);
         writeFileSync(wranglerPath, JSON.stringify(config));
@@ -86,6 +77,8 @@ export default defineConfig({
   vite: {
     optimizeDeps: {
       include: [
+        '@sanity/client',
+        '@sanity/client/stega',
         'react/compiler-runtime',
         'lodash/isObject.js',
         'lodash/groupBy.js',
@@ -104,17 +97,17 @@ export default defineConfig({
         'react-dom/server': 'react-dom/server.edge',
       },
     },
+    ssr: {
+      optimizeDeps: {
+        include: ['@sanity/client', '@sanity/client/stega'],
+      },
+    },
     // Stub styled-components only in the workerd `ssr` environment (see note above).
     environments: {
       ssr: {
         resolve: {
           alias: {
             'styled-components': styledComponentsStub,
-          },
-        },
-        optimizeDeps: {
-          esbuildOptions: {
-            plugins: [stubStyledComponentsInSsr],
           },
         },
       },

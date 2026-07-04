@@ -1,10 +1,10 @@
 import { visionTool } from '@sanity/vision';
 import { defineConfig } from 'sanity';
 import { presentationTool } from 'sanity/presentation';
-import { recurringDates } from 'sanity-plugin-recurring-dates';
 import { structureTool } from 'sanity/structure';
 import { openPostPreviewAction } from './lib/actions/openPostPreview';
 import { resolve } from './lib/presentation/resolve';
+import { recurringDates } from './lib/sanity/recurringDates';
 import { schemaTypes } from './schema/index';
 
 const projectId = 'wfdg37xd';
