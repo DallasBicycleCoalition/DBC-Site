@@ -77,6 +77,8 @@ export default defineConfig({
   vite: {
     optimizeDeps: {
       include: [
+        '@sanity/client',
+        '@sanity/client/stega',
         'react/compiler-runtime',
         'lodash/isObject.js',
         'lodash/groupBy.js',
@@ -93,6 +95,11 @@ export default defineConfig({
       // breaks server-rendered React components like @portabletext/react's <PortableText>.
       alias: {
         'react-dom/server': 'react-dom/server.edge',
+      },
+    },
+    ssr: {
+      optimizeDeps: {
+        include: ['@sanity/client', '@sanity/client/stega'],
       },
     },
     // Stub styled-components only in the workerd `ssr` environment (see note above).
