@@ -26,14 +26,14 @@ export const shortLinkSchema = defineType({
             .replace(/\s+/g, '-')
             .replace(/[^a-z0-9-]/g, ''),
       },
-      validation: (Rule) => Rule.required(),
+      validation: Rule => Rule.required(),
     },
     {
       name: 'destination',
       title: 'Destination URL',
       type: 'url',
       description: 'Where to send the visitor',
-      validation: (Rule) => Rule.required().uri({ scheme: ['http', 'https', 'mailto', 'tel'] }),
+      validation: Rule => Rule.required().uri({ scheme: ['http', 'https', 'mailto', 'tel'] }),
     },
   ],
   preview: {
