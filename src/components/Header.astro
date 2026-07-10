@@ -271,8 +271,10 @@ try {
     #menuToggle {
       display: block;
       margin-bottom: 1.25em;
-      padding-right: 5em; /* Add right-side padding */
-      font-size: 32px; /* Increase font size for a larger icon */
+      margin-right: clamp(1rem, 6vw, 5rem);
+      padding: 0.25em;
+      font-size: 32px;
+      flex: 0 0 auto;
     }
 
     header {
@@ -297,10 +299,16 @@ try {
       display: flex;
     }
 
-    .logo-container[data-astro-cid-3ef6ksr2] {
-      padding-left: 1.25em;
+    .logo-container {
+      padding-left: clamp(1.25rem, 6vw, 4rem);
       padding-top: 2em;
-      flex-shrink: 0;
+      flex: 1 1 auto;
+      min-width: 0;
+      max-width: 540px;
+    }
+    .logo-container img {
+      width: 100%;
+      height: auto;
     }
     header nav {
       padding: 0em;
