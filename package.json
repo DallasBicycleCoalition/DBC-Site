@@ -7,7 +7,7 @@
     "start": "astro dev",
     "build": "astro check && tsc --noEmit && astro build",
     "preview": "astro preview",
-    "deploy": "wrangler deploy -c dist/server/wrangler.json",
+    "deploy": "wrangler deploy",
     "lint": "eslint .",
     "format:check": "prettier --check .",
     "prettify": "prettier --write .",
