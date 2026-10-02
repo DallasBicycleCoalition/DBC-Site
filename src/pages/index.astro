@@ -10,69 +10,57 @@ const homePage = await getHomePage();
 <Layout title={homePage?.title || 'Default Title'}>
   <section class="hero">
     <h1 class="visually-hidden">{homePage?.title}</h1>
-    {
-      homePage?.homePageHeroImage?.asset && (
-        <img
-          src={urlFor(homePage.homePageHeroImage.asset).url()}
-          alt={homePage.homePageHeroImage.altText || 'Hero image'}
-        />
-      )
-    }
+    {homePage?.homePageHeroImage?.asset && (
+      <img
+        src={urlFor(homePage.homePageHeroImage.asset).url()}
+        alt={homePage.homePageHeroImage.altText || 'Hero image'}
+      />
+    )}
   </section>
 
   <section id="who-we-are" class="two-cols">
-    {
-      homePage?.whoWeAre.photo.asset && (
-        <img
-          src={urlFor(homePage.whoWeAre.photo.asset).url()}
-          alt={homePage.whoWeAre.photo.altText || 'Who we are image'}
-          class="who-we-are-img"
-        />
-      )
-    }
+    {homePage?.whoWeAre.photo.asset && (
+      <img
+        src={urlFor(homePage.whoWeAre.photo.asset).url()}
+        alt={homePage.whoWeAre.photo.altText || 'Who we are image'}
+        class="who-we-are-img"
+      />
+    )}
     <div class="content">
       <h2>{homePage?.whoWeAre?.heading}</h2>
       <div class="highlighted-copy">
         {homePage?.whoWeAre.highlightedContent && <PortableText value={homePage.whoWeAre.highlightedContent} />}
       </div>
-      <div class="normal-copy">
-        {homePage?.whoWeAre.content && <PortableText value={homePage.whoWeAre.content} />}
-      </div>
+      <div class="normal-copy">{homePage?.whoWeAre.content && <PortableText value={homePage.whoWeAre.content} />}</div>
     </div>
   </section>
 
   <section id="what-we-do">
     <div class="image-gallery">
-      {
-        homePage?.whatWeDo?.whatWeDoPics?.map(pic => (
-          <div class="image-item">
-            {pic.image && <img src={urlFor(pic.image).url()} alt={pic.altText || 'Image'} />}
-            <p>{pic.highlightedCaption}</p>
-            <p>{pic.caption}</p>
-          </div>
-        ))
-      }
+      {homePage?.whatWeDo?.whatWeDoPics?.map(pic => (
+        <div class="image-item">
+          {pic.image && <img src={urlFor(pic.image).url()} alt={pic.altText || 'Image'} />}
+          <p>{pic.highlightedCaption}</p>
+          <p>{pic.caption}</p>
+        </div>
+      ))}
     </div>
   </section>
 
   <section id="bike-plan" class="two-cols">
-    {
-      homePage?.bikePlan.photo?.asset && (
-        <img
-          src={urlFor(homePage.bikePlan.photo.asset).url()}
-          alt={homePage.bikePlan.photo.altText || 'Bike plan image'}
-          class="bike-plan-img"
-        />
-      )
-    }
+    {homePage?.bikePlan.photo?.asset && (
+      <img
+        src={urlFor(homePage.bikePlan.photo.asset).url()}
+        alt={homePage.bikePlan.photo.altText || 'Bike plan image'}
+        class="bike-plan-img"
+      />
+    )}
     <div class="content">
       <h2>{homePage?.bikePlan?.heading}</h2>
       <div class="highlighted-copy">
         {homePage?.bikePlan.highlightedContent && <PortableText value={homePage.bikePlan.highlightedContent} />}
       </div>
-      <div class="normal-copy">
-        {homePage?.bikePlan.content && <PortableText value={homePage.bikePlan.content} />}
-      </div>
+      <div class="normal-copy">{homePage?.bikePlan.content && <PortableText value={homePage.bikePlan.content} />}</div>
     </div>
   </section>
 

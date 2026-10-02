@@ -10,9 +10,7 @@ const advocacyPage = await getAdvocacyPage();
 <Layout title={advocacyPage?.title || 'Advocacy'}>
   <section id="intro-section" class="single-col">
     <div class="content">
-      <div class="normal-copy">
-        {advocacyPage?.introText && <PortableText value={advocacyPage.introText} />}
-      </div>
+      <div class="normal-copy">{advocacyPage?.introText && <PortableText value={advocacyPage.introText} />}</div>
     </div>
   </section>
 
@@ -27,20 +25,16 @@ const advocacyPage = await getAdvocacyPage();
 
   <section id="additional-text-section" class="single-col">
     <div class="content">
-      <div class="normal-copy">
-        {advocacyPage?.letter && <PortableText value={advocacyPage.letter} />}
-      </div>
+      <div class="normal-copy">{advocacyPage?.letter && <PortableText value={advocacyPage.letter} />}</div>
     </div>
   </section>
 
   <section id="images-section" class="image-gallery">
-    {
-      advocacyPage?.images?.map(image => (
-        <div class="image-item">
-          {image.image && <img src={urlFor(image.image).url()} alt={image.altText || 'Image'} />}
-        </div>
-      ))
-    }
+    {advocacyPage?.images?.map(image => (
+      <div class="image-item">
+        {image.image && <img src={urlFor(image.image).url()} alt={image.altText || 'Image'} />}
+      </div>
+    ))}
   </section>
 
   <style>

@@ -29,19 +29,19 @@ const pageTitle = title === 'Dallas Bike Coalition' ? title : `${title} | Dallas
     <script is:inline src="https://dallas-bicycle-coalition.givecloud.co/v1/widgets.js" async></script>
   </head>
   <body>
-    <a class="skip-link" href="#main-content">Skip to main content</a>
+    <a class="skip-link" href="#main-content">
+      Skip to main content
+    </a>
     <Header />
     <main id="main-content">
       <slot />
     </main>
     <Footer />
-    {
-      draftMode && (
-        <>
-          <SanityVisualEditing client:only="react" />
-          <DisableDraftMode client:only="react" />
-        </>
-      )
-    }
+    {draftMode && (
+      <>
+        <SanityVisualEditing client:only="react" />
+        <DisableDraftMode client:only="react" />
+      </>
+    )}
   </body>
 </html>

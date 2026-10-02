@@ -42,35 +42,29 @@ function formatPostDate(date: string) {
 ---
 
 <Layout title={title} draftMode={draftMode}>
-  {
-    !post && (
-      <article class="blog-post">
-        <h1 id="post-title">Post not found</h1>
-      </article>
-    )
-  }
-  {
-    post?.mainImage && post.mainImage.asset && (
-      <img
-        src={urlFor(post.mainImage).width(1400).height(600).url()}
-        alt={post.mainImage.altText || 'Image'}
-        class="main-post-image"
-        loading="lazy"
-      />
-    )
-  }
-  {
-    post && (
-      <article class="blog-post">
-        {postDate && <p id="post-date">{formatPostDate(postDate)}</p>}
-        <h1 id="post-title">{post.title}</h1>
-        <p class="post-author">POSTED BY {post.author?.name.toUpperCase()}</p>
-        <div class="normal-copy" id="post-content">
-          {post.body && <PostBody body={post.body} client:only="react" />}
-        </div>
-      </article>
-    )
-  }
+  {!post && (
+    <article class="blog-post">
+      <h1 id="post-title">Post not found</h1>
+    </article>
+  )}
+  {post?.mainImage && post.mainImage.asset && (
+    <img
+      src={urlFor(post.mainImage).width(1400).height(600).url()}
+      alt={post.mainImage.altText || 'Image'}
+      class="main-post-image"
+      loading="lazy"
+    />
+  )}
+  {post && (
+    <article class="blog-post">
+      {postDate && <p id="post-date">{formatPostDate(postDate)}</p>}
+      <h1 id="post-title">{post.title}</h1>
+      <p class="post-author">POSTED BY {post.author?.name.toUpperCase()}</p>
+      <div class="normal-copy" id="post-content">
+        {post.body && <PostBody body={post.body} client:only="react" />}
+      </div>
+    </article>
+  )}
 
   <style>
     /* General layout styling */
