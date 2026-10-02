@@ -53,11 +53,9 @@ const teamImageUrl = await resolveImageUrl(aboutUsPage?.team.photo?.asset, {
     <div class="content">
       <h2>{aboutUsPage?.team?.heading || 'Meet Our Team'}</h2>
       <div class="team-members">
-        {
-          aboutUsPage?.team?.members?.map(member => (
-            <div class="team-member">{member?.name && <PortableText value={member.name} />}</div>
-          ))
-        }
+        {aboutUsPage?.team?.members?.map(member => (
+          <div class="team-member">{member?.name && <PortableText value={member.name} />}</div>
+        ))}
       </div>
     </div>
     {teamImageUrl && <img src={teamImageUrl} alt={aboutUsPage?.team.photo.altText || 'Team Image'} />}

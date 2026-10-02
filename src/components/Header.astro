@@ -22,9 +22,9 @@ try {
       {data?.logo && data.logo.asset && <img src={urlFor(data.logo.asset).url()} alt={data.logo.altText || 'Logo'} />}
     </a>
   </div>
-  <button id="menuToggle" type="button" aria-label="Toggle navigation" aria-controls="navMenu" aria-expanded="false"
-    >&#9776;</button
-  >
+  <button id="menuToggle" type="button" aria-label="Toggle navigation" aria-controls="navMenu" aria-expanded="false">
+    &#9776;
+  </button>
   <nav id="navMenu">
     <div class="nav-item" id="aboutUsNavItem">
       <a href="/about-us">About Us</a>
@@ -36,19 +36,31 @@ try {
       <a href="/advocacy">Advocacy</a>
     </div>
     <div class="nav-item dropdown" id="calendarNavItem">
-      <button class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">Calendar</button>
+      <button class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">
+        Calendar
+      </button>
       <div class="dropdown-menu">
-        <a href="/calendar" class="dropdown-item">Calendar</a>
+        <a href="/calendar" class="dropdown-item">
+          Calendar
+        </a>
         <div class="dropdown-separator"></div>
-        <a href="/social-rides" class="dropdown-item">Social Rides</a>
+        <a href="/social-rides" class="dropdown-item">
+          Social Rides
+        </a>
       </div>
       <div class="calendar-mobile-links" style="display: none;">
-        <a href="/calendar" class="dropdown-item">Calendar</a>
-        <a href="/social-rides" class="dropdown-item">Social Rides</a>
+        <a href="/calendar" class="dropdown-item">
+          Calendar
+        </a>
+        <a href="/social-rides" class="dropdown-item">
+          Social Rides
+        </a>
       </div>
     </div>
     <div class="nav-item" id="actionNavItem">
-      <a href={callToActionUrl} class="call-to-action-button" data-give-id={callToActionGiveId}>{callToActionText}</a>
+      <a href={callToActionUrl} class="call-to-action-button" data-give-id={callToActionGiveId}>
+        {callToActionText}
+      </a>
     </div>
   </nav>
 </header>

@@ -11,11 +11,15 @@ const links = emailCityCouncil?.links || [];
     <h1>{emailCityCouncil?.title || 'Email City Council'}</h1>
     <select id="email-dropdown" class="dropdown">
       <option value="">-- Generate email draft --</option>
-      {links.map(link => <option value={link.url}>{link.title}</option>)}
+      {links.map(link => (
+        <option value={link.url}>{link.title}</option>
+      ))}
     </select>
 
     <a id="send-email-link" href="#" target="_blank">
-      <button id="send-email-button" disabled>Send Email</button>
+      <button id="send-email-button" disabled>
+        Send Email
+      </button>
     </a>
   </section>
 
@@ -39,7 +43,6 @@ const links = emailCityCouncil?.links || [];
       });
     });
   </script>
-
   <style>
     #email-section {
       display: flex;

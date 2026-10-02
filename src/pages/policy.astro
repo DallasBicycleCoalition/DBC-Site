@@ -10,13 +10,11 @@ const policyPage = await getPolicyPage();
   <section class="policy-page-intro">
     <h1>{policyPage?.title}</h1>
     <h2>{policyPage?.introBlock.heading}</h2>
-    {
-      policyPage?.introBlock.content && (
-        <div>
-          <PortableText value={policyPage?.introBlock.content} />
-        </div>
-      )
-    }
+    {policyPage?.introBlock.content && (
+      <div>
+        <PortableText value={policyPage?.introBlock.content} />
+      </div>
+    )}
   </section>
 
   <section class="policy-table-section">
@@ -29,28 +27,24 @@ const policyPage = await getPolicyPage();
         </tr>
       </thead>
       <tbody>
-        {
-          policyPage?.policyRows?.map(row => (
-            <tr>
-              <td data-label="Policy">{row.policy && <PortableText value={row.policy} />}</td>
-              <td data-label="Summary">{row.summary && <PortableText value={row.summary} />}</td>
-              <td data-label="More Info">{row.moreInfo && <PortableText value={row.moreInfo} />}</td>
-            </tr>
-          ))
-        }
+        {policyPage?.policyRows?.map(row => (
+          <tr>
+            <td data-label="Policy">{row.policy && <PortableText value={row.policy} />}</td>
+            <td data-label="Summary">{row.summary && <PortableText value={row.summary} />}</td>
+            <td data-label="More Info">{row.moreInfo && <PortableText value={row.moreInfo} />}</td>
+          </tr>
+        ))}
       </tbody>
     </table>
   </section>
 
   <section class="policy-page-intro">
     <h2>{policyPage?.legislativeDemands.heading}</h2>
-    {
-      policyPage?.legislativeDemands.content && (
-        <div>
-          <PortableText value={policyPage?.legislativeDemands.content} />
-        </div>
-      )
-    }
+    {policyPage?.legislativeDemands.content && (
+      <div>
+        <PortableText value={policyPage?.legislativeDemands.content} />
+      </div>
+    )}
   </section>
 </Layout>
 

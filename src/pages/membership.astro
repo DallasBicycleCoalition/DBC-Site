@@ -64,136 +64,124 @@ const thermometerPercent = goalAmount > 0 ? Math.min(100, Math.round((currentAmo
 
 <Layout title={membershipPage?.title || 'Membership'}>
   <section class="membership-hero">
-    {
-      membershipPage?.heroMedia?.asset ? (
-        <img
-          src={urlFor(membershipPage.heroMedia.asset).width(1600).height(760).url()}
-          alt={membershipPage.heroMedia.altText || 'Membership hero image'}
-          class="hero-media"
-          loading="lazy"
-        />
-      ) : (
-        <div class="hero-media hero-media-placeholder" aria-hidden="true" />
-      )
-    }
+    {membershipPage?.heroMedia?.asset ? (
+      <img
+        src={urlFor(membershipPage.heroMedia.asset).width(1600).height(760).url()}
+        alt={membershipPage.heroMedia.altText || 'Membership hero image'}
+        class="hero-media"
+        loading="lazy"
+      />
+    ) : (
+      <div class="hero-media hero-media-placeholder" aria-hidden="true" />
+    )}
 
     <div class="hero-copy">
-      {
-        membershipPage?.heroHeadlineAccent && (
-          <h1 class="hero-title hero-title-accent">{membershipPage.heroHeadlineAccent}</h1>
-        )
-      }
+      {membershipPage?.heroHeadlineAccent && (
+        <h1 class="hero-title hero-title-accent">{membershipPage.heroHeadlineAccent}</h1>
+      )}
       {membershipPage?.heroHeadline && <p class="hero-title hero-title-main">{membershipPage.heroHeadline}</p>}
-      {
-        membershipPage?.heroBody && (
-          <div class="hero-body normal-copy">
-            <PortableText value={membershipPage.heroBody} />
-          </div>
-        )
-      }
+      {membershipPage?.heroBody && (
+        <div class="hero-body normal-copy">
+          <PortableText value={membershipPage.heroBody} />
+        </div>
+      )}
     </div>
   </section>
 
   <section class="membership-tiers" aria-label="Membership tiers">
-    {
-      tiers.map(tier => {
-        const tierGiveId = tier.giveId;
+    {tiers.map(tier => {
+      const tierGiveId = tier.giveId;
 
-        return (
-          <article class="tier-card">
-            <div class="tier-card-body">
-              {tier?.title && <h2>{tier.title}</h2>}
-              {tier?.priceLabel && <p class="tier-price">{tier.priceLabel}</p>}
-              {tier?.description && <p class="tier-description">{tier.description}</p>}
+      return (
+        <article class="tier-card">
+          <div class="tier-card-body">
+            {tier?.title && <h2>{tier.title}</h2>}
+            {tier?.priceLabel && <p class="tier-price">{tier.priceLabel}</p>}
+            {tier?.description && <p class="tier-description">{tier.description}</p>}
 
-              {tier?.benefits && tier.benefits.length > 0 && (
-                <ul class="tier-benefits" role="list">
-                  {tier.benefits.map(benefit => (
-                    <li>{benefit}</li>
-                  ))}
-                </ul>
-              )}
-            </div>
-
-            <div class="tier-card-footer">
-              <a href={`/membership/?give=${tierGiveId}`} class="tier-action-link">
-                {tier?.buttonLabel || 'Join the Coalition'}
-              </a>
-            </div>
-          </article>
-        );
-      })
-    }
-  </section>
-
-  {
-    thermometer && (
-      <section class="thermometer-section">
-        {thermometer.title && <h2>{thermometer.title}</h2>}
-        {thermometer.progressLabel && <p class="thermometer-label">{thermometer.progressLabel}</p>}
-
-        <div
-          class="thermometer-bar"
-          role="progressbar"
-          aria-valuemin="0"
-          aria-valuemax={goalAmount}
-          aria-valuenow={currentAmount}
-          aria-label={thermometer.title || 'Campaign progress'}
-        >
-          <div class="thermometer-fill" style={`width: ${thermometerPercent}%;`} />
-          <p class="thermometer-bar-label">
-            {currentAmount} of {goalAmount}
-          </p>
-        </div>
-
-        {thermometer.supportingText && (
-          <div class="thermometer-copy normal-copy">
-            <PortableText value={thermometer.supportingText} />
-          </div>
-        )}
-      </section>
-    )
-  }
-
-  {
-    (supportSectionHeading ||
-      (supportSectionBody && supportSectionBody.length > 0) ||
-      (membershipPage?.faqItems && membershipPage.faqItems.length > 0)) && (
-      <section class="cta-and-questions-section">
-        <div class="cta-and-questions-layout">
-          <div class="support-section">
-            {supportSectionHeading && <h2>{supportSectionHeading}</h2>}
-            {supportCopy && supportCopy.length > 0 && (
-              <div class="support-copy normal-copy">
-                <PortableText value={supportCopy} />
-              </div>
+            {tier?.benefits && tier.benefits.length > 0 && (
+              <ul class="tier-benefits" role="list">
+                {tier.benefits.map(benefit => (
+                  <li>{benefit}</li>
+                ))}
+              </ul>
             )}
           </div>
 
-          {membershipPage?.faqItems && membershipPage.faqItems.length > 0 && (
-            <div class="faq-content">
-              <div class="faq-heading-wrap">
-                <h2>{membershipPage.faqHeading || 'Frequently Asked Questions'}</h2>
-              </div>
+          <div class="tier-card-footer">
+            <a href={`/membership/?give=${tierGiveId}`} class="tier-action-link">
+              {tier?.buttonLabel || 'Join the Coalition'}
+            </a>
+          </div>
+        </article>
+      );
+    })}
+  </section>
 
-              <div class="faq-list">
-                {membershipPage.faqItems.map(item => (
-                  <details class="faq-item">
-                    <summary>{item?.question}</summary>
-                    {item?.answer && (
-                      <div class="faq-answer normal-copy">
-                        <PortableText value={item.answer} />
-                      </div>
-                    )}
-                  </details>
-                ))}
-              </div>
+  {thermometer && (
+    <section class="thermometer-section">
+      {thermometer.title && <h2>{thermometer.title}</h2>}
+      {thermometer.progressLabel && <p class="thermometer-label">{thermometer.progressLabel}</p>}
+
+      <div
+        class="thermometer-bar"
+        role="progressbar"
+        aria-valuemin="0"
+        aria-valuemax={goalAmount}
+        aria-valuenow={currentAmount}
+        aria-label={thermometer.title || 'Campaign progress'}
+      >
+        <div class="thermometer-fill" style={`width: ${thermometerPercent}%;`} />
+        <p class="thermometer-bar-label">
+          {currentAmount} of {goalAmount}
+        </p>
+      </div>
+
+      {thermometer.supportingText && (
+        <div class="thermometer-copy normal-copy">
+          <PortableText value={thermometer.supportingText} />
+        </div>
+      )}
+    </section>
+  )}
+
+  {(supportSectionHeading ||
+    (supportSectionBody && supportSectionBody.length > 0) ||
+    (membershipPage?.faqItems && membershipPage.faqItems.length > 0)) && (
+    <section class="cta-and-questions-section">
+      <div class="cta-and-questions-layout">
+        <div class="support-section">
+          {supportSectionHeading && <h2>{supportSectionHeading}</h2>}
+          {supportCopy && supportCopy.length > 0 && (
+            <div class="support-copy normal-copy">
+              <PortableText value={supportCopy} />
             </div>
           )}
         </div>
-      </section>
-    )
-  }
+
+        {membershipPage?.faqItems && membershipPage.faqItems.length > 0 && (
+          <div class="faq-content">
+            <div class="faq-heading-wrap">
+              <h2>{membershipPage.faqHeading || 'Frequently Asked Questions'}</h2>
+            </div>
+
+            <div class="faq-list">
+              {membershipPage.faqItems.map(item => (
+                <details class="faq-item">
+                  <summary>{item?.question}</summary>
+                  {item?.answer && (
+                    <div class="faq-answer normal-copy">
+                      <PortableText value={item.answer} />
+                    </div>
+                  )}
+                </details>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    </section>
+  )}
 
   <style>
     .membership-hero,

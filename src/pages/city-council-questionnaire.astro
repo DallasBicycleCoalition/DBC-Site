@@ -8,16 +8,14 @@ const cityCouncilQuestionnaire = await getCityCouncilQuestionnaire();
 
 <Layout title={cityCouncilQuestionnaire?.title || 'City Council Questionnaire'}>
   <section class="hero">
-    {
-      cityCouncilQuestionnaire?.mainImage?.asset && (
-        <img
-          src={cityCouncilQuestionnaire.mainImage.asset}
-          alt={cityCouncilQuestionnaire.mainImage.altText || 'City Council Questionnaire'}
-          class="main-image"
-          loading="lazy"
-        />
-      )
-    }
+    {cityCouncilQuestionnaire?.mainImage?.asset && (
+      <img
+        src={cityCouncilQuestionnaire.mainImage.asset}
+        alt={cityCouncilQuestionnaire.mainImage.altText || 'City Council Questionnaire'}
+        class="main-image"
+        loading="lazy"
+      />
+    )}
   </section>
 
   <section id="content-block">
