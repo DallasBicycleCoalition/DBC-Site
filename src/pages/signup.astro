@@ -7,16 +7,22 @@ import Layout from '../layouts/Layout.astro';
 <Layout title="Join the Email List" clientRouter={false}>
   <section id="email-list-section">
     <div class="ctct-inline-form" data-form-id="f6399a61-27d2-48de-8f52-ac4715e1c6bc"></div>
+    <p id="email-list-blocked" hidden>
+      The sign-up form didn't load. It's provided by Constant Contact. This issue can sometimes happen when some browsers block it as a tracker (Firefox
+      does in private windows and with strict tracking protection). Turning off tracking protection for this site may help it load.
+    </p>
 
     <script is:inline>
       var _ctct_m = 'dc63c3d491c7072d7bc823bb48030a29';
     </script>
+    {/* Tracking protection and ad blockers block this script; onerror shows the message above instead of a blank page */}
     <script
       is:inline
       id="signupScript"
       src="https://static.ctctcdn.com/js/signup-form-widget/current/signup-form-widget.min.js"
       async
       defer
+      onerror="document.getElementById('email-list-blocked').hidden = false"
     ></script>
   </section>
 
@@ -24,6 +30,10 @@ import Layout from '../layouts/Layout.astro';
     #email-list-section {
       max-width: 50rem;
       margin: 0 auto;
+    }
+
+    #email-list-blocked {
+      margin: 2rem 0;
     }
   </style>
 </Layout>
