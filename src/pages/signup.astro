@@ -1,26 +1,29 @@
 ---
 import Layout from '../layouts/Layout.astro';
+
+// The Constant Contact widget only initializes once per full page load, so this page skips the client router
 ---
 
-<Layout title="Join the Email List">
-  <section id="action-network-section">
-    <div id="email-list-widget">
-      <link href="https://actionnetwork.org/css/style-embed-whitelabel-v3.css" rel="stylesheet" type="text/css" />
+<Layout title="Join the Email List" clientRouter={false}>
+  <section id="email-list-section">
+    <div class="ctct-inline-form" data-form-id="f6399a61-27d2-48de-8f52-ac4715e1c6bc"></div>
 
-      <div id="can-form-area-join-the-dbc-email-list" style="width: 100%"></div>
-
-      <script>
-        if (typeof window !== 'undefined') {
-          const formContainer = document.getElementById('can-form-area-join-the-dbc-email-list');
-          if (formContainer) {
-            const script = document.createElement('script');
-            script.src = 'https://actionnetwork.org/widgets/v5/form/join-the-dbc-email-list?format=js&source=widget';
-            formContainer.appendChild(script);
-          } else {
-            console.error('Form container not found');
-          }
-        }
-      </script>
-    </div>
+    <script is:inline>
+      var _ctct_m = 'dc63c3d491c7072d7bc823bb48030a29';
+    </script>
+    <script
+      is:inline
+      id="signupScript"
+      src="https://static.ctctcdn.com/js/signup-form-widget/current/signup-form-widget.min.js"
+      async
+      defer
+    ></script>
   </section>
+
+  <style>
+    #email-list-section {
+      max-width: 50rem;
+      margin: 0 auto;
+    }
+  </style>
 </Layout>
