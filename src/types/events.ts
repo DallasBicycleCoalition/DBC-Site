@@ -1,4 +1,4 @@
-import type { EventInput } from '@fullcalendar/core';
+import type { EventInput } from '@fullcalendar/react';
 
 export interface TransformedEvent extends EventInput {
   description?: string;
