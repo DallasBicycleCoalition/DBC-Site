@@ -208,6 +208,12 @@ div.normal-copy p:not(:last-child):not(:-moz-last-node) {
 }
 
 @media (max-width: 768px) {
+  .fc .fc-toolbar {
+    align-items: center;
+    justify-content: space-between;
+    display: block;
+  }
+
   /* Ensure calendar fits nicely on mobile */
   #calendar {
     max-width: 100%;
@@ -223,7 +229,7 @@ div.normal-copy p:not(:last-child):not(:-moz-last-node) {
   }
 
   /* Ensure calendar view switches to a compact list */
-  .calendar-agenda {
+  .fc-listMonth-view {
     font-size: 0.9rem;
   }
 }

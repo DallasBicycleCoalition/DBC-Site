@@ -1,16 +1,11 @@
-import dayGridPlugin from '@fullcalendar/react/daygrid';
-import listPlugin from '@fullcalendar/react/list';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import listPlugin from '@fullcalendar/list';
 import FullCalendar from '@fullcalendar/react';
 import rrulePlugin from '@fullcalendar/rrule';
-import timeGridPlugin from '@fullcalendar/react/timegrid';
-import classicThemePlugin from '@fullcalendar/react/themes/classic';
-import '@fullcalendar/react/skeleton.css';
-import '@fullcalendar/react/themes/classic/theme.css';
-import '@fullcalendar/react/themes/classic/palette.css';
+import timeGridPlugin from '@fullcalendar/timegrid';
 import { PortableText } from '@portabletext/react';
 import { useEffect, useMemo, useRef, useState } from 'react';
 
-import type { CalendarRef } from '@fullcalendar/react';
 import type { PortableTextBlock } from 'sanity';
 import type { TransformedEvent } from '../../types/events';
 import './ReactCalendar.css';
@@ -52,7 +47,7 @@ type Props = {
 };
 
 export default function ReactCalendar({ events, tags }: Props) {
-  const calendarRef = useRef<CalendarRef | null>(null);
+  const calendarRef = useRef<FullCalendar | null>(null);
   const [modalEvent, setModalEvent] = useState<ModalEvent | null>(null);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -199,19 +194,15 @@ export default function ReactCalendar({ events, tags }: Props) {
 
       <FullCalendar
         ref={calendarRef}
-        plugins={[classicThemePlugin, dayGridPlugin, timeGridPlugin, listPlugin, rrulePlugin]}
+        plugins={[dayGridPlugin, timeGridPlugin, listPlugin, rrulePlugin]}
         initialView={initialView}
         headerToolbar={headerToolbar}
-        buttons={{
-          dayGridMonth: { text: 'Month' },
-          timeGridWeek: { text: 'Week' },
-          timeGridDay: { text: 'Day' },
-          listMonth: { text: 'Agenda' },
-        }}
         views={{
-          dayGridMonth: { showNonCurrentDates: false, fixedWeekCount: false },
+          dayGridMonth: { buttonText: 'Month', showNonCurrentDates: false, fixedWeekCount: false },
+          timeGridWeek: { buttonText: 'Week' },
+          timeGridDay: { buttonText: 'Day' },
           listMonth: {
-            class: 'calendar-agenda',
+            buttonText: 'Agenda',
             contentHeight: 650, // Adjust the height here
           },
         }}
