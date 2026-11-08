@@ -1931,8 +1931,7 @@ export type CalendarPageResult = {
 } | null;
 
 // Query TypeMap
-import '@sanity/client';
-declare module '@sanity/client' {
+declare global {
   interface SanityQueries {
     '\n  *[_type == "post" && slug.current == $slug][0]{ ..., author->{ name } }\n': PostQueryResult;
     '\n  *[_type == "shortLink" && slug.current == $slug][0]{ destination }\n': ShortLinkQueryResult;
@@ -1951,4 +1950,8 @@ declare module '@sanity/client' {
     '\n    *[_type == "membershipPage"]{\n      title,\n      heroMedia { asset->, altText },\n      heroHeadlineAccent,\n      heroHeadline,\n      heroBody,\n      membershipTiers[] {\n        title,\n        priceLabel,\n        description,\n        benefits,\n        embedCode,\n        giveId,\n        buttonLabel\n      },\n      thermometer {\n        title,\n        currentAmount,\n        goalAmount,\n        progressLabel,\n        supportingText\n      },\n      supportSectionHeading,\n      supportSectionBody,\n      faqHeading,\n      faqItems[] {\n        question,\n        answer\n      }\n    }[0]\n  ': MembershipPageResult;
     '\n    *[_type == "calendarPage"][0]{\n      infoText\n    }\n  ': CalendarPageResult;
   }
+}
+// Lets @sanity/client releases that predate the global registry read it too
+declare module '@sanity/client' {
+  interface SanityQueries extends globalThis.SanityQueries {}
 }
